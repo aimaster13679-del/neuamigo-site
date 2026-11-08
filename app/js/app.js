@@ -231,7 +231,9 @@ const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').re
 function getPath(o,p){return p.split('.').reduce((a,k)=>a==null?a:a[k],o)}
 function setPath(obj,path,val){const ks=path.split('.');let o=obj;for(let i=0;i<ks.length-1;i++){if(o[ks[i]]==null)o[ks[i]]={};o=o[ks[i]]}o[ks[ks.length-1]]=val}
 function ageFrom(dob){if(!dob)return null;const d=new Date(dob+'T00:00:00');if(isNaN(d))return null;const n=new Date();let a=n.getFullYear()-d.getFullYear();const m=n.getMonth()-d.getMonth();if(m<0||(m===0&&n.getDate()<d.getDate()))a--;return a}
-function ftIn(cm){const t=Math.round(cm/2.54);return `${Math.floor(t/12)}'${t%12}"`}
+/* Height: metric by default (his rule 29 Oct 'metric units by default'); feet and inches only for members in the USA. */
+function ftIn(cm){if(!cm)return '';let us=false;try{us=/^(United States|USA|US)$/i.test(((typeof S!=='undefined'&&S.me)||{}).country||'')}catch(e){}
+  if(!us)return `${Math.round(cm)} cm`;const t=Math.round(cm/2.54);return `${Math.floor(t/12)}'${t%12}"`}
 const HEIGHTS=[];for(let i=54;i<=84;i++)HEIGHTS.push({cm:Math.round(i*2.54),label:`${Math.floor(i/12)}'${i%12}" · ${Math.round(i*2.54)} cm`});
 function hav(a,b){if(!a||!b)return 99999;const R=6371,t=x=>x*Math.PI/180;const dLa=t(b[0]-a[0]),dLo=t(b[1]-a[1]);const h=Math.sin(dLa/2)**2+Math.cos(t(a[0]))*Math.cos(t(b[0]))*Math.sin(dLo/2)**2;return 2*R*Math.asin(Math.sqrt(h))}
 function coordsOf(o){if(!o)return null;const c=ALL_CITIES.find(x=>x[1]===o.country&&norm(x[0])===norm(o.city||''));if(c)return [c[3],c[4]];return stateCoords(o.country,o.state)||countryCoords(o.country)}
