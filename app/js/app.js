@@ -4389,7 +4389,7 @@ Object.assign(P15V,{adcheck:adCheck15,biz:biz15v,services:svc15v,svcplan:svcPlan
       if(/p2p payments coming soon/.test(em15(e)))throw own('Paying here opens soon. Until then nothing is charged.','p2p coming soon');
       const prod=need(e);if(!prod)throw e;
       if(isNative)throw own('This is not available in the app yet.','not in app');
-      let r;try{r=await API.fn('pay15',{action:'start',product:prod,web:true})}catch(z){throw own('PayPal could not open. Please try again.','paypal')}
+      let r;try{r=await API.fn('pay15',{action:'start',product:prod,web:true,site:(typeof naOn==='function'&&naOn())?'neuamigo':'neumarry'})}catch(z){throw own('PayPal could not open. Please try again.','paypal')}
       if(!r||!r.url)throw own('PayPal could not open. Please try again.','paypal');
       try{localStorage.setItem(KEY,JSON.stringify({order:r.order,name,args,at:Date.now(),v:P15.v}))}catch(z){}
       location.href=r.url;
