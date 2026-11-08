@@ -589,7 +589,7 @@ function applyChange(t,key,v){
 }
 
 /* ---------- Toast ---------- */
-function toast(msg,icon){clearTimeout(toastT);const old=document.querySelector('.toast');if(old)old.remove();
+function toast(msg,icon){try{if(typeof naOn==='function'&&naOn()&&typeof msg==='string')msg=msg.replace(/NeuMarry/g,'NeuAmigo')}catch(e){}clearTimeout(toastT);const old=document.querySelector('.toast');if(old)old.remove();
   const el=document.createElement('div');el.className='toast';el.setAttribute('role','status');el.innerHTML=(icon?ic(icon):'')+`<span>${esc(msg)}</span>`;
   document.getElementById('app').appendChild(el);toastT=setTimeout(()=>el.remove(),3800)}
 function fail(e,field){if(e&&(e.code==='rude_words'||e.code==='money_request'))API.rpc('log_rude',{field:(e.code==='money_request'?'money-':'')+(field||'app')}).catch(()=>{});toast((e&&e.message)||'Something went wrong. Please try again.','info')}
@@ -1831,6 +1831,7 @@ async function afterLogin(){
     S.screen='app';if(!['matches','events','connections','me'].includes(S.tab))S.tab='matches';render();
     await Promise.all([loadCards(),loadMessages(),pre]);ensureMatchChats();S.loaded=true;render();cacheSave();loadInvite();restorePurchases(false);
     API.rpc('touch_seen').catch(()=>{});
+    try{const ap=(typeof naOn==='function'&&naOn())?'neuamigo':(window.NM_APP?'neumarry':'');if(ap)API.rpc('touch_app',{a:ap}).catch(()=>{})}catch(e){}  /* which app(s) a member uses (split 9 Nov 2026) */
   }catch(e){
     if(e.code==='signed_out'){cacheClear();S=fresh();S.screen='welcome';render();return}
     if(warm&&S.screen==='app'){toast(e.code==='network'?'No internet connection. Showing what was saved on this phone.':'NeuMarry could not refresh. Pull down or try again soon.','info');return}
