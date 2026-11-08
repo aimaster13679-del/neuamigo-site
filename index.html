@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NeuAmigo: rooms, jobs, events and friends for people living abroad</title>
+<meta name="description" content="Rooms, job referrals, a flight buddy for parents, events and friends for people living abroad. Now open in Toronto."><link rel="canonical" href="https://neuamigo.com/"><link rel="alternate" hreflang="en" href="https://neuamigo.com/"><link rel="alternate" hreflang="fr" href="https://neuamigo.com/fr/"><meta property="og:title" content="NeuAmigo"><meta property="og:description" content="Rooms, job referrals, a flight buddy for parents, events and friends for people living abroad. Now open in Toronto."><meta property="og:url" content="https://neuamigo.com/">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap">
+<style>
+:root{--bg:#F3F2F8;--bg2:#ECEAF5;--tx:#16152A;--mt:#5E5C74;--gl:rgba(255,255,255,.72);--gl2:rgba(255,255,255,.9);--edge:rgba(255,255,255,.95);--ln:rgba(40,36,80,.08);
+ --mint1:#EEEBFF;--mint2:#D7D0FF;--mintx:#3F35A6;--lem:#E7F2FF;--lemx:#1D4C86;--sh:0 18px 40px -24px rgba(60,50,140,.26),0 2px 6px -2px rgba(60,50,140,.08);color-scheme:light}
+@media (prefers-color-scheme:dark){body{background:radial-gradient(900px 600px at 10% -10%,rgba(255,255,255,.06),transparent 60%),var(--bg)!important}:root{--bg:#08080A;--bg2:#101013;--tx:#F3F3F5;--mt:rgba(243,243,245,.7);--gl:rgba(30,30,34,.62);--gl2:rgba(36,36,42,.82);--edge:rgba(255,255,255,.1);--ln:rgba(255,255,255,.08);
+ --mint1:rgba(255,255,255,.14);--mint2:rgba(255,255,255,.22);--mintx:#FFFFFF;--lem:rgba(255,255,255,.06);--lemx:#EDEDF1;--sh:0 20px 44px -26px rgba(0,0,0,.7);color-scheme:dark}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;font:500 16px/1.55 'Plus Jakarta Sans',system-ui,sans-serif;color:var(--tx);background:radial-gradient(900px 600px at 10% -10%,var(--mint1),transparent 60%),radial-gradient(800px 600px at 100% 0%,var(--lem),transparent 55%),radial-gradient(700px 500px at 50% 100%,#FFEFF4,transparent 60%),var(--bg);-webkit-user-select:none;user-select:none}
+main{overflow-x:clip}img{display:block;max-width:100%;height:auto}a{color:inherit}
+.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+.g{background:var(--gl);border:1px solid var(--edge);-webkit-backdrop-filter:blur(18px) saturate(1.3);backdrop-filter:blur(18px) saturate(1.3);box-shadow:var(--sh);border-radius:24px}
+nav{position:sticky;top:0;z-index:5;padding:12px 0}
+nav .wrap{display:flex;align-items:center;gap:14px}
+nav .bar{display:flex;align-items:center;gap:12px;width:100%;padding:8px 8px 8px 14px;border-radius:999px}
+.logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:18px;text-decoration:none}.logo img{width:30px;height:30px;border-radius:9px}
+.nl{display:flex;gap:4px;margin-left:auto}.nl a{text-decoration:none;font-weight:700;font-size:14px;padding:8px 12px;border-radius:999px;color:var(--mt)}.nl a:hover{color:var(--tx);background:var(--ln)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:800 15px 'Plus Jakarta Sans',sans-serif;text-decoration:none;padding:13px 22px;border-radius:999px;border:1px solid transparent;cursor:pointer;white-space:nowrap}
+.btn.p{background:linear-gradient(150deg,#EEEBFF,#D7D0FF);color:#2F2690;border-color:rgba(255,255,255,.9);box-shadow:0 10px 24px -12px rgba(91,79,214,.55)}
+@media (prefers-color-scheme:dark){.btn.p{background:linear-gradient(150deg,rgba(255,255,255,.22),rgba(255,255,255,.08));color:#fff;border-color:rgba(255,255,255,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}}
+.btn.s{background:var(--gl2);border-color:var(--edge);color:var(--tx)}
+.btn.sm{padding:9px 16px;font-size:14px}
+.hero{padding:34px 0 10px}
+.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:34px;align-items:center}
+.kick{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:800;padding:7px 13px;border-radius:999px;color:var(--mintx);background:var(--mint1);border:1px solid var(--edge)}
+.kick i{width:8px;height:8px;border-radius:50%;background:#5B4FD6;animation:pl 2.4s infinite}
+@keyframes pl{0%{box-shadow:0 0 0 0 rgba(91,79,214,.5)}70%{box-shadow:0 0 0 9px rgba(91,79,214,0)}100%{box-shadow:0 0 0 0 rgba(91,79,214,0)}}
+h1{font-size:clamp(36px,5.4vw,60px);line-height:1.06;font-weight:800;margin:16px 0 14px;letter-spacing:0}
+h1 em{font-style:normal;background:linear-gradient(120deg,#5B4FD6,#3B82C4);-webkit-background-clip:text;background-clip:text;color:transparent}
+@media (prefers-color-scheme:dark){h1 em{background:linear-gradient(120deg,#FFFFFF,#BDBDC8);-webkit-background-clip:text;background-clip:text}}
+.lead{font-size:18px;color:var(--mt);max-width:520px;margin:0 0 22px}
+.cta{display:flex;gap:10px;flex-wrap:wrap}
+.trust{display:flex;gap:16px;flex-wrap:wrap;margin-top:18px;font-size:13.5px;font-weight:700;color:var(--mt)}
+.trust span{display:flex;align-items:center;gap:6px}.trust svg{width:16px;height:16px;color:var(--mintx)}
+.mosaic{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:170px 150px 170px;gap:12px}
+.ph{position:relative;overflow:hidden;border-radius:22px;border:1px solid var(--edge);box-shadow:var(--sh)}
+.ph img{width:100%;height:100%;object-fit:cover}
+.ph b{position:absolute;left:10px;bottom:10px;font-size:13px;font-weight:800;padding:6px 11px;border-radius:999px;background:var(--gl2);border:1px solid var(--edge);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.mosaic .a{grid-row:span 2}.mosaic .d{grid-column:span 2}
+.flags{margin:26px 0 6px;overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.flags .row{display:flex;gap:10px;width:max-content;animation:mq 60s linear infinite}
+.flags span{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;padding:8px 13px;border-radius:999px;background:var(--gl);border:1px solid var(--edge);white-space:nowrap}
+.flags span i{font-style:normal;font-size:17px}
+@keyframes mq{to{transform:translateX(-50%)}}
+section{padding:56px 0 8px}
+.sh{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px}
+h2{font-size:clamp(26px,3.4vw,38px);line-height:1.15;margin:0;font-weight:800}
+.sh p{margin:6px 0 0;color:var(--mt);max-width:560px}
+.bento{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.t{overflow:hidden;display:flex;flex-direction:column;text-decoration:none}
+.t .ph{border:0;border-radius:0;box-shadow:none;height:150px}
+.t .tx{padding:14px 16px 16px}.t .tx b{display:block;font-size:17px;font-weight:800}.t .tx small{display:block;color:var(--mt);font-size:14px;margin-top:3px}
+.t .pr{display:inline-block;margin-top:10px;font-size:12.5px;font-weight:800;padding:5px 10px;border-radius:999px;background:var(--mint1);color:var(--mintx)}
+.t.w2{grid-column:span 2}.t.w2 .ph{height:190px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.st{padding:22px}.st .n{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-weight:800;background:linear-gradient(150deg,var(--mint1),var(--mint2));color:var(--mintx)}
+.st b{display:block;font-size:18px;margin:12px 0 4px}.st small{color:var(--mt);font-size:14.5px}
+.pl{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:14px}
+.pc{padding:22px}.pc h3{margin:0;font-size:20px}.pc .big{font-size:34px;font-weight:800;margin:8px 0 2px}.pc small{color:var(--mt)}
+.pc ul{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px;font-size:14.5px}.pc li{display:flex;gap:8px}.pc li:before{content:'';flex:0 0 18px;height:18px;border-radius:50%;background:var(--mint1) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235B4FD6' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 12.5l4 4L18 8'/%3E%3C/svg%3E") center/12px no-repeat;margin-top:2px}
+.pc.hi{background:linear-gradient(150deg,var(--mint1),var(--gl))}
+.biz{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch}
+.bz{text-decoration:none;display:grid;grid-template-columns:150px 1fr;overflow:hidden}.bz .ph{border:0;border-radius:0;box-shadow:none;height:100%}
+.bz .tx{padding:16px}.bz b{font-size:17px}.bz small{display:block;color:var(--mt);font-size:14px;margin-top:3px}.bz .pr{display:inline-block;margin-top:8px;font-size:12.5px;font-weight:800;color:var(--mintx)}
+.faq{display:grid;gap:10px;max-width:820px}
+details{padding:16px 18px}summary{font-weight:800;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px}summary::-webkit-details-marker{display:none}
+summary:after{content:'+';font-size:22px;line-height:1;color:var(--mintx)}details[open] summary:after{content:'–'}details p{margin:10px 0 0;color:var(--mt)}
+.final{margin:56px 0 0;padding:36px;text-align:center;background:linear-gradient(150deg,var(--mint1),var(--lem))}
+.final h2{margin-bottom:8px}.final p{color:var(--mt);margin:0 0 18px}.final .cta{justify-content:center}
+footer{padding:34px 0 40px;color:var(--mt);font-size:14px}footer .wrap{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center}footer a{text-decoration:none;font-weight:700}
+.lang{margin-left:auto}
+@media (max-width:900px){.hero .wrap{grid-template-columns:1fr}.bento{grid-template-columns:1fr 1fr}.t.w2{grid-column:span 2}.pl{grid-template-columns:1fr}.biz{grid-template-columns:1fr}.steps{grid-template-columns:1fr}.nl{display:none}}
+@media (max-width:520px){.wrap{padding:0 16px}.bento{gap:10px}.t .ph{height:110px}.t.w2 .ph{height:150px}.t .tx{padding:11px 12px 13px}.t .tx b{font-size:15px}.t .tx small{font-size:13px}
+ .mosaic{grid-template-rows:130px 120px 130px;gap:10px}.bz{grid-template-columns:110px 1fr}.final{padding:26px 18px}.lead{font-size:16.5px}.sh{display:block}}
+@media (prefers-reduced-motion:reduce){.flags .row,.kick i{animation:none}}
+</style></head>
+<body><main>
+<nav><div class="wrap"><div class="bar g"><a class="logo" href="/"><img src="/app/img/icon-192.png" alt="">NeuAmigo</a>
+ <div class="nl"><a href="#settle">Settle In</a><a href="#events">Events</a><a href="#plus">Membership</a><a href="#biz">For Business</a></div>
+ <a class="btn p sm" href="/app/">Open the app</a></div></div></nav>
+
+<header class="hero"><div class="wrap">
+ <div><span class="kick"><i></i>Now open in Toronto</span>
+  <h1>Your people,<br><em>wherever you live</em></h1>
+  <p class="lead">Rooms, job referrals, a buddy for your parents' flight, events and new friends from your roots. One app for people living abroad.</p>
+  <div class="cta"><a class="btn p" href="/app/">Open the app, free</a><a class="btn s" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate" rel="noopener">Get it on Google Play</a></div>
+  <div class="trust"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>Verified members</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Money paid inside the app</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>No fake counts, no hidden fees</span></div></div>
+ <div class="mosaic">
+  <div class="ph a"><img src="/app/img/p15/room.webp" alt="A bright furnished room"><b>Find a Room</b></div>
+  <div class="ph"><img src="/app/img/p15/plane.webp" alt="Plane window view above clouds"><b>Travel Buddy</b></div>
+  <div class="ph"><img src="/app/img/p15/lantern.webp" alt="Festival lanterns"><b>Festivals</b></div>
+  <div class="ph d"><img src="/app/img/p15/stadium.webp" alt="A stadium at night"><b>Watch Parties</b></div>
+ </div>
+</div>
+<div class="flags" aria-label="People from many countries"><div class="row" id="fl"></div></div>
+</header>
+
+<section id="settle"><div class="wrap">
+ <div class="sh"><div><h2>Settle In</h2><p>Everything for your first months in a new country, from people who did it before you.</p></div></div>
+ <div class="bento">
+  <a class="t g w2" href="/app/"><div class="ph"><img src="/app/img/p15/room.webp" alt="A furnished room"></div><div class="tx"><b>Find a Room</b><small>Rooms and roommates by area and budget. Contacts open with Plus.</small><span class="pr">Post a room · $29</span></div></a>
+  <a class="t g" href="/app/"><div class="ph"><img src="/app/img/p15/plane.webp" alt="Plane window"></div><div class="tx"><b>Travel Buddy for Parents</b><small>A verified member on the same flight helps them.</small><span class="pr">$49 when matched</span></div></a>
+  <a class="t g" href="/app/"><div class="ph"><img src="/app/img/p15/office.webp" alt="Office desks"></div><div class="tx"><b>Job Referral</b><small>Ask someone inside the company. No reply in 7 days, you get it back.</small><span class="pr">$9 · 5 for $35</span></div></a>
+  <a class="t g" href="/app/"><div class="ph"><img src="/app/img/p15/docs.webp" alt="Papers and a calculator"></div><div class="tx"><b>Trusted Experts</b><small>Immigration, tax, insurance, movers. Licence checked.</small><span class="pr">Prices on every page</span></div></a>
+  <a class="t g" href="/app/"><div class="ph"><img src="/app/img/p15/sofa.webp" alt="A sofa in a living room"></div><div class="tx"><b>Moving-Out Sale</b><small>Buy and sell when people move. Pay in the app.</small><span class="pr">Seller Plan · $4.99</span></div></a>
+  <a class="t g w2" href="/app/"><div class="ph"><img src="/app/img/p15/house.webp" alt="A modern house"></div><div class="tx"><b>From the first night to your own home</b><small>Start with a room, find your people, then grow roots in your new city.</small></div></a>
+ </div></div></section>
+
+<section id="events"><div class="wrap">
+ <div class="sh"><div><h2>Events &amp; Friends</h2><p>Hosts from your city run them. You just book a seat. Tickets with a QR code, money back if the host cancels.</p></div></div>
+ <div class="bento">
+  <a class="t g w2" href="/app/"><div class="ph"><img src="/app/img/p15/table.webp" alt="A dinner table with food"></div><div class="tx"><b>Friend Meetups</b><small>Dinner tables, walks and games with people from your roots.</small></div></a>
+  <a class="t g" href="/app/"><div class="ph"><img src="/app/img/p15/stadium.webp" alt="A stadium"></div><div class="tx"><b>Watch Parties</b><small>Big matches on a big screen, together.</small></div></a>
+  <a class="t g" href="/app/"><div class="ph"><img src="/app/img/p15/lantern.webp" alt="Lanterns"></div><div class="tx"><b>Festivals</b><small>Diwali, Eid, Lunar New Year, Christmas and more.</small></div></a>
+  <a class="t g" href="/app/"><div class="ph"><img src="/app/img/p15/trip.webp" alt="A road trip"></div><div class="tx"><b>Day Trips</b><small>Bus trips with a host.</small></div></a>
+  <a class="t g" href="/app/"><div class="ph"><img src="/app/img/p15/league.webp" alt="A sports field"></div><div class="tx"><b>Sports Leagues</b><small>Join a team or find players.</small></div></a>
+  <a class="t g w2" href="/app/"><div class="ph"><img src="/app/img/p15/hall.webp" alt="An event hall"></div><div class="tx"><b>Host your own</b><small>Run events and keep 90% of every ticket. Host Plans from $19 a month.</small></div></a>
+ </div></div></section>
+
+<section><div class="wrap"><div class="sh"><div><h2>How it works</h2></div></div>
+ <div class="steps"><div class="st g"><span class="n">1</span><b>Open the app</b><small>Free. Sign in with Google or email. Tell us where you live and where your roots are.</small></div>
+ <div class="st g"><span class="n">2</span><b>Pick what you need</b><small>A room, a referral, a buddy for your parents, or a seat at this weekend's event.</small></div>
+ <div class="st g"><span class="n">3</span><b>Pay inside the app</b><small>The price and every fee are shown first. If the host cancels, you get all your money back.</small></div></div></div></section>
+
+<section id="plus"><div class="wrap"><div class="sh"><div><h2>Membership</h2><p>Most of NeuAmigo is free to look at. Plus opens the details.</p></div></div>
+ <div class="pl"><div class="pc g hi"><h3>NeuAmigo Plus</h3><div class="big">$9.99<small style="font-size:15px"> / month</small></div><small>or $89 a year</small>
+  <ul><li>Contact and address of every room</li><li>Full event details, book 24 hours early</li><li>Prices and contact of every expert</li><li>2 job referral requests every month</li></ul></div>
+  <div class="pc g"><h3>Verified Tick</h3><div class="big">$4.99</div><small>for one year</small><ul><li>ID and selfie checked</li><li>ID photo deleted after the check</li><li>People say yes to you sooner</li></ul></div>
+  <div class="pc g"><h3>Free</h3><div class="big">$0</div><small>always</small><ul><li>See rooms, events and experts</li><li>Book event seats</li><li>Ask for a travel buddy</li></ul></div></div></div></section>
+
+<section id="biz"><div class="wrap"><div class="sh"><div><h2>For Business</h2><p>Reach people who just moved to your city. You pay a plan first; there are no hidden cuts.</p></div></div>
+ <div class="biz">
+  <a class="bz g" href="/app/"><div class="ph"><img src="/app/img/p15/hall.webp" alt="Event hall"></div><div class="tx"><b>Host Plans</b><small>Meetups, watch parties, festivals and trips.</small><span class="pr">from $19 a month + 10% per seat</span></div></a>
+  <a class="bz g" href="/app/"><div class="ph"><img src="/app/img/p15/docs.webp" alt="Papers"></div><div class="tx"><b>Experts and rental agents</b><small>A page with your licence, services and prices.</small><span class="pr">from $99 a month</span></div></a>
+  <a class="bz g" href="/app/"><div class="ph"><img src="/app/img/p15/catering.webp" alt="Catering buffet"></div><div class="tx"><b>Event Services</b><small>Catering, decor, music and photos for hosts.</small><span class="pr">$49 a month</span></div></a>
+  <a class="bz g" href="/app/"><div class="ph"><img src="/app/img/p15/city.webp" alt="A city skyline"></div><div class="tx"><b>Ad Spot</b><small>One clear "Sponsored" box in your city. Real views and taps.</small><span class="pr">$500 a city month</span></div></a>
+ </div></div></section>
+
+<section><div class="wrap"><div class="sh"><div><h2>Questions</h2></div></div><div class="faq">
+ <details class="g" open><summary>Is NeuAmigo a matrimony app?</summary><p>No. NeuAmigo helps people living abroad with everything around a new life: rooms, jobs, travel for parents, events and friends. For marriage, our separate app is NeuMarry (neumarry.com).</p></details>
+ <details class="g"><summary>Who runs the events?</summary><p>Independent hosts in your city. They pay a plan to host. Every ticket has a QR code, and if the host cancels you get all your money back.</p></details>
+ <details class="g"><summary>Is my money safe?</summary><p>You pay inside the app. Money for a host or a seller is split automatically by our licensed payment partner; we never ask you to pay anyone outside the app.</p></details>
+ <details class="g"><summary>Which cities?</summary><p>Toronto first, then more cities in Canada, the USA, Australia and Germany.</p></details>
+</div></div></section>
+
+<div class="wrap"><div class="final g"><h2>Find your people in your new city</h2><p>Free to open. Pay only for what you use.</p><div class="cta"><a class="btn p" href="/app/">Open the app</a><a class="btn s" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate" rel="noopener">Get it on Google Play</a></div></div></div>
+</main>
+<footer><div class="wrap"><span>NeuAmigo · © 2026</span><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="delete-account.html">Delete account</a><a href="child-safety.html">Child safety</a><a href="mailto:support@neuamigo.com">support@neuamigo.com</a><a class="lang" href="fr/" hreflang="fr">Français</a></div></footer>
+<script>
+const C=[['🇨🇦','Canada'],['🇺🇸','USA'],['🇲🇽','Mexico'],['🇧🇷','Brazil'],['🇨🇴','Colombia'],['🇬🇧','UK'],['🇮🇪','Ireland'],['🇫🇷','France'],['🇩🇪','Germany'],['🇮🇹','Italy'],['🇪🇸','Spain'],['🇵🇱','Poland'],['🇺🇦','Ukraine'],['🇹🇷','Türkiye'],['🇪🇬','Egypt'],['🇳🇬','Nigeria'],['🇬🇭','Ghana'],['🇰🇪','Kenya'],['🇪🇹','Ethiopia'],['🇿🇦','South Africa'],['🇱🇧','Lebanon'],['🇦🇪','UAE'],['🇮🇷','Iran'],['🇵🇰','Pakistan'],['🇮🇳','India'],['🇳🇵','Nepal'],['🇧🇩','Bangladesh'],['🇱🇰','Sri Lanka'],['🇨🇳','China'],['🇰🇷','Korea'],['🇯🇵','Japan'],['🇵🇭','Philippines'],['🇻🇳','Vietnam'],['🇮🇩','Indonesia'],['🇦🇺','Australia'],['🇳🇿','New Zealand']];
+const h=C.map(c=>`<span><i>${c[0]}</i>${c[1]}</span>`).join('');document.getElementById('fl').innerHTML=h+h;
+</script>
+</body></html>

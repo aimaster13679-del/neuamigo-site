@@ -1,0 +1,64 @@
+:root{--bg:#FFF8F6;--surface:#fff;--ink:#3B1F2A;--muted:#86666F;--line:#F3E0E1;--rose:#E8436B;--rose-soft:#FFE7EC;--gold:#B8863A}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+header{position:sticky;top:0;background:rgba(255,248,246,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:2}
+.wrap{max-width:780px;margin:0 auto;padding:0 18px}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:58px}
+.brand{display:flex;align-items:center;gap:9px;font-family:Lora,Georgia,serif;font-weight:600;font-size:21px;color:var(--ink);text-decoration:none}
+.brand svg{width:30px;height:20px}.brand .c1{stroke:var(--rose)}.brand .c2{stroke:var(--gold)}.brand circle,.brand path{fill:none;stroke-width:2.2;stroke-linejoin:round}
+nav a{color:var(--rose);font-weight:700;text-decoration:none;margin-left:14px;font-size:14px}
+main{padding:28px 0 60px}
+h1{font-family:Lora,Georgia,serif;font-weight:500;font-size:34px;line-height:1.15;margin:0 0 6px}
+h2{font-family:Lora,Georgia,serif;font-weight:500;font-size:23px;margin:34px 0 8px}
+.meta{color:var(--muted);font-size:14px;margin:0 0 20px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 18px;margin:16px 0}
+.box.rose{background:var(--rose-soft);border-color:#F8C9D4}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14.5px;background:var(--surface);border-radius:14px;overflow:hidden}
+th,td{border-bottom:1px solid var(--line);text-align:left;padding:10px 12px;vertical-align:top}
+th{background:#FDF0EE;font-weight:700}
+.tw{overflow-x:auto}
+a{color:var(--rose)}
+ol,ul{padding-left:22px}li{margin:4px 0}
+footer{border-top:1px solid var(--line);padding:22px 0;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:8px 18px}
+@media (max-width:520px){h1{font-size:28px}nav a{margin-left:10px}}
+.lede{font-size:18px;line-height:1.6;color:var(--ink);margin:0 0 8px}
+.crumbs{font-size:13.5px;color:var(--muted);margin:0 0 14px}.crumbs a{text-decoration:none;font-weight:700}
+.faq{display:grid;gap:10px;margin:12px 0}
+.faq details{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:2px 16px}
+.faq summary{cursor:pointer;padding:12px 0;font-weight:700}
+.faq details p{margin:0 0 12px}
+.cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;background:var(--rose-soft);border:1px solid #F8C9D4;border-radius:20px;padding:18px 20px;margin:36px 0 8px}
+.cta div{flex:1 1 280px;min-width:0}.cta p{margin:4px 0 0;color:var(--muted);font-size:15px}
+.btn{display:inline-block;background:var(--rose);color:#fff;font-weight:800;text-decoration:none;border-radius:999px;padding:12px 20px;white-space:nowrap}
+.btn:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.rel{padding-left:20px}.rel a{font-weight:700}
+footer .fg{flex-basis:100%;display:flex;flex-wrap:wrap;gap:6px 16px;margin-bottom:8px}
+footer .fg a{color:var(--ink);font-weight:700;text-decoration:none}
+
+nav a.hl{background:#FFF3DC;border:1px solid #E7C27A;color:#8A5A12;border-radius:999px;padding:6px 12px;text-decoration:none;font-weight:700}
+.roles{display:grid;gap:12px;margin:18px 0 8px}
+.role{display:grid;gap:6px;padding:16px 18px;border:1.5px solid #E7C27A;border-radius:18px;background:linear-gradient(160deg,#FFF8E8,#fff 65%);color:inherit;text-decoration:none}
+.role b{font-size:17px}.role .pay{font-weight:800;color:#8A5A12}.role .more{color:#C2185B;font-weight:700}
+.wform{display:grid;gap:12px;margin:12px 0 24px;max-width:560px}
+.wform label{display:grid;gap:6px;font-weight:700;font-size:14px}
+.wform input,.wform textarea{font:inherit;font-weight:400;padding:12px 14px;border:1.5px solid #EBD9DE;border-radius:14px;background:#fff}
+.wform .ck{display:flex;gap:10px;align-items:flex-start;font-weight:400}.wform .ck input{margin-top:3px}
+.fset{border:0;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px}.fset legend{font-weight:700;font-size:14px;margin-bottom:6px}
+.fset .opt{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border:1.5px solid #EBD9DE;border-radius:999px;font-weight:600}
+.fmsg{margin:0;font-weight:600}.fmsg.ok{color:#2E7D4F}.fmsg.err{color:#C62828}
+nav a{white-space:nowrap}
+@media (max-width:520px){nav a[href="matrimony-events-toronto.html"]{display:none}}
+@media (max-width:420px){nav a{margin-left:8px;font-size:13px}nav a.hl{padding:5px 9px}.brand{font-size:19px}}
+@media (max-width:400px){header .wrap{flex-wrap:wrap;row-gap:8px}nav{margin-left:auto}}
+.ticks{list-style:none;padding:0;margin:12px 0;display:grid;gap:10px}
+.ticks li{position:relative;padding-left:28px}
+.ticks li::before{content:"";position:absolute;left:4px;top:.55em;width:11px;height:6px;border-left:2.4px solid var(--rose);border-bottom:2.4px solid var(--rose);transform:rotate(-45deg)}
+.tbl{overflow-x:auto;margin:12px 0}
+.tbl table{margin:0}
+.box.legal{font-size:14.5px;color:var(--muted)}
+.box.legal b{color:var(--ink)}
+.steps5{display:grid;gap:10px;margin:14px 0 16px;counter-reset:s}
+.s5{display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 16px;box-shadow:0 6px 18px rgba(59,31,42,.06)}
+.s5 .n{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--rose);color:#fff;font-weight:800;font-size:15px}
+.s5 b{display:block;font-size:16.5px;margin:4px 0 2px}.s5 p{margin:0;color:var(--muted);font-size:15px;line-height:1.55}

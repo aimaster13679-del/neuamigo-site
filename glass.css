@@ -1,0 +1,38 @@
+/* NeuMarry glass look for the website (his ok 7 Nov 2026 on mock Dkp9Rekpj8aCetG37FxU8G, 'ab live kar do').
+   Loaded last on every page by src/build.py. Dark glass by default; light glass when the device is set to light. Text unchanged. */
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap");
+:root{--bg:#0E0B12;--band:#15101A;--surface:#17121C;--sunk:#211A27;--ink:#F7F3FA;--muted:rgba(247,243,250,.68);--line:rgba(255,255,255,.1);
+ --rose:#FF4F97;--rose-2:#FF8FC0;--rose-deep:#FF8FC0;--rose-soft:rgba(226,19,110,.2);--gold:#FFE08A;--gold-soft:rgba(255,201,60,.14);--good:#34D399;
+ --grad:linear-gradient(150deg,#FF4F97,#E2136E 55%,#B80E58);--grad-warm:linear-gradient(150deg,#FF4F97,#E2136E 55%,#B80E58);
+ --shadow:0 1px 0 rgba(255,255,255,.05) inset,0 22px 44px -26px rgba(0,0,0,.85);--shadow-rose:0 14px 28px -12px rgba(226,19,110,.7);--shadow2:0 18px 36px -22px rgba(0,0,0,.8);
+ --f-display:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--f-body:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+ --plum:#1B0F1E;--plum2:#0E0B12;--pink:#FFB3D2;color-scheme:dark}
+@media (prefers-color-scheme:light){:root{--bg:#FBF8FC;--band:#F3EEF6;--surface:#FFFFFF;--sunk:#F3EEF6;--ink:#141018;--muted:#5F586B;--line:#E9E3EF;
+ --rose:#E2136E;--rose-2:#FF5C9E;--rose-deep:#B80E58;--rose-soft:#FFE9F2;--gold:#8A6100;--gold-soft:#FFF4D6;--good:#0F8A5A;
+ --shadow:0 1px 0 #fff inset,0 18px 36px -24px rgba(60,20,120,.38);--shadow2:0 14px 30px -20px rgba(60,20,120,.3);color-scheme:light}}
+html,body{background:var(--bg)!important;color:var(--ink)}
+body{background:radial-gradient(120% 60% at 70% -5%,#3A1236,#0E0B12 60%) fixed!important;font-family:var(--f-body)!important;letter-spacing:0}
+@media (prefers-color-scheme:light){body{background:radial-gradient(120% 50% at 70% -5%,#FBE3F0,#FBF8FC 60%) fixed!important}}
+h1,h2,h3,h4{font-family:var(--f-display)!important;font-weight:800!important;letter-spacing:0!important;color:var(--ink)}
+h1 em,h2 em{font-style:normal!important;background:linear-gradient(100deg,#FF5C9E,#FFC93C);-webkit-background-clip:text;background-clip:text;color:transparent!important}
+/* header: see-through glass, stays on top */
+header{background:rgba(14,11,18,.55)!important;-webkit-backdrop-filter:blur(20px) saturate(140%);backdrop-filter:blur(20px) saturate(140%);box-shadow:inset 0 -1px 0 rgba(255,255,255,.08)!important;color:var(--ink)}
+@media (prefers-color-scheme:light){header{background:rgba(251,248,252,.75)!important;box-shadow:inset 0 -1px 0 #ECE6F1!important}}
+header a,header .brand{color:var(--ink)}
+/* cards and panels become glass */
+.card,.panel,.price,.joinbox,.steps>*,.perks>*,.guides a,.faq details,details,.box,.v2card,.c1,.c2{background:linear-gradient(160deg,rgba(255,255,255,.1),rgba(255,255,255,.035))!important;border-color:rgba(255,255,255,.12)!important;-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:var(--shadow)!important;color:var(--ink)}
+@media (prefers-color-scheme:light){.card,.panel,.price,.joinbox,.steps>*,.perks>*,.guides a,.faq details,details,.box,.v2card,.c1,.c2{background:linear-gradient(160deg,rgba(255,255,255,.95),rgba(255,255,255,.78))!important;border-color:#fff!important}}
+/* buttons */
+.btn.primary,a.btn.primary,button.primary{background:linear-gradient(150deg,#FF4F97,#E2136E 55%,#B80E58)!important;color:#fff!important;border-color:transparent!important;box-shadow:0 14px 28px -12px rgba(226,19,110,.7)!important}
+.btn.ghost,a.btn.ghost{background:transparent!important;border:1px solid rgba(255,255,255,.18)!important;color:var(--ink)!important}
+@media (prefers-color-scheme:light){.btn.ghost,a.btn.ghost{border-color:#E1DAE8!important}}
+input,select,textarea{background:rgba(255,255,255,.06)!important;color:var(--ink)!important;border-color:rgba(255,255,255,.16)!important}
+@media (prefers-color-scheme:light){input,select,textarea{background:#fff!important;border-color:#E1DAE8!important}}
+a{color:inherit}.eyebrow{color:var(--rose-2)!important;letter-spacing:.1em}
+footer{background:transparent!important;color:var(--muted);border-top:1px solid var(--line)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+/* white chips and badges keep dark text */
+.date,.date *,.ppm,.ppm *,.gsi,.chip,.chip *{color:#141018!important}
+.box p,.box li{color:var(--ink)}
+main p,main li,main td,main dd{color:rgba(247,243,250,.84)!important}@media (prefers-color-scheme:light){main p,main li,main td,main dd{color:#3A3342!important}}main a{color:var(--rose-2)!important}main b,main strong,main th{color:var(--ink)!important}
+main th,main thead,main thead tr{background:var(--sunk)!important}
