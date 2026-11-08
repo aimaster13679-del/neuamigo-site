@@ -1804,7 +1804,7 @@ async function refreshCards(ids){if(!ids.length)return;const got=await API.rpc('
   await signPaths(PROFILES.filter(p=>ids.includes(p.id)).flatMap(p=>p.photoPaths.slice(0,3)));attachPhotos()}
 /* Google Play purchases: the server checks each one with Google before Gold switches on. */
 function billingError(c){return c==='billing_3'?'Google Play billing is not available on this phone. Update the Google Play Store app and try again.':c==='billing_2'||c==='billing_12'?'No connection to Google Play. Check your internet connection and try again.':'Google Play could not complete the purchase. Please try again.'}
-function verifyPurchase(p){return API.fn('play-verify',{purchaseToken:p.purchaseToken,productId:GOLD_PRODUCT})}
+function verifyPurchase(p){return API.fn('play-verify',{purchaseToken:p.purchaseToken,productId:GOLD_PRODUCT,packageName:window.NM_APP?'com.neuconet.neumarry':'com.neuconet.rootmate'})}
 let restoring=false;
 async function restorePurchases(loud){const B=Bill();if(!B||!S.me||restoring)return;restoring=true;
   try{const r=await B.restore();const list=((r&&r.purchases)||[]).filter(p=>(p.products||[]).includes(GOLD_PRODUCT)&&p.state===1);
