@@ -4131,7 +4131,7 @@ function sale15v(){const l=P15.sl;if(l===undefined){API.rpc('sales15',{}).then(r
      ${s.mine?(s.status==='open'?`<button class="p15-chip" data-a="p15saleTop" data-id="${s.id}">Show at Top ${p15price('sale_top')}</button>`:`<span class="p15-pill">${s.status==='paid'?'Paid · waiting for pickup':'Done'}</span>`):
        s.bought?(s.status==='paid'?`<button class="p15-chip on" data-a="p15saleGot" data-id="${s.id}">I got it</button>`:'<span class="p15-pill">Done</span>'):`<button class="p15-chip on" data-a="p15saleBuy" data-id="${s.id}">Buy</button>`}</div>`).join('')}</div>`:
    `<div class="p15-g p15-note">${ic('tag2')} Nothing for sale in your city yet.</div>`)+
-   `<div class="p15-g p15-note">${ic('shield2')} Pay in the app. The seller gets the money after you tap "I got it".</div>
+   `<div class="p15-g p15-note">${ic('shield2')} Paying here opens soon. Until then nothing is charged.</div>
    <div class="p15-g p15-form"><label>Sell something</label><input id="p15-st" maxlength="60" placeholder="e.g. 3-seat sofa" value="${esc(f.st||'')}">
     <label>Price (${esc(cur15())})</label>${chips15('sp',[['10','10'],['25','25'],['50','50'],['100','100'],['150','150'],['300','300']],f.sp||'50')}
     <label>Pick-up area</label><input id="p15-sa" maxlength="60" placeholder="e.g. Etobicoke" value="${esc(f.sa||'')}"></div>
