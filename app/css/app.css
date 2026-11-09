@@ -2002,7 +2002,7 @@ html.p15on .sheet .btn.primary,html.p15on.c3.gl .sheet .btn.primary{background:l
 html.p15on:not(.gl-lt) .sheet .btn.primary,html.p15on.c3.gl:not(.gl-lt) .sheet .btn.primary{background:linear-gradient(140deg,rgba(255,255,255,.2),rgba(255,255,255,.07))!important;color:#fff!important;border-color:rgba(255,255,255,.2)!important;box-shadow:none!important}
 /* public screens of the new NeuMarry (launch 8 Nov 2026): glassy black, white highlights, lilac buttons; no green */
 html.p15pub.c3 .c3w{background:radial-gradient(120% 60% at 50% 0%,#18181D,#08080A 70%)}
-html.p15pub .c3cyc.y{color:#FFFFFF}html.p15pub .c3cyc.p{color:#CFC9FF}
+html.p15pub .c3cyc.y{color:#FFC93C}html.p15pub .c3cyc.p{color:#CFC9FF}
 html.p15pub .btn.c3cta{background:linear-gradient(140deg,#EEEBFF,#D7D0FF);color:#2F2690}
 html.p15pub .c3kick{color:#E9E8F0}
 html.p15pub.c3.gl .su-head small,html.p15pub .auth .link{color:#5B4FD6}
@@ -2045,9 +2045,10 @@ html.p15mat.gl-lt .tpp .btn.primary,html.p15mat.gl-lt .tp-strip .btn.primary{bac
 .p15-theme{margin-left:auto;width:36px;height:36px;border-radius:99px;display:grid;place-items:center;background:var(--p-gl);border:1px solid var(--p-edge);color:inherit;padding:0}.p15-theme .ic{width:18px;height:18px}.p15-theme+.p15-city{margin-left:8px}
 /* Light welcome (default light, his rule 8 Nov 2026 13:46) */
 html.p15pub.gl-lt.c3 .c3w,html.p15pub.gl-lt .c3w{background:radial-gradient(120% 60% at 50% 0%,#FFFFFF,#F1EFFB 70%)!important;color:#1B1830}
-html.p15pub.gl-lt .c3w .c3topl,html.p15pub.gl-lt .c3w .c3h1,html.p15pub.gl-lt .c3w .c3cyc,html.p15pub.gl-lt .c3w .c3cyc.y,html.p15pub.gl-lt .c3w .c3chips,html.p15pub.gl-lt .c3w .link,html.p15pub.gl-lt .c3w .c3w-body{color:#1B1830!important}
+html.p15pub.gl-lt .c3w .c3topl,html.p15pub.gl-lt .c3w .c3h1,html.p15pub.gl-lt .c3w .c3cyc,html.p15pub.gl-lt .c3w .c3chips,html.p15pub.gl-lt .c3w .link,html.p15pub.gl-lt .c3w .c3w-body{color:#1B1830!important}
 html.p15pub.gl-lt .c3w .c3kick{color:#4A4766!important}
 html.p15pub.gl-lt .c3w .c3cyc.p{color:#5B4FD6!important}
+html.p15pub.gl-lt .c3w .c3cyc.y{color:#A0700A!important} /* born-in city in gold again (his 9 Nov 11:50) */
 html.p15pub.gl-lt .c3w .c3lede{color:#3D3A57!important}
 html.p15pub.gl-lt .c3w .c3note{color:#6B6880!important}
 html.p15pub.gl-lt .c3w .c3lang,html.p15pub.gl-lt .c3w .c3dist,html.p15pub.gl-lt .c3w .c3chips>*{background:rgba(255,255,255,.78)!important;color:#1B1830!important;border-color:rgba(91,79,214,.18)!important}
