@@ -3666,9 +3666,9 @@ function rlSig(seed,ini,layers){let h=2166136261;for(const c of String(seed)){h^
   RLX.fitWel=function(){/* zoom so the WHOLE sphere fits the box above the caption (his rule: globe whole, never cut) */
     const e=document.querySelector('.rl-wel');const w=e&&e.clientWidth||Math.min(innerWidth,500),h=e&&e.clientHeight||330;
     const cap=e&&e.closest('.c3map')&&e.closest('.c3map').querySelector('.c3dist');const ch=cap?cap.offsetHeight+6:0;
-    const D=Math.max(120,Math.min(w*.9,(h-ch)*.92));if(e){e.style.setProperty('--gd',D+'px');e.style.setProperty('--gcy',((h-ch)/2)+'px')}
+    const D=Math.max(120,Math.min(w*.9,(h-ch)*.92));if(e){e.style.setProperty("--ch",ch+"px");e.style.setProperty("--gd",D+"px");e.style.setProperty('--gcy',((h-ch)/2)+'px')}
     if(e&&!e._ro&&window.ResizeObserver){let lh=h;e._ro=new ResizeObserver(()=>{if(Math.abs(e.clientHeight-lh)<4)return;lh=e.clientHeight;clearTimeout(e._rt);e._rt=setTimeout(()=>{try{const E=RLX.live&&RLX.live.welcome;const z=RLX.fitWel();if(E&&E.map&&!E.touched)E.map.setZoom(z)}catch(_){}},120)});e._ro.observe(e)}
-    return Math.log2(Math.PI*D/512)-RLX.GZ};RLX.GZ=0;
+    return Math.log2(Math.PI*D/512)-RLX.GZ};RLX.GZ=-0.176;
   addEventListener('resize',()=>{clearTimeout(RLX._rt);RLX._rt=setTimeout(()=>{try{const E=RLX.live&&RLX.live.welcome;if(E&&E.map&&!E.touched)E.map.setZoom(RLX.fitWel())}catch(_){}},150)});
   const _c3m=c3map;c3map=function(){return RL()&&RLX.webgl()?`<div class="rl-slot rl-wel" data-rl="welcome"><div class="rl-fb">${_c3m()}</div></div>`:_c3m()};
 

@@ -2138,7 +2138,7 @@ html.p15pub .rl-wel{position:relative}
 html.p15pub .rl-wel::before{content:"";position:absolute;left:50%;top:var(--gcy,50%);width:var(--gd,80%);aspect-ratio:1;transform:translate(-50%,-50%) scale(1.12);border-radius:50%;pointer-events:none;z-index:0;
  background:radial-gradient(circle,rgba(255,255,255,0) 58%,rgba(255,255,255,.22) 70%,rgba(255,255,255,0) 82%)}
 html.p15pub.gl-lt .rl-wel::before{background:radial-gradient(circle,rgba(150,140,255,0) 58%,rgba(150,140,255,.18) 70%,rgba(150,140,255,0) 82%)}
-html.p15pub .rl-wel .rl-map{position:relative;z-index:1}
+html.p15pub .rl-wel .rl-map{position:absolute;inset:0 0 var(--ch,0px) 0;z-index:1}
 @media (prefers-reduced-motion:reduce){html.p15pub .rl-wel::before{display:none}}
 /* prepay chooser (mock) */
 .p15-prepay{padding:12px 14px;margin-top:10px}.p15-prepay>b{font-size:13px}
