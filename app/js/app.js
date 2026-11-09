@@ -3822,6 +3822,12 @@ function P15on(){return !!(P15.d&&P15.d.on)}
 async function load15(){try{P15.d=await API.rpc('my15',{});try{localStorage.setItem('nm.p15.'+(API.userId()||''),JSON.stringify(P15.d))}catch(e){}}catch(e){}}
 function warm15(){try{const o=JSON.parse(localStorage.getItem('nm.p15.'+(API.userId()||''))||'null');if(o&&!P15.d)P15.d=o}catch(e){}}
 const p15price=k=>{const c=P15.d&&P15.d.prices&&P15.d.prices[k];return c==null?'':money(c,'USD')};
+/* launch prices (owner ok 9 Nov 2026): honest note, never a struck-through fake old price */
+const p15later=k=>{const c=P15.d&&P15.d.later&&P15.d.later[k];return c==null?'':money(c,'USD')};
+const p15launch=(keys,who)=>{if(!keys.some(k=>p15later(k)))return '';return `<div class="p15-g p15-launch"><span>${ic('tick2')} Launch prices: join now and your price stays as long as you stay. Later prices are for new ${who} only.</span></div>`};
+/* price with tags (his 9 Nov 16:51): LAUNCH PRICE above the price now, highlighted LATER above the later price; no strike-through */
+const p15tag=(k,unit)=>{const l=p15later(k);return `<span class="p15-lp">${l?'<i class="lt">LAUNCH PRICE</i>':''}<b>${p15price(k)}</b><small>${unit}</small>${l?`<span class="lat"><i>LATER</i>${l}</span>`:''}</span>`};
+const trial15=()=>!!(P15.d&&P15.d.on!==undefined&&!P15.d.trialUsed);
 const p15top=(t,back)=>`<div class="p15-top">${back?`<button class="p15-tb" data-a="p15back" aria-label="Back">${ic('back2')}</button>`:'<span class="p15-tb ghost"></span>'}<h1>${esc(t)}</h1><span class="p15-tb ghost"></span></div>`;
 const PH15={'Life Partner':'rings','Settle In':'house','Events & Friends':'hall','Membership':'keys','For Business':'store','Find a Room':'room','Travel Buddy for Parents':'plane','Job Referral':'office','Trusted Experts':'docs','Moving-Out Sale':'sofa','Friend Meetups':'table','Watch Parties':'stadium','Festivals':'lantern','Day Trips':'trip','Sports Leagues':'league'};
 const ph15=t=>PH15[t]?`<span class="p15-ph"><img src="img/p15/${PH15[t]}.webp" alt="" loading="lazy" decoding="async"></span>`:'';
@@ -3853,7 +3859,7 @@ function plus15(){const d=P15.d||{};
   const perks=[['bed2','Find a Room','Contact and address of every room'],['party','Events & Friends','Full event details, book 24 hours early'],['shield2','Trusted Experts','Prices and contact of every expert'],['brief','Job Referral','2 requests every month']];
   return p15wrap(p15top('Membership',true)+`<div class="p15-g p15-hero"><span class="p15-b lem big">${ic('star2')}</span><h2>NeuMarry Plus</h2><small>${d.plus?`Active until ${esc(new Date(d.plusUntil).toLocaleDateString(RM_I18N.locale,{day:'numeric',month:'short',year:'numeric'}))}`:'One membership opens everything'}</small></div>
   <div class="p15-g p15-list">${perks.map(p=>`<div class="p15-li"><span class="p15-b mint">${ic(p[0])}</span><span class="tx"><b>${p[1]}</b><small>${p[2]}</small></span>${ic('tick2')}</div>`).join('')}</div>
-  ${d.plus?'':`<div class="p15-2"><button class="p15-g p15-pr${P15.y?'':' on'}" data-a="p15yr" data-y="0"><b>${p15price('plus_m')}</b><small>per month</small></button><button class="p15-g p15-pr${P15.y?' on':''}" data-a="p15yr" data-y="1"><b>${p15price('plus_y')}</b><small>per year · 2 months free</small></button></div>
+  ${d.plus?'':`<div class="p15-2"><button class="p15-g p15-pr${P15.y?'':' on'}" data-a="p15yr" data-y="0">${p15tag('plus_m','per month')}</button><button class="p15-g p15-pr${P15.y?' on':''}" data-a="p15yr" data-y="1">${p15tag('plus_y','per year · save 35%')}</button></div>${p15launch(['plus_m','plus_y'],'members')}
   <button class="p15-btn" data-a="p15buyPlus"${P15.busy==='plus'?' disabled':''}>${P15.busy==='plus'?'Starting…':'Start Plus'}</button><p class="p15-ex">${d.payTest?'Test mode: no real money is taken.':'Cancel any time. No hidden charges.'}</p>`}
   <button class="p15-g p15-row" data-a="p15open" data-v="tick"><span class="p15-b mint">${ic('shield2')}</span><span class="tx"><b>Verified Tick</b><small>${d.tick?'Active':'People trust you faster'}</small></span>${ic('chev2')}</button>`)}
 function tick15(){const d=P15.d||{},v=(S.me&&S.me.v)||{},idOk=!!(v.id&&v.selfie);
@@ -3949,9 +3955,10 @@ function hostPlans15(){const b=hostBiz15(),f=P15.f,me=S.me||{};
   return p15wrap(p15top('Host Plans',true)+`<p class="p15-sub">${D15()?`You set the ticket price and guests pay it straight to you. Buyers pay NeuMarry a ${p15price('booking_fee')} booking fee.`:`You set the ticket price. We keep 10% of each ticket; buyers pay a ${p15price('booking_fee')} booking fee.`}</p>
   ${b?`<div class="p15-g p15-note">${ic('tick2')}<span>Host name: <b>${esc(b.name)}</b>${planOn15(b)?` · ${esc((plans.find(p=>p[0]===b.plan)||[])[1]||'')} active until ${esc(new Date(b.planUntil).toLocaleDateString(RM_I18N.locale,{day:'numeric',month:'short'}))}`:''}</span></div>`:
    `<div class="p15-g p15-form"><label>Host name people will see</label><input id="p15-hn" maxlength="60" placeholder="e.g. Lagos Nights Club" value="${esc(f.hn||'')}"><small>City: ${esc(me.city||'')} ${esc(me.country||'')}</small></div>`}
-  ${plans.map(([k,t,d])=>`<button class="p15-g p15-plan${f.plan===k?' on':''}" data-a="p15f" data-k="plan" data-val="${k}"><span><b>${t}</b><small>${d}</small></span><span class="p15-pr0"><b>${p15price(k)}</b><small>/month</small></span></button>`).join('')}
+  ${plans.map(([k,t,d])=>`<button class="p15-g p15-plan${f.plan===k?' on':''}" data-a="p15f" data-k="plan" data-val="${k}"><span><b>${t}</b><small>${d}</small></span><span class="p15-pr0">${p15tag(k,'/month')}</span></button>`).join('')}
+  ${p15launch(['host_basic','host_pro','host_big'],'hosts')}
   <div class="p15-g p15-note">${ic('tick2')} ${D15()?'Bookings, QR entry and guest list done for you · ticket money comes to you directly':'Tickets, QR entry, refunds and payouts done for you'} · guests' phone numbers stay private</div>
-  <button class="p15-btn" data-a="p15hostBuy"${P15.busy==='host'?' disabled':''}>${P15.busy==='host'?'Starting…':planOn15(b)?'Renew for one more month':'Start hosting'}</button>${P15.d&&P15.d.payTest?'<p class="p15-ex">Test mode: no real money is taken.</p>':''}
+  <button class="p15-btn" data-a="p15hostBuy"${P15.busy==='host'?' disabled':''}>${P15.busy==='host'?'Starting…':planOn15(b)?'Renew for one more month':trial15()?'Start 14 days free · no card':'Start hosting'}</button>${P15.d&&P15.d.payTest?'<p class="p15-ex">Test mode: no real money is taken.</p>':''}
   ${planOn15(b)?`<button class="p15-g p15-row" data-a="p15open" data-v="hostboard"><span class="p15-b mint">${ic('chart')}</span><span class="tx"><b>Host Dashboard</b><small>Your events, seats and money</small></span>${ic('chev2')}</button>`:''}`)}
 function days15(){const out=[];for(let i=1;i<=21;i++){const d=new Date(Date.now()+i*864e5);out.push([d.toLocaleDateString('en-CA'),d.toLocaleDateString(RM_I18N.locale,{weekday:'short',day:'numeric',month:'short'})])}return out}
 function newEv15(){const f=P15.f;f.kind=f.kind||'meetup';f.day=f.day||days15()[5][0];f.hr=f.hr||'19:00';f.seats=f.seats||'20';f.price=f.price||'15';f.who=f.who||'all';
@@ -3988,7 +3995,7 @@ Object.assign(P15V,{host:hostPlans15,newev:newEv15,hostboard:board15,door:door15
       if(!b&&(P15.f.hn||'').length<2){toast('Please write your host name.','info');return}
       P15.busy='host';render();
       try{let id=b&&b.id;if(!id)id=await API.rpc('biz_upsert15',{k:'host',nm:P15.f.hn,cty:me.city||'',ctry:me.country||'',lg:[],ab:'',cat:'',lic:''});
-        await API.rpc('buy_biz_plan15',{bid:id,prod:P15.f.plan||'host_pro'});await load15();P15.hb=undefined;P15.v='hostboard';toast('Your host plan is active.','tick2')}
+        const tr=trial15()&&!planOn15(b);await API.rpc(tr?'start_trial15':'buy_biz_plan15',{bid:id,prod:P15.f.plan||'host_pro'});await load15();P15.hb=undefined;P15.v='hostboard';toast(tr?'Your 14 free days have started.':'Your host plan is active.','tick2')}
       catch(e){toast(em15(e).includes('not open')?'Payments open soon.':'Could not start the plan. Please try again.','info')}P15.busy='';render()},
     async p15evCreate(){if(P15.busy)return;const f=P15.f,b=hostBiz15();['et','ev','pd'].forEach(k=>{const x=document.getElementById('p15-'+k);if(x)f[k]=x.value.trim()});
       if(!b||!planOn15(b)){P15.v='host';render();return}
@@ -4147,7 +4154,9 @@ function expPlan15(){const f=P15.f;f.ek2=f.ek2||'expert';const b=((P15.d&&P15.d.
    <label>One line about you</label><input id="p15-xa" maxlength="160" value="${esc(f.xa||'')}">
    ${f.ek2==='expert'?`<label>Your services and prices (${esc(cur15())})</label>${[0,1,2].map(i=>`<div class="p15-svc"><input id="p15-s${i}t" maxlength="80" placeholder="Service ${i+1}" value="${esc(f['s'+i+'t']||'')}"><input id="p15-s${i}p" inputmode="numeric" maxlength="6" placeholder="Price" value="${esc(f['s'+i+'p']||'')}"></div>`).join('')}`:''}
    <small>City: ${esc(me.city||'')} ${esc(me.country||'')}</small></div>
-   <button class="p15-btn" data-a="p15expBuy"${P15.busy==='exp'?' disabled':''}>${P15.busy==='exp'?'Starting…':`Start ${f.ek2==='expert'?'Expert':'Agent'} Plan · ${p15price(f.ek2==='expert'?'expert_plan':'agent_plan')} a month`}</button>
+   <div class="p15-g p15-plan on"><span><b>${f.ek2==='expert'?'Expert Plan':'Agent Plan'}</b><small>${f.ek2==='expert'?'Your page with services and prices · licence checked':'Post rooms for your clients · licence checked'}</small></span><span class="p15-pr0">${p15tag(f.ek2==='expert'?'expert_plan':'agent_plan','/month')}</span></div>
+   ${p15launch([f.ek2==='expert'?'expert_plan':'agent_plan'],f.ek2==='expert'?'experts':'agents')}
+   <button class="p15-btn" data-a="p15expBuy"${P15.busy==='exp'?' disabled':''}>${P15.busy==='exp'?'Starting…':trial15()&&!(b&&planOn15(b))?'Start 14 days free · no card':`Start ${f.ek2==='expert'?'Expert':'Agent'} Plan · ${p15price(f.ek2==='expert'?'expert_plan':'agent_plan')} a month`}</button>
    ${b&&planOn15(b)?`<button class="p15-g p15-row" data-a="p15open" data-v="leads"><span class="p15-b mint">${ic('chat')}</span><span class="tx"><b>People who asked you</b><small>Only members who tapped Connect me</small></span>${ic('chev2')}</button>${f.ek2==='expert'?`<button class="p15-btn ghost" data-a="p15xTop" data-id="${b.id}">Top Spot for 30 days · ${p15price('expert_top')}</button>`:''}`:''}`)}
 function leads15v(){const b=((P15.d&&P15.d.biz)||[]).find(x=>x.kind===(P15.f.ek2||'expert'));const l=P15.ld;
   if(!b)return p15wrap(p15top('People who asked',true));if(l===undefined){API.rpc('leads15',{bid:b.id}).then(r=>{P15.ld=r;render()}).catch(()=>{P15.ld=[];render()});return p15wrap(p15top('People who asked',true)+spinner('Loading'))}
@@ -4179,10 +4188,10 @@ Object.assign(P15V,{rooms:rooms15v,postroom:postRoom15,buddy:buddy15v,referral:r
     p15refMe(){const f=P15.f;grab();if((f.myco||'').length<2||!(f.mydom||'').includes('.')){toast('Please write the company and its website.','info');return}
       run('rm',async()=>{await API.rpc('referrer_set15',{co:f.myco,dom:f.mydom,lg:[]});P15.rf=undefined},'Saved. Now check your work email below.')},
     p15connect(el){run('cn',async()=>{await API.rpc('connect15',{bid:el.dataset.id,nt:''})},'Sent. The expert will contact you by email.',{'plus needed':'Connect opens with NeuMarry Plus.'})},
-    p15expBuy(){const f=P15.f;grab();const me=S.me||{},k=f.ek2||'expert';if((f.xn||'').length<2){toast('Please write your business name.','info');return}
+    p15expBuy(){const f=P15.f;grab();const me=S.me||{},k=f.ek2||'expert';const ob0=((P15.d&&P15.d.biz)||[]).find(x=>x.kind===k),tr0=trial15()&&!(ob0&&planOn15(ob0));if((f.xn||'').length<2){toast('Please write your business name.','info');return}
       run('exp',async()=>{const id=await API.rpc('biz_upsert15',{k,nm:f.xn,cty:me.city||'',ctry:me.country||'',lg:[],ab:f.xa||'',cat:k==='expert'?(f.xc||'Immigration'):'',lic:f.xl||''});
         if(k==='expert')await API.rpc('service_set15',{bid:id,items:[0,1,2].map(i=>({title:f['s'+i+'t']||'',detail:'',price:Math.round(Number(f['s'+i+'p']||0)*100),currency:cur15()}))});
-        await API.rpc('buy_biz_plan15',{bid:id,prod:k==='expert'?'expert_plan':'agent_plan'});await load15();P15.ex={}},'Your plan is active. Your page shows in Trusted Experts.')},
+        const ob=((P15.d&&P15.d.biz)||[]).find(x=>x.kind===k),tr=trial15()&&!(ob&&planOn15(ob));await API.rpc(tr?'start_trial15':'buy_biz_plan15',{bid:id,prod:k==='expert'?'expert_plan':'agent_plan'});await load15();P15.ex={}},tr0?'Your 14 free days have started. Your page shows in Trusted Experts.':'Your plan is active. Your page shows in Trusted Experts.')},
     p15xTop(el){run('xt',async()=>{await API.rpc('biz_top15',{bid:el.dataset.id});P15.ex={}},'Top Spot for 30 days.')},
     p15salePost(){const f=P15.f;grab();if((f.st||'').length<3){toast('Please write what you sell.','info');return}
       run('sp',async()=>{await API.rpc('sale_post15',{t:f.st,pc:Number(f.sp||50)*100,cur:cur15(),ar:f.sa||'',lv:null});P15.f={};P15.sl=undefined},'Posted.')},
