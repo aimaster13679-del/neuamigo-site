@@ -2959,7 +2959,7 @@ function renderWelcomeC3(){
     <div class="c3chips">${['💍 Marriage only','🪪 Every member checked','👪 Family can join'].map(t=>`<span>${t}</span>`).join('')}</div>
     <button class="btn block c3cta" data-a="start">Draw your roots line →</button>
     <button class="btn block c3ghost" data-a="login">I already have an account</button>
-    <p class="c3note">Lines on the map are examples. By continuing you agree to our <button class="link" data-a="legal" data-k="terms">Terms</button> and <button class="link" data-a="legal" data-k="privacy">Privacy Policy</button>. 18+ only.</p>
+    <p class="c3note">Lines on the map are examples. By continuing you agree to our <button class="link" data-a="legal" data-k="terms">Terms</button> and <button class="link" data-a="legal" data-k="privacy">Privacy Policy</button>. 18+ only. <span class="c3credit">Map © OpenFreeMap · © OpenStreetMap · Natural Earth</span></p>
    </div></div>`}
 
 /* introduction card: marriage facts first, photo smaller, 3 scores, why we introduced you */
@@ -3629,7 +3629,7 @@ const RLX=(function(){
       const theme=o.dark?'d':lt()?'l':'d';let E=live[k];if(E&&E.theme!==theme){kill(k);E=null}
       if(!E){E=live[k]={el:document.createElement('div'),markers:[],theme,sig:'',touched:false};E.el.className='rl-map';
         Promise.all([load(),data()]).then(()=>{if(live[k]!==E)return;
-          E.map=new maplibregl.Map({container:E.el,style:style(o.dark),center:o.center,zoom:o.zoom,attributionControl:{compact:true},dragRotate:false,pitchWithRotate:false,touchPitch:false,fadeDuration:0,cooperativeGestures:false});
+          E.map=new maplibregl.Map({container:E.el,style:style(o.dark),center:o.center,zoom:o.zoom,attributionControl:k==='welcome'?false:{compact:true},dragRotate:false,pitchWithRotate:false,touchPitch:false,fadeDuration:0,cooperativeGestures:false});
           if(o.padB)E.map.setPadding({top:40,bottom:o.padB,left:0,right:0});['mousedown','touchstart','wheel'].forEach(e=>E.map.on(e,()=>E.touched=true));E.map.on('move',()=>hide(E));
           E.map.on('load',()=>{E.ready=true;E.sig='';sync(k)})}).catch(()=>{slot.classList.add('rl-off')})}
       if(E.el.parentNode!==slot){slot.appendChild(E.el);if(E.map){E.map.resize();if(o.fit&&!E.touched)E.map.setZoom(o.fit())}}

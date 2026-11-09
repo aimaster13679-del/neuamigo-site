@@ -11,8 +11,8 @@
 <link rel="apple-touch-icon" href="img/icon-512.png">
 <title>NeuAmigo</title>
 <link rel="icon" href="img/icon-192.png">
-<link rel="stylesheet" href="css/fonts.css?v=202611091922">
-<link rel="stylesheet" href="css/app.css?v=202611091922">
+<link rel="stylesheet" href="css/fonts.css?v=202611092055">
+<link rel="stylesheet" href="css/app.css?v=202611092055">
 <style id="nm-splash-css">
 #nm-splash{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:#FFF8F6;transition:opacity .25s ease,visibility .25s}
 html.nm-dk #nm-splash{background:#0A0A0D}
@@ -31,21 +31,29 @@ html.nm-dk #nm-splash .ld{background:rgba(255,255,255,.12)}
 @keyframes nmLd{0%{left:-40%}100%{left:100%}}
 @keyframes nmUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){#nm-splash *{animation:none!important}#nm-splash .ld{opacity:1}}
+/* NeuAmigo opening (his ask 10 Nov 02:22: animated loading, never the square): deep navy like the app icon in both themes,
+   gold mark rises in, soft gold glow breathes, a light sweep runs over the mark, thin gold loading line */
+html.na-sp #nm-splash,html.na-sp.nm-dk #nm-splash{background:radial-gradient(120% 80% at 50% 38%,#1C2554 0,#0E1430 55%,#0A0F24 100%)}
+html.na-sp #nm-splash .mk{width:150px;height:153px}
+html.na-sp #nm-splash .gl{inset:-60px;background:radial-gradient(closest-side,rgba(232,196,110,.34),transparent)}
+html.na-sp #nm-splash .sh{-webkit-mask:url(img/na-mark.png) center/contain no-repeat;mask:url(img/na-mark.png) center/contain no-repeat}
+html.na-sp #nm-splash .ld{background:rgba(232,196,110,.16)}
+html.na-sp #nm-splash .ld i{background:linear-gradient(90deg,#B98A2E,#F2D48A)}
 </style>
 </head>
 <body>
-<div id="nm-splash" aria-hidden="true"><div class="sw"><div class="mk"><span class="gl"></span><img id="nm-smk" src="img/nm-mark.png" alt=""><span class="sh"></span></div><script>try{if(true){var i=document.getElementById("nm-smk");i.src="img/na-mark.png";i.parentNode.style.width="150px";i.parentNode.style.height="150px";document.querySelector("#nm-splash .sh").style.display="none"}}catch(e){}</script><div class="ld"><i></i></div></div></div>
+<div id="nm-splash" aria-hidden="true"><div class="sw"><div class="mk"><span class="gl"></span><img id="nm-smk" src="img/nm-mark.png" alt=""><span class="sh"></span></div><script>try{if(true){document.documentElement.classList.add("na-sp");var i=document.getElementById("nm-smk");i.src="img/na-mark.png"}}catch(e){}</script><div class="ld"><i></i></div></div></div>
 <script>/* opening animation (his ask 7 Nov 12:53): theme first, then the app removes it once the first screen is drawn */(function(){var d=document.documentElement,lt=true;try{var t=localStorage.getItem('nm.glassmode');lt=t?t==='light':!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)}catch(e){}if(!lt){d.classList.add('nm-dk');var m=document.querySelector('meta[name=theme-color]');if(m)m.setAttribute('content','#0A0C0B')}
 var t0=Date.now(),done=false;window.nmSplashDone=function(){if(done)return;done=true;var w=Math.max(0,750-(Date.now()-t0));setTimeout(function(){var e=document.getElementById('nm-splash');if(!e)return;e.classList.add('out');setTimeout(function(){e.remove()},260)},w)};setTimeout(window.nmSplashDone,6000)})();</script>
 <div id="app" aria-live="polite"></div>
 <noscript>NeuMarry needs JavaScript to run.</noscript>
 <link rel="preconnect" href="https://dyyhloxrvmqbciejktft.supabase.co" crossorigin>
-<script src="js/config.js?v=202611091922"></script>
-<script src="js/world.js?v=202611091922"></script>
-<script>/* load the one language file this phone needs (fixed files, Rs 0 to run). NM_AVAIL = languages with a file. */(function(){var S=window.NM_AVAIL=['es','ar','hi','pt','zh','bn','ur','ru','id','de','ja','ko','vi','tr','fil','sw'],l=null;try{l=localStorage.getItem('rm.lang')}catch(e){}if(!l){l=((navigator.languages&&navigator.languages[0])||navigator.language||'en').toLowerCase().split('-')[0];if(l==='tl')l='fil'}if(S.indexOf(l)>=0)document.write('<script src="js/l/'+l+'.js?v=202611091922"><\/script>')})();</script>
-<script src="js/i18n.js?v=202611091922"></script>
-<script src="js/api.js?v=202611091922"></script>
-<script src="js/vendor/qrcode.js?v=202611091922"></script>
-<script src="js/app.js?v=202611091922"></script>
+<script src="js/config.js?v=202611092055"></script>
+<script src="js/world.js?v=202611092055"></script>
+<script>/* load the one language file this phone needs (fixed files, Rs 0 to run). NM_AVAIL = languages with a file. */(function(){var S=window.NM_AVAIL=['es','ar','hi','pt','zh','bn','ur','ru','id','de','ja','ko','vi','tr','fil','sw'],l=null;try{l=localStorage.getItem('rm.lang')}catch(e){}if(!l){l=((navigator.languages&&navigator.languages[0])||navigator.language||'en').toLowerCase().split('-')[0];if(l==='tl')l='fil'}if(S.indexOf(l)>=0)document.write('<script src="js/l/'+l+'.js?v=202611092055"><\/script>')})();</script>
+<script src="js/i18n.js?v=202611092055"></script>
+<script src="js/api.js?v=202611092055"></script>
+<script src="js/vendor/qrcode.js?v=202611092055"></script>
+<script src="js/app.js?v=202611092055"></script>
 </body>
 </html>
