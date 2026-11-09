@@ -1371,7 +1371,7 @@ button.a3k{border:0;border-top:3px solid var(--c);text-align:left;width:100%;col
 .fu-feat .ic{color:var(--rose);width:22px;height:22px}.fu-feat b{font-size:12.5px;line-height:1.25}
 .fu-stage{display:inline-block!important;width:max-content;font-size:11.5px!important;font-weight:800;border-radius:999px;padding:2px 8px;margin:2px 0}
 .fu-stage.p{background:#E3F7EE;color:#0E5B43!important}.fu-stage.y{background:#FFF4D6;color:#8A6100!important}.fu-stage.v{background:#EEE8FF;color:#2E9F78!important}.fu-stage.k{background:#14231C;color:#fff!important}
-.fu-myline{margin-top:14px;border-radius:22px;overflow:hidden;background:#14231C;color:#E3E9E5}.fu-myline .fu-mapsvg{height:150px}.fu-myline p{margin:0;padding:10px 14px 14px;font-size:13px;line-height:1.45}
+.fu-myline{margin-top:14px;border-radius:22px;overflow:hidden;background:#14231C;color:#E3E9E5}.fu-myline .fu-mapsvg{height:170px}.fu-myline p{margin:0;padding:10px 14px 14px;font-size:13px;line-height:1.45}
 .fu-evh{display:grid;gap:2px;margin:2px 0 10px}.fu-evh small{font-weight:800;font-size:11px;letter-spacing:.12em;color:var(--rose)}.fu-evh b{font-size:28px;line-height:1.1}
 .fu-tiles{margin-top:12px}.fu-mepanel{margin-top:2px}
 
@@ -2112,3 +2112,9 @@ html .a3v .a3tabs button.on,html.c3.gl .a3v .a3tabs button.on,html.c3.gl.gl-lt .
 .p15-lp .lat i{background:rgba(120,110,200,.16);color:inherit;border:1px solid rgba(120,110,200,.35)}
 .p15-pr .p15-lp{align-items:flex-start}.p15-pr0 .p15-lp{align-items:flex-end}
 .p15-launch span{display:flex;gap:8px;align-items:flex-start}.p15-launch .ic{width:16px;height:16px;flex:none;margin-top:1px}
+.a3k.sm{font:inherit;text-align:left;cursor:pointer}.a3k.sm.on{box-shadow:0 0 0 2px #6C5CE7 inset!important}
+html.nm-drawn .tp-ring .fg,html.nm-drawn .fu-av .fg,html.nm-drawn .tp-s.ok i{animation:none!important}
+/* sign-ups per day: each day is a full-height tap target (9 Nov: thin bars were hard to tap) */
+.a3bars{gap:2px}.a3bars .a3bc{flex:1;height:100%;display:flex;align-items:flex-end;padding:0;border:0;background:transparent;cursor:pointer;border-radius:4px}
+.a3bars .a3bc:active{background:var(--a-bar,#241D2B)}.a3bars .a3bc i{display:block;width:100%;border-radius:3px 3px 0 0;animation:a3up .8s ease both;transform-origin:bottom}
+.a3hint{margin:6px 0 0;font-size:11.5px}

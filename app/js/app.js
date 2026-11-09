@@ -3027,8 +3027,8 @@ const A3MAIL={'Signed up, did not start the form':['Your NeuMarry profile is wai
  default:['Can we help you finish?','finish your profile. If anything is unclear, just reply to this email and our team will help.']};
 async function a3load(){if(A3.busy)return;A3.busy=true;try{const [ov,hl]=await Promise.all([API.rpc('admin_overview').catch(()=>null),API.rpc('admin_help_list').catch(()=>[])]);A3.ov=ov;A3.help=hl||[]}finally{A3.busy=false;render()}}
 function a3kpi(n,l,s,c,go){return n===null||n===undefined?'':`<button class="a3k" style="--c:${c}" data-a="a3go" data-k="${go||''}" aria-label="${esc(l)}: ${esc(String(n))}. Open details"><b>${esc(String(n))}</b><span>${esc(l)}</span>${s?`<small>${esc(s)}</small>`:''}<em class="a3more">Details ›</em></button>`}
-function a3bars(vals){const m=Math.max(1,...vals);return `<div class="a3bars" aria-label="Sign-ups per day, last 30 days">${vals.map((v,i)=>`<i data-a="a3go" data-k="day:${vals.length-1-i}" role="button" aria-label="${v} sign-ups, ${vals.length-1-i} days ago" style="height:${Math.max(3,Math.round(v/m*100))}%;${i===vals.length-1?'background:#FFC93C':''}" title="${v}"></i>`).join('')}</div>`}
-function a3home(){if(A3.list)return a3list();const o=A3.ov;if(!o)return `<div class="a3c">${spinner('Loading')}</div>`;const f=o.funnel_7d||{};const bots=o.bots||[];const failed=bots.filter(b=>b.status==='failed');
+function a3bars(vals){const m=Math.max(1,...vals);return `<div class="a3bars" aria-label="Sign-ups per day, last 30 days">${vals.map((v,i)=>`<button class="a3bc" data-a="a3go" data-k="day:${vals.length-1-i}" aria-label="${v} sign-ups, ${vals.length-1-i} days ago"><i style="height:${Math.max(3,Math.round(v/m*100))}%;${i===vals.length-1?'background:#FFC93C':''}"></i></button>`).join('')}</div><p class="a3m a3hint">Tap a day to see who joined</p>`}
+function a3home(){if(A3.list)return a3list();const o=A3.ov;if(!o)return `<div class="a3c">${spinner('Loading')}</div>`;const f=o.funnel_7d||{};const bots=o.bots||[];const failed=bots.filter(b=>b.status==='failed'&&b.finished_at&&Date.now()-new Date(b.finished_at)<864e5);/* only fresh failures need him (9 Nov fix: old one-time na-db-create stayed forever) */
   const d=o.signups_today-o.signups_yesterday;const vals=o.signups_30d||[];const tot=vals.reduce((a,b)=>a+b,0);const src=Object.entries(o.sources_30d||{}).sort((a,b)=>b[1]-a[1]);
   const need=[o.checks_waiting>0?['shield',`${o.checks_waiting} waiting for checks`,o.oldest_wait_hours!=null?`Oldest ${o.oldest_wait_hours} h · promise 24 h`:'','checks']:null,
     o.reports_open>0?['flag',`${o.reports_open} open report${o.reports_open>1?'s':''}`,'Answer within 24 h','checks']:null,
@@ -3036,7 +3036,7 @@ function a3home(){if(A3.list)return a3list();const o=A3.ov;if(!o)return `<div cl
     ...failed.map(b=>['alert',`${b.bot} failed`,b.summary||'','robots'])].filter(Boolean);
   return `<div class="a3g">${a3kpi(o.signups_today,'Sign-ups today',d?`${d>0?'▲':'▼'} ${Math.abs(d)} vs yesterday`:'same as yesterday','#3BBF8A','today')}${a3kpi(o.live,'Live members','fully verified','#12A36B','live')}${a3kpi(o.checks_waiting,'Waiting for checks',o.oldest_wait_hours!=null?`oldest ${o.oldest_wait_hours} h`:'','#FFC93C','tab:checks')}${a3kpi(o.reports_open,'Open reports','','#FF6B6B','tab:checks')}</div>
    ${need.length?`<div class="a3c"><div class="a3h"><b>Needs you now</b><span>${need.length}</span></div>${need.map(([i,t,s,go])=>`<button class="a3n" data-a="a3tab" data-k="${go}">${ic(i)}<span><b>${esc(t)}</b><small>${esc(s)}</small></span><em>Open</em></button>`).join('')}</div>`:`<div class="a3c a3ok">${ic('check')} Nothing needs you right now.</div>`}
-   ${f.accounts?`<div class="a3c"><div class="a3h"><b>Sign-up journey</b><span>last 7 days</span></div>${[['Made an account',f.accounts,'f0'],['Started the profile',f.profiles,'f1'],['Sent documents',f.documents,'f2'],['Live',f.live,'f3']].map(([t,n,k])=>`<div class="a3f a3fb" role="button" tabindex="0" data-a="a3go" data-k="${k}"><span>${t}</span><div><i style="width:${Math.max(2,Math.round(n/f.accounts*100))}%"></i></div><b>${n}</b></div>`).join('')}</div>`:''}
+   ${f.accounts?`<div class="a3c"><div class="a3h"><b>Sign-up journey</b><span>last 7 days · tap to see</span></div>${[['Made an account',f.accounts,'f0'],['Started the profile',f.profiles,'f1'],['Sent documents',f.documents,'f2'],['Live',f.live,'f3']].map(([t,n,k])=>`<div class="a3f a3fb" role="button" tabindex="0" data-a="a3go" data-k="${k}"><span>${t}</span><div><i style="width:${Math.max(2,Math.round(n/f.accounts*100))}%"></i></div><b>${n} ›</b></div>`).join('')}</div>`:''}
    ${tot?`<div class="a3c"><div class="a3h"><b>Sign-ups per day</b><span>${tot} in 30 days</span></div>${a3bars(vals)}</div>`:''}
    ${src.length?`<div class="a3c"><div class="a3h"><b>Where they came from</b><span>30 days</span></div>${src.slice(0,6).map(([k,n])=>`<div class="a3f"><span>${esc(k)}</span><div><i style="width:${Math.round(n/src[0][1]*100)}%;background:#9D7CFF"></i></div><b>${n}</b></div>`).join('')}</div>`:''}`}
 function a3ago(ts){if(!ts)return '';const m=Math.round((Date.now()-new Date(ts).getTime())/60000);return m<60?`${m} min ago`:m<1440?`${Math.round(m/60)} h ago`:`${Math.round(m/1440)} d ago`}
@@ -3074,6 +3074,7 @@ function renderAdmin3(){const t=A3.tab;
     a3tab(el){A3.tab=el.dataset.k;A3.open=null;if(A3.tab!=='robots')A3.bot=null;render();if(A3.tab==='checks'){const s=document.querySelector('.view .scroll');if(s)s.scrollTop=0}},
     a3reload(){A3.ov=null;A3.help=null;render();a3load()},
     async a3bot(el){A3.bot=el.dataset.k||null;A3.runs=null;render();if(A3.bot){try{A3.runs=await API.rpc('admin_bot_runs',{p_bot:A3.bot,p_limit:30})}catch(e){A3.runs=[]}render()}},
+    a3mf(el){const k=el.dataset.k||'';A3.mf=A3.mf===k?'':k;render()},
     a3open(el){A3.open=+el.dataset.k;render();const s=document.querySelector('.a3v .scroll');if(s)s.scrollTop=0},
     a3ready(el){const t=document.getElementById('a3ans');if(t){t.value=A3HELP[+el.dataset.i];t.focus()}},
     async a3send(el){const t=document.getElementById('a3ans');const v=(t&&t.value||'').trim();if(!v){toast('Write an answer first','x');return}
@@ -3116,9 +3117,11 @@ function a3need(){if(A3.st===undefined||A3.st===null){a3loadStats();return `<div
 function a3kv2(k,n,max,col,act){return `<div class="a3f${act?' a3fb':''}" ${act?`role="button" tabindex="0" ${act}`:''}><span>${esc(k)}</span><div><i style="width:${Math.max(2,Math.round(n/Math.max(1,max)*100))}%;background:${col}"></i></div><b>${n}</b></div>`}
 function a3members(){const L=A3.mlist;if(L===undefined){A3.mlist=null;a3search('')}
   return `<div class="a3c"><input id="a3q" type="search" class="a3in" placeholder="Search name, email, city or country" aria-label="Search members" value="${esc(A3.mq||'')}" data-a3q="1">
-   ${(A3.st&&A3.st.members)?(()=>{const M=A3.st.members;return `<div class="a3g">${[['Members',M.total],['Women',M.women],['Men',M.men],['Live',M.live],['Gold',M.gold],['Banned',M.banned]].map(([l,n])=>`<div class="a3k sm"><b>${n}</b><span>${l}</span></div>`).join('')}</div>`})():(a3loadStats(),'')}
-   ${A3.mlist===null?spinner('Loading'):(A3.mlist||[]).length?A3.mlist.map(x=>`<button class="a3r" data-a="a3mem" data-k="${esc(x.id)}"><span class="a3d ${x.banned?'failed':/live/i.test(x.step||'')?'ok':'run'}"></span><span><b>${esc(x.full_name||x.email||'Member')}${x.gold?' · Gold':''}</b><small>${esc(x.step||'')}</small><small>${esc([x.city,x.country].filter(Boolean).join(', '))}${x.origin_country?' · roots '+esc(x.origin_country):''} · joined ${esc(a3ago(x.created_at))}</small></span><em>›</em></button>`).join(''):'<p class="a3m">No members found.</p>'}</div>
+   ${(A3.st&&A3.st.members)?(()=>{const M=A3.st.members;return `<div class="a3g">${[['Members',M.total,''],['Women',M.women,'w'],['Men',M.men,'m'],['Live',M.live,'live'],['Gold',M.gold,'gold'],['Banned',M.banned,'ban']].map(([l,n,k])=>`<button class="a3k sm${(A3.mf||'')===k?' on':''}" data-a="a3mf" data-k="${k}" aria-pressed="${(A3.mf||'')===k}"><b>${n}</b><span>${l}</span></button>`).join('')}</div>`})():(a3loadStats(),'')}
+   ${A3.mlist===null?spinner('Loading'):a3mfl().length?a3mfl().map(x=>`<button class="a3r" data-a="a3mem" data-k="${esc(x.id)}"><span class="a3d ${x.banned?'failed':/live/i.test(x.step||'')?'ok':'run'}"></span><span><b>${esc(x.full_name||x.email||'Member')}${x.gold?' · Gold':''}</b><small>${esc(x.step||'')}</small><small>${esc([x.city,x.country].filter(Boolean).join(', '))}${x.origin_country?' · roots '+esc(x.origin_country):''} · joined ${esc(a3ago(x.created_at))}</small></span><em>›</em></button>`).join(''):'<p class="a3m">No members found.</p>'}</div>
    ${A3.st&&A3.st.members?['countries','roots','cities'].map(k=>{const a=A3.st.members[k]||[];return a.length?`<div class="a3c"><div class="a3h"><b>${{countries:'Where they live',roots:'Their roots',cities:'Top cities'}[k]}</b><span>tap to see</span></div>${a.map(r=>a3kv2(r.k,r.n,a[0].n,'#9D7CFF',`data-a="a3find" data-k="${esc(String(r.k).split(',')[0])}"`)).join('')}</div>`:''}).join(''):''}`}
+/* member tiles filter the list (9 Nov fix: tapping Women/Men/Gold did nothing) */
+function a3mfl(){const f=A3.mf||'',L=A3.mlist||[];return L.filter(x=>!f||(f==='w'?/^f/i.test(x.gender||''):f==='m'?/^m/i.test(x.gender||''):f==='live'?/live/i.test(x.step||''):f==='gold'?x.gold:f==='ban'?x.banned:true))}
 async function a3search(q){A3.mq=q;A3.mlist=null;render();try{A3.mlist=await API.rpc('admin_members',{p_q:q||null,p_limit:100})}catch(e){A3.mlist=[]}render()}
 function a3activity(){const w=a3need();if(w)return w;const a=A3.st.activity;const d=a.days_14||[];const mx=Math.max(1,...d.map(x=>x.active));const mm=Math.max(1,...d.map(x=>x.messages));
   const k=(n,l,s,c,go)=>`<button class="a3k" style="--c:${c}" ${go?`data-a="a3go" data-k="${go}"`:'data-a="a3tab" data-k="members"'}><b>${n}</b><span>${l}</span>${s?`<small>${s}</small>`:''}<em class="a3more">Details ›</em></button>`;
@@ -3127,9 +3130,9 @@ function a3activity(){const w=a3need();if(w)return w;const a=A3.st.activity;cons
    <div class="a3c"><div class="a3h"><b>Messages per day</b><span>14 days</span></div><div class="a3bars">${d.map(x=>`<i style="height:${Math.max(3,Math.round(x.messages/mm*100))}%;background:#3BBF8A" title="${x.messages}"></i>`).join('')}</div></div>
    <div class="a3c"><div class="a3h"><b>Day by day</b></div>${d.slice().reverse().map(x=>`<div class="a3kv"><span>${esc(new Date(x.d).toLocaleDateString([], {weekday:'short',day:'numeric',month:'short'}))}</span><b>${x.active} active · ${x.messages} messages · ${x.interests} interests</b></div>`).join('')}</div>
    ${a.flagged_7d?`<button class="a3c a3n" data-a="a3tab" data-k="checks">${ic('alert')}<span><b>${a.flagged_7d} warned message${a.flagged_7d>1?'s':''} in 7 days</b><small>Money or scam words; see Checks</small></span><em>Open</em></button>`:''}`}
-function a3money(){const w=a3need();if(w)return w;const M=A3.st.money;const T=M.tickets||[];
+function a3money(){const w=a3need();if(w)return w;const M=A3.st.money||{};const T=M.tickets||[];
   return `<div class="a3g">${T.map(t=>`<div class="a3k" style="--c:#12A36B"><b>${money(t.paid_30d,t.cur)}</b><span>Tickets, 30 days</span><small>${money(t.paid_all,t.cur)} all time · ${t.count_all} paid</small></div>`).join('')}
-    <button class="a3k" style="--c:#FFC93C" data-a="a3tab" data-k="members"><b>${M.gold_active}</b><span>Gold active</span><small>${M.gold_new_30d} new in 30 days · ${M.gold_renewing} renewing</small><em class="a3more">Members ›</em></button></div>
+    <button class="a3k" style="--c:#FFC93C" data-a="a3tab" data-k="members"><b>${M.gold_active??0}</b><span>Gold active</span><small>${M.gold_new_30d??0} new in 30 days · ${M.gold_renewing??0} renewing</small><em class="a3more">Members ›</em></button></div>
    ${T.length?`<div class="a3c"><div class="a3h"><b>Event tickets</b><span>per currency</span></div>${T.map(t=>`<div class="a3kv"><span>${esc(t.cur)} paid (before tax)</span><b>${money(t.paid_all,t.cur)}</b></div><div class="a3kv"><span>of it to restaurants (meals)</span><b>${money(t.meals_all,t.cur)}</b></div><div class="a3kv"><span>NeuMarry share</span><b>${money(t.paid_all-t.meals_all,t.cur)}</b></div>${t.refunded_all?`<div class="a3kv"><span>Refunded</span><b>${money(t.refunded_all,t.cur)}</b></div>`:''}`).join('')}</div>`:''}
    ${(M.gold_by_product||[]).length?`<div class="a3c"><div class="a3h"><b>Gold plans</b><span>active</span></div>${M.gold_by_product.map(r=>a3kv2(r.k,r.n,M.gold_by_product[0].n,'#FFC93C')).join('')}<p class="a3m">Gold money arrives through Google Play / App Store; the exact amounts after store fees are in the store report.</p></div>`:''}
    ${(M.payouts||[]).length?`<div class="a3c"><div class="a3h"><b>Payouts to hosts and partners</b></div>${M.payouts.map(p=>`<div class="a3kv"><span>${esc(p.status)} · ${p.n}</span><b>${money(p.cents,p.cur)}</b></div>`).join('')}</div>`:''}
@@ -3204,12 +3207,16 @@ function langSheet(){const av=['en','fr'].concat(window.NM_AVAIL||[]);const cur=
    EVENTS still need ID + selfie + roots + city. The server decides who is on the new rule (rpc my_join_rule:
    admin first, then everyone once app_flags.easy_join is on); the app only follows it. */
 (function(){
+  /* 9 Nov fix: the opening screen showed the old 'not live' page for a moment, then switched: remember the join rule */
+  try{if(S.join===undefined){const j=JSON.parse(localStorage.getItem('nm.join')||'null');if(j)S.join=j}}catch(e){}
+  /* rings and stamps draw once per app open, not again on every refresh (his 9 Nov: 'photo me 2 baar round ghumna') */
+  document.addEventListener('animationend',e=>{if(e.animationName==='tpdraw'||e.animationName==='tpthud')document.documentElement.classList.add('nm-drawn')});
   const EJ=()=>!!(S.join&&S.join.easy);
   const basicV=()=>{const v=S.me&&S.me.v;return !!v&&!!v.id&&!!v.selfie};
   const canBrowse=()=>verified()||(EJ()&&basicV());
   const seenKey=()=>'nm.liveSeen.'+(S.me&&S.me.id||'');
   const _lm=loadMe;loadMe=async function(){const r=await _lm();
-    if(r){try{S.join=await API.rpc('my_join_rule')}catch(e){S.join=null}
+    if(r){try{S.join=await API.rpc('my_join_rule');try{localStorage.setItem('nm.join',JSON.stringify(S.join||null))}catch(x){}}catch(e){if(!S.join)S.join=null}
       try{localStorage.setItem('nm.easy',EJ()?'1':'0')}catch(e){}}
     return r};
   isLive=function(){return canBrowse()&&photoOk()};
@@ -3351,8 +3358,8 @@ function FUN(){try{if(/127\.0\.0\.1/.test(CFG.url||'')){const t=localStorage.get
   function rootsMap(p,h){const o=ll({country:p.oc,state:p.os})||ctryLL(p.oc),d=(p.lat!=null?[p.lat,p.lng]:null)||ll({country:p.country,state:p.state,city:p.cityName})||ctryLL(p.country);
     if(!o||!d)return '';const k1='fo'+p.id.slice(0,6),k2='fd'+p.id.slice(0,6);
     PM.C[k1]=[o[1],o[0],p.os||p.oc,''];PM.C[k2]=[d[1],d[0],p.cityName,''];
-    const vb=PM.fit([k1,k2],390/(h||170),70);const far=Math.round(dist(o[0],o[1],d[0],d[1]));
-    const svg=PM.draw({vb,fsr:.045,grid:false,label:`Map: ${p.os||p.oc} to ${p.cityName}`,arcs:[[k1,k2,'#0E9F6E']],
+    const vb=PM.fit([k1,k2],390/(h||170),125);/* more room: labels never cut, calmer map (9 Nov his 'gich gich') */const far=Math.round(dist(o[0],o[1],d[0],d[1]));
+    const svg=PM.draw({vb,fsr:.035,grid:false,label:`Map: ${p.os||p.oc} to ${p.cityName}`,arcs:[[k1,k2,'#0E9F6E']],
       pins:[[k1,`${flagOf(p.oc)} ${p.os||p.oc}`,'#FFC93C',0,1.9],[k2,`${flagOf(p.country)} ${p.cityName}`,'#0E9F6E']]});
     return {svg,far}}
   const dist=(a,b,c,d)=>{const R=6371,t=x=>x*Math.PI/180,x=Math.sin(t(c-a)/2)**2+Math.cos(t(a))*Math.cos(t(c))*Math.sin(t(d-b)/2)**2;return 2*R*Math.asin(Math.sqrt(x))};
@@ -3399,7 +3406,7 @@ function FUN(){try{if(/127\.0\.0\.1/.test(CFG.url||'')){const t=localStorage.get
   const stageOf=p=>{const m=(S.chats||{})[p.id]||[];const talk=m.some(x=>x.f==='me')&&m.some(x=>x.f!=='me'&&x.f!=='sys');let fam=false;try{fam=famHas(p.id)}catch(e){}
     return fam?['Families talk','y']:talk?['Talking','p']:m.length?['Said hello','v']:['New match','k']};
   const _rc=renderConnections;renderConnections=function(){let h=_rc();if(!FUN())return h;
-    h=h.replace(/(data-a="openchat" data-id="([^"]+)">[\s\S]*?<\/b>)/g,(m,a,id)=>{const p=byId(id);if(!p)return m;const [t,c]=stageOf(p);return a+`<span class="fu-stage ${c}">${t}</span>`});const me=S.me;const m=rootsMap({id:'me0000',oc:me.oc,os:me.os,country:me.country,state:me.state,cityName:myPlace().split(',')[0],lat:me.lat,lng:me.lng,g:me.g},150);
+    h=h.replace(/(data-a="openchat" data-id="([^"]+)">[\s\S]*?<\/b>)/g,(m,a,id)=>{const p=byId(id);if(!p)return m;const [t,c]=stageOf(p);return a+`<span class="fu-stage ${c}">${t}</span>`});const me=S.me;const m=rootsMap({id:'me0000',oc:me.oc,os:me.os,country:me.country,state:me.state,cityName:myPlace().split(',')[0],lat:me.lat,lng:me.lng,g:me.g},170);
     return m?h.replace(/<\/div><\/div>\s*$/,`<div class="fu-myline"><div class="fu-mapsvg">${m.svg}</div><p>Your roots line · ${m.far.toLocaleString(RM_I18N.locale)} km. Every chat is a step towards someone who knows both places.</p></div></div></div>`):h};
 
   Object.assign(A,{funGo(el){const sel=el&&el.dataset&&el.dataset.k;const x=sel&&document.querySelector('#main '+sel.split(',').join(',#main '));if(x)x.scrollIntoView({behavior:'smooth',block:'start'})}});
@@ -3781,6 +3788,7 @@ function rlSig(seed,ini,layers){let h=2166136261;for(const c of String(seed)){h^
   document.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;const m=canPull(e.target);P=m?{y:e.touches[0].clientY,d:0}:null},{passive:true});
   document.addEventListener('touchmove',e=>{if(!P)return;const d=e.touches[0].clientY-P.y;if(d<=0){if(P.d)set(0);P.d=0;return}P.d=d;set(d)},{passive:true});
   document.addEventListener('touchend',()=>{if(!P)return;const d=P.d;P=null;if(d>=110)go();else set(0,true)},{passive:true});
+  document.addEventListener('touchcancel',()=>{if(!P)return;P=null;set(0,true)},{passive:true});/* 9 Nov fix: the hearts tile stayed half-visible over the header when the phone cancelled the touch */
   function set(d,back){const e=el(),p=Math.min(1,d/110),y=Math.min(84,d*.55);e.classList.toggle('back',!!back);e.classList.toggle('ready',p>=1);e.style.transform=`translate(-50%,${y-60}px)`;e.style.opacity=d?Math.min(1,p*1.6):0;e.style.setProperty('--p',1-p)}
   async function go(){busyR=true;const e=el();e.classList.add('go');e.classList.remove('back');e.style.transform='translate(-50%,24px)';e.style.opacity=1;e.style.setProperty('--p',0);
     const t0=Date.now();try{await loadAll();cacheSave&&cacheSave()}catch(x){}const w=Math.max(0,700-(Date.now()-t0));setTimeout(()=>{render();e.classList.remove('go');set(0,true);busyR=false},w)}
