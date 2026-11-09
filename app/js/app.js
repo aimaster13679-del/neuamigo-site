@@ -3632,7 +3632,7 @@ const RLX=(function(){
           E.map=new maplibregl.Map({container:E.el,style:style(o.dark),center:o.center,zoom:o.zoom,attributionControl:{compact:true},dragRotate:false,pitchWithRotate:false,touchPitch:false,fadeDuration:0,cooperativeGestures:false});
           if(o.padB)E.map.setPadding({top:40,bottom:o.padB,left:0,right:0});['mousedown','touchstart','wheel'].forEach(e=>E.map.on(e,()=>E.touched=true));E.map.on('move',()=>hide(E));
           E.map.on('load',()=>{E.ready=true;E.sig='';sync(k)})}).catch(()=>{slot.classList.add('rl-off')})}
-      if(E.el.parentNode!==slot){slot.appendChild(E.el);if(E.map)E.map.resize()}
+      if(E.el.parentNode!==slot){slot.appendChild(E.el);if(E.map){E.map.resize();if(o.fit&&!E.touched)E.map.setZoom(o.fit())}}
       slot.classList.add('rl-on');if(E.ready)sync(k)})}
   function sync(k){const E=live[k];if(!E||!E.ready)return;const o=OPTS[k]();const s=JSON.stringify([o.arcs,o.roots,o.lives,(o.pins||[]).map(p=>[p.ll,p.html,p.cls])]);if(s===E.sig)return;E.sig=s;apply(E,o)}
   const OPTS={};
@@ -3662,7 +3662,14 @@ function rlSig(seed,ini,layers){let h=2166136261;for(const c of String(seed)){h^
   /* ===== Welcome: live globe instead of the flat map ===== */
   const W=[[[3.38,6.52],[-79.38,43.65],'Nigeria','Canada'],[[129.07,35.18],[151.21,-33.87],'South Korea','Australia'],[[-103.35,20.66],[-3.7,40.42],'Mexico','Spain'],
     [[72.57,23.02],[-0.12,51.5],'India','United Kingdom'],[[120.98,14.6],[55.27,25.2],'Philippines','United Arab Emirates'],[[35.5,33.89],[-46.63,-23.55],'Lebanon','Brazil']];
-  RLX.OPTS.welcome=()=>({dark:!!document.querySelector('.c3w')&&!document.documentElement.classList.contains('gl-lt'),center:[60,20],zoom:innerWidth<500?1.25:1.6,spin:.035,arcs:W.map((w,i)=>[w[0],w[1],i%2?'y':'g']),roots:W.filter((_,i)=>i%2).map(w=>w[2]),lives:W.filter((_,i)=>!(i%2)).map(w=>w[3]),pins:[]});
+  RLX.OPTS.welcome=()=>({dark:!!document.querySelector('.c3w')&&!document.documentElement.classList.contains('gl-lt'),center:[60,20],zoom:RLX.fitWel(),fit:RLX.fitWel,spin:.035,arcs:W.map((w,i)=>[w[0],w[1],i%2?'y':'g']),roots:W.filter((_,i)=>i%2).map(w=>w[2]),lives:W.filter((_,i)=>!(i%2)).map(w=>w[3]),pins:[]});
+  RLX.fitWel=function(){/* zoom so the WHOLE sphere fits the box above the caption (his rule: globe whole, never cut) */
+    const e=document.querySelector('.rl-wel');const w=e&&e.clientWidth||Math.min(innerWidth,500),h=e&&e.clientHeight||330;
+    const cap=e&&e.closest('.c3map')&&e.closest('.c3map').querySelector('.c3dist');const ch=cap?cap.offsetHeight+6:0;
+    const D=Math.max(120,Math.min(w*.9,(h-ch)*.92));if(e){e.style.setProperty('--gd',D+'px');e.style.setProperty('--gcy',((h-ch)/2)+'px')}
+    if(e&&!e._ro&&window.ResizeObserver){let lh=h;e._ro=new ResizeObserver(()=>{if(Math.abs(e.clientHeight-lh)<4)return;lh=e.clientHeight;clearTimeout(e._rt);e._rt=setTimeout(()=>{try{const E=RLX.live&&RLX.live.welcome;const z=RLX.fitWel();if(E&&E.map&&!E.touched)E.map.setZoom(z)}catch(_){}},120)});e._ro.observe(e)}
+    return Math.log2(Math.PI*D/512)-RLX.GZ};RLX.GZ=0;
+  addEventListener('resize',()=>{clearTimeout(RLX._rt);RLX._rt=setTimeout(()=>{try{const E=RLX.live&&RLX.live.welcome;if(E&&E.map&&!E.touched)E.map.setZoom(RLX.fitWel())}catch(_){}},150)});
   const _c3m=c3map;c3map=function(){return RL()&&RLX.webgl()?`<div class="rl-slot rl-wel" data-rl="welcome"><div class="rl-fb">${_c3m()}</div></div>`:_c3m()};
 
   /* ===== Matches: globe tile + introductions as signature cards ===== */

@@ -2118,3 +2118,25 @@ html.nm-drawn .tp-ring .fg,html.nm-drawn .fu-av .fg,html.nm-drawn .tp-s.ok i{ani
 .a3bars{gap:2px}.a3bars .a3bc{flex:1;height:100%;display:flex;align-items:flex-end;padding:0;border:0;background:transparent;cursor:pointer;border-radius:4px}
 .a3bars .a3bc:active{background:var(--a-bar,#241D2B)}.a3bars .a3bc i{display:block;width:100%;border-radius:3px 3px 0 0;animation:a3up .8s ease both;transform-origin:bottom}
 .a3hint{margin:6px 0 0;font-size:11.5px}
+
+/* NeuAmigo first screen fits one phone screen, no scrolling (his 9 Nov 17:50) */
+html.p15pub .c3w{display:flex;flex-direction:column;min-height:100%}
+html.p15pub .c3w .c3topl{padding-top:8px}
+html.p15pub .c3map:has(.rl-wel){flex:1 1 0;height:auto;min-height:190px;max-height:400px}html.p15pub .rl-wel{min-height:0}
+html.p15pub .c3map .c3dist{position:absolute;left:0;bottom:-4px;margin:0 0 0 18px;z-index:3}
+html.p15pub .c3w-body{gap:9px;padding-top:14px!important;padding-bottom:12px!important}
+html.p15pub .c3h1{font-size:29px!important;line-height:1.28!important}
+html.p15pub .c3h1 .c3cyc{-webkit-mask-image:linear-gradient(transparent 0,#000 15%,#000 85%,transparent 100%);mask-image:linear-gradient(transparent 0,#000 15%,#000 85%,transparent 100%)}
+html.p15pub .c3lede{font-size:14px;line-height:1.4}
+html.p15pub .c3chips{gap:6px}
+html.p15pub .c3chips span{flex:none;font-size:12px;padding:6px 9px}
+html.p15pub .btn.c3cta{min-height:50px}html.p15pub .btn.c3ghost{min-height:46px}
+html.p15pub .c3note{font-size:11px;line-height:1.4}
+/* Globe always WHOLE and at its best on the first screen (his ok 9 Nov 18:31): sphere sized from the real box, soft halo, never cut */
+html.p15pub .c3map:has(.rl-wel){overflow:visible}
+html.p15pub .rl-wel{position:relative}
+html.p15pub .rl-wel::before{content:"";position:absolute;left:50%;top:var(--gcy,50%);width:var(--gd,80%);aspect-ratio:1;transform:translate(-50%,-50%) scale(1.12);border-radius:50%;pointer-events:none;z-index:0;
+ background:radial-gradient(circle,rgba(255,255,255,0) 58%,rgba(255,255,255,.22) 70%,rgba(255,255,255,0) 82%)}
+html.p15pub.gl-lt .rl-wel::before{background:radial-gradient(circle,rgba(150,140,255,0) 58%,rgba(150,140,255,.18) 70%,rgba(150,140,255,0) 82%)}
+html.p15pub .rl-wel .rl-map{position:relative;z-index:1}
+@media (prefers-reduced-motion:reduce){html.p15pub .rl-wel::before{display:none}}
