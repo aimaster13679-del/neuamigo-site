@@ -2,12 +2,12 @@
 // security in the database decides what each member can read or write.
 window.RM_CONFIG = (function () {
   var c = {
-    url: 'https://ndxlguuywifovqdzdvtq.supabase.co',
-    key: 'sb_publishable_oBR1e77Tx1mNysmxcZ2cgw_qDOpS4gt',
+    url: 'https://dyyhloxrvmqbciejktft.supabase.co',
+    key: 'sb_publishable_FG1hlHSPAzj1DPqit-QiOQ_8Cm6BaDx',
     appId: 'com.neuconet.rootmate',
     redirect: 'com.neuconet.rootmate://auth-callback',
-    site: 'https://neumarry.com/',
-    support: 'support@neumarry.com',
+    site: 'https://neuamigo.com/',
+    support: 'support@neuamigo.com',
     // Google sign-in (public id of the "Web application" OAuth client; Supabase checks tokens against it).
     googleClientId: '583611998053-skqaj33g8cl9cjhg6pmq139af9qa92bo.apps.googleusercontent.com',
     version: '0.1.0',
