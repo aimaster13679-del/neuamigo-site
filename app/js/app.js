@@ -3868,8 +3868,8 @@ function home15(){
    <button class="p15-g p15-t span2 row" data-a="p15life">${ph15('Life Partner')}<span class="p15-b lem">${ic('heart')}</span><span class="tx"><b>Life Partner</b><small>Verified matrimony: meet someone from your roots</small></span>${ic('chev2')}</button>
   </div>`)}
 function settle15(){
-  const t=[['bed2','mint','Find a Room','Rooms and roommates, by area and budget','rooms'],['plane2','lem','Travel Buddy for Parents','A verified buddy on the same flight','buddy'],
-    ['brief','fern','Job Referral','Ask people inside the company','referral'],['shield2','mint','Trusted Experts','Licensed agents, consultants, movers','experts'],['tag2','lem','Moving-Out Sale','Buy and sell when people move','sale']];
+  const t=[['bed2','mint','Find a Room','Rooms and roommates, by area and budget','rooms'],['plane2','lem','Travel Buddy for Parents','A helper on the same flight','buddy'],
+    ['brief','fern','Job Referral','Ask people inside the company','referral'],['shield2','mint','Trusted Experts','Agents, consultants, movers, cleaners','experts'],['tag2','lem','Moving-Out Sale','Buy and sell when people move','sale'],['brief','mint','Jobs','Pay and hours on every job','jobs'],['tag2','fern','Get up to 5 prices','Movers, cleaning, tax, insurance and more','ask:service']];
   return p15wrap(p15top('Settle In')+`<p class="p15-sub">Everything for your first months in a new country.</p><div class="p15-bento">${t.map((x,i)=>p15tile(x[0],x[1],x[2],x[3],'p15open" data-v="'+x[4],'').replace('p15-t"','p15-t'+(i===0?' span2':'')+'"')).join('')}</div>`)}
 function events15(){
   const t=[['heart','mint','Friend Meetups','Dinner tables, walks, games','meetups'],['tv2','lem','Watch Parties','Big matches on a big screen','watch'],['party','fern','Festivals','Diwali, Eid, Lunar New Year, Christmas','festival'],
@@ -4236,7 +4236,7 @@ function sale15v(){const l=P15.sl;if(l===undefined){API.rpc('sales15',{}).then(r
 function expPlan15(){const f=P15.f;f.ek2=f.ek2||'expert';const b=((P15.d&&P15.d.biz)||[]).find(x=>x.kind===f.ek2),me=S.me||{};
   return p15wrap(p15top('Expert or Agent',true)+chips15('ek2',[['expert','I am an expert'],['agent','I am a rental agent']],f.ek2)+
   `<div class="p15-g p15-form"><label>Business name</label><input id="p15-xn" maxlength="60" value="${esc(f.xn||(b&&b.name)||'')}">
-   ${f.ek2==='expert'?`<label>What you do</label>${chips15('xc',[['Immigration','Immigration'],['Tax','Tax'],['Insurance','Insurance'],['Movers','Movers']],f.xc||'Immigration')}`:''}
+   ${f.ek2==='expert'?`<label>What you do</label>${chips15('xc',[['Immigration','Immigration'],['Tax','Tax'],['Insurance','Insurance'],['Movers','Movers'],['Cleaning','Cleaning'],['Small jobs','Small jobs']],f.xc||'Immigration')}`:''}
    <label>Licence number (optional · shows as shared by you, not checked by NeuAmigo)</label><input id="p15-xl" maxlength="40" value="${esc(f.xl||'')}">
    <label>One line about you</label><input id="p15-xa" maxlength="160" value="${esc(f.xa||'')}">
    ${f.ek2==='expert'?`<label>Your services and prices (${esc(cur15())})</label>${[0,1,2].map(i=>`<div class="p15-svc"><input id="p15-s${i}t" maxlength="80" placeholder="Service ${i+1}" value="${esc(f['s'+i+'t']||'')}"><input id="p15-s${i}p" inputmode="numeric" maxlength="6" placeholder="Price" value="${esc(f['s'+i+'p']||'')}"></div>`).join('')}`:''}
@@ -4249,7 +4249,7 @@ function expPlan15(){const f=P15.f;f.ek2=f.ek2||'expert';const b=((P15.d&&P15.d.
    ${prepay15(f.ek2==='expert'?(f.xp==='pro'?'expert_pro':f.xp==='elite'?'expert_elite':'expert_plan'):f.ap==='pro'?'agent_pro':'agent_plan')}
    ${p15launch([f.ek2==='expert'?'expert_plan':'agent_plan'],f.ek2==='expert'?'experts':'agents')}
    <button class="p15-btn" data-a="p15expBuy"${P15.busy==='exp'?' disabled':''}>${P15.busy==='exp'?'Starting…':trial15()&&!(b&&planOn15(b))?'Start 14 days free · no card':`Start ${f.ek2==='expert'?(f.xp==='pro'?'Expert Pro':f.xp==='elite'?'Expert Elite':'Expert Plan'):f.ap==='pro'?'Agent Pro':'Agent Plan'} · ${p15price(f.ek2==='expert'?(f.xp==='pro'?'expert_pro':f.xp==='elite'?'expert_elite':'expert_plan'):f.ap==='pro'?'agent_pro':'agent_plan')} a month`}</button>
-   ${b&&planOn15(b)?`<button class="p15-g p15-row" data-a="p15open" data-v="leads"><span class="p15-b mint">${ic('chat')}</span><span class="tx"><b>People who asked you</b><small>Only members who tapped Connect me</small></span>${ic('chev2')}</button>${f.ek2==='expert'?`<button class="p15-btn ghost" data-a="p15xTop" data-id="${b.id}">Top Spot for 30 days · ${p15price('expert_top')}</button>`:`<button class="p15-g p15-row" data-a="p15open" data-v="inbox:agent"><span class="p15-b lem">${ic('bed2')}</span><span class="tx"><b>Room Wanted near you</b><small>${p15price('room_lead')} per request · max 5 agents each</small></span>${ic('chev2')}</button>`}`:''}`)}
+   ${b&&planOn15(b)?`<button class="p15-g p15-row" data-a="p15open" data-v="leads"><span class="p15-b mint">${ic('chat')}</span><span class="tx"><b>People who asked you</b><small>Only members who tapped Connect me</small></span>${ic('chev2')}</button>${f.ek2==='expert'?`<button class="p15-g p15-row" data-a="p15open" data-v="inbox:expert"><span class="p15-b lem">${ic('tag2')}</span><span class="tx"><b>New requests · send your price</b><small>Paid from your request wallet · max 5 businesses each</small></span>${ic('chev2')}</button><button class="p15-btn ghost" data-a="p15xTop" data-id="${b.id}">Top Spot for 30 days · ${p15price('expert_top')}</button>`:`<button class="p15-g p15-row" data-a="p15open" data-v="inbox:agent"><span class="p15-b lem">${ic('bed2')}</span><span class="tx"><b>Room Wanted near you</b><small>${p15price('room_lead')} per request · max 5 agents each</small></span>${ic('chev2')}</button>`}`:''}`)}
 function leads15v(){const b=((P15.d&&P15.d.biz)||[]).find(x=>x.kind===(P15.f.ek2||'expert'));const l=P15.ld;
   if(!b)return p15wrap(p15top('People who asked',true));if(l===undefined){API.rpc('leads15',{bid:b.id}).then(r=>{P15.ld=r;render()}).catch(()=>{P15.ld=[];render()});return p15wrap(p15top('People who asked',true)+spinner('Loading'))}
   return p15wrap(p15top('People who asked',true)+(l.length?`<div class="p15-g">${l.map(x=>`<div class="p15-li"><span class="p15-b mint">${ic('user')}</span><span class="tx"><b>${esc(x.name)}</b><small>${esc(x.email||'')}${x.note?' · '+esc(x.note):''}</small></span></div>`).join('')}</div>`:`<div class="p15-g p15-note">${ic('chat')} Nobody yet. Members see your page in Trusted Experts.</div>`))}
@@ -4821,7 +4821,7 @@ const ASK15={
   room:{t:'Room Wanted',biz:'agent',ic:'bed2',sub:'Agents and landlords with a plan send you homes that fit.',who:'agents'},
   player:{t:'Join as a player',biz:'league',ic:'ball2',sub:'League organizers put you in a team. Your name stays hidden until you accept.',who:'organizers'},
   quote:{t:'Get 5 quotes',biz:'services',ic:'party',sub:'Tell us your party once. Up to 5 businesses reply with their price.',who:'businesses'}};
-const askSum15=(k,d)=>{d=d||{};const c=cur15();
+let askSum15=(k,d)=>{d=d||{};const c=cur15();
   if(k==='room')return [d.type,d.beds?d.beds+' bed':'',d.budget?'up to '+money(Number(d.budget)*100,d.cur||c):'',d.move?'move in '+d.move:'',(d.tags||[]).join(', ')].filter(Boolean).join(' · ');
   if(k==='player')return [d.sport,d.level,(d.when||[]).join(', '),d.area].filter(Boolean).join(' · ');
   const B={Low:'budget low',Middle:'budget middle',High:'budget high'};
@@ -4926,6 +4926,231 @@ Object.assign(P15V,{myasks:myAsks15,venuecal:venueCal15});
     if(v==='venuecal'){P15.v='svcplan';render();return}
     return _bk(el)};
 })();
+
+/* ---------- Week 3 (his "haan shuru karo" 11 Nov 2026 20:23; mocks na-plan9, na-jobs, na-plan10, na-plan11) ----------
+   Plan 9 request wallet ("Get up to 5 prices"), Plan 12 Jobs (job seekers never charged, pay + hours on every job),
+   Plan 10 Moving-Out Seller (buyer pays the seller at pick-up), Plan 11 Ad Spot by the week (checked first, always "Sponsored").
+   Platform only: NeuAmigo checks no one; documents show as shared by the member. */
+const SVCCAT15=[['Movers','truck'],['Cleaning','home2'],['Tax','chart'],['Insurance','shield2'],['Small jobs','key'],['Immigration','plane2']];
+const LEADK15={Immigration:'lead_imm',Tax:'lead_tax',Insurance:'lead_tax',Movers:'lead_move',Cleaning:'lead_move','Small jobs':'lead_small'};
+ASK15.service={t:'Get up to 5 prices',biz:'expert',ic:'tag2',sub:'Movers, cleaning, tax, insurance, small jobs, immigration. Up to 5 businesses send their price.',who:'businesses'};
+ASKBIZ15.expert='service';
+const _askSum0=askSum15;askSum15=(k,d)=>k==='service'?[d&&d.cat,d&&d.what,d&&d.when,d&&d.dist].filter(Boolean).join(' · '):_askSum0(k,d);
+const _askForm0=askForm15;askForm15=function(k){if(k!=='service')return _askForm0(k);const a=ASK15.service;let f=P15.q;if(!f||f.k!==k)f=P15.q={k};f.cat=f.cat||'Movers';
+  const W={Movers:['Room','1-bed','2-bed','House'],Cleaning:['Room','1-bed','2-bed','House'],Tax:['Personal tax','Self-employed','Business'],Insurance:['Car','Home','Health','Travel'],'Small jobs':['Furniture setup','Painting','Repairs','TV mount'],Immigration:['Work permit','Study permit','Family','Permanent residence']}[f.cat];
+  if(!W.includes(f.what))f.what=W[0];f.when=f.when||'This week';
+  return p15wrap(p15top(a.t,true)+`<p class="p15-sub">No charge to ask · tap, no typing.</p><div class="p15-g p15-form">
+   <label>What do you need?</label>${chips15q('cat',SVCCAT15.map(x=>x[0]),f.cat)}
+   <label>${f.cat==='Movers'||f.cat==='Cleaning'?'How big?':'What exactly?'}</label>${chips15q('what',W,f.what)}
+   <label>When?</label>${chips15q('when',['This week',...wkDays15().slice(0,2),'Flexible'],f.when)}
+   ${f.cat==='Movers'?`<label>Distance</label>${chips15q('dist',['Same city','Other city'],f.dist||'Same city')}`:''}</div>
+   <div class="p15-g p15-note">${ic('shield2')}<span>Only the businesses who take your request see it, at most 5. You pick one and pay them directly. NeuAmigo does not check any business: ask for their licence or insurance when it matters.</span></div>
+   <button class="p15-btn" data-a="p15askPost" data-k="service"${P15.busy==='ask'?' disabled':''}>${P15.busy==='ask'?'Sending…':'Get up to 5 prices'}</button>
+   <button class="p15-g p15-row" data-a="p15open" data-v="myasks"><span class="p15-b mint">${ic('cal')}</span><span class="tx"><b>My requests and prices</b><small>Prices show here as they come</small></span>${ic('chev2')}</button>`)};
+/* the member's prices: shown inside My requests, cheapest first */
+function priceRows15(a){return (a.connected||[]).filter(b=>b.price).map(b=>`<div class="p15-li"><span class="p15-b mint">${ic('store2')}</span><span class="tx"><b>${esc(b.name)}</b><small>${b.rating?Number(b.rating).toFixed(1)+' ★ · ':''}${esc((b.included||[]).join(' · '))}</small></span><b>${money(b.price,b.currency)}</b></div>`).join('')}
+const _myA=myAsks15;myAsks15=function(){const l=P15.ma;let h=_myA();if(Array.isArray(l))l.filter(a=>a.kind==='service'&&(a.connected||[]).some(b=>b.price)).forEach(a=>{h=h.replace(`data-id="${a.id}">Close this request`,`data-id="${a.id}">Close this request`).replace(`<small class="p15-dim">Reached ${a.reached}`,`<div class="p15-sec"><b>Prices · ${(a.connected||[]).filter(b=>b.price).length} of 5</b></div><div class="p15-list">${priceRows15(a)}</div><small class="p15-dim">You pay the business you pick, directly · Reached ${a.reached}`)});return h};P15V.myasks=myAsks15;
+
+/* expert side: wallet + requests + send your price */
+function wallet15v(){const d=P15.ib&&P15.ib.expert,w=(d&&d.wallet)||null,cur=(P15.d&&P15.d.cur)||'USD',f=P15.f;f.wp=f.wp||'wallet_249';
+  const packs=[['wallet_99','Starter','normal price'],['wallet_249','Growth','every request 10% less'],['wallet_549','Pro','every request 20% less']];
+  return p15wrap(p15top('Request wallet',true)+`<p class="p15-sub">Pay for real requests, not clicks. Wallet money never runs out.</p>
+  ${w?`<div class="p15-g p15-pts"><span class="p15-b lem">${ic('tag2')}</span><span class="tx"><small>In your wallet</small><b>${money(w.cents,cur)}</b><small>${w.tier?`Every request ${w.tier}% less`:'Normal request prices'}</small></span></div>`:''}
+  ${packs.map(([k,t,s])=>`<button class="p15-g p15-plan${f.wp===k?' on':''}" data-a="p15f" data-k="wp" data-val="${k}"><span><b>${t}${k==='wallet_249'?' <i class="p15-spon">Popular</i>':''}</b><small>${s}</small></span><span class="p15-pr0"><b>${p15price(k)}</b></span></button>`).join('')}
+  <div class="p15-sec"><b>Price per request · launch → later</b></div>
+  <div class="p15-g p15-list">${[['Immigration, lawyer','lead_imm'],['Home, rental','room_lead'],['Tax, insurance','lead_tax'],['Movers, clearing a home','lead_move'],['Small jobs','lead_small']].map(([t,k])=>`<div class="p15-li"><span class="tx"><b>${t}</b></span>${p15tag(k,'')}</div>`).join('')}</div>
+  <div class="p15-g p15-note">${ic('shield2')}<span>Wrong or fake request: the money goes back to your wallet. Nobody gets requests without paying, so it is fair for all.</span></div>
+  <button class="p15-btn" data-a="p15walletBuy"${P15.busy==='wal'?' disabled':''}>${P15.busy==='wal'?'Adding…':`Add ${p15price(f.wp)} to my wallet`}</button>`)}
+const _inb0=inbox15;inbox15=function(kind){let h=_inb0(kind);if(kind!=='expert')return h;const l=(P15.ib||{}).expert,cur=(P15.d&&P15.d.cur)||'USD';if(!l||!l.plan)return h;
+  const w=l.wallet;h=h.replace('<p class="p15-sub">',`<button class="p15-g p15-row" data-a="p15open" data-v="wallet"><span class="p15-b lem">${ic('tag2')}</span><span class="tx"><b>Wallet: ${money(w?w.cents:0,cur)}</b><small>${w&&w.tier?`Every request ${w.tier}% less · `:''}add money</small></span>${ic('chev2')}</button><p class="p15-sub">`);
+  (l.asks||[]).filter(x=>x.mine).forEach(x=>{const q=P15.qp=P15.qp||{};const v=q[x.id]||{p:x.quoted?Math.round(x.quoted.price/100):200,inc:[]};
+    const form=x.quoted?`<div class="p15-g p15-note">${ic('tick2')}<span>Your price ${money(x.quoted.price,x.quoted.currency)} is sent.</span></div>`:
+      `<div class="p15-qty"><span>Your price</span><button data-a="p15qp" data-id="${x.id}" data-d="-10" aria-label="Less">−</button><b>${money(v.p*100,cur)}</b><button data-a="p15qp" data-id="${x.id}" data-d="10" aria-label="More">+</button></div>
+       ${mchipsQ15(x.id,['2 people','Truck','Insurance','Materials','Same day'],v.inc)}<button class="p15-btn" data-a="p15qsend" data-id="${x.id}">Send price</button>`;
+    h=h.replace(`data-a="p15askRep" data-id="${x.id}" data-k="expert">`,`data-a="p15askRep" data-id="${x.id}" data-k="expert" data-form="1">`).replace(`<button class="p15-chip" data-a="p15askRep" data-id="${x.id}" data-k="expert" data-form="1">`,form+`<button class="p15-chip" data-a="p15askRep" data-id="${x.id}" data-k="expert" data-form="1">`)});
+  return h.replace(/Connect · /g,'Take request · ')};
+function mchipsQ15(id,opts,cur){return `<div class="p15-chips">${opts.map(v=>`<button class="p15-chip${cur.includes(v)?' on':''}" data-a="p15qi" data-id="${id}" data-val="${esc(v)}">${esc(v)}</button>`).join('')}</div>`}
+
+/* ---------- Plan 12: Jobs ---------- */
+const JOBCAT15=['Elder care','Home help','Garden','Shop helper','Factory','Kitchen','Driving','Cleaning'];
+function jobs15v(){const c=P15.f.jc||'',key='j'+c,l=(P15.jb||{})[key];
+  if(l===undefined){API.rpc('jobs15',{c}).then(r=>{P15.jb=Object.assign(P15.jb||{},{[key]:r||[]});render()}).catch(()=>{P15.jb=Object.assign(P15.jb||{},{[key]:[]});render()});return p15wrap(p15top('Jobs',true)+spinner('Loading'))}
+  const wp=P15.wp;if(wp===undefined){P15.wp=null;API.rpc('workprof15',{}).then(r=>{P15.wp=r||{};render()}).catch(()=>{P15.wp={}})}
+  const done=wp&&wp.skills?[wp.skills.length,wp.langs&&wp.langs.length,wp.avail&&wp.avail.length,wp.area,wp.permit].filter(Boolean).length*20:0;
+  return p15wrap(p15top('Jobs',true)+`<p class="p15-sub">${esc((S.me||{}).city||'Your city')} · pay and hours shown on every job.</p>`+adSlot15('jobs')+
+   `<button class="p15-g p15-row" data-a="p15open" data-v="workprof"><span class="p15-b lem">${ic('user')}</span><span class="tx"><b>Your Work Profile${done?` · ${done}%`:''}</b><small>Apply in one tap · job seekers are never charged</small></span>${ic('chev2')}</button>`+
+   chips15('jc',[['','All']].concat(JOBCAT15.map(x=>[x,x])),c)+
+   (l.length?l.map(j=>`<button class="p15-g p15-row" data-a="p15open" data-v="job:${j.id}"><span class="p15-b mint big">${ic('brief')}</span><span class="tx"><b>${esc(j.title)}</b><small>${esc(j.employer)}${j.area?' · '+esc(j.area):''}</small>${j.sponsored?'<small class="p15-acc">Sponsored</small>':''}${j.mine?`<small class="p15-acc">Your job · ${j.apps} applied</small>`:j.applied?'<small class="p15-acc">Applied</small>':''}</span><span class="p15-pr0"><b>${money(j.pay,j.currency)}</b><small>/ h · ${j.hours} h/wk</small></span></button>`).join(''):
+    `<div class="p15-g p15-note">${ic('brief')} No jobs in your city yet. Employers add new ones every week.</div>`)+
+   `<button class="p15-g p15-row" data-a="p15open" data-v="postjob"><span class="p15-b fern">${ic('store2')}</span><span class="tx"><b>Post a job</b><small>Family job ${p15price('job_family')} · business job ${p15price('job_biz')} · 30 days</small></span>${ic('chev2')}</button>
+   <button class="p15-g p15-row" data-a="p15open" data-v="safejobs"><span class="p15-b mint">${ic('shield2')}</span><span class="tx"><b>Safe jobs</b><small>Our promise to job seekers</small></span>${ic('chev2')}</button>`)}
+function jobFind15(id){for(const k in (P15.jb||{})){const j=(P15.jb[k]||[]).find(x=>x.id===id);if(j)return j}return null}
+function job15v(id){const j=jobFind15(id);if(!j)return p15wrap(p15top('Job',true)+`<div class="p15-g p15-note">This job is not open any more.</div>`);
+  return p15wrap(p15top('Job',true)+`<div class="p15-g p15-pad"><span class="p15-pill">${ic('brief')} ${esc(j.cat)}</span>${j.sponsored?' <span class="p15-pill y">Sponsored</span>':''}<h2>${esc(j.title)}</h2><small>${esc(j.employer)}${j.area?' · '+esc(j.area):''} · ${esc(new Date(j.createdAt).toLocaleDateString(RM_I18N.locale,{day:'numeric',month:'short'}))}</small></div>
+  <div class="p15-kv"><div><small>Pay</small><b>${money(j.pay,j.currency)} / h</b></div><div><small>Hours</small><b>${j.hours} a week</b></div><div><small>Salary is paid</small><b>By the ${j.who==='family'?'family':'employer'}</b></div></div>
+  <div class="p15-g p15-steps">${j.schedule?`<div class="p15-step"><span class="p15-dot">${ic('clock')}</span><span><b>${esc(j.schedule)}</b></span></div>`:''}${(j.langs||[]).length?`<div class="p15-step"><span class="p15-dot">${ic('chat')}</span><span><b>${esc(j.langs.join(' or '))}</b></span></div>`:''}${j.must?`<div class="p15-step"><span class="p15-dot">${ic('tick2')}</span><span><b>${esc(j.must)}</b><small>Must have</small></span></div>`:''}</div>
+  <div class="p15-g p15-note">${ic('shield2')}<span><b>Never pay to get a job.</b> If anyone asks you for money, report it. NeuAmigo does not check employers: meet first in a public place or on a video call.</span></div>
+  ${j.mine?`<button class="p15-btn" data-a="p15open" data-v="jobapps:${j.id}">See ${j.apps} people who applied</button><div class="p15-2"><button class="p15-btn ghost" data-a="p15jobFeat" data-id="${j.id}">Feature 7 days · ${p15price('job_feature')}</button><button class="p15-btn ghost" data-a="p15jobClose" data-id="${j.id}">Job filled</button></div>`:
+   j.applied?`<div class="p15-g p15-note">${ic('tick2')}<span>You applied. The employer sees your Work Profile and contacts you by email.</span></div>`:`<button class="p15-btn" data-a="p15jobApply" data-id="${j.id}"${P15.busy==='apply'?' disabled':''}>${P15.busy==='apply'?'Sending…':'Apply in one tap'}</button><p class="p15-ex">No charge to job seekers, ever. The employer sees your Work Profile.</p>`}
+  ${j.mine?'':`<button class="p15-chip" data-a="p15jobRep" data-id="${j.id}">Report this job</button>`}`)}
+function workProf15(){const w=P15.wf=P15.wf||Object.assign({skills:[],langs:[],avail:[],permit:false,area:'',ready:false},P15.wp||{});
+  return p15wrap(p15top('Work Profile',true)+`<p class="p15-sub">Tap, no typing · no charge, ever (law).</p><div class="p15-g p15-form">
+   <label>What can you do?</label>${mchipsW15('skills',JOBCAT15.concat(['Cooking']),w.skills)}
+   <label>Languages</label>${mchipsW15('langs',['English','French','Spanish','Arabic','Portuguese','Chinese','Hindi','Tagalog','Korean','Swahili'],w.langs)}
+   <label>When can you work?</label>${mchipsW15('avail',['Weekdays','Evenings','Weekends'],w.avail)}
+   <label>Right to work here</label><div class="p15-chips"><button class="p15-chip${w.permit?' on':''}" data-a="p15wset" data-k="permit" data-val="1">Yes · I confirm it myself</button><button class="p15-chip${!w.permit?' on':''}" data-a="p15wset" data-k="permit" data-val="0">Not yet</button></div>
+   <label>Area (optional)</label><input id="p15-war" maxlength="60" placeholder="e.g. Scarborough" value="${esc(w.area||'')}"></div>
+   <button class="p15-g p15-plan${w.ready?' on':''}" data-a="p15wset" data-k="ready" data-val="${w.ready?'0':'1'}"><span><b>"Ready to work" ${w.ready?'is on':'is off'}</b><small>Employers see your skills and area, not your name, until you say yes</small></span><span class="p15-pr0"><b>${w.ready?'On':'Off'}</b></span></button>
+   <button class="p15-btn" data-a="p15wsave"${P15.busy==='wp'?' disabled':''}>${P15.busy==='wp'?'Saving…':'Save profile'}</button>`)}
+function mchipsW15(k,opts,cur){cur=cur||[];return `<div class="p15-chips">${opts.map(v=>`<button class="p15-chip${cur.includes(v)?' on':''}" data-a="p15wm" data-k="${k}" data-val="${esc(v)}">${esc(v)}</button>`).join('')}</div>`}
+function postJob15(){const f=P15.jf=P15.jf||{who:'family',cat:'Elder care',pay:20,hrs:25,sch:'Weekdays',langs:['English']},hire=bizOf15('employer'),on=hire&&planOn15(hire);
+  return p15wrap(p15top('Post a job',true)+`<div class="p15-g p15-form">
+   <label>Who is hiring?</label>${chipsJ15('who',[['family','A family'],['business','A business']],f.who)}
+   <label>${f.who==='family'?'Family name people see':'Business name'}</label><input id="p15-jemp" maxlength="60" placeholder="${f.who==='family'?'e.g. Chen family':'e.g. FreshMart Scarborough'}" value="${esc(f.emp||'')}">
+   <label>Job title</label><input id="p15-jt" maxlength="80" placeholder="e.g. Elder care helper" value="${esc(f.t||'')}">
+   <label>Kind of work</label>${chipsJ15('cat',JOBCAT15.map(x=>[x,x]),f.cat)}
+   ${stepperJ15('pay',money(f.pay*100,cur15())+' / h',1,5,200,'Pay per hour')}
+   ${stepperJ15('hrs',f.hrs+' h',5,5,60,'Hours a week')}
+   <label>When</label>${chipsJ15('sch',[['Weekdays','Weekdays'],['Evenings','Evenings'],['Weekends','Weekends'],['Flexible','Flexible']],f.sch)}
+   <label>Languages</label><div class="p15-chips">${['English','French','Spanish','Arabic','Tagalog','Chinese'].map(v=>`<button class="p15-chip${(f.langs||[]).includes(v)?' on':''}" data-a="p15jm" data-val="${v}">${v}</button>`).join('')}</div>
+   <label>Must have (optional)</label><input id="p15-jmust" maxlength="160" placeholder="e.g. Right to work, first aid" value="${esc(f.must||'')}">
+   <label>Area (optional)</label><input id="p15-jar" maxlength="60" placeholder="e.g. North York" value="${esc(f.ar||'')}"></div>
+   <div class="p15-g p15-note">${ic('shield2')}<span>The pay and hours show on your job. You pay the salary yourself, never through NeuAmigo. Job seekers are never charged. Documents you share show as shared, not checked by NeuAmigo.</span></div>
+   <button class="p15-btn" data-a="p15jobPost"${P15.busy==='job'?' disabled':''}>${P15.busy==='job'?'Posting…':on?'Post job · included in your Hiring plan':`Post job · ${p15price(f.who==='family'?'job_family':'job_biz')}`}</button>
+   <button class="p15-g p15-row" data-a="p15open" data-v="hire"><span class="p15-b lem">${ic('star2')}</span><span class="tx"><b>Hiring plan ${on?'· active':''}</b><small>Unlimited jobs · 5 "Ready to work" connects a month · shown first ("Sponsored")</small></span>${p15tag('hire_plan','/month')}</button>
+   <button class="p15-g p15-row" data-a="p15open" data-v="ready"><span class="p15-b mint">${ic('user')}</span><span class="tx"><b>"Ready to work" people near you</b><small>Connect one: ${p15price('job_connect')}</small></span>${ic('chev2')}</button>`)}
+function chipsJ15(k,opts,cur){return `<div class="p15-chips">${opts.map(([v,l])=>`<button class="p15-chip${String(cur)===String(v)?' on':''}" data-a="p15jf" data-k="${k}" data-val="${esc(v)}">${esc(l)}</button>`).join('')}</div>`}
+function stepperJ15(k,v,step,min,max,label){return `<div class="p15-qty"><span>${esc(label)}</span><button data-a="p15jstp" data-k="${k}" data-d="${-step}" data-min="${min}" data-max="${max}" aria-label="Less">−</button><b>${v}</b><button data-a="p15jstp" data-k="${k}" data-d="${step}" data-min="${min}" data-max="${max}" aria-label="More">+</button></div>`}
+function hire15v(){const b=bizOf15('employer'),f=P15.f;
+  return p15wrap(p15top('Hiring plan',true)+`<div class="p15-g p15-plan on"><span><b>Hiring plan <i class="p15-spon">Sponsored</i></b><small>Unlimited jobs · your jobs shown first, marked "Sponsored" · 5 "Ready to work" connects every month</small></span><span class="p15-pr0">${p15tag('hire_plan','/month')}</span></div>
+  ${b?`<div class="p15-g p15-note">${ic('tick2')}<span><b>${esc(b.name)}</b>${planOn15(b)?` · active until ${esc(until15(b.planUntil))}`:''}</span></div>`:`<div class="p15-g p15-form"><label>Business name</label><input id="p15-hn2" maxlength="60" value="${esc(f.hn2||'')}"></div>`}
+  ${prepay15('hire_plan')}${p15launch(['hire_plan'],'employers')}
+  <button class="p15-btn" data-a="p15hireBuy"${P15.busy==='hire'?' disabled':''}>${P15.busy==='hire'?'Starting…':`${b&&planOn15(b)?'Add time':'Start Hiring plan'} · ${p15price(planKey15('hire_plan'))}`}</button>`)}
+function jobApps15(id){const l=(P15.ja||{})[id];if(l===undefined){API.rpc('job_apps15',{jid:id}).then(r=>{P15.ja=Object.assign(P15.ja||{},{[id]:r||[]});render()}).catch(()=>{P15.ja=Object.assign(P15.ja||{},{[id]:[]});render()});return p15wrap(p15top('People who applied',true)+spinner('Loading'))}
+  const j=jobFind15(id);
+  return p15wrap(p15top('People who applied',true)+`<p class="p15-sub">${esc(j?j.title:'')} · ${l.length} applied. Fit = skills, languages and right to work they told us.</p>`+
+   (l.length?l.map(p=>`<div class="p15-g p15-pad"><div class="p15-rh"><span class="tx"><b>${esc(p.name)}${p.from?' · from '+esc(p.from):''}</b><small>${esc((p.skills||[]).join(', '))}${(p.langs||[]).length?' · '+esc(p.langs.join(', ')):''}${(p.avail||[]).length?' · '+esc(p.avail.join(', ')):''}</small></span><span class="p15-pill">${p.fit}% fit</span></div>
+     <div class="p15-contact">${ic('chat')} ${esc(p.email||'')}</div></div>`).join(''):`<div class="p15-g p15-note">${ic('user')} Nobody yet. People apply as soon as they see your job.</div>`)+
+   `<p class="p15-ex">Meet first in a public place or on a video call. Check documents yourselves before work starts.</p>`)}
+function ready15v(){const c=P15.f.rc||'',l=(P15.rd||{})[c];if(l===undefined){API.rpc('ready15',{c}).then(r=>{P15.rd=Object.assign(P15.rd||{},{[c]:r||{people:[]}});render()}).catch(()=>{P15.rd=Object.assign(P15.rd||{},{[c]:{people:[]}});render()});return p15wrap(p15top('Ready to work',true)+spinner('Loading'))}
+  return p15wrap(p15top('Ready to work',true)+`<p class="p15-sub">People near you who switched on "Ready to work". Names open after you connect${l.included?` · ${l.included} included this month`:` · ${p15price('job_connect')} each`}.</p>`+chips15('rc',[['','All']].concat(JOBCAT15.map(x=>[x,x])),c)+
+   ((l.people||[]).length?l.people.map(p=>`<div class="p15-g p15-pad"><div class="p15-rh"><span class="tx"><b>${p.connected?esc(p.name||''):'Name hidden'}${p.from?' · from '+esc(p.from):''}</b><small>${esc((p.skills||[]).join(', '))}${(p.langs||[]).length?' · '+esc(p.langs.join(', ')):''}${p.area?' · '+esc(p.area):''}</small></span></div>
+     ${p.connected?`<div class="p15-contact">${ic('chat')} ${esc(p.email||'')}</div>`:`<button class="p15-btn" data-a="p15jconn" data-id="${p.id}">Connect · ${l.included?'included':p15price('job_connect')}</button>`}</div>`).join(''):`<div class="p15-g p15-note">${ic('user')} Nobody with these skills near you right now.</div>`))}
+function safeJobs15(){return p15wrap(p15top('Safe jobs',true)+`<div class="p15-g p15-list">${[
+  ['By law, job seekers are never charged','Not to apply, not to be seen.'],['Pay and hours on every job','No job shows without them.'],
+  ['NeuAmigo only connects people','We do not check employers or workers: check documents yourselves before you start.'],
+  ['Meet first in public','Or on a video call.'],['Salary is paid by the employer','Never through NeuAmigo.'],['Report a job','We look at every report and remove jobs that break the rules.']].map(([t,s])=>`<div class="p15-li"><span class="p15-b mint">${ic('tick2')}</span><span class="tx"><b>${t}</b><small>${s}</small></span></div>`).join('')}</div>
+  <div class="p15-g p15-note">${ic('info')}<span>Minimum pay and work rules are set by your country, province or state. Check your local government website.</span></div>`)}
+
+/* ---------- Plan 10: Moving-Out Seller ---------- */
+const SALECAT15=['Sofa','Bed','Table','Kitchen','Electronics','Other'];
+function sale15v2(){const l=P15.sl;if(l===undefined){API.rpc('sales15',{}).then(r=>{P15.sl=r||[];render()}).catch(()=>{P15.sl=[];render()});return p15wrap(p15top('Moving-Out Sale',true)+spinner('Loading'))}
+  const d=s=>s?new Date(s).toLocaleDateString(RM_I18N.locale,{day:'numeric',month:'short'}):'';
+  return p15wrap(p15top('Moving-Out Sale',true)+`<p class="p15-sub">${esc((S.me||{}).city||'Your city')} · from people leaving the city. You pay the seller at pick-up.</p>`+
+   (l.length?l.map(s=>`<div class="p15-g p15-pad"><div class="p15-rh"><span class="p15-b lem">${ic('tag2')}</span><span class="tx"><b>${esc(s.title)}</b><small>${esc(s.cond)}${s.area?' · '+esc(s.area):''}${s.pickupBy?' · pick up by '+esc(d(s.pickupBy)):''}${s.leaving?' · leaving '+esc(d(s.leaving)):''}</small></span><span class="p15-pr0"><b>${money(s.price,s.currency)}</b></span></div>
+     <div class="p15-tags">${s.sponsored?'<span class="p15-pill y">Sponsored · Whole Home</span>':''}${s.top?'<span class="p15-pill y">Boosted</span>':''}${s.takeAll?`<span class="p15-pill">Take all: ${money(s.takeAll,s.currency)}</span>`:''}</div>
+     ${s.mine?`<small class="p15-dim">Your item · ${s.wants||0} want it</small>`:s.locked?`<button class="p15-unlock" data-a="p15open" data-v="plus">${ic('lock2')} Chat with the seller opens with Plus</button>`:`<button class="p15-btn ghost" data-a="p15want" data-id="${s.id}">I want it · show seller contact</button>${(P15.sw||{})[s.id]?`<div class="p15-contact">${ic('chat')} ${esc(P15.sw[s.id])}</div>`:''}`}</div>`).join(''):
+    `<div class="p15-g p15-note">${ic('tag2')} Nothing for sale in your city right now.</div>`)+
+   `<div class="p15-g p15-note">${ic('shield2')}<span>Meet at the home, in daylight. Pay the seller at pick-up. NeuAmigo never holds this money and does not check sellers.</span></div>
+   <button class="p15-g p15-row" data-a="p15open" data-v="mysale"><span class="p15-b fern">${ic('home2')}</span><span class="tx"><b>Leaving soon? Sell your home in a day</b><small>One item ${p15price('sale_one')} · Whole Home ${p15price('sale_home')}</small></span>${ic('chev2')}</button>
+   <button class="p15-g p15-row" data-a="p15open" data-v="ask:service"><span class="p15-b mint">${ic('truck')}</span><span class="tx"><b>Need movers?</b><small>Get up to 5 prices</small></span>${ic('chev2')}</button>`)}
+function mySale15(){const m=P15.ms;if(m===undefined){API.rpc('my_sale15',{}).then(r=>{P15.ms=r||{};render()}).catch(()=>{P15.ms={};render()});return p15wrap(p15top('Sell before you leave',true)+spinner('Loading'))}
+  const p=m.plan,on=p&&new Date(p.until)>new Date(),f=P15.f,cur=(P15.d&&P15.d.cur)||cur15();
+  if(!on){f.sp2=f.sp2||'sale_home';f.lv=f.lv||days15()[13][0];f.ta=f.ta||'900';
+    const plans=[['sale_one','One item','1 item · 30 days'],['sale_30','Leaving Sale','Up to 30 items · 30 days'],['sale_home','Whole Home','Unlimited items · "Take all" price · shown first in your area ("Sponsored") · until you leave']];
+    return p15wrap(p15top('Sell before you leave',true)+plans.map(([k,t,s])=>`<button class="p15-g p15-plan${f.sp2===k?' on':''}" data-a="p15f" data-k="sp2" data-val="${k}"><span><b>${t}${k==='sale_home'?' <i class="p15-spon">Popular</i>':''}</b><small>${s}</small></span><span class="p15-pr0">${p15tag(k,'')}</span></button>`).join('')+
+     `<div class="p15-g p15-form"><label>Your leaving day</label>${chips15('lv',days15().slice(3,17),f.lv)}${f.sp2==='sale_home'?`<label>"Take all" price (${esc(cur15())})</label>${chips15('ta',[['0','No take-all'],['500','500'],['900','900'],['1500','1,500'],['2500','2,500']],f.ta)}`:''}</div>
+     <div class="p15-g p15-note">${ic('tick2')}<span>Buyers pay you directly, at pick-up. Boost one item for 7 days: ${p15price('sale_boost')}.</span></div>
+     <button class="p15-btn" data-a="p15sellPlan"${P15.busy==='sp'?' disabled':''}>${P15.busy==='sp'?'Starting…':`Start ${plans.find(x=>x[0]===f.sp2)[1]} · ${p15price(f.sp2)}`}</button>`)}
+  const it=m.items||[],sold=it.filter(x=>x.status==='sold').length,lim={sale_one:1,sale_30:30,sale_home:500}[p.plan];f.ic=f.ic||'Sofa';f.cd=f.cd||'Good';f.ip=f.ip||'100';
+  return p15wrap(p15top('Your sale',true)+`<div class="p15-g p15-pts"><span class="p15-b lem">${ic('tag2')}</span><span class="tx"><small>${esc({sale_one:'One item',sale_30:'Leaving Sale',sale_home:'Whole Home'}[p.plan])} · until ${esc(until15(p.until))}</small><b>${sold} of ${it.length} sold</b><small>${money(m.soldCents||0,cur)} so far · paid to you at pick-up</small></span></div>
+   ${it.map(x=>`<div class="p15-g p15-li"><span class="tx"><b>${esc(x.title)}</b><small>${x.status==='sold'?'Sold':`${x.wants} want it`}${x.top?' · boosted':''}</small></span><b>${money(x.price,x.currency)}</b>${x.status==='open'?`<button class="p15-chip" data-a="p15sold" data-id="${x.id}">Sold</button>${x.top?'':`<button class="p15-chip" data-a="p15boost" data-id="${x.id}">Boost ${p15price('sale_boost')}</button>`}`:''}</div>`).join('')}
+   ${it.some(x=>x.status==='open')?`<button class="p15-btn ghost" data-a="p15drop">Lower all prices by 10%</button>`:''}
+   ${(p.items||0)<lim?`<div class="p15-g p15-form"><label>Add an item</label><input id="p15-it" maxlength="80" placeholder="e.g. 3-seat sofa, grey" value="${esc(f.it||'')}">
+    <label>What is it?</label>${chips15('ic',SALECAT15.map(x=>[x,x]),f.ic)}
+    <label>Condition</label>${chips15('cd',[['Like new','Like new'],['Good','Good'],['Used','Used']],f.cd)}
+    <label>Price (${esc(cur15())})</label>${chips15('ip',[['20','20'],['60','60'],['100','100'],['180','180'],['300','300'],['600','600']],f.ip)}
+    <label>Pick-up area</label><input id="p15-ia" maxlength="60" placeholder="e.g. Etobicoke" value="${esc(f.ia||'')}"></div>
+    <button class="p15-btn" data-a="p15itemAdd"${P15.busy==='it'?' disabled':''}>${P15.busy==='it'?'Adding…':'Add item'}</button>`:`<div class="p15-g p15-note">${ic('info')} Your plan is full. Pick a bigger plan when this one ends.</div>`}`)}
+
+/* ---------- Plan 11: Ad Spot by the week ---------- */
+const ADPL15=[['city','City Spotlight','Home screen tile · one brand per city per week','ad_city_w'],['homes','Homes','Top of Find a Room','ad_cat_w'],['jobs','Jobs','Top of Jobs','ad_cat_w'],['services','Event services','Top of Event Services','ad_cat_w'],['experts','Experts','Top of Trusted Experts','ad_cat_w']];
+function adSlot15(pl){const k='ad_'+pl,a=(P15.as||{})[k];if(a===undefined){P15.as=Object.assign(P15.as||{},{[k]:null});API.rpc('ad_for15',{pl}).then(r=>{P15.as[k]=r||false;if(r)render()}).catch(()=>{});return ''}
+  if(!a)return '';return `<button class="p15-g p15-ad" data-a="p15adTap" data-id="${esc(a.id)}"><span class="p15-pill">Sponsored</span><b>${esc(a.title)}</b>${a.body?`<small>${esc(a.body)}</small>`:''}<span class="p15-ad-go">${ic('chev2')}</span></button>`}
+function adSpot15v2(){const f=P15.f,l=P15.ads,pl=f.apl||'city',w=(P15.aw||{})[pl],me=S.me||{};
+  if(l===undefined){API.rpc('ads_mine15',{}).then(r=>{P15.ads=r||[];render()}).catch(()=>{P15.ads=[];render()});return p15wrap(p15top('Advertise',true)+spinner('Loading'))}
+  if(w===undefined){P15.aw=Object.assign(P15.aw||{},{[pl]:null});API.rpc('ad_weeks15',{pl}).then(r=>{P15.aw[pl]=r||[];render()}).catch(()=>{P15.aw[pl]=[];render()})}
+  const n=v=>Number(v||0).toLocaleString(RM_I18N.locale),pk=(ADPL15.find(x=>x[0]===pl)||ADPL15[0])[3],wd=s=>new Date(s+'T12:00:00').toLocaleDateString(RM_I18N.locale,{day:'numeric',month:'short'});
+  return p15wrap(p15top('Advertise',true)+`<p class="p15-sub">Reach people new to ${esc(me.city||'your city')}. Prices in your country's money.</p>
+  ${l.length?`<div class="p15-sec"><b>Your ads</b></div>${l.map(a=>`<div class="p15-g p15-pad"><div class="p15-rh"><span class="tx"><b>${esc(a.title)}</b><small>${esc((ADPL15.find(x=>x[0]===a.place)||[0,'City Spotlight'])[1])} · ${esc(a.city)}${a.week?' · week of '+esc(wd(a.week)):''}</small></span><span class="p15-pill${a.status==='live'?'':' y'}">${({live:'Live',check:'Waiting for review',removed:'Not approved',ended:'Ended'})[a.status]||''}</span></div>
+    <div class="p15-kv"><div><small>People who saw it</small><b>${n(a.views)}</b></div><div><small>Taps</small><b>${n(a.taps)}</b></div><div><small>Tap rate</small><b>${a.views?(a.taps/a.views*100).toFixed(1)+'%':'–'}</b></div></div></div>`).join('')}<p class="p15-ex">Counts are real: one per person per day.</p>`:''}
+  <div class="p15-sec"><b>Book a spot</b></div>
+  ${ADPL15.map(([k,t,s,p])=>`<button class="p15-g p15-plan${pl===k?' on':''}" data-a="p15f" data-k="apl" data-val="${k}"><span><b>${t}</b><small>${s}</small></span><span class="p15-pr0">${p15tag(p,'/week')}</span></button>`).join('')}
+  <div class="p15-g p15-form"><label>Week</label>${w?`<div class="p15-chips">${w.map(x=>`<button class="p15-chip${f.awk===x.week?' on':''}" data-a="p15f" data-k="awk" data-val="${x.week}"${x.taken?' disabled':''}>${esc(wd(x.week))}${x.taken?' · taken':''}</button>`).join('')}</div>`:spinner('Loading')}
+   <label>Your name or brand</label><input id="p15-anm" maxlength="60" value="${esc(f.anm||'')}">
+   <label>Headline (4 to 60 letters)</label><input id="p15-at" maxlength="60" placeholder="e.g. Groceries from 40 countries" value="${esc(f.at||'')}">
+   <label>One more line (optional)</label><input id="p15-ab" maxlength="90" value="${esc(f.ab||'')}">
+   <label>Link (https://…)</label><input id="p15-au" maxlength="300" inputmode="url" placeholder="https://" value="${esc(f.au||'')}"></div>
+  <div class="p15-g p15-list">${[['Welcome','Shops, restaurants, banks, phone plans, schools, courses, movers, events'],['Not allowed','Gambling, lotteries, betting, "guaranteed visa or job", get-rich offers, payday loans, adult content'],['Your responsibility','You are responsible for what your ad says. Ads follow the law of the country they show in. We look at every ad before it shows and remove ads that break the rules.']].map(([t,s])=>`<div class="p15-li"><span class="p15-b mint">${ic(t==='Not allowed'?'info':'tick2')}</span><span class="tx"><b>${t}</b><small>${s}</small></span></div>`).join('')}</div>
+  <button class="p15-btn" data-a="p15adBook"${P15.busy==='ad'?' disabled':''}>${P15.busy==='ad'?'Sending…':`Send for review · ${p15price(pk)}`}</button>
+  <p class="p15-ex">Event sponsor (your name at a Weekend Club big event, "Sponsored"): ${p15price('ad_event')} an event · ask in Help.</p>`)}
+Object.assign(P15V,{wallet:wallet15v,jobs:jobs15v,workprof:workProf15,postjob:postJob15,hire:hire15v,ready:ready15v,safejobs:safeJobs15,sale:sale15v2,mysale:mySale15,adspot:adSpot15v2});
+(function(){
+  const get=v=>v&&v.startsWith('job:')?()=>job15v(v.slice(4)):v&&v.startsWith('jobapps:')?()=>jobApps15(v.slice(8)):null;
+  const _rm=renderMatches;renderMatches=function(){if(P15on()&&P15.v&&get(P15.v))return get(P15.v)();return _rm()};
+  const _me=renderMe;renderMe=function(){if(P15on()&&P15.v&&get(P15.v))return get(P15.v)();return _me()};
+  const grab=()=>{['p15-jemp','p15-jt','p15-jmust','p15-jar'].forEach(id=>{const x=document.getElementById(id);if(x){P15.jf=P15.jf||{};P15.jf[{'p15-jemp':'emp','p15-jt':'t','p15-jmust':'must','p15-jar':'ar'}[id]]=x.value}});
+    ['p15-it','p15-ia','p15-anm','p15-hn2'].forEach(id=>{const x=document.getElementById(id);if(x)P15.f[id.slice(4)]=x.value});const wa=document.getElementById('p15-war');if(wa&&P15.wf)P15.wf.area=wa.value};
+  const _f=A.p15f;A.p15f=function(el){grab();return _f(el)};
+  Object.assign(A,{
+    async p15walletBuy(){if(P15.busy)return;P15.busy='wal';render();try{await API.rpc('buy_wallet15',{prod:P15.f.wp||'wallet_249'});if(P15.ib)P15.ib.expert=undefined;await load15();toast('Money added to your wallet.','tick2')}catch(e){const m=em15(e);toast(m.includes('plan needed')?'Start your business plan first.':m.includes('not open')?'Payments open soon.':'Could not add money. Please try again.','info')}P15.busy='';render()},
+    p15qp(el){const q=P15.qp=P15.qp||{},v=q[el.dataset.id]=q[el.dataset.id]||{p:200,inc:[]};v.p=Math.max(10,Math.min(100000,v.p+Number(el.dataset.d)));render()},
+    p15qi(el){const q=P15.qp=P15.qp||{},v=q[el.dataset.id]=q[el.dataset.id]||{p:200,inc:[]},x=el.dataset.val;v.inc=v.inc.includes(x)?v.inc.filter(y=>y!==x):v.inc.concat(x);render()},
+    async p15qsend(el){const b=bizOf15('expert'),v=(P15.qp||{})[el.dataset.id]||{p:200,inc:[]};try{await API.rpc('ask_quote15',{aid:el.dataset.id,bid:b.id,pc:Math.round(v.p*100),inc:v.inc});P15.ib.expert=undefined;toast('Your price is sent.','tick2')}catch(e){toast('Could not send your price.','info')}render()},
+    p15wm(el){const w=P15.wf=P15.wf||{skills:[],langs:[],avail:[]};grab();const k=el.dataset.k,v=el.dataset.val;w[k]=(w[k]||[]).includes(v)?w[k].filter(x=>x!==v):(w[k]||[]).concat(v);render()},
+    p15wset(el){const w=P15.wf=P15.wf||{};grab();w[el.dataset.k]=el.dataset.val==='1';render()},
+    async p15wsave(){const w=P15.wf||{};grab();if(!(w.skills||[]).length){toast('Please pick at least one thing you can do.','info');return}P15.busy='wp';render();
+      try{await API.rpc('workprof_set15',{sk:w.skills,lg:w.langs||[],av:w.avail||[],pm:!!w.permit,ar:w.area||'',rd:!!w.ready});P15.wp=Object.assign({},w);P15.wf=null;P15.v='jobs';toast('Your Work Profile is saved.','tick2')}catch(e){toast('Could not save. Please try again.','info')}P15.busy='';render()},
+    p15jf(el){grab();P15.jf[el.dataset.k]=el.dataset.val;render()},
+    p15jm(el){grab();const f=P15.jf,v=el.dataset.val;f.langs=(f.langs||[]).includes(v)?f.langs.filter(x=>x!==v):(f.langs||[]).concat(v);render()},
+    p15jstp(el){grab();const f=P15.jf,k=el.dataset.k;f[k]=Math.max(Number(el.dataset.min),Math.min(Number(el.dataset.max),Number(f[k]||0)+Number(el.dataset.d)));render()},
+    async p15jobPost(){if(P15.busy)return;grab();const f=P15.jf;if((f.emp||'').trim().length<2){toast('Please write the name people see.','info');return}if((f.t||'').trim().length<3){toast('Please write the job title.','info');return}
+      P15.busy='job';render();
+      try{await API.rpc('job_post15',{w:f.who,emp:f.emp,t:f.t,c:f.cat,pc:Math.round(f.pay*100),hrs:f.hrs,sch:f.sch,lg:f.langs||[],mst:f.must||'',ar:f.ar||''});P15.jf=null;P15.jb={};P15.v='jobs';toast('Your job is live for 30 days.','tick2')}
+      catch(e){toast(em15(e).includes('not open')?'Payments open soon.':'Could not post. Please try again.','info')}P15.busy='';render()},
+    async p15jobApply(el){if(P15.busy)return;if(!(P15.wp&&P15.wp.skills&&P15.wp.skills.length)){P15.v='workprof';toast('First a quick Work Profile (no typing).','info');render();return}
+      P15.busy='apply';render();try{await API.rpc('job_apply15',{jid:el.dataset.id});P15.jb={};P15.v='jobs';toast('Applied. The employer sees your Work Profile.','tick2')}catch(e){toast('Could not apply. Please try again.','info')}P15.busy='';render()},
+    async p15jobRep(el){if(!confirm15('Report this job? For example: it asks for money, or the pay is not real.'))return;try{await API.rpc('job_report15',{jid:el.dataset.id,why:'reported'});toast('Thank you. We look at it.','tick2')}catch(e){toast('Could not report.','info')}},
+    async p15jobFeat(el){try{await API.rpc('job_feature15',{jid:el.dataset.id});P15.jb={};toast('Featured for 7 days.','tick2')}catch(e){toast(em15(e).includes('not open')?'Payments open soon.':'Could not feature.','info')}render()},
+    async p15jobClose(el){try{await API.rpc('job_close15',{jid:el.dataset.id});P15.jb={};P15.v='jobs';toast('Marked as filled.','tick2')}catch(e){toast('Could not save.','info')}render()},
+    async p15hireBuy(){if(P15.busy)return;grab();if(!bizOf15('employer')&&(P15.f.hn2||'').trim().length<2){toast('Please write your business name.','info');return}P15.busy='hire';render();
+      try{await API.rpc('buy_hire15',{nm:P15.f.hn2||'',prod:planKey15('hire_plan')});await load15();P15.jb={};toast('Your Hiring plan is active.','tick2')}catch(e){toast(em15(e).includes('not open')?'Payments open soon.':'Could not start the plan.','info')}P15.busy='';render()},
+    async p15jconn(el){try{await API.rpc('job_connect15',{target:el.dataset.id});P15.rd={};toast('Connected. Their name and email are open now.','tick2')}catch(e){toast(em15(e).includes('not open')?'Payments open soon.':'Could not connect.','info')}render()},
+    async p15want(el){try{const r=await API.rpc('sale_want15',{sid:el.dataset.id});P15.sw=Object.assign(P15.sw||{},{[el.dataset.id]:(r&&r.email)||''});toast('The seller sees you want it. Write to them to agree a pick-up time.','tick2')}catch(e){toast(em15(e).includes('plus')?'Seller contact opens with Plus.':em15(e).includes('sold')?'Already sold.':'Could not send.','info')}render()},
+    async p15sellPlan(){if(P15.busy)return;const f=P15.f;P15.busy='sp';render();
+      try{await API.rpc('sell_plan15',{prod:f.sp2||'sale_home',lv:f.lv||null,ta:Math.round(Number(f.ta||0)*100)});P15.ms=undefined;toast('Your sale is open. Add your items.','tick2')}catch(e){toast(em15(e).includes('not open')?'Payments open soon.':'Could not start.','info')}P15.busy='';render()},
+    async p15itemAdd(){if(P15.busy)return;grab();const f=P15.f;if((f.it||'').trim().length<3){toast('Please write what it is.','info');return}P15.busy='it';render();
+      try{await API.rpc('sale_add15',{t:f.it,c:f.ic||'Other',cd:f.cd||'Good',pc:Math.round(Number(f.ip||100)*100),pb:null,ar:f.ia||''});f.it='';P15.ms=undefined;P15.sl=undefined;toast('Added. Buyers near you can see it.','tick2')}catch(e){toast(em15(e).includes('full')?'Your plan is full.':'Could not add.','info')}P15.busy='';render()},
+    async p15sold(el){try{await API.rpc('sale_sold15',{sid:el.dataset.id});P15.ms=undefined;P15.sl=undefined}catch(e){toast('Could not save.','info')}render()},
+    async p15boost(el){try{await API.rpc('sale_boost15',{sid:el.dataset.id});P15.ms=undefined;P15.sl=undefined;toast('Boosted for 7 days.','tick2')}catch(e){toast(em15(e).includes('not open')?'Payments open soon.':'Could not boost.','info')}render()},
+    async p15drop(){if(!confirm15('Lower the price of every unsold item by 10%?'))return;try{const n=await API.rpc('sale_drop15',{pct:10});P15.ms=undefined;P15.sl=undefined;toast(`${n} prices lowered.`,'tick2')}catch(e){toast('Could not change prices.','info')}render()},
+    async p15adBook(){if(P15.busy)return;grab();const f=P15.f;['at','ab','au'].forEach(k=>{const x=document.getElementById('p15-'+k);if(x)f[k]=x.value.trim()});
+      if(!f.awk){toast('Please pick a week.','info');return}if((f.at||'').length<4){toast('Please write a headline (at least 4 letters).','info');return}if(!/^https:\/\/[^\s.]+\.[^\s]+$/i.test(f.au||'')){toast('Please paste a full link starting with https://','info');return}
+      P15.busy='ad';render();
+      try{await API.rpc('ad_book15',{nm:f.anm||(S.me||{}).name||'Advertiser',pl:f.apl||'city',wk:f.awk,t:f.at,bd:f.ab||'',u:f.au});['awk','at','ab','au'].forEach(k=>delete f[k]);P15.ads=undefined;P15.aw={};toast('Received. We look at your ad before it goes live.','tick2')}
+      catch(e){const m=em15(e);toast(m.includes('taken')?'This week was just taken. Please pick another.':m.includes('not open')?'Payments open soon.':'Please check the headline and link.','info')}P15.busy='';render()}
+  });
+  const _bk=A.p15back;A.p15back=function(el){const v=P15.v||'';
+    if(v.startsWith('job:')||['workprof','postjob','safejobs'].includes(v)){P15.v='jobs';render();return}
+    if(['hire','ready'].includes(v)||v.startsWith('jobapps:')){P15.v=v.startsWith('jobapps:')?'job:'+v.slice(8):'postjob';render();return}
+    if(v==='wallet'){P15.v='inbox:expert';render();return}
+    if(v==='mysale'){P15.v='sale';render();return}
+    if(v==='ask:service'){P15.v=null;render();return}
+    if(v==='inbox:expert'){P15.v='expplan';render();return}
+    return _bk(el)};
+})();
+
+if(typeof IC!=='undefined'&&!IC.truck)Object.assign(IC,{truck:'<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/>'});
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
