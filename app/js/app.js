@@ -3875,6 +3875,7 @@ function events15(){
   const t=[['heart','mint','Friend Meetups','Dinner tables, walks, games','meetups'],['tv2','lem','Watch Parties','Big matches on a big screen','watch'],['party','fern','Festivals','Diwali, Eid, Lunar New Year, Christmas','festival'],
     ['bus2','mint','Day Trips','Bus trips with a host','trip'],['ball2','lem','Sports Leagues','Join a team or find players','league']];
   return p15wrap(p15top('Events & Friends')+`<p class="p15-sub">Hosts from your city run them. You just book a seat.</p><div class="p15-bento">${t.map((x,i)=>p15tile(x[0],x[1],x[2],x[3],'p15open" data-v="ev-'+x[4],'').replace('p15-t"','p15-t'+(i===0?' span2':'')+'"')).join('')}</div>
+  <button class="p15-g p15-row" data-a="p15open" data-v="club"><span class="p15-b lem">${ic('party')}</span><span class="tx"><b>Weekend Club Membership</b><small>${P15.d&&P15.d.club?'Active · no booking fee':'No booking fee · book 48 hours early'}</small></span>${ic('chev2')}</button>
   <button class="p15-g p15-row" data-a="p15open" data-v="tickets"><span class="p15-b mint">${ic('qr')}</span><span class="tx"><b>My Tickets</b><small>QR tickets for the events you booked</small></span>${ic('chev2')}</button>
   ${P15.d&&!P15.d.plus?`<button class="p15-g p15-row" data-a="p15open" data-v="plus"><span class="p15-b lem">${ic('star2')}</span><span class="tx"><b>Event details open with Plus</b><small>You can see names and dates for free</small></span>${ic('chev2')}</button>`:''}`)}
 function plus15(){const d=P15.d||{};
@@ -3938,9 +3939,12 @@ function evDetail15(id){const e=evFind(id);if(!e)return p15wrap(p15top('Event',t
   <div class="p15-kv"><div><small>When</small><b>${esc(evWhen(e))}</b></div><div><small>Where</small><b>${esc(e.locked?e.city:(e.venue||e.city))}</b></div><div><small>Seats left</small><b>${e.left} / ${e.seats}</b></div></div>
   ${e.locked?`<button class="p15-g p15-row" data-a="p15open" data-v="plus"><span class="p15-b lem">${ic('lock2')}</span><span class="tx"><b>Place and details open with Plus</b><small>Or book a seat: they show on your ticket</small></span>${ic('chev2')}</button>`:
    (e.notes||[]).length?`<div class="p15-g p15-steps">${e.notes.map(n=>`<div class="p15-step"><span class="p15-dot">${ic('tick2')}</span><span><b>${esc(n)}</b></span></div>`).join('')}</div>`:''}
-  ${e.left?`<div class="p15-qty"><span>Seats</span><button data-a="p15n" data-d="-1" aria-label="Fewer">−</button><b>${P15.n}</b><button data-a="p15n" data-d="1" aria-label="More">+</button></div>
-  ${D15()?`<div class="p15-buy"><span><b>${e.price?money(e.price*P15.n,e.currency):'Free'}</b><small>${e.price?`to the host + ${money(fee,'USD')} booking fee`:'no booking fee'}</small></span><button class="p15-btn" data-a="p15book" data-id="${e.id}"${P15.busy==='book'?' disabled':''}>${P15.busy==='book'?'Booking…':e.price?`Book · ${money(fee,'USD')} fee`:'Book free'}</button></div>
-  <p class="p15-ex">${e.price?'You pay the ticket money straight to the host; your ticket shows how. NeuMarry only takes the booking fee. Host cancels: your booking fee comes back as a free booking, and the host returns the ticket money. You cancel 48 hours before: the host returns the ticket money.':'Free event. Your seat is saved on your ticket.'}</p>`:
+  ${e.left?`<div class="p15-qty"><span>Adults</span><button data-a="p15n" data-d="-1" aria-label="Fewer adults">−</button><b>${P15.n}</b><button data-a="p15n" data-d="1" aria-label="More adults">+</button></div>
+  ${e.price?`<div class="p15-qty"><span>Kids 12 and under · half price</span><button data-a="p15k" data-d="-1" aria-label="Fewer kids">−</button><b>${P15.k||0}</b><button data-a="p15k" data-d="1" aria-label="More kids">+</button></div>`:''}
+  ${D15()?(()=>{const kids=P15.k||0,seats=P15.n+kids,tick=e.price*P15.n+Math.round(e.price/2)*kids,mem=!!(P15.d&&P15.d.club),cur=(P15.d&&P15.d.cur)||'USD',bf=(P15.d&&P15.d.prices&&P15.d.prices['bf_'+seats])||fee*seats;
+    return `<div class="p15-buy"><span><b>${e.price?money(tick,e.currency):'No ticket price'}</b><small>${e.price?(mem?'to the organizer · booking fee '+money(0,cur)+' (member)':'to the organizer + '+money(bf,cur)+' booking fee'):'no booking fee'}</small></span><button class="p15-btn" data-a="p15book" data-id="${e.id}"${P15.busy==='book'?' disabled':''}>${P15.busy==='book'?'Booking…':e.price&&!mem?`Book · ${money(bf,cur)} fee`:`Book ${seats} seat${seats>1?'s':''}`}</button></div>
+  ${e.price&&!mem?`<button class="p15-g p15-row" data-a="p15open" data-v="club"><span class="p15-b lem">${ic('star2')}</span><span class="tx"><b>Weekend Club members pay no booking fee</b><small>And book 48 hours before everyone</small></span>${ic('chev2')}</button>`:''}
+  <p class="p15-ex">${e.price?'You pay the ticket money straight to the organizer; your ticket shows how. NeuAmigo only takes the booking fee. You cancel 24 hours before or earlier: tell the organizer, who returns the ticket money.':'Your seat is saved on your ticket.'}</p>`})():
   `<div class="p15-buy"><span><b>${money(e.price,e.currency)}</b><small>+ ${money(fee,e.currency)} booking fee per seat</small></span><button class="p15-btn" data-a="p15book" data-id="${e.id}"${P15.busy==='book'?' disabled':''}>${P15.busy==='book'?'Booking…':`Pay ${money(e.price*P15.n+fee*P15.n,e.currency)}`}</button></div>
   <p class="p15-ex">Host cancels: all money back. You cancel 48 hours before: ticket money back, booking fee kept.${P15.d&&P15.d.payTest?' Test mode: no real money is taken.':''}</p>`}`:`<div class="p15-g p15-note">${ic('info')} This event is full.</div>`}`)}
 function tickets15(){const l=P15.tk;if(l===undefined){API.rpc('my_tickets15',{}).then(r=>{P15.tk=r;render()}).catch(()=>{P15.tk=[];render()});return p15wrap(p15top('My Tickets',true)+spinner('Loading'))}
@@ -3950,16 +3954,39 @@ function tickets15(){const l=P15.tk;if(l===undefined){API.rpc('my_tickets15',{})
     ${new Date(t.event.startsAt)-Date.now()>48*36e5?`<button class="p15-btn ghost" data-a="p15cancelT" data-id="${t.id}">${t.direct?'Cancel booking':'Cancel and get ticket money back'}</button>`:''}</div>`).join(''):`<div class="p15-g p15-note">${ic('cal')} No tickets yet. Book a seat in Events &amp; Friends.</div>`))}
 function qrSvg15(c){try{const q=qrcode(0,'M');q.addData('NM15:'+c);q.make();return q.createSvgTag({cellSize:6,margin:2,scalable:true})}catch(e){return ''}}
 Object.keys(EVK).forEach(k=>P15V[k]=()=>evList15(k));
+/* Weekend Club Membership (his final ok 11 Nov 2026 18:21): one weekend or one month, adult or family (2 adults + 3 kids).
+   Ticket money always goes to the organizer; members pay no booking fee and book 48 hours before everyone. Pay once, nothing renews. */
+function club15v(){const d=P15.d||{},t=P15.ct||'month',f=P15.cf||'f';const k='wc_'+(t==='weekend'?'weekend':'month')+'_'+f;
+  const perks=[['tick2','Booking fee: none','Others pay a booking fee on every seat'],['clock','Book 48 hours early','Your seats before the big events fill up'],['party','Members-only nights','Some nights are just for members'],['star2','Season points and badges','Points are just for fun, no money value']];
+  return p15wrap(p15top('Weekend Club',true)+`<div class="p15-g p15-hero"><span class="p15-b lem big">${ic('party')}</span><h2>Weekend Club Membership</h2><small>${d.club?`Active until ${esc(new Date(d.clubUntil).toLocaleDateString(RM_I18N.locale,{day:'numeric',month:'short'}))}`:'Ticket money goes to the organizer. Your membership makes every booking easier.'}</small></div>
+  <div class="p15-2"><button class="p15-g p15-pr${t==='weekend'?' on':''}" data-a="p15cf" data-k="ct" data-val="weekend"><b>One weekend</b></button><button class="p15-g p15-pr${t==='month'?' on':''}" data-a="p15cf" data-k="ct" data-val="month"><b>One month</b></button></div>
+  <div class="p15-2"><button class="p15-g p15-pr${f==='a'?' on':''}" data-a="p15cf" data-k="cf" data-val="a">${p15tag('wc_'+(t==='weekend'?'weekend':'month')+'_a','adult')}</button><button class="p15-g p15-pr${f==='f'?' on':''}" data-a="p15cf" data-k="cf" data-val="f">${p15tag('wc_'+(t==='weekend'?'weekend':'month')+'_f','family · 2 adults + 3 kids')}</button></div>
+  <div class="p15-g p15-list">${perks.map(p=>`<div class="p15-li"><span class="p15-b mint">${ic(p[0])}</span><span class="tx"><b>${p[1]}</b><small>${p[2]}</small></span>${ic('tick2')}</div>`).join('')}</div>
+  ${p15launch([k],'members')}
+  <button class="p15-btn" data-a="p15buyClub" data-k="${k}"${P15.busy==='club'?' disabled':''}>${P15.busy==='club'?'Starting…':`Join · ${p15price(k)}`}</button>
+  <p class="p15-ex">Pay once. Nothing renews by itself. Kids 12 and under pay half the ticket price at every event.</p>`)}
+/* Organizer Seat Credits: 1 credit = 1 booked seat; back when a guest cancels 24 hours before. Ticket money is 100% the organizer's. */
+function credits15v(){const d=P15.d||{},n=d.seatCredits||0;
+  const packs=[['sc_100','100 seats'],['sc_500','500 seats'],['sc_1000','1,000 seats']];
+  return p15wrap(p15top('Seat Credits',true)+`<div class="p15-g p15-hero"><span class="p15-b lem big">${ic('qr')}</span><h2>${n.toLocaleString('en')} credits</h2><small>1 credit = 1 booked seat · never expire · back if a guest cancels 24 hours before</small></div>
+  <div class="p15-g p15-list">${packs.map(([k,l])=>`<button class="p15-li" data-a="p15buyCredits" data-k="${k}" style="width:100%;border:0;background:transparent;color:inherit;text-align:left"><span class="p15-b mint">${ic('qr')}</span><span class="tx"><b>${l}</b><small>${p15price(k)}</small></span>${ic('chev2')}</button>`).join('')}</div>
+  <p class="p15-ex">Your ticket money is 100% yours, paid to you directly. Seats open for booking only while you have credits.</p>`)}
+P15V.club=club15v;P15V.credits=credits15v;
+
 P15V.tickets=tickets15;
 (function(){
   const _o=P15V;const get=v=>v&&v.startsWith('evd:')?()=>evDetail15(v.slice(4)):null;
   const _rm=renderMatches;renderMatches=function(){if(P15on()&&P15.v&&get(P15.v))return get(P15.v)();return _rm()};
   const _me=renderMe;renderMe=function(){if(P15on()&&P15.v&&get(P15.v))return get(P15.v)();return _me()};
   Object.assign(A,{
-    p15n(el){P15.n=Math.max(1,Math.min(10,P15.n+Number(el.dataset.d)));render()},
+    p15n(el){P15.n=Math.max(1,Math.min(10-(P15.k||0),P15.n+Number(el.dataset.d)));render()},
+    p15cf(el){P15[el.dataset.k]=el.dataset.val;render()},
+    async p15buyClub(el){if(P15.busy)return;P15.busy='club';render();try{await API.rpc('buy_club15',{prod:el.dataset.k});await load15();toast('Your Weekend Club membership is active.','star2')}catch(e){if(!P15.shownAt||Date.now()-P15.shownAt>1500)toast('Could not start the membership. Please try again.','info')}P15.busy='';render()},
+    async p15buyCredits(el){if(P15.busy)return;P15.busy='cr';render();try{const r=await API.rpc('buy_seat_credits15',{prod:el.dataset.k});await load15();toast(`You now have ${(r&&r.credits)||''} Seat Credits.`,'tick2')}catch(e){if(!P15.shownAt||Date.now()-P15.shownAt>1500)toast(em15(e).includes('organizers only')?'Seat Credits are for event organizers.':'Could not add credits. Please try again.','info')}P15.busy='';render()},
+    p15k(el){P15.k=Math.max(0,Math.min(10-P15.n,(P15.k||0)+Number(el.dataset.d)));render()},
     async p15book(el){if(P15.busy)return;const id=el.dataset.id,e=evFind(id);if(!e)return;P15.busy='book';render();
-      try{const r=await API.rpc('book15',{eid:id,n:P15.n});P15.tk=undefined;P15.ev[e.kind]=undefined;P15.n=1;P15.v='tickets';toast(r&&r.direct&&r.toHost?'Booked. Pay the host as your ticket shows.':'Booked. Your ticket is ready.','tick2')}
-      catch(x){const m=em15(x);toast(m.includes('plus members')?'For the first 24 hours only Plus members can book.':m.includes('not enough')?'Not enough seats left.':m.includes('not open')?'Payments open soon.':'Could not book. Please try again.','info')}
+      try{const r=await API.rpc('book15',{eid:id,n:P15.n,kids:P15.k||0});P15.tk=undefined;P15.ev[e.kind]=undefined;P15.n=1;P15.k=0;P15.v='tickets';toast(r&&r.direct&&r.toHost?'Booked. Pay the host as your ticket shows.':'Booked. Your ticket is ready.','tick2')}
+      catch(x){const m=em15(x);toast(m.includes('members book first')||m.includes('plus members')?'For the first 48 hours only members can book.':m.includes('seats are not open')?'Seats for this event open soon.':m.includes('not enough')?'Not enough seats left.':m.includes('not open')?'Payments open soon.':'Could not book. Please try again.','info')}
       P15.busy='';render()},
     async p15cancelT(el){try{const r=await API.rpc('cancel_ticket15',{tid:el.dataset.id});P15.tk=undefined;toast(r&&r.direct?(r.hostPaid?'Cancelled. Ask the host to send your ticket money back.':'Cancelled.'):'Cancelled. Ticket money comes back.','tick2')}catch(x){toast(em15(x).includes('too late')?'Less than 48 hours left, so it can no longer be cancelled.':'Could not cancel. Please try again.','info')}render()}
   });
@@ -3996,7 +4023,7 @@ function newEv15(){const f=P15.f;f.kind=f.kind||'meetup';f.day=f.day||days15()[5
   <label>Who can come</label>${chips15('who',[['all','Everyone'],['women','Women only'],['men','Men only'],['u30','Under 30'],['30plus','30 and over']],f.who)}${D15()&&f.price!=='0'?payHowForm15(f):''}</div>
   <button class="p15-btn" data-a="p15evCreate"${P15.busy==='ev'?' disabled':''}>${P15.busy==='ev'?'Saving…':'Publish event'}</button>`)}
 function board15(){const l=P15.hb;if(l===undefined){API.rpc('host_board15',{}).then(r=>{P15.hb=r;render()}).catch(()=>{P15.hb=[];render()});return p15wrap(p15top('Host Dashboard',true)+spinner('Loading'))}
-  return p15wrap(p15top('Host Dashboard',true)+(l.length?l.map(e=>`<div class="p15-g p15-hb"><div class="p15-hbh"><b>${esc(e.title)}</b><span class="p15-pill${e.status==='open'?'':' y'}">${e.status==='open'?'Open':e.status==='cancelled'?'Cancelled':'Done'}</span></div>
+  return p15wrap(p15top('Host Dashboard',true)+`<button class="p15-g p15-row" data-a="p15open" data-v="credits"><span class="p15-b lem">${ic('qr')}</span><span class="tx"><b>Seat Credits: ${((P15.d&&P15.d.seatCredits)||0).toLocaleString('en')}</b><small>1 credit = 1 booked seat · add more</small></span>${ic('chev2')}</button>`+(l.length?l.map(e=>`<div class="p15-g p15-hb"><div class="p15-hbh"><b>${esc(e.title)}</b><span class="p15-pill${e.status==='open'?'':' y'}">${e.status==='open'?'Open':e.status==='cancelled'?'Cancelled':'Done'}</span></div>
     <small>${esc(evWhen(e))} · ${e.sold} of ${e.seats} seats sold · ${e.checkedIn} checked in</small><div class="p15-bar"><i style="width:${Math.round(100*e.sold/Math.max(1,e.seats))}%"></i></div>
     ${e.direct||D15()?`<div class="p15-kv"><div><small>Tickets</small><b>${money(e.tickets,e.currency)}</b></div><div><small>Paid to you</small><b class="p15-acc">${money(e.got,e.currency)}</b></div><div><small>Still to get</small><b>${money(e.toGet,e.currency)}</b></div></div>
     <button class="p15-g p15-row" data-a="p15open" data-v="guests:${e.id}"><span class="p15-b mint">${ic('user')}</span><span class="tx"><b>Guests and payments</b><small>${esc(e.payHow||'Add how guests pay you')}</small></span>${ic('chev2')}</button>`:
@@ -4039,7 +4066,7 @@ Object.assign(P15V,{host:hostPlans15,newev:newEv15,hostboard:board15,door:door15
       catch(e){toast('Camera is not allowed. Type the code instead.','info')}}
   });
   const _back=A.p15back;A.p15back=function(el){if(P15.cam){P15.cam.getTracks().forEach(t=>t.stop());P15.cam=null}P15.dr=null;
-    const up={newev:'hostboard',door:'hostboard',hostboard:'host'};if(up[P15.v]){P15.v=up[P15.v];render();return}return _back(el)};
+    const up={newev:'hostboard',door:'hostboard',hostboard:'host',credits:'hostboard'};if(up[P15.v]){P15.v=up[P15.v];render();return}return _back(el)};
 })();
 function confirm15(m){try{return window.confirm(m)}catch(e){return true}}
 
