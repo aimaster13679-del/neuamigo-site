@@ -5446,6 +5446,80 @@ Object.assign(P15V,{search:search15v,create:create15v});
   const _bk=A.p15back;A.p15back=function(el){if(P15.v==='search'||P15.v==='create'){P15.v=null;render();return}return _bk(el)};
 })();
 
+/* ---------- v6: a completely new look (his ask 12 Nov 2026 02:00 "abhi wale looks ka kuch bhi nahi chahiye") ----------
+   Editorial "Today" cards, big bold type, real HD photos instead of any icon (his rule 01:59: no simple icons anywhere),
+   text-only floating menu with a centre "Post", one-question-per-screen request flow. Photos always whole, never text on a photo.
+   Mock first: on only with localStorage nm.p15v6 = '1' until he says ok (then V6_LIVE = true). */
+const V6_LIVE = false;
+function T6(){try{return localStorage.getItem('nm.p15v6t')||'A'}catch(e){return 'A'}}
+function V6(){try{return V6_LIVE||localStorage.getItem('nm.p15v6')==='1'}catch(e){return V6_LIVE}}
+const img6=(p,alt)=>`<span class="x6-ph"><img src="img/p15/${p}.webp" alt="${esc(alt||'')}" loading="lazy" decoding="async"></span>`;
+const F6={home:['room','Find a Home','Rooms, flats and roommates','rooms'],job:['office','Find a Job','Pay and hours on every job','jobs'],quote:['boxes','Get 5 Quotes','Moving, cleaning, tax, repairs','ask:service'],
+  expert:['docs','Find an Expert','Visa, tax and insurance advisers','experts'],sell:['sofa','Buy & Sell Used','From people moving out','sale'],parents:['plane','Flight Helper','Someone on your parents\' flight','buddy'],
+  events:['hall','Events','Meetups, matches, festivals','ev15'],club:['table','Weekend Club','Members book first','club'],friends:['table','Meet New Friends','Dinners, walks and games','meetups'],
+  watch:['stadium','Watch Matches','Big screen, big crowd','watch'],fest:['lantern','Festivals & Culture','Nights from every country','festival'],trip:['trip','Day Trips','Bus trips with a host','trip'],league:['league','Play in a League','Join a team or find players','league']};
+const go6=(k)=>{const v=F6[k][3];return v==='ev15'?'data-a="tab" data-k="ev15"':`data-a="p15open" data-v="${v}"`};
+const hi6=()=>{const h=new Date().getHours();return h<5?'Hi':h<12?'Good morning':h<17?'Good afternoon':'Good evening'};
+function top6(){const lt=document.documentElement.classList.contains('gl-lt'),me=S.me||{};
+  return `<div class="x6-top"><b class="x6-word">NeuAmigo</b><span class="x6-city">${esc(me.city||'Your city')}</span><button class="x6-pill" data-a="p15theme">${lt?'Dark':'Light'}</button></div>`}
+function search6(){const c=(S.me||{}).city||'your city',W=['a room in '+c,'a job near you','movers for Saturday','visa help','a football team','new friends'];
+  return `<button class="x6-search" data-a="p15open" data-v="search"><span>Search</span><span class="x6-roll" aria-hidden="true"><span>${W.concat(W[0]).map(w=>`<i>${esc(w)}</i>`).join('')}</span></span></button>`}
+function today6(list){return `<div class="x6-rail">${list.map(([k,over,title,sub],i)=>`<button class="x6-today" ${go6(k)} style="--i:${i}">${img6(F6[k][0])}<span class="x6-tb"><small>${esc(over)}</small><b>${esc(title)}</b><span>${esc(sub)}</span><em>Open →</em></span></button>`).join('')}</div>`}
+function picks6(keys){return `<div class="x6-picks">${keys.map((k,i)=>`<button ${go6(k)} style="--i:${i}">${img6(F6[k][0])}<span>${esc(F6[k][1].replace('Find a ','').replace('Get 5 ','').replace('Find an ','').replace('Buy & Sell Used','Sell'))}</span></button>`).join('')}</div>`}
+const PL6=[['home','Find a home','rooms'],['sim','Phone plan + bank account','experts'],['job','Find a job','jobs'],['move','Help moving in','ask:service'],['friends','Meet people near you','meetups'],['parents','Plan your parents\' visit','buddy']];
+const pd6=()=>{try{return JSON.parse(localStorage.getItem('nm.p15plan')||'[]')}catch(e){return []}};
+function plan6(){const d=pd6(),n=d.length,t=PL6.length;
+  return `<div class="x6-sec"><b>Your first 30 days</b><span>${n} of ${t}</span></div><div class="x6-bar"><i style="width:${Math.round(n/t*100)}%"></i></div>
+   <div class="x6-rail x6-steps">${PL6.map(([k,l,v],i)=>{const on=d.includes(k);return `<div class="x6-step${on?' on':''}"><span class="x6-num">${String(i+1).padStart(2,'0')}</span><b>${esc(l)}</b><div class="x6-sa"><button data-a="p15open" data-v="${v}">Start</button><button class="x6-done" data-a="x6tick" data-k="${k}" aria-pressed="${on}">${on?'Done ✓':'Mark done'}</button></div></div>`}).join('')}</div>`}
+function week6(){const key='ev:'+((S.me||{}).city||''),l=(P15.v6ev||{})[key];
+  if(l===undefined){P15.v6ev=Object.assign(P15.v6ev||{},{[key]:null});API.rpc('events15',{k:'',cty:(S.me||{}).city||''}).then(r=>{P15.v6ev[key]=r||[];render()}).catch(()=>{P15.v6ev[key]=[]})}
+  const ev=(l||[]).slice(0,8),PH={meetup:'table',watch:'stadium',festival:'lantern',trip:'trip',league:'league'};
+  return `<div class="x6-sec"><b>This weekend</b><button data-a="tab" data-k="ev15">See all</button></div><div class="x6-rail">${ev.length?ev.map(e=>`<button class="x6-ev" data-a="p15open" data-v="evd:${e.id}">${img6(PH[e.kind]||'hall')}<span class="x6-eb"><small>${esc(evWhen(e))}</small><b>${esc(e.title)}</b><span>${e.price?money(e.price,e.currency):'No ticket price'} · ${e.left} left</span></span></button>`).join(''):
+    `<button class="x6-ev" data-a="p15open" data-v="host">${img6('hall')}<span class="x6-eb"><small>No events yet in ${esc((S.me||{}).city||'your city')}</small><b>Host the first one</b><span>Your event, your ticket price</span></span></button>`}</div>`}
+function list6(keys,start){return `<div class="x6-list">${keys.map((k,i)=>`<button class="x6-row" ${go6(k)} style="--i:${i}"><span class="x6-n">${String((start||1)+i).padStart(2,'0')}</span><span class="x6-rt"><b>${esc(F6[k][1])}</b><small>${esc(F6[k][2])}</small></span>${img6(F6[k][0])}</button>`).join('')}</div>`}
+const CB6={home:['#2B59FF','#fff'],job:['#FF6B2C','#fff'],quote:['#B8F23A','#10140A'],expert:['#FF5FA2','#fff'],sell:['#12B886','#fff'],parents:['#00B3C7','#fff'],events:['#FFC93C','#1A1405'],club:['#15130F','#fff'],
+  friends:['#FF5FA2','#fff'],watch:['#2B59FF','#fff'],fest:['#FF6B2C','#fff'],trip:['#12B886','#fff'],league:['#B8F23A','#10140A']};
+function bento6(keys){return `<div class="x6-bento">${keys.map((k,i)=>{const c=CB6[k]||['#15130F','#fff'];return `<button class="x6-bt${i===0?' big':''}" ${go6(k)} style="--bg:${c[0]};--fg:${c[1]};--i:${i}">${img6(F6[k][0])}<b>${esc(F6[k][1])}</b><small>${esc(F6[k][2])}</small></button>`}).join('')}</div>`}
+function home6(){const me=S.me||{};return p15wrap(top6()+`<h1 class="x6-h1">${esc(hi6())}${me.name?', '+esc(me.name.split(' ')[0]):''}.<br><span>What do you need today?</span></h1>`+search6()+
+  (T6()==='C'?bento6(['home','job','quote','expert','sell','parents','events','club']):today6([['home','SETTLE IN','A home that fits','Rooms, flats and roommates by budget'],['quote','HELP IN ONE TAP','5 quotes, zero calls','Movers, cleaning, tax, repairs'],['job','WORK','Jobs with pay shown upfront','Hours and pay on every job'],['events','THIS WEEKEND','Your weekend, sorted','Meetups, matches, festivals'],['parents','FAMILY','Parents flying alone?','Someone on the same flight helps']])+
+  `<div class="x6-sec"><b>Quick picks</b></div>`+picks6(['home','job','quote','expert','sell','parents','events','club']))+plan6()+week6())}
+function settle6(){return p15wrap(top6()+`<h1 class="x6-h1">Settle In<br><span>Your first months, sorted.</span></h1>`+search6()+(T6()==='C'?bento6(['home','job','quote','expert','sell','parents']):list6(['home','job','quote','expert','sell','parents']))+plan6()+
+  `<div class="x6-sec"><b>Your things</b></div><div class="x6-list">${(typeof PC15==='function'&&PC15()?[['Chats','People you are connected to','chats','office']]:[]).concat([['My requests','Quotes, Room Wanted, teams','myasks','boxes'],['My tickets','Seats and QR codes','tickets','hall']]).map(([t,s,v,p],i)=>`<button class="x6-row" data-a="p15open" data-v="${v}"><span class="x6-n">${String(i+7).padStart(2,'0')}</span><span class="x6-rt"><b>${t}</b><small>${s}</small></span>${img6(p)}</button>`).join('')}</div>`)}
+function events6(){const d=P15.d||{};return p15wrap(top6()+`<h1 class="x6-h1">Events<br><span>Meet people every week.</span></h1>`+
+  `<button class="x6-club" data-a="p15open" data-v="club">${img6('hall')}<span class="x6-cb"><small>WEEKEND CLUB</small><b>${d.club?'You are a member':'Big weekend nights, members first'}</b><span>${d.club?'Book before everyone, pick your seat':'No booking fee · book 48 hours early'}</span><em>${d.club?'Open':'Join'}</em></span></button>`+
+  week6()+(T6()==='C'?bento6(['friends','watch','fest','trip','league']):list6(['friends','watch','fest','trip','league']))+`<button class="x6-wide" data-a="p15open" data-v="ask:player">No team yet? <b>Find me a team →</b></button>`)}
+/* one question per screen for "Get 5 Quotes" */
+const Q6=[{k:'cat',q:'What do you need?',o:[['Movers','Moving house','boxes'],['Cleaning','Home cleaning','room'],['Tax','Tax filing','docs'],['Insurance','Insurance','keys'],['Small jobs','Repairs & fixes','tools'],['Immigration','Visa help','plane']]},
+  {k:'what',q:'How big is the job?',o:[['Room','A room'],['1-bed','1 bedroom'],['2-bed','2 bedrooms'],['House','A house']]},
+  {k:'when',q:'When?',o:[['This week','This week'],['next','Next weekend'],['Flexible','I\'m flexible']]},
+  {k:'dist',q:'How far?',o:[['Same city','Same city'],['Other city','Another city']]}];
+function quote6(){const q=P15.q&&P15.q.k==='service'?P15.q:(P15.q={k:'service'}),st=Math.min(P15.qs||0,4),steps=Q6.filter(s=>s.k!=='dist'||q.cat==='Movers');
+  if(st>=steps.length){const sum=askSum15('service',Object.assign({},q,{cat:q.cat}));
+    return p15wrap(`<div class="x6-qtop"><button class="x6-back" data-a="x6qprev">← Back</button><span>Ready</span></div><h1 class="x6-h1 q">Here's your request</h1>
+     <div class="x6-sum">${img6((Q6[0].o.find(o=>o[0]===q.cat)||[0,0,'boxes'])[2])}<div><small>GET 5 QUOTES</small><b>${esc(sum)}</b><span>Goes to at most 5 businesses in ${esc((S.me||{}).city||'your city')}, then closes. No charge to ask.</span></div></div>
+     <p class="x6-note">NeuAmigo does not check businesses. Ask for their licence or insurance when it matters, and pay the one you pick directly.</p>
+     <button class="x6-cta" data-a="p15askPost" data-k="service"${P15.busy==='ask'?' disabled':''}>${P15.busy==='ask'?'Sending…':'Send to 5 businesses'}</button>`)}
+  const s=steps[st];
+  return p15wrap(`<div class="x6-qtop"><button class="x6-back" data-a="${st?'x6qprev':'p15back'}">← Back</button><span>Step ${st+1} of ${steps.length}</span></div><div class="x6-bar"><i style="width:${Math.round(st/steps.length*100)}%"></i></div>
+   <h1 class="x6-h1 q">${esc(s.q)}</h1><div class="x6-ans${s.o[0][2]?' ph':''}">${s.o.map(([v,l,p],i)=>`<button class="${q[s.k]===v?'on':''}" data-a="x6ans" data-k="${s.k}" data-val="${esc(v)}" style="--i:${i}">${p?img6(p):''}<b>${esc(l)}</b>${q[s.k]===v?'<em>✓</em>':''}</button>`).join('')}</div>`)}
+Object.assign(P15V,{});
+(function(){
+  const _h=home15;home15=function(){return V6()?home6():_h()};
+  const _s=settle15;settle15=function(){return V6()?settle6():_s()};
+  const _e=events15;events15=function(){return V6()?events6():_e()};
+  const _af=askForm15;askForm15=function(k){return V6()&&k==='service'?quote6():_af(k)};
+  const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);if(!V6()||!(typeof P15on==='function'&&P15on())||P15.mat)return;const nav=document.querySelector('.navwrap .nav');if(!nav)return;
+    const cur=P15.v&&S.tab==='me'?'me':S.tab==='settle'||S.tab==='ev15'||S.tab==='me'?S.tab:'matches';
+    const b=(k,l)=>`<button data-a="tab" data-k="${k}" class="${cur===k?'on':''}" aria-current="${cur===k?'page':'false'}"><span>${l}</span></button>`;
+    nav.className='nav x6nav';nav.innerHTML=b('matches','Home')+b('settle','Settle')+`<button class="x6-post" data-a="p15open" data-v="create">Post</button>`+b('ev15','Events')+b('me','Me')};
+  Object.assign(A,{
+    x6tick(el){const d=pd6(),k=el.dataset.k,i=d.indexOf(k);if(i<0)d.push(k);else d.splice(i,1);try{localStorage.setItem('nm.p15plan',JSON.stringify(d))}catch(e){}render()},
+    x6ans(el){const q=P15.q=P15.q&&P15.q.k==='service'?P15.q:{k:'service'};q[el.dataset.k]=el.dataset.val==='next'?((wkDays15()[0])||'Next weekend'):el.dataset.val;render();setTimeout(()=>{P15.qs=(P15.qs||0)+1;A.__x6fwd=1;render()},260)},
+    x6qprev(){P15.qs=Math.max(0,(P15.qs||0)-1);render()}});
+  const _o=A.p15open;A.p15open=function(el){if(el&&el.dataset&&el.dataset.v==='ask:service')P15.qs=0;return _o(el)};
+  const _r=render;render=function(){try{const d=document.documentElement,on=V6(),t=T6();d.classList.toggle('p15v6',on);['A','B','C'].forEach(x=>d.classList.toggle('x6t-'+x,on&&t===x))}catch(e){}return _r.apply(this,arguments)};
+})();
+
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
 })();
