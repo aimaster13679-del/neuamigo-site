@@ -5616,12 +5616,29 @@ const ZB8={all:[['club','WEEKEND CLUB','Members book first','Pick your seat on t
   help:[['ask:service','ONE REQUEST','Tell us once, get 5 quotes','You pick one and pay them directly','Ask now','boxes']],
   events:[['club','WEEKEND CLUB','Members book first','Pick your seat on the map','Open','hall']],
   sale:[['sale','BUY & SELL','From people moving out','Price on every item','See items','sofa']]};
+
+/* v9: cut-out objects (no background) on pastel tiles, Zepto-like */
+const CUT8={'Find a Home':'house','Rooms & flats':'house','Post a Room':'house','Insurance':'house','Home cleaning':'house','Cleaning':'house',
+  'Find a Job':'laptop','Post a Job':'laptop','Work profile':'laptop','Shop work':'laptop','Kitchen work':'laptop','Safe jobs tips':'docs',
+  'Get 5 Quotes':'boxes','Moving house':'boxes','Moving help':'boxes','Sell yours':'boxes','Kitchen':'boxes','Moving out':'boxes',
+  'Experts':'calc','Tax filing':'calc','Buy & Sell':'chair','Furniture':'chair','Room Wanted':'chair','All items':'chair','Home items':'chair',
+  'Flight Helper':'suitcase','Visa help':'suitcase','Repairs':'tools','Events':'lantern','Festivals':'lantern','Weekend Club':'lantern','Host an event':'lantern','Meet friends':'lantern',
+  'Play a league':'ball','Watch matches':'balls','Day trips':'van'};
+const TINT8=['#FFEFE3','#E7F1FF','#EFE9FF','#E5F7EC','#FFF5CF','#FFE7EF','#E3F6F8','#F4F0E8'];
+const WIDE8=['house','balls','lantern','suitcase'];
+const cut8=(c,cls)=>`<span class="z8-cut${cls?' '+cls:''}${WIDE8.includes(c)?' wide':''}"><img src="img/c16/${c}.webp" alt="" loading="lazy" decoding="async"></span>`;
+const ZTC8={all:'suitcase',homes:'house',jobs:'laptop',help:'boxes',events:'lantern',sale:'chair'};
+const ZBC8={club:'lantern',rooms:'house',jobs:'laptop','ask:service':'boxes',sale:'chair'};
+const ZCOL8={all:[['New place starter','house','chair','boxes','tools','rooms'],['Weekend plans','lantern','ball','balls','van','ev15'],['Papers sorted','calc','docs','suitcase','laptop','experts']],
+  homes:[['New place starter','house','chair','boxes','tools','rooms']],events:[['Weekend plans','lantern','ball','balls','van','ev15']],help:[['Papers sorted','calc','docs','suitcase','laptop','experts']],jobs:[],sale:[]};
+function zcol8(t){const l=ZCOL8[t]||[];if(!l.length)return '';return `<div class="z8-sec"><b>Collections</b></div><div class="z8-cols">${l.map(([n,a,b,c,d,v],i)=>`<button class="z8-col" ${zgo8(v)} style="--i:${i}"><span class="z8-cg">${[a,b,c,d].map((x,j)=>`<span style="--t:${TINT8[(i*4+j)%8]}">${cut8(x)}</span>`).join('')}</span><b>${esc(n)}</b><small>Open →</small></button>`).join('')}</div>`}
 function zv8(v){return v.startsWith('q:')?`data-a="z8q" data-c="${esc(v.slice(2))}"`:zgo8(v)}
-function zbn8(list){return `<div class="z8-bn${list.length===1?' one':''}">${list.map(([v,o,t,s,c,p],i)=>`<button class="z8-ban" ${zgo8(v)} style="--i:${i}"><span class="z8-bt"><small>${esc(o)}</small><b>${esc(t)}</b><span>${esc(s)}</span><em>${esc(c)} →</em></span>${ph8(p)}</button>`).join('')}</div>`}
-function zgrid8(list){return `<div class="z8-grid c${list.length%4===0?4:3}">${list.map(([l,p,v],i)=>`<button class="z8-tile" ${zv8(v)} style="--i:${i}">${ph8(p)}<b>${esc(l)}</b></button>`).join('')}</div>`}
+function zbn8(list){return `<div class="z8-bn${list.length===1?' one':''}">${list.map(([v,o,t,s,c,p],i)=>`<button class="z8-ban" ${zgo8(v)} style="--i:${i}"><span class="z8-bt"><small>${esc(o)}</small><b>${esc(t)}</b><span>${esc(s)}</span><em>${esc(c)} →</em></span>${ZBC8[v]?cut8(ZBC8[v],'big'):ph8(p)}</button>`).join('')}</div>`}
+function zgrid8(list){return `<div class="z8-grid c${list.length%4===0?4:3}">${list.map(([l,p,v],i)=>`<button class="z8-tile" ${zv8(v)} style="--i:${i};--t:${TINT8[i%8]}">${CUT8[l]?cut8(CUT8[l]):ph8(p)}<b>${esc(l)}</b></button>`).join('')}</div>`}
 function zdata8(rpc,key,args){const c=P15.z8d=P15.z8d||{};if(c[key]===undefined){c[key]=null;API.rpc(rpc,args||{}).then(r=>{c[key]=r||[];render()}).catch(()=>{c[key]=[]})}return c[key]||[]}
 function zrail8(title,cards,more){if(!cards.length)return '';return `<div class="z8-sec"><b>${esc(title)}</b>${more?`<button ${zgo8(more)}>See all →</button>`:''}</div><div class="z8-rail">${cards.join('')}</div>`}
-const zcard8=(go,p,t,sub,price,btn)=>`<div class="z8-card">${`<button class="z8-cimg" ${go}>${ph8(p)}</button>`}<b>${esc(t)}</b><small>${esc(sub)}</small><div class="z8-cf"><span>${price}</span><button ${go}>${esc(btn)}</button></div></div>`;
+const RC8={table:'lantern',stadium:'balls',lantern:'lantern',trip:'van',league:'ball',hall:'lantern',office:'laptop',store:'laptop',catering:'laptop',sofa:'chair',boxes:'boxes'};
+const zcard8=(go,p,t,sub,price,btn)=>`<div class="z8-card">${`<button class="z8-cimg" ${go} style="--t:${TINT8[(t.length)%8]}">${RC8[p]?cut8(RC8[p]):ph8(p)}</button>`}<b>${esc(t)}</b><small>${esc(sub)}</small><div class="z8-cf"><span>${price}</span><button ${go}>${esc(btn)}</button></div></div>`;
 function zrails8(t){const c=(S.me||{}).city||'',out=[],PH={meetup:'table',watch:'stadium',festival:'lantern',trip:'trip',league:'league'};
   if(t==='all'||t==='events'){const ev=zdata8('events15','ev',{k:'',cty:c}).slice(0,8);out.push(zrail8('This weekend',ev.map(e=>zcard8(`data-a="p15open" data-v="evd:${e.id}"`,PH[e.kind]||'hall',e.title,evWhen(e)+' · '+e.left+' left',e.price?esc(money(e.price,e.currency)):'No ticket price','Book')),'ev15'))}
   if(t==='all'||t==='jobs'){const jb=zdata8('jobs15','jobs',{}).slice(0,8);out.push(zrail8('Jobs near you',jb.map(j=>zcard8(`data-a="p15open" data-v="job:${j.id}"`,j.cat==='Shop helper'?'store':j.cat==='Cooking'?'catering':'office',j.title,j.area+' · '+j.hours+' h/wk',esc(money(j.pay,j.currency))+'<small> / h</small>','Apply')),'jobs'))}
@@ -5631,10 +5648,10 @@ function zrails8(t){const c=(S.me||{}).city||'',out=[],PH={meetup:'table',watch:
 function zpage8(){const t=zt8(),T=ZT8.find(x=>x[0]===t)||ZT8[0],me=S.me||{},c=me.city||'your city',lt=document.documentElement.classList.contains('gl-lt'),
   W=['a room in '+c,'a job near you','movers for Saturday','visa help','a football team','a sofa'];
   return p15wrap(`<div class="z8-head" style="--h:${T[3]};--h2:${T[4]}">
-    <div class="z8-hr"><div><small>NeuAmigo · ${esc(c)}</small><b>${t==='all'?'Settle in '+esc(c):esc(T[1])+' in '+esc(c)}</b></div><button class="z8-mode" data-a="p15theme">${lt?'Dark':'Light'}</button></div>
+    <div class="z8-hr"><div><small>NeuAmigo · ${esc(c)}</small><b>${t==='all'?'Settle in '+esc(c):esc(T[1])+' in '+esc(c)}</b></div><span class="z8-float" aria-hidden="true">${cut8(ZTC8[t],'f1')}${cut8(t==='events'?'ball':t==='jobs'?'calc':'boxes','f2')}</span><button class="z8-mode" data-a="p15theme">${lt?'Dark':'Light'}</button></div>
     <button class="z8-search" data-a="p15open" data-v="search"><span>Search for</span><span class="z8-roll" aria-hidden="true"><span>${W.concat(W[0]).map(w=>`<i>"${esc(w)}"</i>`).join('')}</span></span></button>
-    <div class="z8-tabs" role="tablist">${ZT8.map(([k,l,p])=>`<button role="tab" aria-selected="${k===t}" class="${k===t?'on':''}" data-a="z8tab" data-k="${k}"><span class="z8-tp">${ph8(p)}</span><b>${esc(l)}</b></button>`).join('')}</div></div>
-   <div class="z8-body">${zbn8(ZB8[t])}${zgrid8(ZG8[t])}${zrails8(t)}</div>`)}
+    <div class="z8-tabs" role="tablist">${ZT8.map(([k,l,p])=>`<button role="tab" aria-selected="${k===t}" class="${k===t?'on':''}" data-a="z8tab" data-k="${k}"><span class="z8-tp">${cut8(ZTC8[k])}</span><b>${esc(l)}</b></button>`).join('')}</div></div>
+   <div class="z8-body">${zbn8(ZB8[t])}${zgrid8(ZG8[t])}${zcol8(t)}${zrails8(t)}</div>`)}
 (function(){
   const _h=home15;home15=function(){if(!V8())return _h();if(P15.z8nav!=='matches'){P15.z8nav='matches';P15.z8='all'}return zpage8()};
   const _s=settle15;settle15=function(){if(!V8())return _s();if(P15.z8nav!=='settle'){P15.z8nav='settle';P15.z8='help'}return zpage8()};
