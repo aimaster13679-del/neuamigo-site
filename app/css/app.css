@@ -2199,3 +2199,30 @@ html.p15pub .rl-wel .rl-map{position:absolute;inset:0 0 var(--ch,0px) 0;z-index:
 .p15-chin{position:sticky;bottom:calc(84px + env(safe-area-inset-bottom));display:flex;gap:8px;padding:8px;border-radius:20px;background:var(--p-gl2);border:1px solid var(--p-edge);-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px)}
 .p15-chin input{flex:1;min-width:0;border:0;background:transparent;color:inherit;font-size:15px;padding:8px 6px;outline:none}
 .p15-chin .p15-btn{width:auto;margin:0;padding:0 16px;min-height:42px}
+/* Chat v2 (his feedback 11 Nov 22:01): full screen on every phone, one glass for header + composer (same as the bottom menu), clean pill composer */
+.p15chs{display:flex;flex-direction:column}
+.p15-chv{display:flex;flex-direction:column;min-height:100%;padding:0 14px}
+.p15-chh{position:sticky;top:0;z-index:3;display:flex;align-items:center;gap:10px;margin:0 -14px;padding:calc(8px + env(safe-area-inset-top)) 14px 10px;background:#FFFFFF;border-bottom:1px solid #E6EBE8;box-shadow:0 10px 24px -22px rgba(30,60,45,.45)}
+html:not(.gl-lt) .p15-chh{background:rgba(22,22,26,.92);border-bottom-color:rgba(255,255,255,.12);box-shadow:none;-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px)}
+.p15-cha{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(209,170,82,.16);border:1px solid rgba(209,170,82,.5);color:var(--p-ink)}.p15-cha .ic{width:19px;height:19px}
+.p15-chn{flex:1;min-width:0;display:grid}.p15-chn b{font-size:16px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.p15-chn small{font-size:12px;color:var(--p-mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.p15-chat{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:3px;padding:14px 0 12px}
+.p15-chsafe{align-self:center;display:flex;gap:6px;align-items:center;max-width:300px;margin:0 auto 10px;padding:7px 12px;border-radius:12px;font-size:11.5px;line-height:1.35;color:var(--p-mut);background:var(--p-gl);border:1px solid var(--p-edge)}.p15-chsafe .ic{flex:none;width:14px;height:14px}
+.p15-chday{display:flex;justify-content:center;margin:10px 0 6px}.p15-chday span{font-size:11px;font-weight:700;color:var(--p-mut);padding:3px 10px;border-radius:99px;background:var(--p-gl);border:1px solid var(--p-edge)}
+.p15-bub{max-width:78%;align-self:flex-start;padding:8px 12px 5px;border-radius:18px;background:#FFFFFF;border:1px solid #E6EBE8;color:var(--p-ink);font-size:15px;line-height:1.38;box-shadow:0 6px 16px -14px rgba(30,60,45,.5)}
+html:not(.gl-lt) .p15-bub{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.1);box-shadow:none}
+.p15-bub.tail{border-bottom-left-radius:6px;margin-bottom:6px}
+.p15-bub.me{align-self:flex-end;background:#16152A;border-color:#16152A;color:#fff}.p15-bub.me.tail{border-bottom-left-radius:18px;border-bottom-right-radius:6px}
+html:not(.gl-lt) .p15-bub.me{background:#F3EBD6;border-color:#F3EBD6;color:#16152A}
+.p15-bub span{display:block;overflow-wrap:anywhere;white-space:pre-wrap}.p15-bub small{display:block;text-align:right;font-size:10.5px;opacity:.6;margin-top:1px}
+.p15-chin{position:sticky;bottom:calc(86px + env(safe-area-inset-bottom));z-index:3;display:flex;align-items:center;gap:8px;margin:0 0 6px;padding:6px 6px 6px 18px;border-radius:99px;background:#FFFFFF;border:1px solid #E6EBE8;box-shadow:0 12px 28px -20px rgba(30,60,45,.35)}
+html:not(.gl-lt) .p15-chin{background:rgba(22,22,26,.92);border-color:rgba(255,255,255,.12);box-shadow:none;-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px)}
+.p15 .p15-chin input,.p15-chin input#p15-msg{flex:1;min-width:0;height:44px;border:0!important;outline:none;background:transparent!important;box-shadow:none!important;-webkit-appearance:none;appearance:none;color:var(--p-ink);font:inherit;font-size:15.5px;padding:0;margin:0}
+.p15-chin input::placeholder{color:var(--p-mut)}
+.p15-send{flex:none;width:44px;height:44px;border-radius:50%;border:0;display:grid;place-items:center;background:#D1AA52;color:#16152A;padding:0;cursor:pointer}.p15-send .ic{width:20px;height:20px}
+.p15-send:active{transform:scale(.94)}
+.p15chs+.navwrap,.p15chs~.navwrap{background:transparent}
+.p15-chv::after{content:'';flex:none;height:calc(80px + env(safe-area-inset-bottom))}
+.p15-chin{bottom:calc(80px + env(safe-area-inset-bottom))}
+.p15-chv::after{height:8px}
+.p15-chin{bottom:8px}
