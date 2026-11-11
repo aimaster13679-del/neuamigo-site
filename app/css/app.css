@@ -2714,3 +2714,20 @@ html.p15v8:not(.gl-lt) .z8-cg>span .z8-cut{background:color-mix(in srgb,var(--t)
 @media (prefers-reduced-motion:reduce){.z8-cut.big img,.z8-float .z8-cut{animation:none}}
 .z8-cut.wide img{max-width:96%;max-height:90%}
 .z8-cut.wide:not(.big) img{transform:scale(1.08)}
+/* ===== v4 real photos + sapphire ===== */
+.z9-ph{display:block;width:100%}
+.z9-ph .z8-ph{border-radius:14px}
+.z8-tile .z8-ph{border-radius:14px;box-shadow:0 8px 16px -12px rgba(10,30,80,.55)}
+.z8-tile:active .z8-ph{transform:scale(.94)}.z8-tile .z8-ph{transition:transform .15s}
+.z8-tp .z9-ph .z8-ph{border-radius:10px;box-shadow:0 6px 14px -8px rgba(0,0,0,.6)}
+.z9-ph.big{align-self:center}.z9-ph.big .z8-ph{border-radius:16px;box-shadow:0 14px 26px -16px rgba(10,30,80,.6);animation:z8bob 3.4s ease-in-out infinite}
+.z8-float .z9-ph{position:absolute;width:52px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}
+.z8-float .z9-ph .z8-ph{border-radius:9px;border:2px solid rgba(255,255,255,.85)}
+.z8-float .z9-ph.f1{right:0;top:2px;transform:rotate(8deg);animation:z9f1 3.2s ease-in-out infinite}
+.z8-float .z9-ph.f2{right:44px;top:14px;width:44px;transform:rotate(-8deg);animation:z9f2 3.8s .5s ease-in-out infinite}
+@keyframes z9f1{50%{transform:rotate(4deg) translateY(-5px)}}@keyframes z9f2{50%{transform:rotate(-4deg) translateY(-5px)}}
+.z8-cg>span .z9-ph .z8-ph{border-radius:10px}
+.z8-cimg .z9-ph .z8-ph{border-radius:14px}
+html.p15v8 .z8-ban{background:color-mix(in srgb,#0F52BA 7%,var(--z8card))!important;border-color:color-mix(in srgb,#0F52BA 20%,transparent)!important}
+html.p15v8 .z8-head::before{content:"";position:absolute;inset:auto auto -40% -15%;width:60%;aspect-ratio:1;background:rgba(120,170,255,.16);transform:rotate(-14deg);border-radius:48px;pointer-events:none}
+@media (prefers-reduced-motion:reduce){.z9-ph.big .z8-ph,.z8-float .z9-ph{animation:none}}

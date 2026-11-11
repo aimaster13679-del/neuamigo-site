@@ -5597,8 +5597,8 @@ function post7(){if(!V6())return;const vk=S.tab+'|'+(P15.v||''),same=vk===VK7;VK
 const V8_LIVE=false;
 function V8(){try{return V8_LIVE||localStorage.getItem('nm.p15v8')==='1'}catch(e){return V8_LIVE}}
 {const _v6=V6;V6=function(){return V8()||_v6()}}
-const ZT8=[['all','All','city','#2347E8','#1733B8'],['homes','Homes','house','#0B8A68','#076A50'],['jobs','Jobs','office','#E2541C','#B83F10'],
-  ['help','Help','boxes','#7B35D6','#5E22AE'],['events','Events','hall','#D3245F','#A8164A'],['sale','Sale','sofa','#0A7FA6','#06627F']];
+const ZT8=[['all','All','city','#0F52BA','#0A3A85'],['homes','Homes','house','#0F52BA','#0A3A85'],['jobs','Jobs','office','#0F52BA','#0A3A85'],
+  ['help','Help','boxes','#0F52BA','#0A3A85'],['events','Events','hall','#0F52BA','#0A3A85'],['sale','Sale','sofa','#0F52BA','#0A3A85']];
 const P16=["room","house","office","boxes","tools","store","docs","catering","table","league","stadium"];
 const ph8=(p)=>`<span class="z8-ph"><img src="img/${P16.includes(p)?"p16":"p15"}/${p}.webp" alt="" loading="lazy" decoding="async"></span>`;
 const zt8=()=>P15.z8||'all';
@@ -5626,7 +5626,9 @@ const CUT8={'Find a Home':'house','Rooms & flats':'house','Post a Room':'house',
   'Play a league':'ball','Watch matches':'balls','Day trips':'van'};
 const TINT8=['#FFEFE3','#E7F1FF','#EFE9FF','#E5F7EC','#FFF5CF','#FFE7EF','#E3F6F8','#F4F0E8'];
 const WIDE8=['house','balls','lantern','suitcase'];
-const cut8=(c,cls)=>`<span class="z8-cut${cls?' '+cls:''}${WIDE8.includes(c)?' wide':''}"><img src="img/c16/${c}.webp" alt="" loading="lazy" decoding="async"></span>`;
+const PH9={house:'house',laptop:'office',boxes:'boxes',calc:'docs',chair:'sofa',suitcase:'plane',tools:'tools',lantern:'lantern',ball:'league',balls:'stadium',van:'trip',docs:'docs'};
+const cut8=(c,cls)=>`<span class="z9-ph${cls?' '+cls:''}">${ph8(PH9[c]||c)}</span>`;
+const cut8old=(c,cls)=>`<span class="z8-cut${cls?' '+cls:''}${WIDE8.includes(c)?' wide':''}"><img src="img/c16/${c}.webp" alt="" loading="lazy" decoding="async"></span>`;
 const ZTC8={all:'suitcase',homes:'house',jobs:'laptop',help:'boxes',events:'lantern',sale:'chair'};
 const ZBC8={club:'lantern',rooms:'house',jobs:'laptop','ask:service':'boxes',sale:'chair'};
 const ZCOL8={all:[['New place starter','house','chair','boxes','tools','rooms'],['Weekend plans','lantern','ball','balls','van','ev15'],['Papers sorted','calc','docs','suitcase','laptop','experts']],
@@ -5634,7 +5636,7 @@ const ZCOL8={all:[['New place starter','house','chair','boxes','tools','rooms'],
 function zcol8(t){const l=ZCOL8[t]||[];if(!l.length)return '';return `<div class="z8-sec"><b>Collections</b></div><div class="z8-cols">${l.map(([n,a,b,c,d,v],i)=>`<button class="z8-col" ${zgo8(v)} style="--i:${i}"><span class="z8-cg">${[a,b,c,d].map((x,j)=>`<span style="--t:${TINT8[(i*4+j)%8]}">${cut8(x)}</span>`).join('')}</span><b>${esc(n)}</b><small>Open →</small></button>`).join('')}</div>`}
 function zv8(v){return v.startsWith('q:')?`data-a="z8q" data-c="${esc(v.slice(2))}"`:zgo8(v)}
 function zbn8(list){return `<div class="z8-bn${list.length===1?' one':''}">${list.map(([v,o,t,s,c,p],i)=>`<button class="z8-ban" ${zgo8(v)} style="--i:${i}"><span class="z8-bt"><small>${esc(o)}</small><b>${esc(t)}</b><span>${esc(s)}</span><em>${esc(c)} →</em></span>${ZBC8[v]?cut8(ZBC8[v],'big'):ph8(p)}</button>`).join('')}</div>`}
-function zgrid8(list){return `<div class="z8-grid c${list.length%4===0?4:3}">${list.map(([l,p,v],i)=>`<button class="z8-tile" ${zv8(v)} style="--i:${i};--t:${TINT8[i%8]}">${CUT8[l]?cut8(CUT8[l]):ph8(p)}<b>${esc(l)}</b></button>`).join('')}</div>`}
+function zgrid8(list){return `<div class="z8-grid c${list.length%4===0?4:3}">${list.map(([l,p,v],i)=>`<button class="z8-tile" ${zv8(v)} style="--i:${i};--t:${TINT8[i%8]}">${ph8(p)}<b>${esc(l)}</b></button>`).join('')}</div>`}
 function zdata8(rpc,key,args){const c=P15.z8d=P15.z8d||{};if(c[key]===undefined){c[key]=null;API.rpc(rpc,args||{}).then(r=>{c[key]=r||[];render()}).catch(()=>{c[key]=[]})}return c[key]||[]}
 function zrail8(title,cards,more){if(!cards.length)return '';return `<div class="z8-sec"><b>${esc(title)}</b>${more?`<button ${zgo8(more)}>See all →</button>`:''}</div><div class="z8-rail">${cards.join('')}</div>`}
 const RC8={table:'lantern',stadium:'balls',lantern:'lantern',trip:'van',league:'ball',hall:'lantern',office:'laptop',store:'laptop',catering:'laptop',sofa:'chair',boxes:'boxes'};
