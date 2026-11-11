@@ -5216,6 +5216,92 @@ Object.assign(P15V,{chats:chats15v});
 function wants15v(sid){const l=(P15.wt||{})[sid];if(l===undefined){API.rpc('sale_wants15',{sid}).then(r=>{P15.wt=Object.assign(P15.wt||{},{[sid]:r||[]});render()}).catch(()=>{P15.wt=Object.assign(P15.wt||{},{[sid]:[]});render()});return p15wrap(p15top('Who wants it',true)+spinner('Loading'))}
   return p15wrap(p15top('Who wants it',true)+(l.length?`<div class="p15-g">${l.map(p=>`<div class="p15-li"><span class="p15-b mint">${ic('user')}</span><span class="tx"><b>${esc(p.name)}</b><small>Agree a pick-up time in chat</small></span>${chatBtn15('sale',sid,p.id,'Chat',1)}</div>`).join('')}</div>`:`<div class="p15-g p15-note">${ic('tag2')} Nobody yet.</div>`))}
 
+/* ---------- Premium look + clear names + real back button (his ask 12 Nov 2026 01:16) ----------
+   Back: every NeuAmigo page goes ONE page back (Android back + browser back); on Home, back twice to leave.  [live now]
+   Premium hubs + clear names: shown as a mock first; on only with localStorage nm.p15prem = '1' until he says ok (then PREM15_LIVE = true). */
+const PREM15_LIVE = false;
+function PREM15(){try{return PREM15_LIVE||localStorage.getItem('nm.p15prem')==='1'}catch(e){return PREM15_LIVE}}
+/* clear names: old -> new (tile titles and page titles) */
+const NAME15={'Find a Room':'Find a Home','Jobs':'Find a Job','Get up to 5 prices':'Get 5 Quotes','Trusted Experts':'Find an Expert','Moving-Out Sale':'Buy & Sell Used',
+  'Travel Buddy for Parents':'Flight Helper for Parents','Job Referral':'Get a Job Referral','Friend Meetups':'Meet New Friends','Watch Parties':'Watch Matches Together',
+  'Festivals':'Festivals & Culture Nights','Sports Leagues':'Play in a League','Post a Room':'List your home','Pick your seats':'Choose your seats'};
+/* what each service category means, in plain words (the saved value stays the same) */
+const CATL15={Movers:'Moving house (truck + helpers)',Cleaning:'Home cleaning',Tax:'Tax filing help',Insurance:'Insurance advice','Small jobs':'Repairs & small fixes',Immigration:'Visa & immigration help'};
+(function(){const _w=p15wrap;p15wrap=function(inner){if(PREM15())inner=inner.replace(/<h1>([^<]+)<\/h1>/,(m,t)=>'<h1>'+(NAME15[t]||t)+'</h1>');return _w(inner)}})();
+
+/* ---------- back button (live) ---------- */
+let BK15=0;
+(function(){
+  const _gb=goBack;goBack=function(){
+    if(typeof P15on==='function'&&P15on()&&S.screen==='app'&&!view&&!sheet&&!picker&&!celebrate){
+      if(P15.v){A.p15back({dataset:{}});return true}
+      if(S.tab!=='matches'){S.tab='matches';save();render();return true}
+      if(Date.now()-BK15<2200)return false;
+      BK15=Date.now();toast('Press back again to exit','info');return true}
+    return _gb()};
+  try{window.__p15gb=()=>goBack()}catch(e){}
+  /* browser back (web app): one step back too */
+  try{if(!window.Capacitor||!Capacitor.isNativePlatform||!Capacitor.isNativePlatform()){history.pushState({p15:1},'');
+    window.addEventListener('popstate',()=>{if(goBack())history.pushState({p15:1},'')})}}catch(e){}
+})();
+
+/* ---------- premium hubs (mock until ok) ---------- */
+const hubHead15=(t,s)=>`<div class="p15-hub"><span class="p15-logo"><img src="img/icon-192.png" alt=""></span><span class="tx"><b>${esc(t)}</b><small>${esc(s)}</small></span><button class="p15-theme" data-a="p15theme" aria-label="${document.documentElement.classList.contains('gl-lt')?'Dark theme':'Light theme'}">${ic(document.documentElement.classList.contains('gl-lt')?'moon':'sun')}</button></div>`;
+const PH15X={'Find a Job':'office','Get 5 Quotes':'boxes'};
+const tileP15=(o)=>{const p=PH15[o.t]||PH15X[NAME15[o.t]||o.t]||PH15X[o.t];const n=NAME15[o.t]||o.t;
+  return `<button class="p15-g p15-pt${o.big?' big':''}${o.row?' row':''}" data-a="${o.a}"${o.v?` data-v="${o.v}"`:''}${o.k?` data-k="${o.k}"`:''} style="--i:${o.i||0}">
+   ${p?`<span class="p15-pph"><img src="img/p15/${p}.webp" alt="" loading="lazy" decoding="async"></span>`:''}
+   <span class="p15-pbody"><span class="p15-b ${o.tone}">${ic(o.ic)}</span><span class="tx"><b>${esc(n)}</b><small>${esc(o.d)}</small></span>${o.row?`<span class="p15-go">${ic('chev2')}</span>`:''}</span></button>`};
+function settle15p(){const me=S.me||{};
+  const T=[{t:'Find a Room',d:'Rooms, flats and roommates by area and budget',ic:'bed2',tone:'mint',a:'p15open',v:'rooms',big:1},
+    {t:'Jobs',d:'Pay and hours on every job · get referred too',ic:'brief',tone:'lem',a:'p15open',v:'jobs',row:1},
+    {t:'Get up to 5 prices',d:'Moving, cleaning, tax, insurance, repairs',ic:'tag2',tone:'fern',a:'p15open',v:'ask:service'},
+    {t:'Trusted Experts',d:'Visa, tax and insurance advisers',ic:'shield2',tone:'mint',a:'p15open',v:'experts'},
+    {t:'Moving-Out Sale',d:'Furniture and more from people moving out',ic:'tag2',tone:'lem',a:'p15open',v:'sale'},
+    {t:'Travel Buddy for Parents',d:'Someone on the same flight helps them',ic:'plane2',tone:'fern',a:'p15open',v:'buddy'}];
+  return p15wrap(hubHead15('Settle In',`Your first months in ${me.city||'a new city'}, sorted`)+
+   `<div class="p15-bento p15-pb">${T.map((o,i)=>tileP15(Object.assign({i},o))).join('')}</div>`+
+   (typeof PC15==='function'&&PC15()?`<button class="p15-g p15-row" data-a="p15open" data-v="chats"><span class="p15-b mint">${ic('chat')}</span><span class="tx"><b>Chats</b><small>Businesses, employers and sellers you are connected to</small></span>${ic('chev2')}</button>`:'')+
+   `<button class="p15-g p15-row" data-a="p15open" data-v="myasks"><span class="p15-b lem">${ic('cal')}</span><span class="tx"><b>My requests</b><small>Quotes, Room Wanted and teams you asked for</small></span>${ic('chev2')}</button>`)}
+function events15p(){const d=P15.d||{};
+  const T=[{t:'Weekend Club',d:d.club?'Your membership is active':'Big weekend events, members first',ic:'star2',tone:'lem',a:'p15open',v:'club',row:1},
+    {t:'Friend Meetups',d:'Dinners, walks and games',ic:'heart',tone:'mint',a:'p15open',v:'meetups',big:1},
+    {t:'Watch Parties',d:'Big matches on a big screen',ic:'tv2',tone:'lem',a:'p15open',v:'watch'},
+    {t:'Festivals',d:'Culture nights from every country',ic:'party',tone:'fern',a:'p15open',v:'festival'},
+    {t:'Day Trips',d:'Bus trips with a host',ic:'bus2',tone:'mint',a:'p15open',v:'trip'},
+    {t:'Sports Leagues',d:'Join a team or find players',ic:'ball2',tone:'lem',a:'p15open',v:'league'}];
+  const PHE={'Weekend Club':'hall'};
+  return p15wrap(hubHead15('Events & Friends','Meet people near you, every week')+pts15card()+
+   `<div class="p15-bento p15-pb">${T.map((o,i)=>tileP15(Object.assign({i},o)).replace('<span class="p15-pbody">',(!PH15[o.t]&&PHE[o.t])?`<span class="p15-pph"><img src="img/p15/${PHE[o.t]}.webp" alt="" loading="lazy" decoding="async"></span><span class="p15-pbody">`:'<span class="p15-pbody">')).join('')}</div>
+   <button class="p15-g p15-row" data-a="p15open" data-v="tickets"><span class="p15-b mint">${ic('party')}</span><span class="tx"><b>My tickets</b><small>Your seats with their QR codes</small></span>${ic('chev2')}</button>`)}
+function home15p(){const me=S.me||{};
+  return p15wrap(hubHead15('NeuAmigo',me.city?`${me.city}${me.country?', '+me.country:''}`:'Your people, wherever you live')+
+   `<h2 class="p15-h1 p15-hero">Your people,<br>wherever you live</h2><p class="p15-sub">Homes, jobs, help, events and friends, in one app.</p>
+   ${(typeof RL==='function'&&RL()&&RLX.webgl())?`<div class="p15-earth"><div class="rl-slot" data-rl="p15"></div><span class="p15-earth-h">${ic('globe')} Spin it · tap a flag</span><span class="p15-earth-t">One app for people living abroad, in every country</span></div>`:''}
+   <div class="p15-bento p15-pb">
+    ${tileP15({t:'Settle In',d:'Home, job, quotes, experts, parents\' travel',ic:'key',tone:'mint',a:'tab',k:'settle',big:1,i:0})}
+    ${tileP15({t:'Events & Friends',d:'Meetups, matches, festivals, trips',ic:'party',tone:'lem',a:'tab',k:'ev15',i:1})}
+    ${tileP15({t:'Membership',d:'NeuAmigo Plus',ic:'star2',tone:'fern',a:'p15open',v:'plus',i:2})}
+    ${tileP15({t:'For Business',d:'Agents, hosts, services, employers, ads',ic:'store2',tone:'mint',a:'p15open',v:'biz',row:1,i:3})}
+   </div>`)}
+(function(){
+  const _s=settle15;settle15=function(){return PREM15()?settle15p():_s()};
+  const _e=events15;events15=function(){return PREM15()?events15p():_e()};
+  const _h=home15;home15=function(){return PREM15()?home15p():_h()};
+  const _m=me15;me15=function(){let h=_m();if(!PREM15())return h;
+    /* NeuAmigo checks no one: no paid "Verified" tick here; NeuMarry name -> NeuAmigo is done by the brand switch */
+    h=h.replace(/<button class="p15-g p15-row" data-a="p15open" data-v="tick">[\s\S]*?<\/button>/,'').replace(/ <span class="p15-pill">[^<]*<svg[\s\S]*?<\/svg> Verified<\/span>/,'');
+    h=h.replace('Find a Room, Travel Buddy, Job Referral','Homes, jobs, quotes, flight helper');
+    return h.replace('<div class="p15-g p15-pad p15-mehd">','<div class="p15-g p15-pad p15-mehd p15-meprem">')};
+  const _f=askForm15;askForm15=function(k){const h=_f(k);if(!PREM15()||k!=='service')return h;
+    return h.replace(/(data-a="p15qf" data-k="cat" data-val="([^"]+)">)([^<]+)</g,(m,a,v,t)=>a+(CATL15[v]||t)+'<')};
+  const _ss=askSum15;askSum15=(k,d)=>{const s=_ss(k,d);return PREM15()&&k==='service'&&d&&CATL15[d.cat]?s.replace(d.cat,CATL15[d.cat]):s};
+  /* Jobs now also holds "Get a job referral" (one place for work) */
+  const _j=P15V.jobs;P15V.jobs=function(){const h=_j();if(!PREM15())return h;return h.replace('<button class="p15-g p15-row" data-a="p15open" data-v="postjob">',`<button class="p15-g p15-row" data-a="p15open" data-v="referral"><span class="p15-b lem">${ic('user')}</span><span class="tx"><b>Get a job referral</b><small>Ask someone who works inside the company</small></span>${ic('chev2')}</button><button class="p15-g p15-row" data-a="p15open" data-v="postjob">`)};
+  /* premium switch on the page root */
+  const _r=render;render=function(){try{document.documentElement.classList.toggle('p15prem',PREM15())}catch(e){}return _r.apply(this,arguments)};
+})();
+
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
 })();

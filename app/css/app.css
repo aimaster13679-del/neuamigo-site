@@ -2226,3 +2226,44 @@ html:not(.gl-lt) .p15-chin{background:rgba(22,22,26,.92);border-color:rgba(255,2
 .p15-chin{bottom:calc(80px + env(safe-area-inset-bottom))}
 .p15-chv::after{height:8px}
 .p15-chin{bottom:8px}
+/* ---------- Premium v3 (his ask 12 Nov 01:16; on with html.p15prem until his ok) ---------- */
+html.p15prem .p15-g{border-radius:24px;box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 18px 40px -26px rgba(40,40,90,.35),0 2px 6px -3px rgba(40,40,90,.12)}
+html.p15prem:not(.gl-lt) .p15-g{background:linear-gradient(160deg,rgba(255,255,255,.085),rgba(255,255,255,.035));border-color:rgba(255,255,255,.11);box-shadow:0 1px 0 rgba(255,255,255,.08) inset,0 22px 44px -28px rgba(0,0,0,.9)}
+html.p15prem.gl-lt .p15-g{background:linear-gradient(160deg,rgba(255,255,255,.96),rgba(255,255,255,.78));border-color:rgba(255,255,255,.95)}
+.p15-hub{display:flex;align-items:center;gap:12px;margin:2px 0 4px}
+.p15-logo{flex:none;width:44px;height:44px;border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px rgba(209,170,82,.55),0 10px 22px -12px rgba(209,170,82,.8)}.p15-logo img{width:100%;height:100%;display:block}
+.p15-hub .tx{flex:1;min-width:0;display:grid}.p15-hub .tx b{font-size:24px;font-weight:800;line-height:1.15}.p15-hub .tx small{font-size:13px;color:var(--p-mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.p15-hub .p15-theme{position:static;flex:none}
+.p15-pb{gap:12px}
+.p15-pt{position:relative;display:flex;flex-direction:column;align-items:stretch;text-align:left;padding:0;overflow:hidden;font:inherit;cursor:pointer;color:inherit;transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s ease}
+.p15-pt:active{transform:scale(.97)}
+.p15-pt.big,.p15-pt.row{grid-column:span 2}
+.p15-pph{display:block;position:relative;width:100%;aspect-ratio:3/2;overflow:hidden;background:var(--p-gl2)}
+.p15-pph img{display:block;width:100%;height:100%;object-fit:cover}
+.p15-pt.row{flex-direction:row;align-items:center}
+.p15-pt.row .p15-pph{width:42%;flex:none;align-self:stretch;aspect-ratio:3/2;height:auto}
+.p15-pbody{position:relative;display:flex;flex-direction:column;gap:8px;padding:12px 14px 14px;flex:1;min-width:0}
+.p15-pt.row .p15-pbody{flex-direction:column;justify-content:center;padding:12px 40px 12px 14px}
+.p15-pt .p15-pbody .p15-b{margin-top:-34px;box-shadow:0 0 0 3px var(--p-bg,#fff),0 8px 18px -10px rgba(40,40,90,.5)}
+html:not(.gl-lt) .p15-pt .p15-pbody .p15-b{box-shadow:0 0 0 3px #0B0B0E,0 8px 18px -10px rgba(0,0,0,.8)}
+.p15-pt.row .p15-pbody .p15-b{margin-top:0;box-shadow:none}
+.p15-pbody .tx{display:grid;gap:3px;min-width:0}.p15-pbody .tx b{font-size:16.5px;font-weight:800;line-height:1.2;overflow-wrap:anywhere}.p15-pbody .tx small{font-size:12.5px;line-height:1.35;color:var(--p-mut)}
+.p15-pt.big .p15-pbody .tx b{font-size:20px}
+.p15-go{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:rgba(209,170,82,.16);border:1px solid rgba(209,170,82,.45)}.p15-go .ic{width:15px;height:15px}
+/* entrance: tiles rise in one after another (once), then stay still */
+html.p15prem .p15-pt{animation:p15rise .5s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0) * 60ms)}
+@keyframes p15rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+/* one quiet movement: a soft light sweep over the main tile's photo every few seconds */
+html.p15prem .p15-pt.big .p15-pph::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.28) 50%,transparent 65%);transform:translateX(-120%);animation:p15sweep 7s ease-in-out 1.2s infinite}
+@keyframes p15sweep{0%,70%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+html.p15prem .p15-hero{font-size:30px;line-height:1.12;letter-spacing:0}
+html.p15prem .p15-meprem .p15-av{box-shadow:0 0 0 2px #D1AA52,0 0 0 5px rgba(209,170,82,.18)}
+html.p15prem .p15-row{transition:transform .2s ease}html.p15prem .p15-row:active{transform:scale(.98)}
+html.p15prem .p15-sec b{font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--p-mut)}
+@media (prefers-reduced-motion:reduce){html.p15prem .p15-pt{animation:none}html.p15prem .p15-pt.big .p15-pph::after{animation:none;display:none}}
+html.p15prem .p15-pt.big .p15-pph::after{content:none;animation:none}
+.p15-pt.row .p15-pph{align-self:center}
+html.p15prem .p15-pt.big .p15-pbody .p15-b{animation:p15float 4.5s ease-in-out 1s infinite}
+@keyframes p15float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@media (prefers-reduced-motion:reduce){html.p15prem .p15-pt.big .p15-pbody .p15-b{animation:none}}
+html.p15prem .p15-hero{background:none!important;box-shadow:none!important;border:0!important;padding:4px 0 0!important;text-align:left}
