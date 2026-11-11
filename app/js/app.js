@@ -5220,6 +5220,7 @@ function wants15v(sid){const l=(P15.wt||{})[sid];if(l===undefined){API.rpc('sale
    Back: every NeuAmigo page goes ONE page back (Android back + browser back); on Home, back twice to leave.  [live now]
    Premium hubs + clear names: shown as a mock first; on only with localStorage nm.p15prem = '1' until he says ok (then PREM15_LIVE = true). */
 const PREM15_LIVE = false;
+const PAL15 = 'A'; /* colour set he picks: A Emerald Night, B Ocean & Coral, C Cobalt & Lime */
 function PREM15(){try{return PREM15_LIVE||localStorage.getItem('nm.p15prem')==='1'}catch(e){return PREM15_LIVE}}
 /* clear names: old -> new (tile titles and page titles) */
 const NAME15={'Find a Room':'Find a Home','Jobs':'Find a Job','Get up to 5 prices':'Get 5 Quotes','Trusted Experts':'Find an Expert','Moving-Out Sale':'Buy & Sell Used',
@@ -5299,7 +5300,61 @@ function home15p(){const me=S.me||{};
   /* Jobs now also holds "Get a job referral" (one place for work) */
   const _j=P15V.jobs;P15V.jobs=function(){const h=_j();if(!PREM15())return h;return h.replace('<button class="p15-g p15-row" data-a="p15open" data-v="postjob">',`<button class="p15-g p15-row" data-a="p15open" data-v="referral"><span class="p15-b lem">${ic('user')}</span><span class="tx"><b>Get a job referral</b><small>Ask someone who works inside the company</small></span>${ic('chev2')}</button><button class="p15-g p15-row" data-a="p15open" data-v="postjob">`)};
   /* premium switch on the page root */
-  const _r=render;render=function(){try{document.documentElement.classList.toggle('p15prem',PREM15())}catch(e){}return _r.apply(this,arguments)};
+  const _r=render;render=function(){try{const d=document.documentElement,on=PREM15();d.classList.toggle('p15prem',on);let pal='';try{pal=localStorage.getItem('nm.p15pal')||PAL15}catch(e){pal=PAL15}
+    ['A','B','C'].forEach(x=>d.classList.toggle('p15pal-'+x,on&&pal===x))}catch(e){}return _r.apply(this,arguments)};
+})();
+
+/* ---------- v4: every form becomes bento steps, options become icon tiles, names fixed everywhere, alive motion (mock until ok) ---------- */
+const NAMEX15=[['Find a Room','Find a Home'],['Post a Room Wanted','Ask agents for a home'],['List your home','List your home'],['Travel Buddy for Parents','Flight Helper for Parents'],['Travel Buddy','Flight Helper'],
+  ['Trusted Experts','Find an Expert'],['Moving-Out Sale','Buy & Sell Used'],['Get up to 5 prices','Get 5 Quotes'],['Friend Meetups','Meet New Friends'],['Watch Parties','Watch Matches Together'],
+  ['Sports Leagues','Play in a League'],['Event Services','Party & Event Services'],['Host Plans','Host Events'],['League Organizer','Run a League'],['League Organiser','Run a League'],['Ad Spot','Advertise'],
+  ['Job Referral','Get a Job Referral'],['Join as a player','Find me a team'],['Room Wanted near you','People looking for a home'],['Quote requests near you','People asking for party quotes']];
+const OPTIC15={'Moving house (truck + helpers)':'truck','Home cleaning':'sparkle','Tax filing help':'chart','Insurance advice':'shield2','Repairs & small fixes':'key','Visa & immigration help':'plane2',
+  Movers:'truck',Cleaning:'sparkle',Tax:'chart',Insurance:'shield2','Small jobs':'key',Immigration:'plane2',Room:'bed2',Studio:'bed2',Apartment:'city',House:'home2','1-bed':'bed2','2-bed':'bed2','1':'bed2','2':'bed2','3':'bed2','4+':'home2',
+  'This week':'cal',Flexible:'clock','Same city':'pin','Other city':'globe',Now:'bolt',Furnished:'home2','Near transit':'bus2',Parking:'key','Pets ok':'heart','Bills included':'coin',
+  Football:'ball2',Cricket:'ball2',Volleyball:'ball2',Basketball:'ball2',Badminton:'ball2',Tennis:'ball2','Just for fun':'sparkle','Played before':'star','Strong':'bolt','Weekday evenings':'moon',Saturday:'sun',Sunday:'sun',
+  Catering:'party',Hall:'store2',Decor:'sparkle',DJ:'mic',Photos:'camera',Cake:'gift',Birthday:'gift','Community night':'users','Office party':'brief',Festival:'party',Wedding:'rings',Low:'coin',Middle:'coin',High:'crown',
+  'Elder care':'heart','Home help':'home2',Garden:'sun','Shop helper':'store2',Factory:'key',Kitchen:'party',Driving:'bus2',Cooking:'party',Weekdays:'brief',Evenings:'moon',Weekends:'sun',
+  English:'chat',French:'chat',Spanish:'chat',Arabic:'chat',Portuguese:'chat',Chinese:'chat',Hindi:'chat',Tagalog:'chat',Korean:'chat',Swahili:'chat','A family':'users','A business':'store2','Like new':'sparkle',Good:'star',Used:'tag2',Sofa:'home2',Bed:'bed2',Table:'home2',Electronics:'tv2',Other:'more','Private room':'bed2','Shared room':'users','Whole place':'home2'};
+const DAYRX15=/^(Mon|Tue|Wed|Thu|Fri|Sat|Sun)[a-z]*,? (\d{1,2}) ([A-Za-z]{3,})$/;
+function divEnd15(h,i){let d=0,re=/<div\b|<\/div>/g;re.lastIndex=i;let m;while((m=re.exec(h))){if(m[0]==='</div>'){d--;if(d===0)return re.lastIndex}else d++}return -1}
+function prem15(h){
+  /* names everywhere in visible text */
+  h=h.replace(/>([^<]+)</g,(m,t)=>{let x=t;for(const [a,b] of NAMEX15)if(x.includes(a)&&!x.includes(b))x=x.split(a).join(b);return '>'+x+'<'});
+  /* forms -> bento steps */
+  let out='',pos=0,re=/<div class="p15-g p15-form">/g,m;
+  while((m=re.exec(h))){const st=m.index,en=divEnd15(h,st);if(en<0)break;const inner=h.slice(st+m[0].length,en-6);
+    const parts=inner.split('<label>');let pre=parts.shift(),n=0;
+    const steps=parts.map(p=>{const j=p.indexOf('</label>');const lab=p.slice(0,j),body=p.slice(j+8);n++;const on=/class="p15-chip on"|class="p15-chip[^"]* on"/.test(body)||/<input[^>]*value="[^"]+"/.test(body)||/class="p15-qty"/.test(body);
+      return {on,html:`<div class="p15-g p15-st3${on?' done':''}" style="--i:${n}"><div class="p15-sh"><i>${on?ic('check'):n}</i><b>${lab}</b></div>${body}</div>`}});
+    const done=steps.filter(s=>s.on).length;
+    out+=h.slice(pos,st)+(steps.length>1?`<div class="p15-prog" role="progressbar" aria-valuemin="0" aria-valuemax="${steps.length}" aria-valuenow="${done}"><span><i style="width:${Math.round(done/steps.length*100)}%"></i></span><small>${done} of ${steps.length}</small></div>`:'')+(pre.trim()?`<div class="p15-g p15-st3">${pre}</div>`:'')+steps.map(s=>s.html).join('');
+    pos=en;re.lastIndex=en}
+  h=out+h.slice(pos);
+  /* option chips -> icon tiles; dates -> calendar tiles */
+  h=h.replace(/(<button class="p15-chip(?: on)?"[^>]*data-a="(?:p15qf|p15mf|p15f|p15jf|p15jm|p15wm)"[^>]*>)([^<]+)(<\/button>)/g,(m0,a,t,c)=>{const d=t.trim().match(DAYRX15);
+    if(d)return a.replace('p15-chip','p15-chip p15-opt day')+`<span class="dw">${d[1]}</span><b>${d[2]}</b><span class="dm">${d[3]}</span>`+c;
+    if(/data-k="cat"/.test(a)){const v=(a.match(/data-val="([^"]+)"/)||[])[1];if(v&&CATL15[v])t=CATL15[v]}
+    const k=OPTIC15[t.trim()];return a.replace('p15-chip','p15-chip p15-opt')+(k?`<span class="oi">${ic(k)}</span>`:'')+`<span class="ot">${t}</span>`+c});
+  return h}
+(function(){
+  const _w=p15wrap;p15wrap=function(inner){const h=_w(inner);return PREM15()?prem15(h):h};
+  /* sticky summary for request forms */
+  const _af=askForm15;askForm15=function(k){let h=_af(k);if(!PREM15())return h;const q=Object.assign({},P15.q);delete q.k;const sum=askSum15(k,q);
+    return h.replace(/<button class="p15-btn" data-a="p15askPost"/,`<div class="p15-dock"><span class="tx"><small>Your request</small><b>${esc(sum||'Pick your options')}</b></span><button class="p15-btn p15-gold" data-a="p15askPost"`).replace(/(data-a="p15askPost"[^>]*>[^<]*<\/button>)/,'$1</div>')};
+  /* page slide: forward when opening, backward on back, soft fade on tabs */
+  let dir='';const mark=d=>{dir=d};
+  const _o=A.p15open;A.p15open=function(el){mark('f');return _o(el)};
+  const _b=A.p15back;A.p15back=function(el){mark('b');return _b(el)};
+  const _t=A.tab;A.tab=function(el){mark('t');return _t(el)};
+  const _r=render;render=function(){const r=_r.apply(this,arguments);if(PREM15()&&dir){const d=dir;dir='';requestAnimationFrame(()=>{const m=document.querySelector('#main>.p15,#main>.main-inner');if(m){m.classList.remove('p15in-f','p15in-b','p15in-t');void m.offsetWidth;m.classList.add('p15in-'+d)}})}return r};
+  /* 3D tilt when a tile is touched */
+  const tilt=e=>{if(!PREM15())return;const t=e.target.closest&&e.target.closest('.p15-pt');if(!t)return;const b=t.getBoundingClientRect(),x=(e.clientX-b.left)/b.width-.5,y=(e.clientY-b.top)/b.height-.5;
+    t.style.setProperty('--rx',(-y*7).toFixed(2)+'deg');t.style.setProperty('--ry',(x*9).toFixed(2)+'deg');t.classList.add('tilt')};
+  const untilt=e=>{document.querySelectorAll('.p15-pt.tilt').forEach(t=>{t.classList.remove('tilt')})};
+  document.addEventListener('pointerdown',tilt,{passive:true});['pointerup','pointercancel','pointerleave','scroll'].forEach(ev=>document.addEventListener(ev,untilt,{passive:true,capture:true}));
+  /* loading: shimmering skeleton cards instead of a spinner on NeuAmigo pages */
+  const _sp=spinner;spinner=function(l){if(PREM15()&&typeof P15on==='function'&&P15on()&&S.screen==='app')return `<div class="p15-skel" role="status" aria-label="${esc(l||'Loading')}"><i></i><i></i><i></i></div>`;return _sp(l)};
 })();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
