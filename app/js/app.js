@@ -5520,6 +5520,77 @@ Object.assign(P15V,{});
   const _r=render;render=function(){try{const d=document.documentElement,on=V6(),t=T6();d.classList.toggle('p15v6',on);['A','B','C'].forEach(x=>d.classList.toggle('x6t-'+x,on&&t===x))}catch(e){}return _r.apply(this,arguments)};
 })();
 
+/* v7 "alive" layer on the v6 designs: stories, kinetic heading, live city clock,
+   journey path, scroll reveal, photo crossfade, sliding menu highlight, page morph.
+   Same flag as v6 (not live until his ok). */
+const ST7={home:[['room','house','keys'],'Find a Home',['Rooms, flats and roommates','Rent shown on every listing','Message the owner inside the app'],'rooms'],
+  job:[['office','store','catering'],'Find a Job',['Pay and hours on every job','Apply with one profile','Families and shops post jobs'],'jobs'],
+  quote:[['boxes','tools','docs'],'Get 5 Quotes',['Tell us once what you need','Up to 5 businesses reply','You pick one and pay them directly'],'ask:service'],
+  expert:[['docs','office','keys'],'Find an Expert',['Visa, tax and insurance advisers','Fees shown on their page','Ask before you pay'],'experts'],
+  sell:[['sofa','table','boxes'],'Buy & Sell Used',['Things from people moving out','Price on every item','Pick up near you'],'sale'],
+  parents:[['plane','trip','city'],'Flight Helper',['Parents flying alone?','Someone on the same flight helps','You agree on everything in chat'],'buddy'],
+  events:[['hall','stadium','lantern'],'Events',['Meetups, matches, festivals','Ticket price shown upfront','Pick your own seat'],'ev15'],
+  club:[['table','hall','league'],'Weekend Club',['Members book first','Pick your seat on the map','Points for every night out'],'club']};
+const TZ7={Toronto:'America/Toronto',Vancouver:'America/Vancouver',Montreal:'America/Toronto',Calgary:'America/Edmonton','New York':'America/New_York',London:'Europe/London',Sydney:'Australia/Sydney',Melbourne:'Australia/Melbourne',Dubai:'Asia/Dubai',Berlin:'Europe/Berlin',Paris:'Europe/Paris',Singapore:'Asia/Singapore'};
+function now7(){const c=(S.me||{}).city||'';let t;try{t=new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:TZ7[c]||undefined})}catch(e){t=new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'})}return t.toLowerCase().replace(' ',' ')}
+function phase7(){const c=(S.me||{}).city||'';let h;try{h=+new Date().toLocaleString('en-US',{hour:'numeric',hour12:false,timeZone:TZ7[c]||undefined})}catch(e){h=new Date().getHours()}return h<5||h>=21?'night':h<11?'morning':h<17?'day':'evening'}
+const multi7=(ps)=>`<span class="x6-ph x7-mx">${ps.map((p,i)=>`<img src="img/p15/${p}.webp" alt="" loading="lazy" decoding="async" style="--n:${i}">`).join('')}</span>`;
+function stories7(keys){return `<div class="x7-stories" role="list">${keys.map((k,i)=>`<button class="x7-st" data-a="x7story" data-k="${k}" style="--i:${i}" role="listitem"><span class="x7-ring"><img src="img/p15/${ST7[k][0][0]}.webp" alt="" loading="lazy"></span><small>${esc(ST7[k][1].replace('Find a ','').replace('Find an ','').replace('Get 5 ','').replace('Buy & Sell Used','Sell'))}</small></button>`).join('')}</div>`}
+function head7(){const me=S.me||{},c=me.city||'your city',W=['a room','a job','movers','new friends','visa help','a team'];
+  return `<div class="x7-live x7-${phase7()}"><i></i><span>${esc(c)} · <b class="x7-clock">${now7()}</b></span></div>
+   <h1 class="x6-h1 x7-h1">${esc(hi6())}${me.name?', '+esc(me.name.split(' ')[0]):''}.<br><span class="x7-lf">Let's find</span> <span class="x7-cyc" aria-label="what you need"><span>${W.concat(W[0]).map(w=>`<i>${esc(w)}</i>`).join('')}</span></span></h1>`}
+function journey7(){const d=pd6(),n=d.length,t=PL6.length,PH={home:'room',sim:'docs',job:'office',move:'boxes',friends:'table',parents:'plane'},nx=PL6.findIndex(([k])=>!d.includes(k));
+  return `<div class="x6-sec"><b>Your first 30 days</b><span>${n} of ${t} done</span></div>
+   <div class="x7-jr" style="--p:${n/t}"><svg class="x7-path" viewBox="0 0 ${t*150} 60" preserveAspectRatio="none" aria-hidden="true"><path class="bg" d="M38 30 ${PL6.slice(1).map((_,i)=>`Q ${i*150+113} ${i%2?4:56} ${i*150+188} 30`).join(' ')}"/><path class="fg" pathLength="1" d="M38 30 ${PL6.slice(1).map((_,i)=>`Q ${i*150+113} ${i%2?4:56} ${i*150+188} 30`).join(' ')}"/></svg>
+   ${PL6.map(([k,l,v],i)=>{const on=d.includes(k);return `<div class="x7-stop${on?' on':''}${i===nx?' nx':''}" style="--i:${i}"><span class="x7-dot"><img src="img/p15/${PH[k]}.webp" alt="" loading="lazy">${on?'<em>✓</em>':''}</span><small>Day ${[1,3,7,10,14,30][i]}</small><b>${esc(l)}</b><div class="x6-sa"><button data-a="p15open" data-v="${v}">${on?'Open':'Start'}</button><button class="x6-done" data-a="x6tick" data-k="${k}" aria-pressed="${on}">${on?'Done ✓':'Mark done'}</button></div></div>`}).join('')}</div>`}
+/* full-screen story viewer: photo whole in its 3:2 frame, words under it, never on it */
+let ST7T=null;
+function story7(k,dir){const s=ST7[k];if(!s)return;const keys=Object.keys(ST7);let ix=0;
+  const old=document.querySelector('.x7-sv');if(old)old.remove();clearInterval(ST7T);
+  const el=document.createElement('div');el.className='x7-sv';el.setAttribute('role','dialog');el.setAttribute('aria-label',s[1]);
+  const draw=()=>{el.innerHTML=`<div class="x7-bars">${s[0].map((_,i)=>`<i class="${i<ix?'done':i===ix?'run':''}"><b></b></i>`).join('')}</div>
+    <div class="x7-svh"><span class="x7-ring sm"><img src="img/p15/${s[0][0]}.webp" alt=""></span><b>${esc(s[1])}</b><button class="x7-x" aria-label="Close">✕</button></div>
+    <div class="x7-svp"><span class="x6-ph"><img src="img/p15/${s[0][ix]}.webp" alt=""></span></div>
+    <div class="x7-svt"><small>${ix+1} of ${s[0].length}</small><b>${esc(s[2][ix])}</b></div>
+    <div class="x7-thumbs">${s[0].map((p,i)=>`<span class="x6-ph${i===ix?' on':''}"><img src="img/p15/${p}.webp" alt=""></span>`).join('')}</div>
+    ${keys[keys.indexOf(k)+1]?`<div class="x7-nextup"><span>Next</span><span class="x7-ring sm"><img src="img/p15/${ST7[keys[keys.indexOf(k)+1]][0][0]}.webp" alt=""></span><b>${esc(ST7[keys[keys.indexOf(k)+1]][1])}</b></div>`:''}
+    <button class="x7-svgo">Open ${esc(s[1])} →</button><button class="x7-tap l" aria-label="Back"></button><button class="x7-tap r" aria-label="Next"></button>`;
+    el.querySelector('.x7-x').onclick=close;el.querySelector('.x7-tap.l').onclick=()=>step(-1);el.querySelector('.x7-tap.r').onclick=()=>step(1);
+    el.querySelector('.x7-svgo').onclick=()=>{close();const v=s[3];v==='ev15'?A.tab({dataset:{k:'ev15'}}):A.p15open({dataset:{v}})}};
+  const step=(d)=>{ix+=d;if(ix<0)ix=0;if(ix>=s[0].length){const ni=keys.indexOf(k)+1;if(ni<keys.length){story7(keys[ni],1);return}close();return}draw();restart()};
+  const restart=()=>{clearInterval(ST7T);ST7T=setInterval(()=>step(1),3600)};
+  const close=()=>{clearInterval(ST7T);el.classList.add('out');setTimeout(()=>el.remove(),260)};
+  draw();document.body.appendChild(el);if(dir)el.classList.add('next');restart()}
+/* after every render: live clock, reveal-on-scroll, sliding menu highlight */
+let IO7=null,VK7='',NAV7=null,CLK7=null;
+function post7(){if(!V6())return;const vk=S.tab+'|'+(P15.v||''),same=vk===VK7;VK7=vk;
+  const els=document.querySelectorAll('.x6-today,.x6-row,.x6-bt,.x6-ev,.x7-stop,.x6-club,.x6-picks button,.x6-ans button,.x7-st');
+  if(!same&&'IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){IO7&&IO7.disconnect();
+    IO7=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('x7-in');IO7.unobserve(e.target)}}),{threshold:.12});
+    let j=0;els.forEach(e=>{e.classList.add('x7-rv');e.style.setProperty('--d',(j++%6)*70+'ms');IO7.observe(e)})}
+  else els.forEach(e=>e.classList.add('x7-in'));
+  clearInterval(CLK7);CLK7=setInterval(()=>{const c=document.querySelector('.x7-clock');if(c)c.textContent=now7();else clearInterval(CLK7)},20000);
+  const nav=document.querySelector('.navwrap .nav.x6nav');if(nav){const on=nav.querySelector('button.on');let ind=nav.querySelector('.x7-ind');if(!ind){ind=document.createElement('i');ind.className='x7-ind';nav.prepend(ind)}
+    if(on){const r=on.getBoundingClientRect(),nr=nav.getBoundingClientRect(),to=[r.left-nr.left,r.width];
+      if(NAV7&&(NAV7[0]!==to[0])){ind.style.transition='none';ind.style.transform=`translateX(${NAV7[0]}px)`;ind.style.width=NAV7[1]+'px';ind.getBoundingClientRect();ind.style.transition=''}
+      ind.style.transform=`translateX(${to[0]}px)`;ind.style.width=to[1]+'px';ind.style.opacity=1;NAV7=to}else ind.style.opacity=0}}
+(function(){
+  const _h=home6;home6=function(){const me=S.me||{},C=T6()==='C';
+    return p15wrap(top6()+head7()+search6()+stories7(Object.keys(ST7))+
+      (C?bento6(['home','job','quote','expert','sell','parents','events','club']).replace(/<span class="x6-ph"><img src="img\/p15\/(\w+)\.webp"[^>]*><\/span>/,(m,p)=>multi7(ST7.home[0])):
+       today6([['home','SETTLE IN','A home that fits','Rooms, flats and roommates by budget'],['quote','HELP IN ONE TAP','5 quotes, zero calls','Movers, cleaning, tax, repairs'],['job','WORK','Jobs with pay shown upfront','Hours and pay on every job'],['events','THIS WEEKEND','Your weekend, sorted','Meetups, matches, festivals'],['parents','FAMILY','Parents flying alone?','Someone on the same flight helps']])
+        .replace(/<span class="x6-ph"><img src="img\/p15\/(\w+)\.webp"[^>]*><\/span>/g,(m,p)=>{const k=Object.keys(ST7).find(x=>ST7[x][0][0]===p);return k?multi7(ST7[k][0]):m}))+
+      journey7()+week6())};
+  plan6=journey7;
+  const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{requestAnimationFrame(post7)}catch(e){}};
+  Object.assign(A,{x7story(el){story7(el.dataset.k)}});
+  /* page morph: the browser's own view transition when available, otherwise nothing changes */
+  const vt=(f)=>function(el){if(!V6()||!document.startViewTransition||matchMedia('(prefers-reduced-motion: reduce)').matches)return f.apply(this,arguments);
+    const ph=el&&el.closest&&el.closest('button')&&el.closest('button').querySelector('.x6-ph');if(ph)ph.style.viewTransitionName='x7hero';
+    const a=arguments,t=this;document.startViewTransition(()=>{const r=f.apply(t,a);const n=document.querySelector('#main .x6-ph, #main .p15-ph, #main img');if(ph)ph.style.viewTransitionName='';if(n&&ph)n.style.viewTransitionName='x7hero';return r});};
+  A.p15open=vt(A.p15open);A.tab=vt(A.tab);
+})();
+
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
 })();
