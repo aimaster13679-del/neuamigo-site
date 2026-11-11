@@ -3836,9 +3836,9 @@ try{if(typeof RLX!=='undefined'&&RLX.OPTS&&RLX.OPTS.welcome)RLX.OPTS.p15=()=>Obj
 function P15on(){return !!(P15.d&&P15.d.on)}
 async function load15(){try{P15.d=await API.rpc('my15',{});try{localStorage.setItem('nm.p15.'+(API.userId()||''),JSON.stringify(P15.d))}catch(e){}}catch(e){}}
 function warm15(){try{const o=JSON.parse(localStorage.getItem('nm.p15.'+(API.userId()||''))||'null');if(o&&!P15.d)P15.d=o}catch(e){}}
-const p15price=k=>{const c=P15.d&&P15.d.prices&&P15.d.prices[k];return c==null?'':money(c,'USD')};
+const p15price=k=>{const c=P15.d&&P15.d.prices&&P15.d.prices[k];return c==null?'':money(c,(P15.d&&P15.d.cur)||'USD')};
 /* launch prices (owner ok 9 Nov 2026): honest note, never a struck-through fake old price */
-const p15later=k=>{const c=P15.d&&P15.d.later&&P15.d.later[k];return c==null?'':money(c,'USD')};
+const p15later=k=>{const c=P15.d&&P15.d.later&&P15.d.later[k];return c==null?'':money(c,(P15.d&&P15.d.cur)||'USD')};
 const p15launch=(keys,who)=>{if(!keys.some(k=>p15later(k)))return '';return `<div class="p15-g p15-launch"><span>${ic('tick2')} Launch prices: join now and your price stays as long as you stay. Later prices are for new ${who} only.</span></div>`};
 /* price with tags (his 9 Nov 16:51): LAUNCH PRICE above the price now, highlighted LATER above the later price; no strike-through */
 const p15tag=(k,unit)=>{const l=p15later(k);return `<span class="p15-lp">${l?'<i class="lt">LAUNCH PRICE</i>':''}<b>${p15price(k)}</b><small>${unit}</small>${l?`<span class="lat"><i>LATER</i>${l}</span>`:''}</span>`};
