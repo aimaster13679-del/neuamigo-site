@@ -2166,3 +2166,16 @@ html.p15pub .rl-wel .rl-map{position:absolute;inset:0 0 var(--ch,0px) 0;z-index:
 .p15-pts .p15-pill{background:rgba(209,170,82,.18);color:inherit;border:1px solid rgba(209,170,82,.6)}
 .p15-step small{display:block;font-size:12px;color:var(--p-mut);font-weight:500}
 @media (prefers-reduced-motion:reduce){.p15-st.mine{animation:none}.p15-st{transition:none}}
+/* Week 2: league table, match day scores, request cards, venue calendar */
+.p15-dim{display:block;font-size:12px;color:var(--p-mut);margin-top:4px}
+.p15-tbl{padding:4px 0}.p15-tr{display:grid;grid-template-columns:26px 1fr 26px 26px 26px 34px;gap:4px;align-items:center;padding:9px 12px;border-top:1px solid var(--p-hair);font-size:13.5px}
+.p15-tr:first-child{border-top:0}.p15-tr i{font-style:normal;text-align:center;color:var(--p-mut)}.p15-tr span{min-width:0}.p15-tr span b{display:block;overflow-wrap:anywhere}.p15-tr small{display:block;font-size:11px}
+.p15-tr.h{font-size:11px;font-weight:800;color:var(--p-mut);text-transform:uppercase}.p15-tr.me{background:rgba(209,170,82,.12)}.p15-tr i b{color:var(--p-ink)}
+.p15-match{display:grid;grid-template-columns:1fr auto auto 1fr;gap:6px 8px;align-items:center;padding:12px;margin-top:8px;font-size:13px;font-weight:700}
+.p15-match>span:first-child{text-align:right}.p15-match>span{min-width:0;overflow-wrap:anywhere}.p15-match>.p15-btn{grid-column:1/-1;margin:2px 0 0}
+.p15-sc{display:inline-flex;align-items:center;gap:4px}.p15-sc b{min-width:18px;text-align:center;font-size:18px}
+.p15-sc button{width:28px;height:28px;border-radius:9px;border:1.5px solid rgba(128,128,150,.4);background:var(--p-gl2);color:inherit;font-weight:800}
+.p15-ask.wait{opacity:.82}.p15-ask .p15-btn{margin-top:10px}.p15-ask .p15-chip{margin-top:8px}
+.p15-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:12px}.p15-cal i{font-style:normal;text-align:center;font-size:11px;font-weight:800;color:var(--p-mut)}
+.p15-cd{aspect-ratio:1;border-radius:12px;border:1.5px solid rgba(128,128,150,.35);background:var(--p-gl2);color:var(--p-ink);font-weight:700;font-size:13px;padding:0}
+.p15-cd.busy{background:#D1AA52;border-color:#D1AA52;color:#16152A}.p15-cd:disabled{opacity:.35}
