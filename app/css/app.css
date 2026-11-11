@@ -2179,3 +2179,4 @@ html.p15pub .rl-wel .rl-map{position:absolute;inset:0 0 var(--ch,0px) 0;z-index:
 .p15-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:12px}.p15-cal i{font-style:normal;text-align:center;font-size:11px;font-weight:800;color:var(--p-mut)}
 .p15-cd{aspect-ratio:1;border-radius:12px;border:1.5px solid rgba(128,128,150,.35);background:var(--p-gl2);color:var(--p-ink);font-weight:700;font-size:13px;padding:0}
 .p15-cd.busy{background:#D1AA52;border-color:#D1AA52;color:#16152A}.p15-cd:disabled{opacity:.35}
+.p15-empty{display:grid;gap:4px;padding:18px 16px;margin-top:12px;text-align:center}.p15-empty b{font-size:15px}.p15-empty small{font-size:13px;color:var(--p-mut)}
