@@ -3972,6 +3972,18 @@ function credits15v(){const d=P15.d||{},n=d.seatCredits||0;
   <div class="p15-g p15-list">${packs.map(([k,l])=>`<button class="p15-li" data-a="p15buyCredits" data-k="${k}" style="width:100%;border:0;background:transparent;color:inherit;text-align:left"><span class="p15-b mint">${ic('qr')}</span><span class="tx"><b>${l}</b><small>${p15price(k)}</small></span>${ic('chev2')}</button>`).join('')}</div>
   <p class="p15-ex">Your ticket money is 100% yours, paid to you directly. Seats open for booking only while you have credits.</p>`)}
 P15V.club=club15v;P15V.credits=credits15v;
+/* Weekend Club event slots (his final ok 11 Nov 2026): NeuAmigo plans the calendar; organizers ask; one slot = one organizer,
+   chosen by rating and guests who really came; the next one is backup. */
+function slots15v(){const l=P15.sl2;if(l===undefined){API.rpc('slots15',{}).then(r=>{P15.sl2=r;render()}).catch(()=>{P15.sl2={slots:[]};render()});return p15wrap(p15top('Open event slots',true)+spinner('Loading'))}
+  const sl=(l&&l.slots)||[];const st={open:['Ask for it',''],yours:['Yours · set it up','ok'],backup:['You are backup','y'],taken:['Taken','y']};
+  if(!l||!l.biz)return p15wrap(p15top('Open event slots',true)+`<div class="p15-g p15-empty"><b>Start a host plan first</b><small>Slots are for event organizers in your city.</small></div><button class="p15-btn" data-a="p15open" data-v="host">See host plans</button>`);
+  return p15wrap(p15top('Open event slots',true)+`<p class="p15-sub">${esc(l.city||'')} · next 4 weekends. NeuAmigo plans the calendar and gives you the Event Kit. One slot, one organizer: if many ask, it goes by rating and guests who really came, and a backup is kept.</p>
+  ${sl.length?sl.map(s=>{const w=new Date(s.startsAt);const tag=s.status==='open'&&s.mine?['Asked · tap to undo','y']:st[s.status]||st.open;
+    return `<div class="p15-g p15-hb"><div class="p15-hbh"><b>${esc(s.title)}</b><span class="p15-pill${tag[1]==='y'?' y':''}">${s.asks} asked</span></div>
+    <small>${esc((()=>{try{return w.toLocaleString(RM_I18N.locale,{weekday:'short',day:'numeric',month:'short',hour:'numeric',minute:'2-digit',timeZone:s.tz||undefined})}catch(e){return w.toLocaleString()}})())} · ${esc(s.expected)}${s.kids?' · families':''} · Event Kit included</small>
+    ${s.status==='yours'?`<button class="p15-btn" data-a="p15slotUse" data-t="${esc(s.title)}">Set it up</button>`:s.status==='open'?`<button class="p15-btn${s.mine?' ghost':''}" data-a="p15slot" data-id="${s.id}" data-yes="${s.mine?'0':'1'}"${P15.busy===s.id?' disabled':''}>${tag[0]}</button>`:`<div class="p15-ex">${tag[0]}</div>`}</div>`}).join(''):`<div class="p15-g p15-empty"><b>No slots right now</b><small>New weekends open every week.</small></div>`}`)}
+P15V.slots=slots15v;
+
 
 P15V.tickets=tickets15;
 (function(){
@@ -3980,6 +3992,8 @@ P15V.tickets=tickets15;
   const _me=renderMe;renderMe=function(){if(P15on()&&P15.v&&get(P15.v))return get(P15.v)();return _me()};
   Object.assign(A,{
     p15n(el){P15.n=Math.max(1,Math.min(10-(P15.k||0),P15.n+Number(el.dataset.d)));render()},
+    async p15slot(el){if(P15.busy)return;P15.busy=el.dataset.id;render();try{await API.rpc('claim_slot15',{sid:el.dataset.id,yes:el.dataset.yes==='1'});P15.sl2=undefined;toast(el.dataset.yes==='1'?'Asked. You hear within 24 hours.':'Your ask is removed.','tick2')}catch(e){toast(em15(e).includes('host plan')?'You need an active host plan in this city.':'Could not ask for this slot. Please try again.','info')}P15.busy='';render()},
+    p15slotUse(el){P15.f.et=el.dataset.t;P15.v='newev';render()},
     p15cf(el){P15[el.dataset.k]=el.dataset.val;render()},
     async p15buyClub(el){if(P15.busy)return;P15.busy='club';render();try{await API.rpc('buy_club15',{prod:el.dataset.k});await load15();toast('Your Weekend Club membership is active.','star2')}catch(e){if(!P15.shownAt||Date.now()-P15.shownAt>1500)toast('Could not start the membership. Please try again.','info')}P15.busy='';render()},
     async p15buyCredits(el){if(P15.busy)return;P15.busy='cr';render();try{const r=await API.rpc('buy_seat_credits15',{prod:el.dataset.k});await load15();toast(`You now have ${(r&&r.credits)||''} Seat Credits.`,'tick2')}catch(e){if(!P15.shownAt||Date.now()-P15.shownAt>1500)toast(em15(e).includes('organizers only')?'Seat Credits are for event organizers.':'Could not add credits. Please try again.','info')}P15.busy='';render()},
@@ -4023,7 +4037,7 @@ function newEv15(){const f=P15.f;f.kind=f.kind||'meetup';f.day=f.day||days15()[5
   <label>Who can come</label>${chips15('who',[['all','Everyone'],['women','Women only'],['men','Men only'],['u30','Under 30'],['30plus','30 and over']],f.who)}${D15()&&f.price!=='0'?payHowForm15(f):''}</div>
   <button class="p15-btn" data-a="p15evCreate"${P15.busy==='ev'?' disabled':''}>${P15.busy==='ev'?'Saving…':'Publish event'}</button>`)}
 function board15(){const l=P15.hb;if(l===undefined){API.rpc('host_board15',{}).then(r=>{P15.hb=r;render()}).catch(()=>{P15.hb=[];render()});return p15wrap(p15top('Host Dashboard',true)+spinner('Loading'))}
-  return p15wrap(p15top('Host Dashboard',true)+`<button class="p15-g p15-row" data-a="p15open" data-v="credits"><span class="p15-b lem">${ic('qr')}</span><span class="tx"><b>Seat Credits: ${((P15.d&&P15.d.seatCredits)||0).toLocaleString('en')}</b><small>1 credit = 1 booked seat · add more</small></span>${ic('chev2')}</button>`+(l.length?l.map(e=>`<div class="p15-g p15-hb"><div class="p15-hbh"><b>${esc(e.title)}</b><span class="p15-pill${e.status==='open'?'':' y'}">${e.status==='open'?'Open':e.status==='cancelled'?'Cancelled':'Done'}</span></div>
+  return p15wrap(p15top('Host Dashboard',true)+`<button class="p15-g p15-row" data-a="p15open" data-v="credits"><span class="p15-b lem">${ic('qr')}</span><span class="tx"><b>Seat Credits: ${((P15.d&&P15.d.seatCredits)||0).toLocaleString('en')}</b><small>1 credit = 1 booked seat · add more</small></span>${ic('chev2')}</button><button class="p15-g p15-row" data-a="p15open" data-v="slots"><span class="p15-b mint">${ic('party')}</span><span class="tx"><b>Open event slots</b><small>Ask for a weekend slot in your city · Event Kit included</small></span>${ic('chev2')}</button>`+(l.length?l.map(e=>`<div class="p15-g p15-hb"><div class="p15-hbh"><b>${esc(e.title)}</b><span class="p15-pill${e.status==='open'?'':' y'}">${e.status==='open'?'Open':e.status==='cancelled'?'Cancelled':'Done'}</span></div>
     <small>${esc(evWhen(e))} · ${e.sold} of ${e.seats} seats sold · ${e.checkedIn} checked in</small><div class="p15-bar"><i style="width:${Math.round(100*e.sold/Math.max(1,e.seats))}%"></i></div>
     ${e.direct||D15()?`<div class="p15-kv"><div><small>Tickets</small><b>${money(e.tickets,e.currency)}</b></div><div><small>Paid to you</small><b class="p15-acc">${money(e.got,e.currency)}</b></div><div><small>Still to get</small><b>${money(e.toGet,e.currency)}</b></div></div>
     <button class="p15-g p15-row" data-a="p15open" data-v="guests:${e.id}"><span class="p15-b mint">${ic('user')}</span><span class="tx"><b>Guests and payments</b><small>${esc(e.payHow||'Add how guests pay you')}</small></span>${ic('chev2')}</button>`:
@@ -4066,7 +4080,7 @@ Object.assign(P15V,{host:hostPlans15,newev:newEv15,hostboard:board15,door:door15
       catch(e){toast('Camera is not allowed. Type the code instead.','info')}}
   });
   const _back=A.p15back;A.p15back=function(el){if(P15.cam){P15.cam.getTracks().forEach(t=>t.stop());P15.cam=null}P15.dr=null;
-    const up={newev:'hostboard',door:'hostboard',hostboard:'host',credits:'hostboard'};if(up[P15.v]){P15.v=up[P15.v];render();return}return _back(el)};
+    const up={newev:'hostboard',door:'hostboard',hostboard:'host',credits:'hostboard',slots:'hostboard'};if(up[P15.v]){P15.v=up[P15.v];render();return}return _back(el)};
 })();
 function confirm15(m){try{return window.confirm(m)}catch(e){return true}}
 
