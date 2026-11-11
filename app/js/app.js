@@ -5591,6 +5591,60 @@ function post7(){if(!V6())return;const vk=S.tab+'|'+(P15.v||''),same=vk===VK7;VK
   A.p15open=vt(A.p15open);A.tab=vt(A.tab);
 })();
 
+/* v8 "Zepto style" (his reference app, 12 Nov 2026): colour header that changes per section tab,
+   rolling search, dense picture tiles, rails with price + one button, banners. No icons, no circles.
+   Mock only: localStorage nm.p15v8 = '1' until his ok. */
+const V8_LIVE=false;
+function V8(){try{return V8_LIVE||localStorage.getItem('nm.p15v8')==='1'}catch(e){return V8_LIVE}}
+{const _v6=V6;V6=function(){return V8()||_v6()}}
+const ZT8=[['all','All','city','#2347E8','#1733B8'],['homes','Homes','house','#0B8A68','#076A50'],['jobs','Jobs','office','#E2541C','#B83F10'],
+  ['help','Help','boxes','#7B35D6','#5E22AE'],['events','Events','hall','#D3245F','#A8164A'],['sale','Sale','sofa','#0A7FA6','#06627F']];
+const P16=["room","house","office","boxes","tools","store","docs","catering","table","league","stadium"];
+const ph8=(p)=>`<span class="z8-ph"><img src="img/${P16.includes(p)?"p16":"p15"}/${p}.webp" alt="" loading="lazy" decoding="async"></span>`;
+const zt8=()=>P15.z8||'all';
+function zgo8(v){return v==='ev15'?'data-a="tab" data-k="ev15"':`data-a="p15open" data-v="${v}"`}
+/* tiles: [label, photo, view, quote-category] */
+const ZG8={all:[['Find a Home','room','rooms'],['Find a Job','office','jobs'],['Get 5 Quotes','boxes','ask:service'],['Experts','docs','experts'],['Buy & Sell','sofa','sale'],['Flight Helper','plane','buddy'],['Events','hall','ev15'],['Weekend Club','table','club']],
+  homes:[['Rooms & flats','room','rooms'],['Post a Room','keys','postroom'],['Room Wanted','house','ask:room'],['Furniture','sofa','sale'],['Moving help','boxes','q:Movers'],['Cleaning','tools','q:Cleaning']],
+  jobs:[['Find a Job','office','jobs'],['Post a Job','store','postjob'],['Work profile','docs','workprof'],['Shop work','store','jobs'],['Kitchen work','catering','jobs'],['Safe jobs tips','keys','safejobs']],
+  help:[['Moving house','boxes','q:Movers'],['Home cleaning','room','q:Cleaning'],['Tax filing','docs','q:Tax'],['Insurance','keys','q:Insurance'],['Repairs','tools','q:Small jobs'],['Visa help','plane','q:Immigration'],['Experts','office','experts'],['Flight Helper','trip','buddy']],
+  events:[['Meet friends','table','meetups'],['Watch matches','stadium','watch'],['Festivals','lantern','festival'],['Day trips','trip','trip'],['Play a league','league','league'],['Host an event','hall','host']],
+  sale:[['All items','sofa','sale'],['Sell yours','boxes','mysale'],['Furniture','sofa','sale'],['Kitchen','catering','sale'],['Home items','room','sale'],['Moving out','house','sale']]};
+const ZB8={all:[['club','WEEKEND CLUB','Members book first','Pick your seat on the map','Open','table'],['ask:service','GET 5 QUOTES','Movers, cleaning, tax','Up to 5 businesses reply','Ask now','boxes']],
+  homes:[['rooms','HOMES','Rent shown on every listing','Rooms, flats and roommates','See homes','room']],
+  jobs:[['jobs','JOBS','Pay and hours on every job','Families and shops hire here','See jobs','office']],
+  help:[['ask:service','ONE REQUEST','Tell us once, get 5 quotes','You pick one and pay them directly','Ask now','boxes']],
+  events:[['club','WEEKEND CLUB','Members book first','Pick your seat on the map','Open','hall']],
+  sale:[['sale','BUY & SELL','From people moving out','Price on every item','See items','sofa']]};
+function zv8(v){return v.startsWith('q:')?`data-a="z8q" data-c="${esc(v.slice(2))}"`:zgo8(v)}
+function zbn8(list){return `<div class="z8-bn${list.length===1?' one':''}">${list.map(([v,o,t,s,c,p],i)=>`<button class="z8-ban" ${zgo8(v)} style="--i:${i}"><span class="z8-bt"><small>${esc(o)}</small><b>${esc(t)}</b><span>${esc(s)}</span><em>${esc(c)} →</em></span>${ph8(p)}</button>`).join('')}</div>`}
+function zgrid8(list){return `<div class="z8-grid c${list.length%4===0?4:3}">${list.map(([l,p,v],i)=>`<button class="z8-tile" ${zv8(v)} style="--i:${i}">${ph8(p)}<b>${esc(l)}</b></button>`).join('')}</div>`}
+function zdata8(rpc,key,args){const c=P15.z8d=P15.z8d||{};if(c[key]===undefined){c[key]=null;API.rpc(rpc,args||{}).then(r=>{c[key]=r||[];render()}).catch(()=>{c[key]=[]})}return c[key]||[]}
+function zrail8(title,cards,more){if(!cards.length)return '';return `<div class="z8-sec"><b>${esc(title)}</b>${more?`<button ${zgo8(more)}>See all →</button>`:''}</div><div class="z8-rail">${cards.join('')}</div>`}
+const zcard8=(go,p,t,sub,price,btn)=>`<div class="z8-card">${`<button class="z8-cimg" ${go}>${ph8(p)}</button>`}<b>${esc(t)}</b><small>${esc(sub)}</small><div class="z8-cf"><span>${price}</span><button ${go}>${esc(btn)}</button></div></div>`;
+function zrails8(t){const c=(S.me||{}).city||'',out=[],PH={meetup:'table',watch:'stadium',festival:'lantern',trip:'trip',league:'league'};
+  if(t==='all'||t==='events'){const ev=zdata8('events15','ev',{k:'',cty:c}).slice(0,8);out.push(zrail8('This weekend',ev.map(e=>zcard8(`data-a="p15open" data-v="evd:${e.id}"`,PH[e.kind]||'hall',e.title,evWhen(e)+' · '+e.left+' left',e.price?esc(money(e.price,e.currency)):'No ticket price','Book')),'ev15'))}
+  if(t==='all'||t==='jobs'){const jb=zdata8('jobs15','jobs',{}).slice(0,8);out.push(zrail8('Jobs near you',jb.map(j=>zcard8(`data-a="p15open" data-v="job:${j.id}"`,j.cat==='Shop helper'?'store':j.cat==='Cooking'?'catering':'office',j.title,j.area+' · '+j.hours+' h/wk',esc(money(j.pay,j.currency))+'<small> / h</small>','Apply')),'jobs'))}
+  if(t==='all'||t==='sale'||t==='homes'){const sl=zdata8('sales15','sale',{}).slice(0,8);out.push(zrail8(t==='homes'?'Furniture for your new place':'From people moving out',sl.map(s=>zcard8('data-a="p15open" data-v="sale"',s.cat==='Sofa'?'sofa':s.cat==='Kitchen'?'catering':'boxes',s.title,s.area+' · '+s.cond,esc(money(s.price,s.currency)),'View')),'sale'))}
+  if(t==='help')out.push(`<div class="z8-sec"><b>How it works</b></div><div class="z8-how">${[['1','Tell us once','Pick what you need, no typing','boxes'],['2','Get up to 5 replies','Local businesses send their price','office'],['3','Pick one','You choose and pay them directly','keys']].map(([n,a,b,p])=>`<div class="z8-hw">${ph8(p)}<span><em>${n}</em><b>${a}</b><small>${b}</small></span></div>`).join('')}</div>`);
+  return out.join('')}
+function zpage8(){const t=zt8(),T=ZT8.find(x=>x[0]===t)||ZT8[0],me=S.me||{},c=me.city||'your city',lt=document.documentElement.classList.contains('gl-lt'),
+  W=['a room in '+c,'a job near you','movers for Saturday','visa help','a football team','a sofa'];
+  return p15wrap(`<div class="z8-head" style="--h:${T[3]};--h2:${T[4]}">
+    <div class="z8-hr"><div><small>NeuAmigo · ${esc(c)}</small><b>${t==='all'?'Settle in '+esc(c):esc(T[1])+' in '+esc(c)}</b></div><button class="z8-mode" data-a="p15theme">${lt?'Dark':'Light'}</button></div>
+    <button class="z8-search" data-a="p15open" data-v="search"><span>Search for</span><span class="z8-roll" aria-hidden="true"><span>${W.concat(W[0]).map(w=>`<i>"${esc(w)}"</i>`).join('')}</span></span></button>
+    <div class="z8-tabs" role="tablist">${ZT8.map(([k,l,p])=>`<button role="tab" aria-selected="${k===t}" class="${k===t?'on':''}" data-a="z8tab" data-k="${k}"><span class="z8-tp">${ph8(p)}</span><b>${esc(l)}</b></button>`).join('')}</div></div>
+   <div class="z8-body">${zbn8(ZB8[t])}${zgrid8(ZG8[t])}${zrails8(t)}</div>`)}
+(function(){
+  const _h=home15;home15=function(){if(!V8())return _h();if(P15.z8nav!=='matches'){P15.z8nav='matches';P15.z8='all'}return zpage8()};
+  const _s=settle15;settle15=function(){if(!V8())return _s();if(P15.z8nav!=='settle'){P15.z8nav='settle';P15.z8='help'}return zpage8()};
+  const _e=events15;events15=function(){if(!V8())return _e();if(P15.z8nav!=='ev15'){P15.z8nav='ev15';P15.z8='events'}return zpage8()};
+  Object.assign(A,{
+    z8tab(el){P15.z8=el.dataset.k;render();const m=document.querySelector('#main');try{(m&&m.scrollTop>0?m:document.scrollingElement).scrollTo({top:0,behavior:'smooth'})}catch(e){}},
+    z8q(el){const cat=el.dataset.c;A.p15open({dataset:{v:'ask:service'}});setTimeout(()=>{P15.q={k:'service',cat};P15.qs=1;render()},140)}});
+  const _r=render;render=function(){try{const d=document.documentElement,on=V8();d.classList.toggle('p15v8',on);if(on){const T=ZT8.find(x=>x[0]===zt8())||ZT8[0];d.style.setProperty('--zh',T[3]);d.style.setProperty('--zh2',T[4]);['A','B','C'].forEach(x=>d.classList.toggle('x6t-'+x,x==='A'))}}catch(e){}return _r.apply(this,arguments)};
+})();
+
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
 })();
