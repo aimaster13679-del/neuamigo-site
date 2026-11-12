@@ -2733,3 +2733,15 @@ html.p15v8 .z8-head::before{content:"";position:absolute;inset:auto auto -40% -1
 @media (prefers-reduced-motion:reduce){.z9-ph.big .z8-ph,.z8-float .z9-ph{animation:none}}
 /* no blinking: same view drawn again stays still */
 html.nm-same .z8-body,html.nm-same .z8-tile,html.nm-same .z8-col,html.nm-same .x6-bt,html.nm-same .x6-today,html.nm-same .x6-row,html.nm-same .p15-pt,html.nm-same .x7-st,html.nm-same .x6-ans button,html.nm-same .x6-picks button,html.nm-same .z8-tabs button.on::after,html.nm-same .p15in-f,html.nm-same .p15in-b,html.nm-same .p15in-t{animation:none!important}
+/* clearer tiles + alive touches (12 Nov 2026) */
+.z8-tile small{display:block;font-size:10.5px;line-height:1.25;font-weight:600;color:var(--z8mut);margin-top:-3px}
+.z8-grid.c3 .z8-tile small{font-size:11.5px}
+.z8-tile .z8-ph{position:relative;overflow:hidden}
+.z8-tile .z8-ph::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);transform:translateX(-120%);animation:z8shine 7s ease-in-out infinite;animation-delay:calc(var(--i)*0.45s + 1.2s);pointer-events:none}
+@keyframes z8shine{0%,12%{transform:translateX(-120%)}22%,100%{transform:translateX(120%)}}
+.z8-tile:active{transform:scale(.9)!important;transition:transform .1s}
+.z8-tile{transition:transform .35s cubic-bezier(.3,1.8,.5,1)}
+.z8-head{background-image:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.10) 45%,transparent 60%)!important;background-size:250% 100%!important;animation:z8sky 9s ease-in-out infinite}
+html.p15v8 .z8-head{background-color:var(--h)}html.p15v8:not(.gl-lt) .z8-head{background-color:var(--h2)}
+@keyframes z8sky{0%{background-position:120% 0}100%{background-position:-120% 0}}
+@media (prefers-reduced-motion:reduce){.z8-tile .z8-ph::after,.z8-head{animation:none}}

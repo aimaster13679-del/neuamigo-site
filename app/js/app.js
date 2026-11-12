@@ -5319,6 +5319,7 @@ const OPTIC15={'Moving house (truck + helpers)':'truck','Home cleaning':'sparkle
 const DAYRX15=/^(Mon|Tue|Wed|Thu|Fri|Sat|Sun)[a-z]*,? (\d{1,2}) ([A-Za-z]{3,})$/;
 function divEnd15(h,i){let d=0,re=/<div\b|<\/div>/g;re.lastIndex=i;let m;while((m=re.exec(h))){if(m[0]==='</div>'){d--;if(d===0)return re.lastIndex}else d++}return -1}
 function prem15(h){
+  if(h.indexOf('z8-head')>=0)return h; /* the new home has its own clear names */
   /* names everywhere in visible text */
   h=h.replace(/>([^<]+)</g,(m,t)=>{let x=t;for(const [a,b] of NAMEX15)if(x.includes(a)&&!x.includes(b))x=x.split(a).join(b);return '>'+x+'<'});
   /* forms -> bento steps */
@@ -5606,12 +5607,12 @@ const ph8=(p)=>`<span class="z8-ph"><img src="img/${P17.includes(p)?"p17":P16.in
 const zt8=()=>P15.z8||'all';
 function zgo8(v){return v==='ev15'?'data-a="tab" data-k="ev15"':`data-a="p15open" data-v="${v}"`}
 /* tiles: [label, photo, view, quote-category] */
-const ZG8={all:[['Find a Home','house','rooms'],['Find a Job','office','jobs'],['Get 5 Quotes','calc','ask:service'],['Experts','expert','experts'],['Buy & Sell','saletags','sale'],['Flight Helper','plane','buddy'],['Events','hall','ev15'],['Weekend Club','table','club']],
-  homes:[['Rooms & flats','room','rooms'],['Post a Room','rentsign','postroom'],['Room Wanted','bedside','ask:room'],['Furniture','sofa','sale'],['Moving help','boxes2','q:Movers'],['Cleaning','clean2','q:Cleaning']],
-  jobs:[['Find a Job','office','jobs'],['Post a Job','hiring','postjob'],['Work profile','resume','workprof'],['Shop work','store','jobs'],['Kitchen work','kitchen','jobs'],['Safe jobs tips','jobsnews','safejobs']],
-  help:[['Moving house','boxes','q:Movers'],['Home cleaning','clean','q:Cleaning'],['Tax filing','docs','q:Tax'],['Insurance','insure','q:Insurance'],['Repairs','tools','q:Small jobs'],['Visa help','passport','q:Immigration'],['Experts','expert','experts'],['Flight Helper','plane','buddy']],
-  events:[['Meet friends','coffee','meetups'],['Watch matches','stadium','watch'],['Festivals','lantern','festival'],['Day trips','trip','trip'],['Play a league','league','league'],['Host an event','mic','host']],
-  sale:[['All items','saletags','sale'],['Sell yours','garage','mysale'],['Furniture','sofa','sale'],['Kitchen','kitchen2','sale'],['Home items','bedside','sale'],['Moving out','boxes3','sale']]};
+const ZG8={all:[['Rent a Home','house','rooms','Rooms & flats'],['Find Work','office','jobs','Jobs near you'],['Compare Prices','calc','ask:service','5 businesses quote you'],['Ask an Expert','expert','experts','Visa, tax, insurance'],['Buy Used Items','saletags','sale','From people moving out'],['Travel Buddy','plane','buddy','Help on a family flight'],['Events','hall','ev15','Things to do this week'],['Weekend Club','table','club','Members-only nights']],
+  homes:[['Rent a Room','room','rooms','See rooms & flats'],['List Your Room','rentsign','postroom','Find a tenant'],['Ask for a Room','bedside','ask:room','Owners message you'],['Used Furniture','sofa','sale','Cheap, near you'],['Hire Movers','boxes2','q:Movers','Get 5 prices'],['Home Cleaning','clean2','q:Cleaning','Get 5 prices']],
+  jobs:[['Find Work','office','jobs','Pay shown on every job'],['Hire Someone','hiring','postjob','Post a job'],['Work Profile','resume','workprof','Apply in one tap'],['Shop Jobs','store','jobs','Stores & markets'],['Kitchen Jobs','kitchen','jobs','Cafés & restaurants'],['Job Safety Tips','jobsnews','safejobs','Spot fake offers']],
+  help:[['Hire Movers','boxes','q:Movers','Get 5 prices'],['Home Cleaning','clean','q:Cleaning','Get 5 prices'],['Tax Help','docs','q:Tax','File your taxes'],['Insurance Help','insure','q:Insurance','Home, car, health'],['Repairs','tools','q:Small jobs','Fix things at home'],['Visa Help','passport','q:Immigration','Papers & permits'],['Ask an Expert','expert','experts','Fees shown upfront'],['Travel Buddy','plane','buddy','Help on a family flight']],
+  events:[['Meet People','coffee','meetups','Coffee meetups'],['Watch Matches','stadium','watch','Big screen nights'],['Festivals','lantern','festival','Food & culture'],['Day Trips','trip','trip','Weekend outings'],['Join a League','league','league','Play sports'],['Host an Event','mic','host','Sell tickets']],
+  sale:[['Browse Items','saletags','sale','Price on every item'],['Sell Your Stuff','garage','mysale','Post in 1 minute'],['Furniture','sofa','sale','Sofas, beds, tables'],['Kitchen Items','kitchen2','sale','Pots, plates, more'],['Home Items','bedside','sale','Lamps, decor'],['Moving-Out Sales','boxes3','sale','Whole homes for sale']]};
 const ZB8={all:[['club','WEEKEND CLUB','Members book first','Pick your seat on the map','Open','table'],['ask:service','GET 5 QUOTES','Movers, cleaning, tax','Up to 5 businesses reply','Ask now','boxes']],
   homes:[['rooms','HOMES','Rent shown on every listing','Rooms, flats and roommates','See homes','room']],
   jobs:[['jobs','JOBS','Pay and hours on every job','Families and shops hire here','See jobs','office']],
@@ -5638,7 +5639,7 @@ const ZCOL8={all:[['New place starter','house','chair','boxes','tools','rooms'],
 function zcol8(t){const l=ZCOL8[t]||[];if(!l.length)return '';return `<div class="z8-sec"><b>Collections</b></div><div class="z8-cols">${l.map(([n,a,b,c,d,v],i)=>`<button class="z8-col" ${zgo8(v)} style="--i:${i}"><span class="z8-cg">${[a,b,c,d].map((x,j)=>`<span style="--t:${TINT8[(i*4+j)%8]}">${cut8(x)}</span>`).join('')}</span><b>${esc(n)}</b><small>Open →</small></button>`).join('')}</div>`}
 function zv8(v){return v.startsWith('q:')?`data-a="z8q" data-c="${esc(v.slice(2))}"`:zgo8(v)}
 function zbn8(list){return `<div class="z8-bn${list.length===1?' one':''}">${list.map(([v,o,t,s,c,p],i)=>`<button class="z8-ban" ${zgo8(v)} style="--i:${i}"><span class="z8-bt"><small>${esc(o)}</small><b>${esc(t)}</b><span>${esc(s)}</span><em>${esc(c)} →</em></span>${ZBC8[v]?cut8(ZBC8[v],'big'):ph8(p)}</button>`).join('')}</div>`}
-function zgrid8(list){return `<div class="z8-grid c${list.length%4===0?4:3}">${list.map(([l,p,v],i)=>`<button class="z8-tile" ${zv8(v)} style="--i:${i};--t:${TINT8[i%8]}">${ph8(p)}<b>${esc(l)}</b></button>`).join('')}</div>`}
+function zgrid8(list){return `<div class="z8-grid c${list.length%4===0?4:3}">${list.map(([l,p,v,sub],i)=>`<button class="z8-tile" ${zv8(v)} style="--i:${i};--t:${TINT8[i%8]}">${ph8(p)}<b>${esc(l)}</b>${sub?`<small>${esc(sub)}</small>`:''}</button>`).join('')}</div>`}
 let RR8=null;function rr8(){clearTimeout(RR8);RR8=setTimeout(()=>render(),80)}
 function zdata8(rpc,key,args){const c=P15.z8d=P15.z8d||{};if(c[key]===undefined){c[key]=null;API.rpc(rpc,args||{}).then(r=>{c[key]=r||[];rr8()}).catch(()=>{c[key]=[]})}return c[key]||[]}
 function zrail8(title,cards,more){if(!cards.length)return '';return `<div class="z8-sec"><b>${esc(title)}</b>${more?`<button ${zgo8(more)}>See all →</button>`:''}</div><div class="z8-rail">${cards.join('')}</div>`}
@@ -5675,6 +5676,10 @@ function zpage8(){const t=zt8(),T=ZT8.find(x=>x[0]===t)||ZT8[0],me=S.me||{},c=me
     d.classList.toggle('nm-same',vk===VK);VK=vk;
     const ms=Date.now()-T0;document.querySelectorAll('.z8-roll>span,.v5-roll>span,.x6-roll>span,.z9-ph.big .z8-ph,.z8-float .z9-ph').forEach(e=>e.style.animationDelay='-'+ms+'ms');
   }catch(e){}return r}})();
+
+/* banners slide by themselves every 4.5 s (stop while the finger is on them) */
+(function(){let T=null,hold=false;document.addEventListener('touchstart',e=>{if(e.target.closest&&e.target.closest('.z8-bn'))hold=true},{passive:true});document.addEventListener('touchend',()=>{setTimeout(()=>hold=false,3000)},{passive:true});
+  setInterval(()=>{try{if(hold||document.hidden||matchMedia('(prefers-reduced-motion: reduce)').matches)return;const b=document.querySelector('.z8-bn:not(.one)');if(!b)return;const w=b.firstElementChild?b.firstElementChild.getBoundingClientRect().width+12:300;const nx=b.scrollLeft+w>=b.scrollWidth-b.clientWidth+4?0:b.scrollLeft+w;b.scrollTo({left:nx,behavior:'smooth'})}catch(e){}},4500)})();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
