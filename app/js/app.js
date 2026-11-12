@@ -5941,7 +5941,7 @@ function c10post(){const R=[['rentsign','A home to rent','postroom'],['hiring','
    in one line what Weekend Club and NeuAmigo Plus each give, (3) "Settings and help" (language, help; the legal rows as a
    plain list, like every big app). "For Business" shows once. Old "SALE" photo fallback on rows without a match removed.
    Mock first: switch nm.c11 = '1' on a phone; C11_LIVE=true after his ok. */
-const C11_LIVE=false;
+const C11_LIVE=true;
 function C11(){try{return C11_LIVE||localStorage.getItem('nm.c11')==='1'||localStorage.getItem('nm.c12')==='1'}catch(e){return C11_LIVE}}
 /* new photos (Pexels licence, free): kept next to the p17 set so every photo helper finds them */
 ['lang','help','lock','early','night','seats','medal','plan','compass','ticket'].forEach(p=>{if(!P17.includes(p))P17.push(p)});
@@ -5993,7 +5993,7 @@ function c11me(){const me=S.me||{},d=P15.d||{},biz=typeof c10biz==='function'&&c
    top, then "Top 10 events" (ranked by seats really booked), "New this week" (posted in the last 7 days, NEW label), then one row
    per category. Bottom tabs: Home / Settle In / Events / Buy & Sell / Me. Homes, Jobs and Services are 3 tabs inside Settle In.
    Real data only: a row with no data is hidden. Mock first: nm.c12 = '1'; C12_LIVE=true after his ok (Me page part26 joins it). */
-const C12_LIVE=false;
+const C12_LIVE=true;
 function C12(){try{return C12_LIVE||localStorage.getItem('nm.c12')==='1'}catch(e){return C12_LIVE}}
 if(C12()){try{localStorage.setItem('nm.c11','1')}catch(e){}}
 const C12CAT=[['move','plane','Moving Abroad','Plan, papers, travel buddy','p15open" data-v="c12move'],['settle','keys','Settle In','Homes, jobs, services','p15open" data-v="rooms'],
@@ -6050,6 +6050,28 @@ function c12sell(){const sl=P15.sl;if(sl===undefined||sl===null){if(sl===undefin
       v?'':(S.tab==='ev15'||S.tab==='me'?S.tab:'matches');
     const b=(k,l,a)=>`<button ${a} class="${cur===k?'on':''}" aria-current="${cur===k?'page':'false'}"><span>${l}</span></button>`;
     nav.className='nav x6nav c9nav c12nav';nav.innerHTML=b('matches','Home','data-a="tab" data-k="matches"')+b('settle','Settle In','data-a="p15open" data-v="rooms"')+b('ev15','Events','data-a="tab" data-k="ev15"')+b('sell','Buy & Sell','data-a="p15open" data-v="c12sell"')+b('me','Me','data-a="tab" data-k="me"')}catch(e){}};
+})();
+/* where the person is moving to / lives (his ask 12 Nov 17:34: the app showed "Surat" and USD without asking).
+   One question after "Where are you in your move?": the city decides homes, jobs, events and the currency of every price. */
+const C12POP=[['Toronto','Canada'],['Vancouver','Canada'],['Calgary','Canada'],['Montreal','Canada'],['London','United Kingdom'],['New York','United States'],['Sydney','Australia'],['Melbourne','Australia'],['Dubai','United Arab Emirates'],['Singapore','Singapore'],['Auckland','New Zealand'],['Berlin','Germany']];
+const c12rows=q=>{const n=norm(q||'');if(!n)return '';const l=cities15().filter(c=>norm(c[0]).includes(n)||norm(c[1]).includes(n)).slice(0,30);
+  return l.length?l.map(c=>`<button class="c9-pan c12-crow" data-a="c12destpick" data-c="${esc(c[0])}" data-k="${esc(c[1])}"><b>${esc(c[0])}</b><small>${esc(c[1])}</small></button>`).join(''):'<p class="c9-lede c9-c">No city found. Try another spelling.</p>'};
+function c12dest(){const path=c10get('nm.path','moving'),q=P15.c12q||'';
+  return c9wrap(`<div class="c9-chz"><div class="c9-brand">${NA_CASE('c9lg')}<span><b>NeuAmigo</b></span></div>
+   <h1 class="c9-h1">${path==='moving'?'Which city are you<br>moving to?':'Which city do<br>you live in?'}</h1><p class="c9-lede">We show homes, jobs, events and prices for that city, in its own money.</p>
+   <div class="c12-pop">${C12POP.map(([c,k])=>`<button class="c12-pc" data-a="c12destpick" data-c="${esc(c)}" data-k="${esc(k)}"><b>${esc(c)}</b><small>${esc(k)}</small></button>`).join('')}</div>
+   <input id="c12dq" class="c12-q2" type="search" placeholder="Another city? Type its name" value="${esc(q)}" autocomplete="off" aria-label="Search city">
+   <div id="c12dl" class="c12-dl">${c12rows(q)}</div></div>`)}
+document.addEventListener('input',e=>{if(e.target&&e.target.id==='c12dq'){P15.c12q=e.target.value;const l=document.getElementById('c12dl');if(l)l.innerHTML=c12rows(e.target.value)}});
+(function(){
+  const _h=home15;home15=function(){if(C12()&&C9()&&!(typeof c10biz==='function'&&c10biz())&&c10get('nm.path',null)&&!c10get('nm.dest',null))return c12dest();return _h()};
+  const _t=c9top;c9top=function(){const h=_t.apply(this,arguments);if(!C12())return h;return h.replace(/<small>in <em>([^<]*)<\/em><\/small>/,'<button class="c12-city" data-a="c12citych">in <em>$1</em> ▾</button>')};
+  Object.assign(A,{
+    async c12destpick(el){const c=el.dataset.c,k=el.dataset.k;setCityNow15(c,k);c10set('nm.dest',{c,k});if(S.me){S.me.city=c;S.me.country=k}
+      P15.z8d={};P15.ev={};P15.rooms=undefined;P15.sl=undefined;P15.c12q='';render();try{document.querySelector('#main').scrollTo(0,0)}catch(e){}
+      try{if(S.me&&S.me.id)await API.update('profiles',{id:'eq.'+S.me.id},{city:c,country:k})}catch(e){}
+      try{await load15()}catch(e){}P15.z8d={};render()},
+    c12citych(){try{localStorage.removeItem('nm.dest')}catch(e){}P15.c12q='';render()}});
 })();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
