@@ -5973,7 +5973,7 @@ function c11me(){const me=S.me||{},d=P15.d||{},biz=typeof c10biz==='function'&&c
    </div>
    <div class="c9-rh"><h2>${biz?'Using NeuAmigo':'For businesses'}</h2></div>
    ${biz?row('city','Switch to using NeuAmigo','Find homes, jobs and events','data-a="c10bizoff"'):row('office','NeuAmigo for Business','Rent a home, post a job, run events, offer services, sell items','data-a="c10bizon"')}
-   ${me.isAdmin?row('docs','Admin panel','Members, payments and checks','data-a="openAdmin"')+row('city','Ads to check','Approve or remove new Ad Spot ads','data-a="p15open" data-v="adcheck"'):''}
+   ${me.isAdmin?row('docs','NeuAmigo admin','Every day: members, posts, payments','data-a="p15open" data-v="nadmin"')+row('city','Ads to check','Approve or remove new Ad Spot ads','data-a="p15open" data-v="adcheck"'):''}
    <div class="c9-rh"><h2>Settings and help</h2></div>
    ${row('lang','Language',lang,'data-a="lang"')}${row('help','Help and contact','Questions, complaints, Grievance Officer','data-a="helpOpen"')}
    <div class="c9-pan c11-ls"><button data-a="legal" data-k="terms">Terms of Service</button><button data-a="legal" data-k="privacy">Privacy Policy</button><button data-a="deleteAsk" class="red">Delete my account</button></div>
@@ -6080,6 +6080,44 @@ function c12search(){const q=(P15.sq||'').trim().toLowerCase(),r=q?SRCH15.filter
    ${q?'':'<div class="c9-rh"><h2>Popular</h2></div>'}${r.length?r.map(x=>`<button class="c9-pan c10-sw" data-a="p15open" data-v="${x[3]}">${c9i(ph(x))}<span><b>${esc(x[0])}</b><small>${esc(x[1])}</small></span></button>`).join('')
     :'<div class="c9-pan c9-empty"><b>Nothing found</b><small>Try "room", "job", "movers" or "visa"</small></div>'}</div>`)}
 (function(){const _s=P15V.search;P15V.search=function(){return C12()&&C9()?c12search():_s.apply(this,arguments)}})();
+
+/* ===== part28: NeuAmigo admin dashboard (his ask 12 Nov 2026 18:01): what came in each day + totals so far. Admin only. ===== */
+function nad28(){const me=S.me||{};if(!me.isAdmin)return c9wrap(c9back('Admin')+'<div class="c9-in"><div class="c9-pan c9-empty"><b>Only for the admin</b></div></div>');
+  const d=P15.nad;if(d===undefined){P15.nad=null;API.rpc('admin_na15',{}).then(r=>{P15.nad=r||{};render()}).catch(e=>{P15.nad={err:String(e&&e.message||e)};render()})}
+  if(!d)return c9wrap(c9back('Admin')+`<div class="c9-in">${spinner('Loading')}</div>`);
+  if(d.err)return c9wrap(c9back('Admin')+`<div class="c9-in"><div class="c9-pan c9-empty"><b>Could not load</b><small>${esc(d.err)}</small><button class="c9-btn" data-a="nadre">Try again</button></div></div>`);
+  const n=x=>Number(x||0).toLocaleString('en'),$=c=>'US$'+(Number(c||0)/100).toLocaleString('en',{maximumFractionDigits:0}),R=x=>'Rs '+Math.round(Number(x||0)/100*84).toLocaleString('en-IN');
+  const m=d.money||{},L=d.live||{},A=d.all||{},days=(d.days||[]).slice().reverse();
+  const box=(t,v,s,a)=>`<button class="c9-pan nad-k" ${a||''}><small>${esc(t)}</small><b>${v}</b>${s?`<em>${s}</em>`:''}</button>`;
+  const mx=Math.max(1,...(d.days||[]).map(x=>x.signups));
+  const bars=`<div class="c9-pan nad-ch"><div class="nad-bars">${(d.days||[]).map(x=>`<i style="height:${Math.round(x.signups/mx*100)}%" title="${x.day}: ${x.signups}"></i>`).join('')}</div><div class="nad-ax"><span>30 days ago</span><span>Today</span></div></div>`;
+  const biz=L.biz||{},bz=Object.keys(biz).map(k=>`${k} ${biz[k]}`).join(' · ')||'none yet';
+  const list=(rows,f)=>rows&&rows.length?`<div class="c9-pan nad-ls">${rows.map(f).join('')}</div>`:'<div class="c9-pan nad-ls"><div class="nad-r"><span>Nothing yet</span></div></div>';
+  const when=t=>{try{return new Date(t).toLocaleString('en',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}catch(e){return ''}};
+  return c9wrap(c9back('NeuAmigo admin')+`<div class="c9-in">
+   <div class="nad-top"><small>Updated ${esc(when(d.now))}</small><button class="c9-pill" data-a="nadre">Refresh</button></div>
+   <div class="c9-rh"><h2>Members</h2></div>
+   <div class="nad-g">${box('All members',n(d.members))}${box('Joined today',n(d.members_today))}${box('Last 7 days',n(d.members_7))}</div>
+   <div class="c9-rh"><h2>Money (real payments, test ones left out)</h2></div>
+   <div class="nad-g">${box('Today',$(m.today),R(m.today))}${box('Last 7 days',$(m.d7),R(m.d7))}${box('Last 30 days',$(m.d30),R(m.d30))}${box('All time',$(m.all),R(m.all)+' · '+n(m.n_all)+' payments')}</div>
+   <div class="c9-rh"><h2>Sign-ups, last 30 days</h2></div>${bars}
+   <div class="c9-rh"><h2>Live right now</h2></div>
+   <div class="nad-g">${box('Homes to rent',n(L.rooms),'all time '+n(A.rooms),'data-a="p15open" data-v="rooms"')}${box('Jobs',n(L.jobs),'all time '+n(A.jobs),'data-a="p15open" data-v="jobs"')}${box('Upcoming events',n(L.events),'all time '+n(A.events)+' · seats '+n(A.seats),'data-a="tab" data-k="ev15"')}
+    ${box('Items for sale',n(L.sales),'all time '+n(A.sales),'data-a="p15open" data-v="c12sell"')}${box('Open requests',n(L.asks),'all time '+n(A.asks))}${box('Plus members',n(L.plus))}${box('Weekend Club',n(L.club))}${box('Business plans',n(Object.values(biz).reduce((a,b)=>a+b,0)),esc(bz))}${box('Ads to check','Open','','data-a="p15open" data-v="adcheck"')}</div>
+   <div class="c9-rh"><h2>Day by day</h2></div><p class="c9-lede">Posts = new homes, jobs, events and items for sale. US$ = money paid that day.</p>
+   <div class="c9-pan nad-tb"><table><thead><tr><th>Day</th><th>Joined</th><th>Posts</th><th>Seats</th><th>Requests</th><th>US$</th></tr></thead><tbody>
+    ${days.map(x=>`<tr><td>${esc(new Date(x.day).toLocaleDateString('en',{day:'numeric',month:'short'}))}</td><td>${x.signups}</td><td>${x.rooms+x.jobs+x.events+x.sales}</td><td>${x.seats}</td><td>${x.asks}</td><td>${(x.usd_cents/100).toFixed(0)}</td></tr>`).join('')}</tbody></table></div>
+   <div class="c9-rh"><h2>What people paid for (all time)</h2></div>
+   ${list(d.products,p=>`<div class="nad-r"><span>${esc(p.label)}</span><b>${n(p.n)} · ${$(p.usd_cents)}</b></div>`)}
+   <div class="c9-rh"><h2>Where members are</h2></div>
+   ${list(d.countries,c=>`<div class="nad-r"><span>${esc(c.k)}</span><b>${n(c.n)}</b></div>`)}
+   ${list(d.cities,c=>`<div class="nad-r"><span>${esc(c.k)}</span><b>${n(c.n)}</b></div>`)}
+   <div class="c9-rh"><h2>Newest members</h2></div>
+   ${list(d.recent_members,r=>`<div class="nad-r"><span>${esc(r.name||'')} · ${esc(r.city||'')}, ${esc(r.country||'')}</span><b>${esc(when(r.at))}</b></div>`)}
+   <div class="c9-rh"><h2>Latest payments</h2></div>
+   ${list(d.recent_pays,p=>`<div class="nad-r"><span>${esc(p.label)}${p.test?' · test':''}</span><b>${esc(money(p.cents,p.currency))} · ${esc(when(p.at))}</b></div>`)}
+   <button class="c9-btn g nad-old" data-a="openAdmin">Old panel: reports, checks, members</button></div>`)}
+(function(){Object.assign(P15V,{nadmin:nad28});Object.assign(A,{nadre(){P15.nad=undefined;render()}})})();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
