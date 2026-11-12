@@ -2775,3 +2775,23 @@ html.p15v8 #app::before,html.p15v8 #app::after{display:none!important}
 html.p15v8.z8home{background:linear-gradient(var(--zh) 0 50%,var(--z8bg) 50% 100%)!important}
 html.p15v8.z8home:not(.gl-lt){background:linear-gradient(var(--zh2) 0 50%,var(--z8bg) 50% 100%)!important}
 html.p15v8.p15v8.p15v8.p15v8:not(.z8home),html.p15v8.p15v8.p15v8.p15v8:not(.z8home) body{background:var(--z8bg)!important;background-image:none!important}
+
+/* ===== v8 loading + refresh (his ok 12 Nov 2026 12:03): Suitcase "a" logo ===== */
+.spin.na8sp{display:inline-block;width:34px;height:34px;vertical-align:middle}
+.spin.na8sp svg{width:100%;height:100%;display:block;filter:drop-shadow(0 6px 10px rgba(11,40,110,.25));animation:na8rock .7s ease-in-out infinite;transform-origin:50% 90%}
+@keyframes na8rock{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+#nm-ptr{background:transparent!important;box-shadow:none!important;width:44px;height:44px;border-radius:12px}
+#nm-ptr .pb{width:44px!important;height:44px!important;filter:drop-shadow(0 8px 14px rgba(11,40,110,.35))}
+#nm-ptr .pb svg{transform:rotate(calc(var(--p) * -40deg));transition:transform .1s}
+#nm-ptr.ready .pb svg{transform:none}
+#nm-ptr.go .pb{animation:none!important}
+#nm-ptr.go .pb svg{animation:na8rock .6s ease-in-out infinite;transform-origin:50% 90%}
+#na8chip{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 100px);z-index:90;transform:translate(-50%,30px);opacity:0;pointer-events:none;background:#0B1226;color:#fff;font:700 14px/1.3 'Plus Jakarta Sans',Inter,system-ui,sans-serif;padding:10px 16px;border-radius:12px;white-space:nowrap;box-shadow:0 10px 24px rgba(0,0,0,.25);transition:transform .4s cubic-bezier(.3,1.4,.5,1),opacity .3s}
+#na8chip b{color:#E5C27A}
+html:not(.gl-lt) #na8chip{background:#fff;color:#0B1226}html:not(.gl-lt) #na8chip b{color:#0F52BA}
+#na8chip.on{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){.spin.na8sp svg,#nm-ptr.go .pb svg{animation:none!important}}
+html.gl #na8chip,html.gl-lt #na8chip{background:#0B1226!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+html.gl-lt #na8chip b{color:#E5C27A!important;-webkit-text-fill-color:#E5C27A!important}
+html.nm-dk #na8chip{background:#fff!important;color:#0B1226!important;-webkit-text-fill-color:#0B1226!important}
+html.nm-dk #na8chip b{color:#0F52BA!important;-webkit-text-fill-color:#0F52BA!important}

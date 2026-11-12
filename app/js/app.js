@@ -5700,6 +5700,22 @@ function in8(){if(!IN8())return;const m=document.querySelector('#main');if(!m||m
 /* phone top bar colour follows the screen (header colour on the new home, page colour elsewhere) */
 {const _ar3=afterRenderEvents;afterRenderEvents=function(vk){_ar3(vk);try{if(!V8())return;const lt=document.documentElement.classList.contains('gl-lt'),h=document.querySelector('.z8-head');const T=ZT8.find(x=>x[0]===zt8())||ZT8[0];const c=h?(lt?T[3]:T[4]):(lt?'#F3F4F7':'#09090B');const m=document.querySelector('meta[name=theme-color]');if(m)m.setAttribute('content',c);document.documentElement.classList.toggle('z8home',!!h)}catch(e){}}}
 
+/* v8 loading + refresh (his ok 12 Nov 2026 12:03, Neutant-style, Suitcase "a" logo):
+   1. spinner(): the small NeuAmigo suitcase logo that rocks gently, instead of the old hearts.
+   2. Pull down to refresh: the suitcase logo comes down with the finger, rocks while loading,
+      then a short "Updated just now" note shows above the bottom bar. */
+(function(){
+  const CASE=(cls)=>`<svg class="${cls||''}" viewBox="0 0 1024 1024" aria-hidden="true"><rect width="1024" height="1024" rx="230" fill="#0F52BA"/><rect x="397" y="190" width="230" height="200" rx="66" fill="none" stroke="#E5C27A" stroke-width="58"/><rect x="206" y="330" width="612" height="500" rx="104" fill="#fff"/><rect x="296" y="832" width="92" height="40" rx="20" fill="#E5C27A"/><rect x="636" y="832" width="92" height="40" rx="20" fill="#E5C27A"/><circle cx="500" cy="580" r="124" fill="none" stroke="#0F52BA" stroke-width="90"/><rect x="579" y="411" width="90" height="338" rx="45" fill="#0F52BA"/></svg>`;
+  window.NA_CASE=CASE;
+  spinner=function(label){return `<span class="spin na8sp" role="status" aria-label="${esc(label||'Loading')}">${CASE()}</span>`};
+  let chipT=null;
+  function chip(){let c=document.getElementById('na8chip');if(!c){c=document.createElement('div');c.id='na8chip';c.setAttribute('role','status');document.body.appendChild(c)}
+    c.innerHTML='✓ Updated <b>just now</b>';c.classList.remove('on');void c.offsetWidth;c.classList.add('on');clearTimeout(chipT);chipT=setTimeout(()=>c.classList.remove('on'),1800)}
+  function fix(e){if(!e||e._na8)return;e._na8=1;const pb=e.querySelector('.pb');if(pb)pb.innerHTML=CASE();
+    let was=false;new MutationObserver(()=>{const g=e.classList.contains('go');if(was&&!g)chip();was=g}).observe(e,{attributes:true,attributeFilter:['class']})}
+  new MutationObserver(()=>fix(document.getElementById('nm-ptr'))).observe(document.body,{childList:true});
+})();
+
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
 })();
