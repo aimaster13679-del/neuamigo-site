@@ -2745,3 +2745,17 @@ html.nm-same .z8-body,html.nm-same .z8-tile,html.nm-same .z8-col,html.nm-same .x
 html.p15v8 .z8-head{background-color:var(--h)}html.p15v8:not(.gl-lt) .z8-head{background-color:var(--h2)}
 @keyframes z8sky{0%{background-position:120% 0}100%{background-position:-120% 0}}
 @media (prefers-reduced-motion:reduce){.z8-tile .z8-ph::after,.z8-head{animation:none}}
+/* inner screens with photos (mock) */
+html.p15in8 #main .p15-b.z8-th{width:84px!important;min-width:84px!important;height:auto!important;aspect-ratio:3/2;padding:0!important;border-radius:12px!important;background:none!important;overflow:hidden;box-shadow:0 6px 14px -10px rgba(10,30,80,.6)}
+html.p15in8 #main .p15-b.z8-th .z8-ph{border-radius:12px}
+html.p15in8 #main .p15-b.big.z8-th{width:110px!important;min-width:110px!important}
+html.p15in8 #main .z8-oi{display:block;width:100%;max-width:64px;margin:0 auto 4px}.z8-oi .z8-ph{border-radius:9px}
+html.p15in8 #main .p15-row,html.p15in8 #main .p15-li{border-radius:20px!important}
+html.p15in8 #main .p15-st,html.p15in8 #main .p15-tag{border-radius:8px!important}
+/* inner screens follow the sapphire colour */
+html.p15v8{--xp:#0F52BA;--xp2:#0A3A85;--xa:#6EA0FF;--xai:#061433;--xt:rgba(15,82,186,.12)}
+html.p15v8.p15v8.gl-lt .p15{--p-m1:#E6EEFF;--p-m2:#CCDDFF;--p-mt:#0F52BA;--p-acc:#0F52BA}
+html.p15v8.p15v8:not(.gl-lt) .p15{--p-m1:rgba(110,160,255,.18);--p-m2:rgba(110,160,255,.32);--p-mt:#9CC0FF;--p-acc:#8DB4FF}
+html.p15in8 #main .p15-opt{min-width:96px!important}
+html.p15in8 #main .p15-opt .ot{white-space:nowrap;padding-right:18px}
+html.p15v8 #main .p15-opt.on .ot{color:#0F52BA!important}html.p15v8:not(.gl-lt) #main .p15-opt.on .ot{color:#9CC0FF!important}

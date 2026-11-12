@@ -5681,6 +5681,20 @@ function zpage8(){const t=zt8(),T=ZT8.find(x=>x[0]===t)||ZT8[0],me=S.me||{},c=me
 (function(){let T=null,hold=false;document.addEventListener('touchstart',e=>{if(e.target.closest&&e.target.closest('.z8-bn'))hold=true},{passive:true});document.addEventListener('touchend',()=>{setTimeout(()=>hold=false,3000)},{passive:true});
   setInterval(()=>{try{if(hold||document.hidden||matchMedia('(prefers-reduced-motion: reduce)').matches)return;const b=document.querySelector('.z8-bn:not(.one)');if(!b)return;const w=b.firstElementChild?b.firstElementChild.getBoundingClientRect().width+12:300;const nx=b.scrollLeft+w>=b.scrollWidth-b.clientWidth+4?0:b.scrollLeft+w;b.scrollTo({left:nx,behavior:'smooth'})}catch(e){}},4500)})();
 
+/* inner screens: simple icons replaced by the thing's own photo (mock until his ok: nm.p15in8) */
+const IN8_LIVE=false;
+function IN8(){try{return IN8_LIVE||localStorage.getItem('nm.p15in8')==='1'}catch(e){return IN8_LIVE}}
+const KW8=[[/serving|plate|pot|pan\b/i,'kitchen2'],[/studio/i,'bedside'],[/apartment|condo/i,'city'],[/^\s*house\s*$/i,'house'],[/home help|nanny|babysit/i,'clean2'],[/elder|care/i,'bedside'],[/kitchen|cook|caf|restaurant/i,'kitchen'],[/shop|store|cashier/i,'store'],[/factory|warehouse/i,'tools'],[/driv|deliver/i,'trip'],[/garden/i,'house'],[/clean/i,'clean'],[/home help|nanny|babysit/i,'clean2'],
+  [/room wanted|room|flat|home|rent|landlord|agent/i,'room'],[/player|league|team|match|sport/i,'league'],[/party|catering|birthday/i,'catering'],[/quote|price|movers|moving/i,'boxes2'],[/tax/i,'docs'],[/visa|immigration/i,'passport'],[/insur/i,'insure'],
+  [/job|work|hire|apply|profile|referral/i,'office'],[/sofa|furniture|chair|bed/i,'sofa'],[/sale|sell|item|buy/i,'saletags'],[/ticket|event|night|show/i,'hall'],[/club|member/i,'table'],[/chat|message|friend/i,'coffee'],[/flight|travel|parent/i,'plane'],[/wallet|pay|credit/i,'calc']];
+function kw8(t,fb){for(const [r,p] of KW8)if(r.test(t))return p;return fb===undefined?'saletags':fb}
+function in8(){if(!IN8())return;const m=document.querySelector('#main');if(!m||m.querySelector('.z8-head'))return;
+  m.querySelectorAll('span.p15-b:not(.z8-th)').forEach(b=>{const row=b.closest('.p15-row,.p15-li,.p15-rh,button,div');const t=(row?row.textContent:'')||'';const p=kw8(t);b.classList.add('z8-th');b.innerHTML=ph8(p)});
+  m.querySelectorAll('span.oi').forEach(o=>{const c=o.closest('button');const t=c?c.textContent:'';const p=kw8(t,null);if(!p){o.remove();return}o.className='oi z8-oi';o.innerHTML=ph8(p)});
+  m.querySelectorAll('.p15-note>svg').forEach(s=>s.remove());
+  document.documentElement.classList.add('p15in8')}
+{const _ar2=afterRenderEvents;afterRenderEvents=function(vk){_ar2(vk);try{in8()}catch(e){}}}
+
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
 })();
