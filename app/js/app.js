@@ -5860,7 +5860,7 @@ function c9globe(){const cv=document.getElementById('c9gl');if(!cv||cv._on)retur
    movers get "My 30-day plan" (before the flight -> week 1 -> weeks 2-3 -> week 4), each step = one photo card + one button;
    (2) givers (landlords, employers, organizers, service businesses, sellers) switch to "NeuAmigo for Business" with their own
    nav, Airbnb-style, so users and givers never mix. Real data only; progress = the user's own ticks. */
-const C10_LIVE=false;
+const C10_LIVE=true;
 function C10(){try{return C10_LIVE||localStorage.getItem('nm.c10')==='1'}catch(e){return C10_LIVE}}
 const c10get=(k,d)=>{try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}};
 const c10set=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
@@ -5932,6 +5932,9 @@ function c10post(){const R=[['rentsign','A home to rent','postroom'],['hiring','
     const b=(k,l,a)=>`<button ${a} class="${cur===k?'on':''}"><span>${l}</span></button>`;
     nav.innerHTML=b('d','Dashboard','data-a="tab" data-k="matches"')+b('l','Listings','data-a="p15open" data-v="bzlist"')+b('r','Requests','data-a="p15open" data-v="bzreq"')+b('me','Me','data-a="tab" data-k="me"');nav.classList.add('c10biz')};
 })();
+/* no old screen on open (his screenshot 12 Nov 2026 14:10): until the member data arrives, NeuAmigo uses the copy saved on
+   this phone, or starts in the NeuAmigo look right away; the matrimony screens never show in NeuAmigo. */
+(function(){const _p=P15on;P15on=function(){if(!P15.d&&typeof naOn==='function'&&naOn()){try{warm15()}catch(e){}if(!P15.d)P15.d={on:true,warm:true}}return _p()}})();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
