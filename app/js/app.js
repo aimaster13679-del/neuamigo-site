@@ -5936,6 +5936,58 @@ function c10post(){const R=[['rentsign','A home to rent','postroom'],['hiring','
    this phone, or starts in the NeuAmigo look right away; the matrimony screens never show in NeuAmigo. */
 (function(){const _p=P15on;P15on=function(){if(!P15.d&&typeof naOn==='function'&&naOn()){try{warm15()}catch(e){}if(!P15.d)P15.d={on:true,warm:true}}return _p()}})();
 
+/* ===== part26: Me page in 3 clear parts + a clear photo for every row (his ok 12 Nov 2026 16:33) =====
+   (1) "Your things" (tickets, requests, work profile, 30-day plan, change what I need), (2) ONE Membership card that says
+   in one line what Weekend Club and NeuAmigo Plus each give, (3) "Settings and help" (language, help; the legal rows as a
+   plain list, like every big app). "For Business" shows once. Old "SALE" photo fallback on rows without a match removed.
+   Mock first: switch nm.c11 = '1' on a phone; C11_LIVE=true after his ok. */
+const C11_LIVE=false;
+function C11(){try{return C11_LIVE||localStorage.getItem('nm.c11')==='1'}catch(e){return C11_LIVE}}
+/* new photos (Pexels licence, free): kept next to the p17 set so every photo helper finds them */
+['lang','help','lock','early','night','seats','medal','plan','compass','ticket'].forEach(p=>{if(!P17.includes(p))P17.push(p)});
+/* rows on inner screens get a photo that matches their words; no match = no photo (never the sale tags again) */
+if(C11())KW8.unshift([/language/i,'lang'],[/help and contact|questions, complaints/i,'help'],[/privacy/i,'lock'],[/terms of service|delete my account|permanently remove/i,'-'],
+  [/booking fee/i,'calc'],[/48 hours|24 hours early|1 hour before/i,'early'],[/members-only/i,'night'],[/pick your own seats|table map/i,'seats'],
+  [/points and badges|season points/i,'medal'],[/30-day plan|steps done/i,'plan'],[/change what i need/i,'compass'],[/my tickets|qr code/i,'ticket']);
+(function(){const _k=kw8;kw8=function(t,fb){if(!C11())return _k(t,fb);const p=_k(t,fb===undefined?'-':fb);return p}})();
+{const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{if(!C11())return;
+  document.querySelectorAll('#main .z8-ph img[src$="/-.webp"]').forEach(i=>{const s=i.closest('.p15-b,.oi,.ci');if(s)s.remove()})}catch(e){}}}
+
+function c11me(){const me=S.me||{},d=P15.d||{},biz=typeof c10biz==='function'&&c10biz();
+  const path=(typeof c10get==='function'?c10get('nm.path',''):'')||'';
+  const tile=(p,t,a)=>`<button class="c9-pk" ${a}>${c9i(p)}<b>${esc(t)}</b></button>`;
+  const row=(p,t,s,a)=>`<button class="c9-pan c10-sw" ${a}>${c9i(p)}<span><b>${esc(t)}</b>${s?`<small>${s}</small>`:''}</span></button>`;
+  const club=d.club?`Member till ${esc(until15(d.clubUntil))}`:'For events: no booking fee, book 48 hours early'+(p15price('wc_month_a')?` · from ${p15price('wc_month_a')} a month`:'');
+  const plus=d.plus?`Active till ${esc(until15(d.plusUntil))}`:'Contacts and addresses of homes and experts'+(p15price('plus_m')?` · ${p15price('plus_m')} a month`:'');
+  const lang=esc((LANGS_ALL.find(x=>x[0]===RM_I18N.lang)||LANGS_ALL[0])[1]);
+  return c9wrap(`${c9top()}<div class="c9-in"><h1 class="c9-h1">Me</h1>
+   <div class="c11-who"><b>${esc(me.name||'')}</b><small>${esc([me.city,me.country].filter(Boolean).join(', '))}</small></div>
+   <div class="c9-rh"><h2>Your things</h2></div>
+   <div class="c9-g2 c11-g">${tile('ticket','My tickets','data-a="p15open" data-v="tickets"')}${tile('boxes','My requests','data-a="p15open" data-v="myasks"')}
+    ${tile('resume','My work profile','data-a="p15open" data-v="workprof"')}${path!=='local'&&typeof c10bar==='function'?tile('plan','My 30-day plan','data-a="p15open" data-v="plan30"'):tile('compass','Change what I need','data-a="c9redo"')}</div>
+   ${path!=='local'&&typeof c10bar==='function'?row('compass','Change what I need','Moving, just arrived or local · homes, jobs, people','data-a="c9redo"'):''}
+   <div class="c9-rh"><h2>Membership</h2></div>
+   <div class="c11-mem">
+    <button class="c11-mr" data-a="p15open" data-v="club">${c9i('night')}<span><b>Weekend Club${d.club?' <em>Member</em>':''}</b><small>${club}</small></span></button>
+    <button class="c11-mr" data-a="p15open" data-v="plus">${c9i('keys')}<span><b>NeuAmigo Plus${d.plus?' <em>Active</em>':''}</b><small>${plus}</small></span></button>
+   </div>
+   <div class="c9-rh"><h2>${biz?'Using NeuAmigo':'For businesses'}</h2></div>
+   ${biz?row('city','Switch to using NeuAmigo','Find homes, jobs and events','data-a="c10bizoff"'):row('office','NeuAmigo for Business','Rent a home, post a job, run events, offer services, sell items','data-a="c10bizon"')}
+   ${me.isAdmin?row('docs','Admin panel','Members, payments and checks','data-a="openAdmin"')+row('city','Ads to check','Approve or remove new Ad Spot ads','data-a="p15open" data-v="adcheck"'):''}
+   <div class="c9-rh"><h2>Settings and help</h2></div>
+   ${row('lang','Language',lang,'data-a="lang"')}${row('help','Help and contact','Questions, complaints, Grievance Officer','data-a="helpOpen"')}
+   <div class="c9-pan c11-ls"><button data-a="legal" data-k="terms">Terms of Service</button><button data-a="legal" data-k="privacy">Privacy Policy</button><button data-a="deleteAsk" class="red">Delete my account</button></div>
+   <button class="c11-out" data-a="logout">Log out</button>
+   <p class="c11-v">NeuAmigo ${esc(CFG.version)} · ${esc(API.email())}</p></div>`)}
+(function(){const _m=me15;me15=function(){if(C11()&&typeof C9==='function'&&C9()){try{return c11me()}catch(e){}}return _m.apply(this,arguments)}})();
+
+/* Weekend Club page: no yellow "launch" label (one blue), whole photos on its rows (via the rules above) */
+/* Play rule: the Android app never opens website payments (PayPal); it says plainly that joining opens soon in the app */
+(function(){const _c=P15V.club,_p=P15V.plus;
+  const fix=h=>{if(!C11()||!isNative)return h;return h.replace(/<button class="p15-btn" data-a="p15buy(Club|Plus)"[^>]*>[\s\S]*?<\/button>/,'<div class="p15-g p15-launch c11-soon"><span>Joining opens soon inside the app. Until then nothing is charged.</span></div>')};
+  P15V.club=function(){return fix(_c.apply(this,arguments))};if(_p)P15V.plus=function(){return fix(_p.apply(this,arguments))}})();
+{const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{document.documentElement.classList.toggle('c11on',C11())}catch(e){}}}
+
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
 })();

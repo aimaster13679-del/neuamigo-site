@@ -2926,3 +2926,24 @@ html.gl-lt .c9 .c10-card{background:linear-gradient(135deg,#DCE8FF,#fff 70%)}
 .c10-bz{padding:12px;margin-top:14px}.c10-bz .c9-h2{margin-top:10px}.c10-pl{padding:12px 14px;margin-bottom:8px}.c10-pl b{display:block;font-size:15px}.c10-pl small{color:var(--c9t2);font-size:13px}
 html.c9on.p15v6.p15on.p15on.p15on.p15on.p15on.p15on.p15on .navwrap .nav.x6nav.c9nav.c10biz{grid-template-columns:repeat(4,1fr)!important}
 .c10-sb .c9-btn{white-space:nowrap}.c10-sb .c9-btn.g{flex:0 0 84px}
+/* part26: Me in 3 parts, one membership card, plain legal list, blue launch label (12 Nov 2026) */
+.c11-who{margin:2px 0 4px}.c11-who b{display:block;font-size:19px;font-weight:800;color:var(--c9tx)}.c11-who small{display:block;color:var(--c9t2);font-size:13.5px;font-weight:600;margin-top:2px}
+.c9 .c9-rh{margin-top:22px}
+.c11-g{margin-top:10px}
+.c11-mem{margin-top:10px;border-radius:20px;padding:6px;background:linear-gradient(135deg,#1B3A78,#0B1226 62%);border:1px solid rgba(91,155,255,.45)}
+.c11-mr{display:flex;gap:12px;align-items:center;width:100%;padding:10px;border:0;background:transparent;color:#fff;text-align:left;border-radius:14px}
+.c11-mr+.c11-mr{border-top:1px solid rgba(255,255,255,.1);border-radius:0 0 14px 14px}
+.c11-mr>.c9-ph{width:96px;flex:0 0 96px;border-radius:12px}
+.c11-mr b{display:block;font-size:16px;font-weight:800;color:#fff}.c11-mr b em{font-style:normal;font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#8DB6FF;margin-left:6px}
+.c11-mr small{display:block;color:#C3CCE3;font-size:12.5px;font-weight:600;line-height:1.35;margin-top:2px}
+.c11-ls{margin-top:12px;padding:4px 14px}
+.c11-ls button{display:block;width:100%;text-align:left;border:0;background:transparent;color:var(--c9tx);font-size:15px;font-weight:700;padding:14px 0}
+.c11-ls button+button{border-top:1px solid var(--c9hl)}.c11-ls button.red{color:#E5484D}
+.c11-out{display:block;width:100%;margin-top:16px;padding:15px;border-radius:16px;border:1px solid var(--c9hl);background:var(--c9pn);color:var(--c9tx);font-size:16px;font-weight:800}
+.c11-v{text-align:center;color:var(--c9t2);font-size:12.5px;margin:14px 0 6px}
+html.c11on .p15-lp .lt{background:#E7EEFB!important;color:#0F52BA!important;-webkit-text-fill-color:#0F52BA}
+html.c11on.nm-dk .p15-lp .lt,html.c11on:not(.gl-lt) .p15-lp .lt{background:rgba(91,155,255,.16)!important;color:#9CC1FF!important;-webkit-text-fill-color:#9CC1FF}
+html.c11on.gl-lt .p15-lp .lt{background:#E7EEFB!important;color:#0F52BA!important;-webkit-text-fill-color:#0F52BA}
+html.c11on .p15-pr.on{border-color:#0F52BA}html.c11on .p15-pr.on b,html.c11on .p15-pr.on small,html.c11on .p15-pr.on .lat{color:inherit!important}
+html.c11on .p15-pr.on .p15-lp b,html.c11on .p15-pr.on .p15-lp small{color:var(--c9tx,#0B1226)!important;-webkit-text-fill-color:var(--c9tx,#0B1226)!important;background:none!important}
+html.c11on .c9 .c9-in button.c11-out{display:block;width:100%;margin-top:16px;padding:15px;border-radius:16px;border:1px solid var(--c9hl);background:var(--c9pn);color:var(--c9tx);font-size:16px;font-weight:800;text-align:center}
