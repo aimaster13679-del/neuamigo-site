@@ -2947,3 +2947,20 @@ html.c11on.gl-lt .p15-lp .lt{background:#E7EEFB!important;color:#0F52BA!importan
 html.c11on .p15-pr.on{border-color:#0F52BA}html.c11on .p15-pr.on b,html.c11on .p15-pr.on small,html.c11on .p15-pr.on .lat{color:inherit!important}
 html.c11on .p15-pr.on .p15-lp b,html.c11on .p15-pr.on .p15-lp small{color:var(--c9tx,#0B1226)!important;-webkit-text-fill-color:var(--c9tx,#0B1226)!important;background:none!important}
 html.c11on .c9 .c9-in button.c11-out{display:block;width:100%;margin-top:16px;padding:15px;border-radius:16px;border:1px solid var(--c9hl);background:var(--c9pn);color:var(--c9tx);font-size:16px;font-weight:800;text-align:center}
+/* part27: Netflix-style categories (12 Nov 2026) */
+.c12-q{margin-top:6px}
+.c12-cats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.c12-cat{display:block;text-align:left;border:1px solid var(--c9hl);background:var(--c9pn);border-radius:18px;padding:8px 8px 12px;color:var(--c9tx)}
+.c12-cat .c9-ph{width:100%;border-radius:12px}
+.c12-cat b{display:block;font-size:17px;font-weight:800;margin:9px 4px 0;line-height:1.2}
+.c12-cat small{display:block;font-size:12.5px;font-weight:600;color:var(--c9t2);margin:2px 4px 0;line-height:1.3}
+.c12-new{display:inline-block;font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:.6px;color:#fff;background:#0F52BA;border-radius:6px;padding:3px 7px;margin-top:8px}
+.c12-seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px;padding:5px;border-radius:14px;background:var(--c9pn2);border:1px solid var(--c9hl)}
+.c12-seg button{border:0;background:transparent;color:var(--c9t2);font-size:15px;font-weight:800;padding:11px 4px;border-radius:10px}
+.c12-seg button.on{background:var(--c9pri);color:var(--c9prt)}
+.c12-g{margin-top:14px}.c12-g .c9-pk small{display:block;color:var(--c9t2);font-size:12px;font-weight:600;margin-top:2px}
+.c12-items{display:grid;grid-template-columns:1fr 1fr;gap:12px}.c12-items .c9-card{flex:none;width:auto}
+.c9-card small{display:block}
+html.c12on .c12nav button span{font-size:13.5px;white-space:nowrap}
+.c12-cats .c12-cat{display:flex;flex-direction:column;justify-content:flex-start;align-items:stretch}
+.c12-cats .c12-cat>.c9-ph{width:100%!important;flex:none!important;aspect-ratio:3/2}
