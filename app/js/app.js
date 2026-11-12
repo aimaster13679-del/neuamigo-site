@@ -5723,7 +5723,9 @@ function in8(){if(!IN8())return;const m=document.querySelector('#main');if(!m||m
 const C9_LIVE=true;
 function C9(){try{return C9_LIVE||localStorage.getItem('nm.c9')==='1'}catch(e){return C9_LIVE}}
 const c9p=p=>`img/${P17.includes(p)?'p17':P16.includes(p)?'p16':'p15'}/${p}.webp`;
-const c9i=(p,url)=>`<span class="c9-ph"><img src="${esc(url||c9p(p))}" alt="" decoding="sync"></span>`;
+/* speed fix 12 Nov 2026 18:4x: app photos 1200px + 600px copies in t/; phone picks the size it needs, loads only when on screen */
+const c9t=p=>c9p(p).replace(/\/([^/]+)$/,'/t/$1');
+const c9i=(p,url)=>url?`<span class="c9-ph"><img src="${esc(url)}" alt="" loading="lazy" decoding="async"></span>`:`<span class="c9-ph"><img src="${esc(c9p(p))}" srcset="${esc(c9t(p))} 600w, ${esc(c9p(p))} 1200w" sizes="auto, (max-width:600px) 60vw, 360px" alt="" loading="lazy" decoding="async"></span>`;
 const C9EV={meetup:'coffee',watch:'stadium',festival:'catering',trip:'trip',league:'league'};
 const C9KW=[[/cook|kitchen|food|dinner|potluck|brunch/i,'catering'],[/bingo|game|quiz|trivia|night/i,'hall'],[/football|soccer|league|cricket|basket/i,'league'],[/watch|match|final|screening/i,'stadium'],[/music|karaoke|open mic|concert|dance/i,'mic'],[/coffee|meet|friends|walk/i,'coffee'],[/trip|hike|tour|day out/i,'trip'],[/culture|festival|fair/i,'catering']];
 const c9evp=e=>{const t=e.title||'';for(const [r,p] of C9KW)if(r.test(t))return p;return C9EV[e.kind]||'hall'};
@@ -6118,6 +6120,130 @@ function nad28(){const me=S.me||{};if(!me.isAdmin)return c9wrap(c9back('Admin')+
    ${list(d.recent_pays,p=>`<div class="nad-r"><span>${esc(p.label)}${p.test?' · test':''}</span><b>${esc(money(p.cents,p.currency))} · ${esc(when(p.at))}</b></div>`)}
    <button class="c9-btn g nad-old" data-a="openAdmin">Old panel: reports, checks, members</button></div>`)}
 (function(){Object.assign(P15V,{nadmin:nad28});Object.assign(A,{nadre(){P15.nad=undefined;render()}})})();
+
+/* ===== part29: NeuAmigo admin v2 (his ask 12 Nov 2026 18:36: "modern, advanced, sab clickable, day-by-day itni lambi list
+   nahi, easy"). One screen: period switch, "needs you" box, bento tiles (each opens its own list), one 30-day chart where a
+   tapped day opens that day's numbers, live-now chips, countries, newest members, latest payments. Lists have a search box.
+   Real data only (admin_na15 + admin_na_list). Mock first: on only with localStorage nm.nad2 = '1' until he says ok. ===== */
+const NAD2_LIVE = true;
+function NAD2(){try{return NAD2_LIVE||localStorage.getItem('nm.nad2')==='1'}catch(e){return NAD2_LIVE}}
+function nad29(){
+  const me=S.me||{};if(!me.isAdmin)return c9wrap(c9back('Admin')+'<div class="c9-in"><div class="c9-pan c9-empty"><b>Only for the admin</b></div></div>');
+  const d=P15.nad;if(d===undefined){P15.nad=null;API.rpc('admin_na15',{}).then(r=>{P15.nad=r||{};render()}).catch(e=>{P15.nad={err:String(e&&e.message||e)};render()})}
+  if(!d)return c9wrap(c9back('Admin')+`<div class="c9-in">${spinner('Loading')}</div>`);
+  if(d.err)return c9wrap(c9back('Admin')+`<div class="c9-in"><div class="c9-pan c9-empty"><b>Could not load</b><small>${esc(d.err)}</small><button class="c9-btn" data-a="nadre">Try again</button></div></div>`);
+  if(P15.nadl)return nadList29(d);
+  const n=x=>Number(x||0).toLocaleString('en'),usd=c=>'US$'+(Number(c||0)/100).toLocaleString('en',{maximumFractionDigits:0}),rs=c=>'Rs '+Math.round(Number(c||0)/100*84).toLocaleString('en-IN');
+  const days=d.days||[],L=d.live||{},A0=d.all||{},m=d.money||{};
+  const per=P15.nadp||'7',PN={today:'Today','7':'7 days','30':'30 days',all:'All time'},PK=['today','7','30','all'];
+  const posts=x=>(x.rooms||0)+(x.jobs||0)+(x.events||0)+(x.sales||0);
+  const sum=(arr,f)=>arr.reduce((s,x)=>s+f(x),0);
+  const span=per==='today'?1:per==='7'?7:30,cur=days.slice(-span),prev=per==='today'?days.slice(-2,-1):per==='7'?days.slice(-14,-7):[];
+  const val=f=>per==='all'?null:sum(cur,f),pv=f=>prev.length?sum(prev,f):null;
+  const delta=(a,b)=>{if(b===null||a===null)return '';const df=a-b;return `<em class="nad2-dl ${df>0?'up':df<0?'dn':''}">${df>0?'▲ ':df<0?'▼ ':''}${df===0?'same as before':n(Math.abs(df))+' vs before'}</em>`};
+  const F={signups:x=>x.signups||0,asks:x=>x.asks||0,posts,seats:x=>x.seats||0,money:x=>x.usd_cents||0};
+  const V={signups:per==='all'?d.members:val(F.signups),asks:per==='all'?A0.asks:val(F.asks),posts:per==='all'?(A0.rooms||0)+(A0.jobs||0)+(A0.events||0)+(A0.sales||0):val(F.posts),seats:per==='all'?A0.seats:val(F.seats),money:per==='all'?m.all:val(F.money)};
+  const spark=f=>{const s=days.slice(-14).map(f),mx=Math.max(1,...s);return `<span class="nad2-sp" aria-hidden="true">${s.map(v=>`<i style="height:${Math.max(6,Math.round(v/mx*100))}%"></i>`).join('')}</span>`};
+  const rng=`data-r="${per}"`;
+  const tile=(cls,k,t,v,sub,f)=>`<button class="nad2-t ${cls}" data-a="nadl" data-k="${k}" ${rng}><small>${esc(t)}</small><b>${v}</b>${sub||''}${f?spark(f):''}<span class="nad2-go">Open list ›</span></button>`;
+  /* "needs you": only real, current facts */
+  const biz=L.biz||{},nb=Object.values(biz).reduce((s,x)=>s+Number(x||0),0),need=[];
+  if(L.asks>0)need.push(`<button class="nad2-nd" data-a="nadl" data-k="asks" data-r="30"><b>${n(L.asks)} request${L.asks>1?'s':''} waiting</b><small>${nb?'Sent to businesses, waiting for an answer':'No business plan yet, so nobody can answer'}</small><span>›</span></button>`);
+  if(!nb)need.push(`<button class="nad2-nd" data-a="p15open" data-v="biz"><b>0 business plans</b><small>Businesses answer requests and pay for them</small><span>›</span></button>`);
+  if(!need.length)need.push(`<div class="nad2-nd ok"><b>All clear</b><small>Nothing is waiting right now</small></div>`);
+  /* 30-day chart: one metric at a time; tap a bar = that day */
+  const cm=P15.nadm||'signups',CM={signups:'Joined',asks:'Requests',posts:'Posts',money:'Money'},cf=F[cm],cx=Math.max(1,...days.map(cf));
+  const sel=P15.nadday||'';
+  const bars=`<div class="nad2-bars">${days.map(x=>{const v=cf(x),dd=String(x.day).slice(0,10);return `<button class="${dd===sel?'on':''}${v?'':' z'}" data-a="nadday" data-v="${dd}" aria-label="${esc(dd)}: ${v}"><i style="height:${Math.max(4,Math.round(v/cx*100))}%"></i></button>`}).join('')}</div>`;
+  const dayRow=sel?(()=>{const x=days.find(y=>String(y.day).slice(0,10)===sel);if(!x)return '';const lbl=new Date(sel+'T12:00').toLocaleDateString('en',{weekday:'long',day:'numeric',month:'long'});
+    const c=(k,t,v)=>`<button class="nad2-dc" data-a="nadl" data-k="${k}" data-r="day" data-d="${sel}"><b>${v}</b><small>${t}</small></button>`;
+    return `<div class="nad2-day"><div class="nad2-dh"><b>${esc(lbl)}</b><button class="c9-pill" data-a="nadday" data-v="">Close</button></div><div class="nad2-dg">${c('members','Joined',n(x.signups))}${c('asks','Requests',n(x.asks))}${c('posts','Posts',n(posts(x)))}${c('seats','Seats',n(x.seats))}${c('pays','Money',usd(x.usd_cents))}</div></div>`})():`<p class="nad2-hint">Tap any day to see that day</p>`;
+  const totCM=cm==='money'?usd(sum(days,cf)):n(sum(days,cf));
+  /* live now */
+  const chip=(t,v,a)=>`<button class="nad2-c" ${a||''}><b>${n(v)}</b><small>${esc(t)}</small></button>`;
+  /* countries */
+  const cs=d.countries||[],cmx=Math.max(1,...cs.map(c=>c.n));
+  const when=t=>{try{return new Date(t).toLocaleString('en',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}catch(e){return ''}};
+  const ini=s=>esc(String(s||'?').trim().charAt(0).toUpperCase()||'?');
+  const rows=(arr,f)=>arr&&arr.length?arr.slice(0,5).map(f).join(''):'<div class="nad2-r e"><span>Nothing yet</span></div>';
+  return c9wrap(`<div class="c9-top"><button class="c9-pill" data-a="p15back">Back</button><b class="c9-tt">Admin</b><button class="c9-pill" data-a="nadre" aria-label="Refresh">Refresh</button></div>
+  <div class="c9-in nad2">
+   <div class="nad2-hd"><div><small>NeuAmigo · updated ${esc(when(d.now))}</small><h1>Your business today</h1></div></div>
+   <div class="nad2-seg" role="tablist">${PK.map(k=>`<button class="${k===per?'on':''}" data-a="nadp" data-v="${k}" role="tab" aria-selected="${k===per}">${PN[k]}</button>`).join('')}</div>
+   <div class="nad2-need">${need.join('')}</div>
+   <div class="nad2-bento">
+    ${tile('big a','members','Members joined',n(V.signups),`<em class="nad2-s">${n(d.members)} members in total</em>${delta(V.signups,pv(F.signups))}`,F.signups)}
+    ${tile('big b','pays','Money in',usd(V.money),`<em class="nad2-s">${rs(V.money)}</em>${delta(V.money===null?null:Math.round(V.money/100),pv(F.money)===null?null:Math.round(pv(F.money)/100))}`,F.money)}
+    ${tile('sm','asks','Requests',n(V.asks),delta(V.asks,pv(F.asks)))}
+    ${tile('sm','posts','New posts',n(V.posts),delta(V.posts,pv(F.posts)))}
+    ${tile('sm','seats','Seats booked',n(V.seats),delta(V.seats,pv(F.seats)))}
+    ${tile('sm','pays','Payments',n(per==='all'?m.n_all:val(x=>x.pays||0)),'')}
+   </div>
+   <div class="nad2-card">
+    <div class="nad2-ch"><b>Last 30 days</b><span>${esc(CM[cm])}: ${totCM}</span></div>
+    <div class="nad2-mc">${Object.keys(CM).map(k=>`<button class="${k===cm?'on':''}" data-a="nadm" data-v="${k}">${CM[k]}</button>`).join('')}</div>
+    ${bars}<div class="nad2-ax"><span>30 days ago</span><span>Today</span></div>${dayRow}
+   </div>
+   <div class="c9-rh"><h2>Live right now</h2></div>
+   <div class="nad2-chips">${chip('Homes',L.rooms,'data-a="p15open" data-v="rooms"')}${chip('Jobs',L.jobs,'data-a="p15open" data-v="jobs"')}${chip('Events',L.events,'data-a="p15open" data-v="events"')}${chip('For sale',L.sales,'data-a="p15open" data-v="c12sell"')}${chip('Requests',L.asks,'data-a="nadl" data-k="asks" data-r="30"')}${chip('Plus',L.plus,'data-a="nadl" data-k="members" data-r="all" data-f="plus"')}${chip('Club',L.club,'data-a="nadl" data-k="members" data-r="all" data-f="club"')}${chip('Business',nb,'data-a="p15open" data-v="biz"')}</div>
+   <div class="nad2-two">
+    <div class="nad2-card"><div class="nad2-ch"><b>Where members are</b></div>
+     ${cs.length?cs.slice(0,6).map(c=>`<button class="nad2-cb" data-a="nadl" data-k="members" data-r="all" data-q="${esc(c.k||'')}"><span>${esc(c.k||'Not set')}</span><i><u style="width:${Math.round(c.n/cmx*100)}%"></u></i><b>${n(c.n)}</b></button>`).join(''):'<div class="nad2-r e"><span>Nothing yet</span></div>'}</div>
+    <div class="nad2-card"><div class="nad2-ch"><b>What people paid for</b><button class="nad2-all" data-a="nadl" data-k="pays" data-r="all">See all</button></div>
+     ${rows(d.products,p=>`<button class="nad2-r" data-a="nadl" data-k="pays" data-r="all" data-q="${esc(p.label||'')}"><span>${esc(p.label)}</span><b>${n(p.n)} · ${usd(p.usd_cents)}</b></button>`)}</div>
+   </div>
+   <div class="nad2-card"><div class="nad2-ch"><b>Newest members</b><button class="nad2-all" data-a="nadl" data-k="members" data-r="all">See all</button></div>
+    ${rows(d.recent_members,r=>`<button class="nad2-r" data-a="nadl" data-k="members" data-r="all" data-q="${esc(r.name||'')}"><span class="nad2-av">${ini(r.name)}</span><span><b>${esc(r.name||'Member')}</b><small>${esc([r.city,r.country].filter(Boolean).join(', '))}</small></span><em>${esc(when(r.at))}</em></button>`)}</div>
+   <div class="nad2-card"><div class="nad2-ch"><b>Latest payments</b><button class="nad2-all" data-a="nadl" data-k="pays" data-r="all">See all</button></div>
+    ${rows(d.recent_pays,p=>`<button class="nad2-r" data-a="nadl" data-k="pays" data-r="all" data-q="${esc(p.label||'')}"><span><b>${esc(p.label)}</b><small>${esc(when(p.at))}${p.test?' · test':''}</small></span><em class="m">${esc(money(p.cents,p.currency))}</em></button>`)}</div>
+   <button class="c9-btn g nad-old" data-a="openAdmin">Old panel: reports, checks, members</button>
+  </div>`);
+}
+/* one list behind a tile: search box filters on the phone (no reload), tap a row to see all its details */
+function nadList29(d){
+  const L=P15.nadl,T={members:'Members',asks:'Requests',posts:'New posts',seats:'Seats booked',pays:'Payments'};
+  const RN={today:'Today','7':'Last 7 days','30':'Last 30 days',all:'All time',day:L.d?new Date(L.d+'T12:00').toLocaleDateString('en',{day:'numeric',month:'long'}):''};
+  const head=`<div class="c9-top"><button class="c9-pill" data-a="nadx">Back</button><b class="c9-tt">${esc(T[L.k]||'')}</b><span class="c9-pill ghost"></span></div>`;
+  if(L.rows===undefined){L.rows=null;const a=nadRange29(L);API.rpc('admin_na_list',{k:L.k,d1:a[0],d2:a[1]}).then(r=>{if(P15.nadl===L){L.rows=r||[];render()}}).catch(e=>{if(P15.nadl===L){L.rows={err:String(e&&e.message||e)};render()}})}
+  if(!L.rows)return c9wrap(head+`<div class="c9-in">${spinner('Loading')}</div>`);
+  if(L.rows.err)return c9wrap(head+`<div class="c9-in"><div class="c9-pan c9-empty"><b>Could not load</b><small>${esc(L.rows.err)}</small></div></div>`);
+  const n=x=>Number(x||0).toLocaleString('en'),when=t=>{try{return new Date(t).toLocaleString('en',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}catch(e){return ''}};
+  let rs=L.rows;if(L.f==='plus')rs=rs.filter(r=>r.plus);if(L.f==='club')rs=rs.filter(r=>r.club);
+  const q=(L.q||'').toLowerCase().trim();
+  const KIND={room:'Room wanted',player:'Player for a league',quote:'Get 5 quotes'};
+  const tag=(t,c)=>`<em class="nad2-tg ${c||''}">${esc(t)}</em>`;
+  const row=r=>{let t='',s='',x='',more=[];
+    if(L.k==='members'){t=r.name||'Member';s=[r.city,r.country].filter(Boolean).join(', ');x=(r.plus?tag('Plus','g'):'')+(r.club?tag('Club','g'):'');more=[['Joined',when(r.at)]]}
+    else if(L.k==='asks'){t=(KIND[r.kind]||r.kind)+(r.cat?' · '+r.cat:'');s=[r.city,r.country].filter(Boolean).join(', ');x=tag(r.status==='open'?'Waiting':r.status,r.status==='open'?'w':'');more=[['Sent to',n(r.sent)+' business'+(r.sent==1?'':'es')],['Answered by',n(r.taken)],['Posted',when(r.at)]]}
+    else if(L.k==='posts'){t=r.title;s=[r.city,r.country].filter(Boolean).join(', ');x=tag(r.kind);more=[['Status',r.status],['Posted',when(r.at)]]}
+    else if(L.k==='seats'){t=r.title;s=r.city||'';x=tag(n(r.qty)+' seat'+(r.qty==1?'':'s'));more=[['Status',r.status],['Event on',when(r.event_at)],['Booked',when(r.at)]]}
+    else if(L.k==='pays'){t=r.label;s=when(r.at);x=`<b class="m">${esc(money(r.cents,r.currency))}</b>`+(r.test?tag('test'):'')+(r.status!=='paid'?tag(r.status,'w'):'');more=[['Status',r.status]]}
+    const key=(t+' '+s).toLowerCase(),hid=q&&!key.includes(q);
+    return `<details class="nad2-li" data-s="${esc(key)}"${hid?' hidden':''}><summary><span class="nad2-av">${esc(String(t||'?').trim().charAt(0).toUpperCase())}</span><span class="nad2-lt"><b>${esc(t)}</b><small>${esc(s)}</small></span><span class="nad2-lx">${x}</span></summary><div class="nad2-mo">${more.map(m=>`<div><small>${esc(m[0])}</small><b>${esc(m[1])}</b></div>`).join('')}</div></details>`};
+  return c9wrap(head+`<div class="c9-in nad2">
+   <div class="nad2-lh"><b>${n(rs.length)}</b><small>${esc(RN[L.r]||'')}${rs.length>=300?' · newest 300':''}</small></div>
+   <label class="nad2-q"><input type="search" placeholder="Search name, city, country" value="${esc(L.q||'')}" oninput="window.__nadq&&window.__nadq(this.value)" aria-label="Search"></label>
+   <div class="nad2-ls">${rs.length?rs.map(row).join(''):'<div class="c9-pan c9-empty"><b>Nothing here yet</b><small>When it happens it shows up here.</small></div>'}</div>
+   <p class="nad2-none"${q&&!rs.some(r=>1)?'':' hidden'}>No match</p>
+  </div>`);
+}
+function nadRange29(L){const iso=x=>x.toISOString().slice(0,10),t=new Date(),b=new Date(t.getTime()-t.getTimezoneOffset()*6e4);
+  if(L.r==='day')return [L.d,L.d];if(L.r==='today')return [iso(b),iso(b)];if(L.r==='all')return ['2020-01-01',iso(b)];
+  const a=new Date(b.getTime()-((L.r==='7'?7:30)-1)*864e5);return [iso(a),iso(b)]}
+(function(){
+  window.__nadq=v=>{try{if(P15.nadl)P15.nadl.q=v;const s=String(v||'').toLowerCase().trim();let c=0;document.querySelectorAll('.nad2-li').forEach(e=>{const ok=!s||e.dataset.s.includes(s);e.hidden=!ok;if(ok)c++});const nn=document.querySelector('.nad2-none');if(nn)nn.hidden=c>0}catch(e){}};
+  const _old=P15V.nadmin;P15V.nadmin=function(){return NAD2()?nad29():_old()};
+  const _bk=A.p15back;A.p15back=function(el){if(P15.v==='nadmin'&&P15.nadl){P15.nadl=null;render();return}return _bk(el)};
+  Object.assign(A,{
+    nadp(el){P15.nadp=el.dataset.v;render()},
+    nadm(el){P15.nadm=el.dataset.v;render()},
+    nadday(el){P15.nadday=el.dataset.v||'';render()},
+    nadl(el){P15.nadl={k:el.dataset.k,r:el.dataset.r||'30',d:el.dataset.d||'',f:el.dataset.f||'',q:el.dataset.q||''};render();
+      try{document.querySelector('#main').scrollTo(0,0)}catch(e){}
+      if(P15.nadl.q)setTimeout(()=>window.__nadq(P15.nadl&&P15.nadl.q),0)},
+    nadx(){P15.nadl=null;render()}});
+  const _re=A.nadre;A.nadre=function(el){P15.nadl=null;return _re(el)};
+})();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
