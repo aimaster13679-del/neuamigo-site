@@ -3075,3 +3075,13 @@ html.c9on .c12-q2:focus,html.c9on #v5-q.c12-q2:focus{outline:none;border-color:#
 .nad2-how .nad2-warn{color:#B86E00}
 .nad2-how .c9-btn{margin-top:12px;width:100%}
 .nad2-why{margin:0 0 12px 46px;font-size:13px;font-weight:600;line-height:1.45;color:var(--c9t2)}
+
+/* honest request answers (part30, 13 Nov 2026) */
+.askh-n,.askh-l{display:flex;flex-direction:column;gap:3px;border-radius:14px;padding:12px 14px;margin:10px 0;background:var(--c9pn2,rgba(127,140,170,.12));border:1px solid var(--c9hl,rgba(127,140,170,.2));box-shadow:inset 4px 0 0 #0F52BA}
+.askh-n b,.askh-l b{font-weight:800;font-size:14.5px;color:var(--c9tx,inherit)}.askh-n span,.askh-l span{font-weight:600;font-size:13px;line-height:1.45;color:var(--c9t2,inherit)}
+.askh-n.w,.askh-l.w{box-shadow:inset 4px 0 0 #E8901E}.askh-n.ok,.askh-l.ok{box-shadow:inset 4px 0 0 #1C9A62}.askh-l.e{box-shadow:inset 4px 0 0 #9AA3B5}
+.askh-l .p15-btn.sm{margin-top:8px;align-self:flex-start;padding:9px 16px;font-size:14px;width:auto}
+.askh-cd{font-style:normal;font-weight:800;color:var(--c9tx,inherit);font-variant-numeric:tabular-nums;white-space:nowrap}
+.askh-l .askh-t{margin-top:6px;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;background:var(--c9pn,rgba(255,255,255,.6));font-weight:700;font-size:13px;color:var(--c9t2,inherit)}
+.askh-t .askh-cd{font-size:16px}
+.p15-ask .askh-t{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:8px 0 4px;padding:8px 10px;border-radius:10px;background:var(--c9pn2,rgba(127,140,170,.12));font-weight:700;font-size:13px;color:var(--c9t2,inherit)}

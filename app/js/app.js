@@ -4871,7 +4871,7 @@ function inbox15(kind){const b=bizOf15(kind),k=ASKBIZ15[kind],a=ASK15[k];if(!a)r
   const pk=k==='room'?'room_lead':k==='player'?'player_lead':'quote_lead',now=Date.now(),lat=P15.d&&P15.d.later&&P15.d.later[pk];
   const left=t=>{const m=Math.max(0,Math.round((new Date(t)-now)/6e4));return m>=60?Math.floor(m/60)+' h '+(m%60)+' min':m+' min'};
   return p15wrap(p15top(a.t,true)+`<p class="p15-sub">New requests in ${esc(b.city||(S.me||{}).city||'')}. Each one reaches at most 5 ${a.who}, then closes. ${p15price(pk)} per request${lat?` (later ${money(lat,P15.d.cur)})`:''}.</p>`+
-   ((l.asks||[]).length?l.asks.map(x=>`<div class="p15-g p15-pad p15-ask${x.open||x.mine?'':' wait'}"><div class="p15-rh"><span class="tx"><b>${esc(askSum15(x.kind,x.data))}</b><small>${esc(new Date(x.createdAt).toLocaleString(RM_I18N.locale,{weekday:'short',hour:'numeric',minute:'2-digit'}))}</small></span>${x.mine?`<span class="p15-pill">${ic('tick2')} Connected</span>`:x.open?`<span class="p15-pill">${x.paid} of 5</span>`:`<span class="p15-pill y">${ic('clock')} opens in ${left(x.openAt)}</span>`}</div>
+   ((l.asks||[]).length?l.asks.map(x=>`<div class="p15-g p15-pad p15-ask${x.open||x.mine?'':' wait'}"><div class="p15-rh"><span class="tx"><b>${esc(askSum15(x.kind,x.data))}</b><small>${esc(new Date(x.createdAt).toLocaleString(RM_I18N.locale,{weekday:'short',hour:'numeric',minute:'2-digit'}))}</small></span>${!x.mine&&typeof askhCd==='function'?askhCd(new Date(new Date(x.createdAt).getTime()+864e5).toISOString()):''}${x.mine?`<span class="p15-pill">${ic('tick2')} Connected</span>`:x.open?`<span class="p15-pill">${x.paid} of 5</span>`:`<span class="p15-pill y">${ic('clock')} opens in ${left(x.openAt)}</span>`}</div>
      ${x.mine?`<div class="p15-contact">${ic('user')} ${esc((x.contact&&x.contact.name)||'')}<br>${ic('chat')} ${esc((x.contact&&x.contact.email)||'')}</div>
        ${chatBtn15('ask',x.id,'','Chat in app')}${x.reported?`<small class="p15-dim">Reported · one request credit added</small>`:`<button class="p15-chip" data-a="p15askRep" data-id="${x.id}" data-k="${kind}">Wrong or fake? Report it, get a credit</button>`}`:
       x.open?`<div class="p15-bar"><i style="width:${x.paid*20}%"></i></div>${x.nextWave&&new Date(x.nextWave)-now<864e5?`<small class="p15-dim">Next 5 ${a.who} see it in ${left(x.nextWave)}</small>`:''}<button class="p15-btn" data-a="p15askBuy" data-id="${x.id}" data-k="${kind}"${P15.busy===x.id?' disabled':''}>${P15.busy===x.id?'Connecting…':`Connect · ${p15price(pk)}`}</button>`:
@@ -4905,7 +4905,7 @@ Object.assign(P15V,{myasks:myAsks15,venuecal:venueCal15});
       if(k==='quote'&&!(q.need||[]).length){toast('Please pick what you need.','info');return}
       if(k==='player'&&!(q.when||[]).length){toast('Please pick when you can play.','info');return}
       q.cur=cur15();P15.busy='ask';render();
-      try{await API.rpc('ask_post15',{k,d:q});P15.q=null;P15.ma=undefined;P15.v='myasks';toast(`Sent. It reaches up to 5 ${ASK15[k].who} now.`,'tick2')}
+      try{await API.rpc('ask_post15',{k,d:q});P15.q=null;P15.ma=undefined;P15.v='myasks';toast((window.__askhSent&&window.__askhSent(k,q))||`Sent. It reaches up to 5 ${ASK15[k].who} now.`,'tick2')}
       catch(e){const m=em15(e);toast(m.includes('three')?'You already have 3 open requests of this kind.':m.includes('city')?'Please add your city first.':'Could not send. Please try again.','info')}
       P15.busy='';render()},
     async p15askClose(el){try{await API.rpc('ask_close15',{aid:el.dataset.id});P15.ma=undefined;toast('Closed. No new businesses will see it.','tick2')}catch(e){toast('Could not close. Please try again.','info')}render()},
@@ -6224,14 +6224,14 @@ function nadList29(d){
   let rs=L.rows;if(L.f==='plus')rs=rs.filter(r=>r.plus);if(L.f==='club')rs=rs.filter(r=>r.club);
   const q=(L.q||'').toLowerCase().trim();
   const KIND={room:'Looking for a room',player:'Looking for a team',quote:'Event quotes',service:'Get 5 prices'};
-  const ST={open:['Waiting','w','No business has answered yet.'],full:['Answered','g','5 businesses answered. The member chooses one.'],closed:['Closed','','The member closed it (found help or no longer needs it).'],removed:['Removed','','Removed after reports.']};
+  const ST={open:['Waiting','w','No business has answered yet.'],full:['Answered','g','5 businesses answered. The member chooses one.'],closed:['Closed','','The member closed it (found help or no longer needs it).'],removed:['Removed','','Removed after reports.'],ended:['Ended','','Nobody answered in 24 hours. It ended by itself and the member was told they can send it again.']};
   const cap=x=>x?String(x).charAt(0).toUpperCase()+String(x).slice(1):'';
   const tag=(t,c)=>`<em class="nad2-tg ${c||''}">${esc(t)}</em>`;
   const row=r=>{let t='',s='',x='',more=[];
     if(L.k==='members'){t=r.name||'Member';s=[r.city,r.country].filter(Boolean).join(', ');x=(r.plus?tag('Plus','g'):'')+(r.club?tag('Club','g'):'');more=[['Joined',when(r.at)]]}
     else if(L.k==='asks'){const st=ST[r.status]||[cap(r.status),'',''];t=(KIND[r.kind]||cap(r.kind))+(r.cat?' · '+cap(r.cat):'');s=[r.city,r.country].filter(Boolean).join(', ');x=tag(st[0],st[1]);
-      const why=r.status==='open'?(Number(r.sent)?'Sent to '+n(r.sent)+' business'+(r.sent==1?'':'es')+' in '+(r.city||'that city')+'. Waiting for one to answer.':'No business with a plan in '+(r.city||'that city')+' yet, so nobody got it. It reaches them as soon as one joins.'):st[2];
-      more=[['Sent to',n(r.sent)+' business'+(r.sent==1?'':'es')],['Answered',n(r.taken)],['Asked on',when(r.at)]];more.why=why}
+      const why=r.status==='open'?(Number(r.sent)?'Sent to '+n(r.sent)+' business'+(r.sent==1?'':'es')+' in '+(r.city||'that city')+'. Waiting for one to answer.':(Number(r.in_city)?Number(r.in_city)+' business'+(r.in_city==1?'':'es')+' in '+(r.city||'that city')+' will get it shortly.':'No business with a plan in '+(r.city||'that city')+' yet. The member was told this, and it goes to the first one that joins. If nobody answers in 24 hours it ends by itself and the member is told.')):st[2];
+      more=[['Sent to',n(r.sent)+' business'+(r.sent==1?'':'es')],['Answered',n(r.taken)],[r.status==='open'?'Time left':'Asked on',r.status==='open'?askhLeft(new Date(new Date(r.at).getTime()+864e5).toISOString()):when(r.at)]];more.why=why}
     else if(L.k==='posts'){t=r.title;s=[r.city,r.country].filter(Boolean).join(', ');x=tag(r.kind);more=[['Status',r.status],['Posted',when(r.at)]]}
     else if(L.k==='seats'){t=r.title;s=r.city||'';x=tag(n(r.qty)+' seat'+(r.qty==1?'':'s'));more=[['Status',r.status],['Event on',when(r.event_at)],['Booked',when(r.at)]]}
     else if(L.k==='pays'){t=r.label;s=when(r.at);x=`<b class="m">${esc(money(r.cents,r.currency))}</b>`+(r.test?tag('test'):'')+(r.status!=='paid'?tag(r.status,'w'):'');more=[['Status',r.status]]}
@@ -6239,7 +6239,7 @@ function nadList29(d){
     return `<details class="nad2-li" data-s="${esc(key)}"${hid?' hidden':''}><summary><span class="nad2-av">${esc(String(t||'?').trim().charAt(0).toUpperCase())}</span><span class="nad2-lt"><b>${esc(t)}</b><small>${esc(s)}</small></span><span class="nad2-lx">${x}</span></summary><div class="nad2-mo">${more.map(m=>`<div><small>${esc(m[0])}</small><b>${esc(m[1])}</b></div>`).join('')}</div>${more.why?`<p class="nad2-why">${esc(more.why)}</p>`:''}</details>`};
   return c9wrap(head+`<div class="c9-in nad2">
    <div class="nad2-lh"><b>${n(rs.length)}</b><small>${esc(RN[L.r]||'')}${rs.length>=300?' · newest 300':''}</small></div>
-   ${L.k==='asks'?`<div class="nad2-how"><b>How requests work</b><ol><li>A member asks for help, e.g. movers or a room.</li><li>NeuAmigo sends it by itself to up to 5 businesses in that city that have a plan.</li><li>A business pays to answer. The member sees the answers and picks one.</li></ol><p>You don't approve anything. <b>Waiting</b> means no business has answered yet.</p>${(d.live&&Object.values(d.live.biz||{}).reduce((a,b)=>a+Number(b||0),0))?'':'<p class="nad2-warn">Right now no business has joined, so requests can\'t be answered. Getting businesses to join is the next step.</p>'}<button class="c9-btn" data-a="p15open" data-v="biz">See the business plans</button></div>`:''}
+   ${L.k==='asks'?`<div class="nad2-how"><b>How requests work</b><ol><li>A member asks for help, e.g. movers or a room.</li><li>NeuAmigo sends it by itself to up to 5 businesses in that city that have a plan.</li><li>A business pays to answer. The member sees the answers and picks one.</li><li>Businesses have 24 hours to answer; the member sees a countdown. If nobody answers, it ends by itself and the member is told.</li></ol><p>You don't approve anything. <b>Waiting</b> means no business has answered yet.</p>${(d.live&&Object.values(d.live.biz||{}).reduce((a,b)=>a+Number(b||0),0))?'':'<p class="nad2-warn">Right now no business has joined, so requests can\'t be answered. Getting businesses to join is the next step.</p>'}<button class="c9-btn" data-a="p15open" data-v="biz">See the business plans</button></div>`:''}
    <label class="nad2-q"><input type="search" placeholder="Search name, city, country" value="${esc(L.q||'')}" oninput="window.__nadq&&window.__nadq(this.value)" aria-label="Search"></label>
    <div class="nad2-ls">${rs.length?rs.map(row).join(''):'<div class="c9-pan c9-empty"><b>Nothing here yet</b><small>When it happens it shows up here.</small></div>'}</div>
    <p class="nad2-none"${q&&!rs.some(r=>1)?'':' hidden'}>No match</p>
@@ -6261,6 +6261,45 @@ function nadRange29(L){const iso=x=>x.toISOString().slice(0,10),t=new Date(),b=n
       if(P15.nadl.q)setTimeout(()=>window.__nadq(P15.nadl&&P15.nadl.q),0)},
     nadx(){P15.nadl=null;render()}});
   const _re=A.nadre;A.nadre=function(el){P15.nadl=null;return _re(el)};
+})();
+
+/* ===== part30: honest answers on requests (his ask 13 Nov 2026 00:37: "us insaan ko kuch javab to dena padega ...
+   warna ye request salo saal padi rahegi"). The member always knows where the request stands:
+   before sending: how many businesses in the city can answer; after sending: sent to N / none here yet / answered;
+   after 24 HOURS (his rule 13 Nov 00:44, with a countdown) with no answer the request ENDS by itself (DB ask_end15) and the member is told, with "Send again".
+   Mock first: on only with localStorage nm.askh = '1' until he says ok. ===== */
+const ASKH_LIVE = true; /* his ok 13 Nov 2026 00:44 ('baki sab ok', with 24 h + countdown) */
+function ASKH(){try{return ASKH_LIVE||localStorage.getItem('nm.askh')==='1'}catch(e){return ASKH_LIVE}}
+function askhDate(t){try{return new Date(t).toLocaleDateString('en',{weekday:'short',day:'numeric',month:'short'})}catch(e){return ''}}
+/* how many businesses can answer here now */
+function askhCity(k,cat){const key=k+'|'+(cat||'');P15.acn=P15.acn||{};const v=P15.acn[key];
+  if(v===undefined){P15.acn[key]=null;API.rpc('ask_city15',{k,cat:cat||null}).then(r=>{P15.acn[key]=r||{n:0};render()}).catch(()=>{P15.acn[key]={err:1};render()})}
+  return P15.acn[key]}
+function askhNote(k,cat){const r=askhCity(k,cat),who=(ASK15[k]||{}).who||'businesses',city=esc((S.me||{}).city||'your city');
+  if(!r)return `<div class="askh-n"><b>Checking ${city}…</b></div>`;if(r.err)return '';
+    if(r.n>0)return `<div class="askh-n ok"><b>${r.n} ${r.n===1?who.replace(/s$/,''):who} in ${city} can answer now</b><span>Businesses have 24 hours to answer. Answers show in My requests.</span></div>`;
+  return `<div class="askh-n w"><b>No ${esc(who)} in ${city} on NeuAmigo yet</b><span>You can still send it. Businesses have 24 hours to answer. If nobody answers in that time, we tell you here and nothing is charged.</span></div>`}
+/* what the member sees on each request */
+function askhLeft(t){const ms=new Date(t).getTime()-Date.now();if(!(ms>0))return 'ending now';const m=Math.floor(ms/6e4),h=Math.floor(m/60);return h?h+'h '+String(m%60).padStart(2,'0')+'m':m+' min'}
+function askhCd(t){return `<span class="askh-t">Time left to answer <em class="askh-cd" data-end="${esc(t)}">${esc(askhLeft(t))}</em></span>`}
+function askhLine(a){const who=(ASK15[a.kind]||{}).who||'businesses',city=esc(a.city||(S.me||{}).city||'your city'),cd=askhCd(a.closesAt),n=(a.connected||[]).length;
+  if(a.status==='ended')return `<div class="askh-l e"><b>Nobody answered in 24 hours</b><span>Sorry, no ${esc(who)} in ${city} answered this time. Nothing was charged. You can send it again any time.</span><button class="p15-btn sm" data-a="p15open" data-v="ask:${esc(a.kind)}">Send again</button></div>`;
+  if(a.status==='closed')return `<div class="askh-l"><b>You closed this request</b></div>`;
+  if(a.status==='full')return `<div class="askh-l ok"><b>5 answered. Pick the one you like.</b></div>`;
+  if(n)return `<div class="askh-l ok"><b>${n} answered</b><span>They contact you by email.</span>${cd}</div>`;
+  if(a.reached>0)return `<div class="askh-l"><b>Sent to ${a.reached} ${esc(a.reached===1?who.replace(/s$/,''):who)}</b><span>Waiting for an answer.</span>${cd}</div>`;
+  if(a.inCity>0)return `<div class="askh-l"><b>Going out to ${a.inCity} ${esc(who)} in ${city}</b>${cd}</div>`;
+  return `<div class="askh-l w"><b>No ${esc(who)} in ${city} yet</b><span>It goes to the first one that joins. If nobody answers in time, it ends and we tell you here.</span>${cd}</div>`}
+(function(){
+  /* countdown ticks every 20 s without redrawing the screen */
+  setInterval(()=>{try{document.querySelectorAll('.askh-cd').forEach(e=>{const t=askhLeft(e.dataset.end);if(e.textContent!==t)e.textContent=t})}catch(e){}},20000);
+  window.__askhSent=(k,q)=>{if(!ASKH())return null;const r=(P15.acn||{})[k+'|'+((q&&q.cat)||'')];return r&&r.n>0?'Sent to '+r.n+' in your city':'Sent. It goes to the first one that joins.'};
+  const _af=askForm15;askForm15=function(k){let h=_af(k);if(!ASKH())return h;const cat=k==='service'&&P15.q?P15.q.cat:'';
+    const note=askhNote(k,cat);return h.replace(/(<button class="(p15-btn|x6-cta)" data-a="p15askPost")/,note+'$1')};
+  const _ma=P15V.myasks;P15V.myasks=function(){let h=_ma();if(!ASKH()||!Array.isArray(P15.ma))return h;
+    /* swap the old 'Reached N · N of 5 connected' line for the plain status, one per request in the same order */
+    let i=0;return h.replace(/<small class="p15-dim">Reached [^<]*<\/small>/g,()=>{const a=P15.ma[i++];return a?askhLine(a):''})
+      .replace(/<span class="p15-pill([^"]*)">ended<\/span>/g,'<span class="p15-pill y">Ended</span>')};
 })();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
