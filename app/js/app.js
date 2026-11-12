@@ -5754,7 +5754,7 @@ function c9home(){const c=c9city(),need=c9need()||['home','work','people','help'
   const a=ma.find(x=>x.status==='open');
   const picked=a?c9row('Picked for you','',`<button class="c9-pan c9-req" data-a="p15open" data-v="myasks">${c9i('boxes')}<span><span class="c9-tag">Your request</span><b>${esc((a.data&&(a.data.need||[]).join(' + '))||'Your request')}</b><small>${a.connected&&a.connected.length?`<i class="c9-live"></i>${a.connected.length} replied`:`Sent to ${a.reached||0} businesses`}</small></span></button>`):'';
   const R={
-   home:c9row('Homes near you','data-a="p15open" data-v="rooms"',c9rail(rooms.slice(0,8).map(r=>`<button class="c9-card" data-a="p15open" data-v="rooms">${c9i('room',r.photos&&r.photos[0]&&PC15()?phUrl15(r.photos[0]):'')}<span class="c9-pr">${esc(money(r.rent,r.currency))}<small> /month</small></span><b>${esc(r.title)}</b><small>${esc(r.area||'')}</small></button>`))),
+   home:c9row('Places to rent near you','data-a="p15open" data-v="rooms"',c9rail(rooms.slice(0,8).map(r=>`<button class="c9-card" data-a="p15open" data-v="rooms">${c9i('room',r.photos&&r.photos[0]&&PC15()?phUrl15(r.photos[0]):'')}<span class="c9-pr">${esc(money(r.rent,r.currency))}<small> /month</small></span><b>${esc(r.title)}</b><small>${esc(r.area||'')}</small></button>`))),
    people:(up.length>=3?c9row('Popular this week','data-a="tab" data-k="ev15"',`<div class="c9-rail t10">${up.slice().sort((x,y)=>((y.seats||0)-(y.left||0))-((x.seats||0)-(x.left||0))).slice(0,10).map((e,i)=>`<button class="c9-t10" data-a="p15open" data-v="evd:${e.id}"><i>${i+1}</i>${c9i(c9evp(e))}</button>`).join('')}</div>`):'')+
      c9row('This week','data-a="tab" data-k="ev15"',c9rail(up.slice(h?1:0,9).map(e=>`<button class="c9-card" data-a="p15open" data-v="evd:${e.id}">${c9i(c9evp(e))}<span class="c9-pr">${e.price?esc(money(e.price,e.currency)):'No ticket'}</span><b>${esc(e.title)}</b><small>${esc(evWhen(e))}</small></button>`))),
    work:c9row('Jobs near you','data-a="p15open" data-v="jobs"',c9rail(jobs.slice(0,8).map(j=>`<button class="c9-card" data-a="p15open" data-v="job:${j.id}">${c9i(c9jobp(j))}<span class="c9-pr">${esc(money(j.pay,j.currency))}<small> /hour</small></span><b>${esc(j.title)}</b><small>${esc(j.area||'')}${j.hours?' · '+j.hours+' h/week':''}</small></button>`))),
@@ -5804,7 +5804,7 @@ function c9welcome(){const L=(LANGS_ALL.find(x=>x[0]===RM_I18N.lang)||LANGS_ALL[
       ['wallet','chats','chat','inbox','me','profile','settings','mytickets','points','plans','referral','biz','leads','svcleads','svcplan','expplan','adcheck','adspot','door'].includes(h)?'me':
       v?'':(S.tab==='ev15'||S.tab==='me'?S.tab:'matches');
     const b=(k,l,a)=>`<button ${a} class="${cur===k?'on':''}" aria-current="${cur===k?'page':'false'}"><span>${l}</span></button>`;
-    nav.className='nav x6nav c9nav';nav.innerHTML=b('matches','Home','data-a="tab" data-k="matches"')+b('homes','Homes','data-a="p15open" data-v="rooms"')+b('jobs','Jobs','data-a="p15open" data-v="jobs"')+b('ev15','Events','data-a="tab" data-k="ev15"')+b('me','Me','data-a="tab" data-k="me"')};
+    nav.className='nav x6nav c9nav';nav.innerHTML=b('matches','Home','data-a="tab" data-k="matches"')+b('homes','Housing','data-a="p15open" data-v="rooms"')+b('jobs','Jobs','data-a="p15open" data-v="jobs"')+b('ev15','Events','data-a="tab" data-k="ev15"')+b('me','Me','data-a="tab" data-k="me"')};
 })();
 /* ---------- part 2: homes, jobs, Me in the Cinema look (same data and actions as before) ---------- */
 function c9back(t){return `<div class="c9-top"><button class="c9-pill" data-a="p15back">Back</button>${t?`<b class="c9-tt">${esc(t)}</b>`:'<span></span>'}<span class="c9-pill ghost"></span></div>`}
@@ -5812,7 +5812,7 @@ function c9rooms(){const l=P15.rooms;if(l===undefined){API.rpc('rooms15',{maxren
   const TY={private:['Private room','room'],shared:['Shared room','sofa'],whole:['Whole place','boxes2']},ty=P15.c9ty||'',mx=P15.f.max||'0';
   const L=l.filter(r=>(!ty||r.type===ty)&&(mx==='0'||r.rent<=Number(mx)*100));
   return c9wrap(c9top()+`<div class="c9-in"><h1 class="c9-h1">Find a home</h1><p class="c9-lede">Rent is shown on every listing.</p></div>
-   <div class="c9-rail c9-tabs">${[['','All homes','keys']].concat(Object.entries(TY).map(([k,[t,p]])=>[k,t,p])).map(([k,t,p])=>`<button class="c9-tab${ty===k?' on':''}" data-a="c9ty" data-k="${k}">${c9i(p)}<b>${esc(t)}</b></button>`).join('')}</div>
+   <div class="c9-rail c9-tabs">${[['','All','keys']].concat(Object.entries(TY).map(([k,[t,p]])=>[k,t,p])).map(([k,t,p])=>`<button class="c9-tab${ty===k?' on':''}" data-a="c9ty" data-k="${k}">${c9i(p)}<b>${esc(t)}</b></button>`).join('')}</div>
    <div class="c9-chips">${[['0','Any rent'],['700','Under 700'],['900','Under 900'],['1200','Under 1,200'],['1800','Under 1,800']].map(([v,t])=>`<button class="c9-chip${mx===v?' on':''}" data-a="p15f" data-k="max" data-val="${v}">${esc(t)}</button>`).join('')}</div>
    <div class="c9-in">${L.length?L.map(r=>{const T=TY[r.type]||['',''],ph=r.photos&&r.photos[0]&&PC15()?phUrl15(r.photos[0]):'';return `<div class="c9-home">${c9i(T[1]||'room',ph)}${r.photos&&r.photos.length>1&&PC15()?`<small class="c9-n">${r.photos.length} photos</small>`:''}
      <div class="c9-hrow"><b class="c9-h2">${esc(r.title)}</b>${r.sponsored?'<span class="c9-sp">Sponsored</span>':''}</div>
