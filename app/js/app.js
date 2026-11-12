@@ -5714,6 +5714,19 @@ function in8(){if(!IN8())return;const m=document.querySelector('#main');if(!m||m
   function fix(e){if(!e||e._na8)return;e._na8=1;const pb=e.querySelector('.pb');if(pb)pb.innerHTML=CASE();
     let was=false;new MutationObserver(()=>{const g=e.classList.contains('go');if(was&&!g)chip();was=g}).observe(e,{attributes:true,attributeFilter:['class']})}
   new MutationObserver(()=>fix(document.getElementById('nm-ptr'))).observe(document.body,{childList:true});
+  /* 12 Nov 19:4x fix: a tap that redraws the screen loses the finger-up signal, so the logo stayed faint under the header */
+  const hide=()=>{const e=document.getElementById('nm-ptr');if(e&&!e.classList.contains('go')){e.style.opacity=0;e.style.transform='translate(-50%,-60px)';e.classList.remove('ready')}};
+  const _arP=afterRenderEvents;afterRenderEvents=function(vk){_arP(vk);hide()};
+  document.addEventListener('touchstart',e=>{if(e.touches.length===1)hide()},{passive:true,capture:true});
+  /* phone bars = screen colours (needs the Bars part of the Android app, build from 12 Nov 2026 ~20:00; older builds ignore it) */
+  const hex=c=>{const m=String(c||'').match(/\d+(\.\d+)?/g);if(!m||m.length<3||(m[3]!==undefined&&Number(m[3])===0))return null;return '#'+m.slice(0,3).map(x=>('0'+Math.round(+x).toString(16)).slice(-2)).join('').toUpperCase()};
+  let lastB='';
+  const bars=()=>{try{const B=window.Capacitor&&Capacitor.Plugins&&Capacitor.Plugins.Bars;if(!B)return;const de=document.documentElement,lt=de.classList.contains('gl-lt')||!de.classList.contains('nm-dk')&&!de.classList.contains('gl-dk')&&!matchMedia('(prefers-color-scheme: dark)').matches;
+    const nav=document.querySelector('.navwrap');const bottom=hex(getComputedStyle(document.body).backgroundColor)||hex(getComputedStyle(de).backgroundColor)||(lt?'#F5F6FA':'#070B18');
+    const m=document.querySelector('meta[name=theme-color]'),top=(m&&/^#[0-9a-f]{6}$/i.test(m.content)?m.content.toUpperCase():null)||bottom;
+    const k=top+bottom+lt;if(k===lastB)return;lastB=k;B.set({top,bottom,light:lt})}catch(e){}};
+  const _arB=afterRenderEvents;afterRenderEvents=function(vk){_arB(vk);setTimeout(bars,0)};
+  try{const m=document.querySelector('meta[name=theme-color]');if(m)new MutationObserver(()=>setTimeout(bars,0)).observe(m,{attributes:true});new MutationObserver(()=>setTimeout(bars,0)).observe(document.documentElement,{attributes:true,attributeFilter:['class']})}catch(e){}
 })();
 
 /* v9 "Cinema" design (his ok 12 Nov 2026 12:47; mock handoff/mocks/na-cinema-v1):
@@ -6148,8 +6161,8 @@ function nad29(){
   const tile=(cls,k,t,v,sub,f)=>`<button class="nad2-t ${cls}" data-a="nadl" data-k="${k}" ${rng}><small>${esc(t)}</small><b>${v}</b>${sub||''}${f?spark(f):''}<span class="nad2-go">Open list ›</span></button>`;
   /* "needs you": only real, current facts */
   const biz=L.biz||{},nb=Object.values(biz).reduce((s,x)=>s+Number(x||0),0),need=[];
-  if(L.asks>0)need.push(`<button class="nad2-nd" data-a="nadl" data-k="asks" data-r="30"><b>${n(L.asks)} request${L.asks>1?'s':''} waiting</b><small>${nb?'Sent to businesses, waiting for an answer':'No business plan yet, so nobody can answer'}</small><span>›</span></button>`);
-  if(!nb)need.push(`<button class="nad2-nd" data-a="p15open" data-v="biz"><b>0 business plans</b><small>Businesses answer requests and pay for them</small><span>›</span></button>`);
+  if(L.asks>0)need.push(`<button class="nad2-nd" data-a="nadl" data-k="asks" data-r="30"><b>${n(L.asks)} member${L.asks>1?'s':''} asked for help</b><small>${nb?'Sent to businesses. Nothing for you to approve.':'No business can answer yet. Tap to see why.'}</small><span>›</span></button>`);
+  if(!nb)need.push(`<button class="nad2-nd" data-a="p15open" data-v="biz"><b>0 businesses joined</b><small>Only businesses with a plan can answer members</small><span>›</span></button>`);
   if(!need.length)need.push(`<div class="nad2-nd ok"><b>All clear</b><small>Nothing is waiting right now</small></div>`);
   /* 30-day chart: one metric at a time; tap a bar = that day */
   const cm=P15.nadm||'signups',CM={signups:'Joined',asks:'Requests',posts:'Posts',money:'Money'},cf=F[cm],cx=Math.max(1,...days.map(cf));
@@ -6210,18 +6223,23 @@ function nadList29(d){
   const n=x=>Number(x||0).toLocaleString('en'),when=t=>{try{return new Date(t).toLocaleString('en',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}catch(e){return ''}};
   let rs=L.rows;if(L.f==='plus')rs=rs.filter(r=>r.plus);if(L.f==='club')rs=rs.filter(r=>r.club);
   const q=(L.q||'').toLowerCase().trim();
-  const KIND={room:'Room wanted',player:'Player for a league',quote:'Get 5 quotes'};
+  const KIND={room:'Looking for a room',player:'Looking for a team',quote:'Event quotes',service:'Get 5 prices'};
+  const ST={open:['Waiting','w','No business has answered yet.'],full:['Answered','g','5 businesses answered. The member chooses one.'],closed:['Closed','','The member closed it (found help or no longer needs it).'],removed:['Removed','','Removed after reports.']};
+  const cap=x=>x?String(x).charAt(0).toUpperCase()+String(x).slice(1):'';
   const tag=(t,c)=>`<em class="nad2-tg ${c||''}">${esc(t)}</em>`;
   const row=r=>{let t='',s='',x='',more=[];
     if(L.k==='members'){t=r.name||'Member';s=[r.city,r.country].filter(Boolean).join(', ');x=(r.plus?tag('Plus','g'):'')+(r.club?tag('Club','g'):'');more=[['Joined',when(r.at)]]}
-    else if(L.k==='asks'){t=(KIND[r.kind]||r.kind)+(r.cat?' · '+r.cat:'');s=[r.city,r.country].filter(Boolean).join(', ');x=tag(r.status==='open'?'Waiting':r.status,r.status==='open'?'w':'');more=[['Sent to',n(r.sent)+' business'+(r.sent==1?'':'es')],['Answered by',n(r.taken)],['Posted',when(r.at)]]}
+    else if(L.k==='asks'){const st=ST[r.status]||[cap(r.status),'',''];t=(KIND[r.kind]||cap(r.kind))+(r.cat?' · '+cap(r.cat):'');s=[r.city,r.country].filter(Boolean).join(', ');x=tag(st[0],st[1]);
+      const why=r.status==='open'?(Number(r.sent)?'Sent to '+n(r.sent)+' business'+(r.sent==1?'':'es')+' in '+(r.city||'that city')+'. Waiting for one to answer.':'No business with a plan in '+(r.city||'that city')+' yet, so nobody got it. It reaches them as soon as one joins.'):st[2];
+      more=[['Sent to',n(r.sent)+' business'+(r.sent==1?'':'es')],['Answered',n(r.taken)],['Asked on',when(r.at)]];more.why=why}
     else if(L.k==='posts'){t=r.title;s=[r.city,r.country].filter(Boolean).join(', ');x=tag(r.kind);more=[['Status',r.status],['Posted',when(r.at)]]}
     else if(L.k==='seats'){t=r.title;s=r.city||'';x=tag(n(r.qty)+' seat'+(r.qty==1?'':'s'));more=[['Status',r.status],['Event on',when(r.event_at)],['Booked',when(r.at)]]}
     else if(L.k==='pays'){t=r.label;s=when(r.at);x=`<b class="m">${esc(money(r.cents,r.currency))}</b>`+(r.test?tag('test'):'')+(r.status!=='paid'?tag(r.status,'w'):'');more=[['Status',r.status]]}
     const key=(t+' '+s).toLowerCase(),hid=q&&!key.includes(q);
-    return `<details class="nad2-li" data-s="${esc(key)}"${hid?' hidden':''}><summary><span class="nad2-av">${esc(String(t||'?').trim().charAt(0).toUpperCase())}</span><span class="nad2-lt"><b>${esc(t)}</b><small>${esc(s)}</small></span><span class="nad2-lx">${x}</span></summary><div class="nad2-mo">${more.map(m=>`<div><small>${esc(m[0])}</small><b>${esc(m[1])}</b></div>`).join('')}</div></details>`};
+    return `<details class="nad2-li" data-s="${esc(key)}"${hid?' hidden':''}><summary><span class="nad2-av">${esc(String(t||'?').trim().charAt(0).toUpperCase())}</span><span class="nad2-lt"><b>${esc(t)}</b><small>${esc(s)}</small></span><span class="nad2-lx">${x}</span></summary><div class="nad2-mo">${more.map(m=>`<div><small>${esc(m[0])}</small><b>${esc(m[1])}</b></div>`).join('')}</div>${more.why?`<p class="nad2-why">${esc(more.why)}</p>`:''}</details>`};
   return c9wrap(head+`<div class="c9-in nad2">
    <div class="nad2-lh"><b>${n(rs.length)}</b><small>${esc(RN[L.r]||'')}${rs.length>=300?' · newest 300':''}</small></div>
+   ${L.k==='asks'?`<div class="nad2-how"><b>How requests work</b><ol><li>A member asks for help, e.g. movers or a room.</li><li>NeuAmigo sends it by itself to up to 5 businesses in that city that have a plan.</li><li>A business pays to answer. The member sees the answers and picks one.</li></ol><p>You don't approve anything. <b>Waiting</b> means no business has answered yet.</p>${(d.live&&Object.values(d.live.biz||{}).reduce((a,b)=>a+Number(b||0),0))?'':'<p class="nad2-warn">Right now no business has joined, so requests can\'t be answered. Getting businesses to join is the next step.</p>'}<button class="c9-btn" data-a="p15open" data-v="biz">See the business plans</button></div>`:''}
    <label class="nad2-q"><input type="search" placeholder="Search name, city, country" value="${esc(L.q||'')}" oninput="window.__nadq&&window.__nadq(this.value)" aria-label="Search"></label>
    <div class="nad2-ls">${rs.length?rs.map(row).join(''):'<div class="c9-pan c9-empty"><b>Nothing here yet</b><small>When it happens it shows up here.</small></div>'}</div>
    <p class="nad2-none"${q&&!rs.some(r=>1)?'':' hidden'}>No match</p>

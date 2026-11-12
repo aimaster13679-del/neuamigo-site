@@ -3064,3 +3064,14 @@ html.c9on .c12-q2:focus,html.c9on #v5-q.c12-q2:focus{outline:none;border-color:#
 .nad2-none{text-align:center;color:var(--c9t2);font-weight:700}
 @media (min-width:700px){.nad2-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.nad2-chips{grid-template-columns:repeat(8,1fr)}}
 @media (prefers-reduced-motion:reduce){.nad2-t{transition:none}}
+
+/* 12 Nov 2026 19:4x (his screenshots): tabs centred; header glow removed so the top matches the phone bar; request help box */
+.c9 .nad2-seg button{display:flex;align-items:center;justify-content:center;text-align:center;width:100%;min-width:0}
+.c9:before,html.gl-lt .c9:before{display:none}
+.nad2-how{background:var(--c9pn);border:1px solid var(--c9hl);border-radius:18px;padding:14px 16px;margin-bottom:12px}
+.nad2-how>b{font-size:16px;font-weight:800;color:var(--c9tx)}
+.nad2-how ol{margin:8px 0;padding-left:20px;color:var(--c9tx);font-weight:600;font-size:14px;line-height:1.5}
+.nad2-how p{margin:6px 0 0;color:var(--c9t2);font-weight:600;font-size:13.5px;line-height:1.45}.nad2-how p b{color:var(--c9tx)}
+.nad2-how .nad2-warn{color:#B86E00}
+.nad2-how .c9-btn{margin-top:12px;width:100%}
+.nad2-why{margin:0 0 12px 46px;font-size:13px;font-weight:600;line-height:1.45;color:var(--c9t2)}
