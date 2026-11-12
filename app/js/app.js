@@ -5511,7 +5511,8 @@ Object.assign(P15V,{});
   const _e=events15;events15=function(){return V6()?events6():_e()};
   const _af=askForm15;askForm15=function(k){return V6()&&k==='service'?quote6():_af(k)};
   const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);if(!V6()||!(typeof P15on==='function'&&P15on())||P15.mat)return;const nav=document.querySelector('.navwrap .nav');if(!nav)return;
-    const cur=P15.v&&S.tab==='me'?'me':S.tab==='settle'||S.tab==='ev15'||S.tab==='me'?S.tab:'matches';
+    const fam=v=>{v=String(v||'');const h=v.split(':')[0];if(['evd','club','seats','tickets','credits','slots','meetups','watch','festival','trip','league','host','hostboard','newev','newleague','venuecal','lgplan','fixtures','ev15','events'].includes(h))return 'ev15';if(['wallet','chats','chat','inbox','me','profile','settings','mytickets','points','plans','referral','biz','leads','svcleads','svcplan','expplan','adcheck','adspot','door','hire'].includes(h))return 'me';if(h==='create')return '';return 'settle'};
+    const cur=P15.v?(fam(P15.v)||S.tab):(S.tab==='settle'||S.tab==='ev15'||S.tab==='me'?S.tab:'matches');
     const b=(k,l)=>`<button data-a="tab" data-k="${k}" class="${cur===k?'on':''}" aria-current="${cur===k?'page':'false'}"><span>${l}</span></button>`;
     nav.className='nav x6nav';nav.innerHTML=b('matches','Home')+b('settle','Settle')+`<button class="x6-post" data-a="p15open" data-v="create">Post</button>`+b('ev15','Events')+b('me','Me')};
   Object.assign(A,{
@@ -5600,7 +5601,7 @@ const V8_LIVE=true;
 function V8(){try{return V8_LIVE||localStorage.getItem('nm.p15v8')==='1'}catch(e){return V8_LIVE}}
 {const _v6=V6;V6=function(){return V8()||_v6()}}
 const ZT8=[['all','All','city','#0F52BA','#0A3A85'],['homes','Homes','house','#0F52BA','#0A3A85'],['jobs','Jobs','office','#0F52BA','#0A3A85'],
-  ['help','Help','tools','#0F52BA','#0A3A85'],['events','Events','hall','#0F52BA','#0A3A85'],['sale','Sale','saletags','#0F52BA','#0A3A85']];
+  ['help','Services','tools','#0F52BA','#0A3A85'],['events','Events','hall','#0F52BA','#0A3A85'],['sale','Sale','saletags','#0F52BA','#0A3A85']];
 const P16=["room","house","office","boxes","tools","store","docs","catering","table","league","stadium"];
 const P17=["passport","clean","clean2","hiring","jobsnews","resume","kitchen","coffee","mic","garage","saletags","rentsign","boxes2","boxes3","calc","expert","insure","bedside","kitchen2"];
 const ph8=(p)=>`<span class="z8-ph"><img src="img/${P17.includes(p)?"p17":P16.includes(p)?"p16":"p15"}/${p}.webp" alt=""></span>`;
@@ -5691,9 +5692,13 @@ function kw8(t,fb){for(const [r,p] of KW8)if(r.test(t))return p;return fb===unde
 function in8(){if(!IN8())return;const m=document.querySelector('#main');if(!m||m.querySelector('.z8-head'))return;
   m.querySelectorAll('span.p15-b:not(.z8-th)').forEach(b=>{const row=b.closest('.p15-row,.p15-li,.p15-rh,button,div');const t=(row?row.textContent:'')||'';const p=kw8(t);b.classList.add('z8-th');b.innerHTML=ph8(p)});
   m.querySelectorAll('span.oi').forEach(o=>{const c=o.closest('button');const t=c?c.textContent:'';const p=kw8(t,null);if(!p){o.remove();return}o.className='oi z8-oi';o.innerHTML=ph8(p)});
+  m.querySelectorAll('span.ci:not(.z8-ci)').forEach(c=>{const b=c.closest('button');const t=b?b.textContent:'';c.className='ci z8-ci';c.innerHTML=ph8(/list your home/i.test(t)?'rentsign':/room wanted/i.test(t)?'bedside':/post a job/i.test(t)?'hiring':/sell/i.test(t)?'garage':/5 quotes/i.test(t)?'calc':/host/i.test(t)?'mic':/team/i.test(t)?'league':/party/i.test(t)?'catering':kw8(t))});
   m.querySelectorAll('.p15-note>svg').forEach(s=>s.remove());
   document.documentElement.classList.add('p15in8')}
 {const _ar2=afterRenderEvents;afterRenderEvents=function(vk){_ar2(vk);try{in8()}catch(e){}}}
+
+/* phone top bar colour follows the screen (header colour on the new home, page colour elsewhere) */
+{const _ar3=afterRenderEvents;afterRenderEvents=function(vk){_ar3(vk);try{if(!V8())return;const lt=document.documentElement.classList.contains('gl-lt'),h=document.querySelector('.z8-head');const T=ZT8.find(x=>x[0]===zt8())||ZT8[0];const c=h?(lt?T[3]:T[4]):(lt?'#F3F4F7':'#09090B');const m=document.querySelector('meta[name=theme-color]');if(m)m.setAttribute('content',c);document.documentElement.classList.toggle('z8home',!!h)}catch(e){}}}
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();

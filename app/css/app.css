@@ -2759,3 +2759,19 @@ html.p15v8.p15v8:not(.gl-lt) .p15{--p-m1:rgba(110,160,255,.18);--p-m2:rgba(110,1
 html.p15in8 #main .p15-opt{min-width:96px!important}
 html.p15in8 #main .p15-opt .ot{white-space:nowrap;padding-right:18px}
 html.p15v8 #main .p15-opt.on .ot{color:#0F52BA!important}html.p15v8:not(.gl-lt) #main .p15-opt.on .ot{color:#9CC0FF!important}
+html.p15in8 #main .z8-ci{display:block!important;width:100%!important;height:auto!important;aspect-ratio:3/2;padding:0!important;background:none!important;border-radius:14px!important;overflow:hidden;box-shadow:0 8px 16px -12px rgba(10,30,80,.6)!important}
+html.p15in8 #main .z8-ci .z8-ph{border-radius:14px}
+html.p15v8 #main .p15-av{border-radius:14px!important;background:#0F52BA!important;color:#fff!important}
+/* 12 Nov 11:25: rolling search words never cut + phone bars take the screen colour */
+.z8-search{line-height:1.4}
+.z8-roll{display:inline-block;vertical-align:middle;height:1.5em;line-height:1.5em;overflow:hidden}
+.z8-roll>span{display:block;animation:z8roll 15s cubic-bezier(.6,0,.3,1) infinite!important}
+.z8-roll i{display:block;height:1.5em;line-height:1.5em}
+@keyframes z8roll{0%,13%{transform:translateY(0)}16.6%,29.6%{transform:translateY(-14.2857%)}33.3%,46.3%{transform:translateY(-28.5714%)}50%,63%{transform:translateY(-42.8571%)}66.6%,79.6%{transform:translateY(-57.1428%)}83.3%,96.3%{transform:translateY(-71.4285%)}100%{transform:translateY(-85.7142%)}}
+html.p15v8 .z8-head{box-shadow:0 -400px 0 0 var(--h)}
+html.p15v8:not(.gl-lt) .z8-head{box-shadow:0 -400px 0 0 var(--h2)}
+html.p15v8,html.p15v8 body,html.p15v8 #app,html.p15v8 .navwrap{background:var(--z8bg)!important}
+html.p15v8 #app::before,html.p15v8 #app::after{display:none!important}
+html.p15v8.z8home{background:linear-gradient(var(--zh) 0 50%,var(--z8bg) 50% 100%)!important}
+html.p15v8.z8home:not(.gl-lt){background:linear-gradient(var(--zh2) 0 50%,var(--z8bg) 50% 100%)!important}
+html.p15v8.p15v8.p15v8.p15v8:not(.z8home),html.p15v8.p15v8.p15v8.p15v8:not(.z8home) body{background:var(--z8bg)!important;background-image:none!important}
