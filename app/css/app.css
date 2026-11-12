@@ -2904,3 +2904,5 @@ html.c9on.p15v6.p15on.p15on.p15on.p15on.p15on.p15on.p15on.gl-lt .navwrap .nav.x6
 html.c9on .nav.c9nav .x7-ind{display:none!important}
 html.c9on .p15 .p15-btn:not(.ghost):not([disabled]){background:var(--c9pri)!important;color:var(--c9prt)!important;border:0!important;border-radius:14px!important;font-weight:800!important;box-shadow:none!important}
 html.c9on .p15 .p15-btn:not(.ghost):not([disabled]) *{color:inherit!important}
+.c9-globe{display:flex;justify-content:center;margin:0 0 4px}.c9-globe canvas{width:min(330px,86vw);aspect-ratio:1;display:block}.c9-globe.off{display:none}
+.c9w .c9-g2.w{grid-template-columns:repeat(4,1fr);gap:8px}.c9w .c9-g2.w .c9-pk{padding:5px 5px 8px;border-radius:14px}.c9w .c9-g2.w .c9-pk b{font-size:12px;margin:6px 2px 0}.c9w .c9-g2.w .c9-pk small{display:none}.c9w .c9-g2.w .c9-ph{border-radius:9px}

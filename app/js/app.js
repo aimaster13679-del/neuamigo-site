@@ -5780,6 +5780,7 @@ function c9events(){const c=c9city(),ev=zdata8('events15','ev',{k:'',cty:c}),k=P
 /* ---------- welcome (first screen before sign-in) ---------- */
 function c9welcome(){const L=(LANGS_ALL.find(x=>x[0]===RM_I18N.lang)||LANGS_ALL[0])[1];
   return `<div class="scroll c9w"><div class="c9"><div class="c9-top"><div class="c9-brand">${NA_CASE('c9lg')}<span><b>NeuAmigo</b></span></div><button class="c9-pill notr" data-a="lang">${esc(L)}</button></div>
+   <div class="c9-globe"><canvas id="c9gl" aria-label="Globe with routes between many countries"></canvas></div>
    <div class="c9-in"><h1 class="c9-h1 xl">Everything you need<br>in your new country.</h1><p class="c9-lede">One app for people who moved to a new country, from anywhere in the world.</p>
    <div class="c9-g2 w">${C9NEED.map(([k,t,s,p])=>`<div class="c9-pk">${c9i(p)}<b>${esc(t)}</b><small>${esc(s)}</small></div>`).join('')}</div>
    <button class="c9-btn" data-a="start">Create my account</button><button class="c9-btn g" data-a="login">I already have an account</button>
@@ -5848,6 +5849,12 @@ function c9me(orig){const me=S.me||{},d=P15.d||{};
 })();
 /* an event opened from the home rows / Events list (their own cache) must open its page too */
 (function(){const _f=evFind;evFind=function(id){const e=_f(id);if(e)return e;const l=(P15.z8d&&P15.z8d.ev)||[];return l.find(x=>x.id===id)||null}})();
+
+/* the welcome globe (his ask 12 Nov 2026 13:44: like NeuMarry's globe, more fun, clear, HD): loaded only on that screen */
+function c9globe(){const cv=document.getElementById('c9gl');if(!cv||cv._on)return;cv._on=1;
+  const need=['js/vendor/d3-array.min.js','js/vendor/d3-geo.min.js','js/na-globe.js'],load=src=>new Promise((ok,no)=>{if(document.querySelector(`script[src="${src}"]`))return ok();const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s)});
+  (async()=>{try{for(const s of need)await load(s);const w=window.__naw||(window.__naw=await (await fetch('js/vendor/countries110.json')).json());if(cv.isConnected)naGlobe(cv,w)}catch(e){cv.parentNode&&cv.parentNode.classList.add('off')}})()}
+(function(){const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{if(C9()&&S.screen==='welcome')c9globe()}catch(e){}}})();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
