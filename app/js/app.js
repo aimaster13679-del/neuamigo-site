@@ -5761,7 +5761,7 @@ function c9home(){const c=c9city(),need=c9need()||['home','work','people','help'
    help:c9row('Get 5 prices in one go','data-a="tab" data-k="settle"',c9rail([['boxes','Movers'],['clean2','Cleaning'],['docs','Tax filing'],['tools','Repairs'],['insure','Insurance'],['passport','Visa help']].map(([p,t])=>`<button class="c9-card s" data-a="z8q" data-c="${t==='Repairs'?'Small jobs':t==='Tax filing'?'Tax':t==='Visa help'?'Immigration':t}">${c9i(p)}<b>${esc(t)}</b></button>`)))};
   const order=need.concat(['home','work','people','help'].filter(k=>!need.includes(k)));
   const more=c9row('More for your move','',c9rail([['expert','Ask an expert','experts'],['saletags','Buy used items','sale'],['plane','Travel buddy','buddy'],['table','Weekend Club','club']].map(([p,t,v])=>`<button class="c9-card s" data-a="p15open" data-v="${v}">${c9i(p)}<b>${esc(t)}</b></button>`)));
-  return c9wrap(c9top()+hero+picked+order.map(k=>R[k]).join('')+more)}
+  return c9wrap(c9top()+(typeof c10pre==='function'?c10pre():'')+hero+picked+order.map(k=>R[k]).join('')+more)}
 /* ---------- events ---------- */
 function c9events(){const c=c9city(),ev=zdata8('events15','ev',{k:'',cty:c}),k=P15.c9k||'';let d=P15.c9d;
   const now=new Date(),day=x=>new Date(x).toDateString();
@@ -5855,6 +5855,83 @@ function c9globe(){const cv=document.getElementById('c9gl');if(!cv||cv._on)retur
   const need=['js/vendor/d3-array.min.js','js/vendor/d3-geo.min.js','js/na-globe.js'],load=src=>new Promise((ok,no)=>{if(document.querySelector(`script[src="${src}"]`))return ok();const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s)});
   (async()=>{try{for(const s of need)await load(s);const w=window.__naw||(window.__naw=await (await fetch('js/vendor/countries110.json')).json());if(cv.isConnected)naGlobe(cv,w)}catch(e){cv.parentNode&&cv.parentNode.classList.add('off')}})()}
 (function(){const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{if(C9()&&S.screen==='welcome')c9globe()}catch(e){}}})();
+
+/* v10 Journey + Business (his ok 12 Nov 2026 13:56): (1) 3 paths on first open: moving soon / just arrived / live here;
+   movers get "My 30-day plan" (before the flight -> week 1 -> weeks 2-3 -> week 4), each step = one photo card + one button;
+   (2) givers (landlords, employers, organizers, service businesses, sellers) switch to "NeuAmigo for Business" with their own
+   nav, Airbnb-style, so users and givers never mix. Real data only; progress = the user's own ticks. */
+const C10_LIVE=false;
+function C10(){try{return C10_LIVE||localStorage.getItem('nm.c10')==='1'}catch(e){return C10_LIVE}}
+const c10get=(k,d)=>{try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}};
+const c10set=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const C10P=[['moving','I am moving soon','Plan your move before you fly','plane'],['arrived','I just arrived','Your first 30 days, step by step','keys'],['local','I live here already','Homes, jobs, events and help near you','city']];
+const C10S=[['Before you fly',[['ahead','keys','Find a home before you land','Owners and agents send you homes','ask:room'],['papers','passport','Ask an expert about visa and papers','Licensed experts, price shown first','experts'],['buddy','plane','Find a travel buddy for the flight','Help for you or your parents','buddy'],['wp','resume','Make your work profile','Then apply to jobs in one tap','workprof']]],
+ ['Week 1 · after you land',[['home','room','Choose your home','Rent shown on every listing','rooms'],['movers','boxes','Get 5 prices from movers','You choose and pay them directly','q:Movers'],['bank','expert','Phone plan and bank account','Ask an expert what to bring','experts']]],
+ ['Weeks 2 and 3',[['jobs','hiring','Apply for jobs','Pay and hours on every job','jobs'],['furn','sofa','Get used furniture','From people moving out','sale'],['clean','clean2','Book home cleaning','Get 5 prices','q:Cleaning']]],
+ ['Week 4',[['event','hall','Go to your first event','Meet people near you','ev15'],['club','table','Join the Weekend Club','Members book first','club']]]];
+const c10all=()=>C10S.flatMap(x=>x[1]);
+const c10go=v=>v.startsWith('q:')?`data-a="z8q" data-c="${esc(v.slice(2))}"`:v==='ev15'?'data-a="tab" data-k="ev15"':`data-a="p15open" data-v="${v}"`;
+function c10path(){const sel=P15.c10p;
+  return c9wrap(`<div class="c9-chz"><div class="c9-brand">${NA_CASE('c9lg')}<span><b>NeuAmigo</b></span></div><h1 class="c9-h1">Where are you<br>in your move?</h1><p class="c9-lede">We set up the app for you.</p>
+   <div class="c10-paths">${C10P.map(([k,t,s,p])=>`<button class="c9-pan c10-path${sel===k?' on':''}" data-a="c10path" data-k="${k}">${c9i(p)}<span><b>${esc(t)}</b><small>${esc(s)}</small></span></button>`).join('')}</div>
+   <button class="c9-btn" data-a="c10pathgo" ${sel?'':'disabled'}>${sel?'Continue':'Pick one'}</button></div>`)}
+function c10done(){return c10get('nm.plan30',[])}
+function c10bar(){const all=c10all(),d=c10done().filter(x=>all.some(s=>s[0]===x)).length;return {d,n:all.length,pct:Math.round(d/all.length*100)}}
+function c10pre(){const path=c10get('nm.path',null);if(!C10()||!(path==='moving'||path==='arrived'))return '';
+  const b=c10bar(),done=c10done(),nx=c10all().find(s=>!done.includes(s[0])&&!(path==='arrived'&&C10S[0][1].includes(s)))||c10all().find(s=>!done.includes(s[0]));
+  return `<div class="c9-in"><button class="c9-pan c10-card" data-a="p15open" data-v="plan30"><span class="c10-ct"><span class="c9-tag">My 30-day plan</span><b>${b.d} of ${b.n} steps done</b><span class="c10-bar"><i style="width:${b.pct}%"></i></span></span>${nx?`<span class="c10-nx">${c9i(nx[1])}<span><small>Next step</small><b>${esc(nx[2])}</b></span></span>`:'<span class="c10-nx"><span><b>All done. Welcome home.</b></span></span>'}</button></div>`}
+function c10plan(){const done=c10done(),b=c10bar(),path=c10get('nm.path','moving');
+  return c9wrap(c9back('')+`<div class="c9-in"><h1 class="c9-h1">My 30-day plan</h1><p class="c9-lede">${path==='arrived'?'Welcome. Start with week 1.':'Start before you fly, then follow the weeks.'} Tap a step to do it, then mark it done.</p>
+   <div class="c9-pan c10-sum"><b>${b.d} of ${b.n} steps done</b><span class="c10-bar"><i style="width:${b.pct}%"></i></span></div>
+   ${C10S.map(([h,steps],si)=>`<div class="c10-stage${path==='arrived'&&si===0?' opt':''}"><h2>${esc(h)}${path==='arrived'&&si===0?' <small>(if you still need it)</small>':''}</h2>${steps.map(([k,p,t,s,v])=>{const ok=done.includes(k);return `<div class="c9-pan c10-step${ok?' ok':''}">${c9i(p)}<span class="c10-st"><b>${esc(t)}</b><small>${esc(s)}</small><span class="c10-sb"><button class="c9-btn sm" ${c10go(v)}>${ok?'Open':'Do it'}</button><button class="c9-btn sm g" data-a="c10tick" data-k="${k}">${ok?'✓ Done':'Done'}</button></span></span></div>`}).join('')}</div>`).join('')}
+   <p class="c9-lede c9-c">Government steps (tax number, health card) are free: ask an expert where to find them.</p></div>`)}
+/* ---------- business side ---------- */
+const C10R=[['home','rentsign','Homes to rent','Landlords and agents'],['work','hiring','Jobs to fill','Families and businesses'],['events','hall','Events to run','Hosts and organizers'],['service','tools','Services','Movers, cleaners, tax, repairs, experts'],['sell','saletags','Things to sell','Moving out? Sell your items']];
+const C10A={home:[['Post a home','postroom'],['People looking for a home','inbox:agent']],work:[['Post a job','postjob'],['My jobs and applicants','jobs']],events:[['Create an event','newev'],['My events and bookings','hostboard']],service:[['Requests from customers','svcleads'],['My plan','svcplan']],sell:[['Add items to sell','mysale'],['See my sale','mysale']]};
+function c10biz(){return c10get('nm.biz',false)===true}
+function c10roles(){return c10get('nm.bizr',[])}
+function c10bztop(t){return `<div class="c9-top"><div class="c9-brand">${NA_CASE('c9lg')}<span><b>NeuAmigo</b><small>for <em>Business</em></small></span></div><button class="c9-pill" data-a="c10bizoff">Switch to using</button></div>${t?`<div class="c9-in"><h1 class="c9-h1">${esc(t)}</h1></div>`:''}`}
+function c10bzpick(){const n=P15.c10r=P15.c10r||c10roles().slice();
+  return c9wrap(c10bztop('What do you offer?')+`<div class="c9-in"><p class="c9-lede">Pick one or more. Your business home shows these.</p>
+   <div class="c10-paths">${C10R.map(([k,p,t,s])=>`<button class="c9-pan c10-path${n.includes(k)?' on':''}" data-a="c10role" data-k="${k}">${c9i(p)}<span><b>${esc(t)}</b><small>${esc(s)}</small></span></button>`).join('')}</div>
+   <button class="c9-btn" data-a="c10rolego" ${n.length?'':'disabled'}>${n.length?`Continue · ${n.length} picked`:'Pick at least one'}</button></div>`)}
+function c10bzhome(){const r=c10roles();if(!r.length)return c10bzpick();const d=P15.d||{},biz=(d.biz||[]);
+  return c9wrap(c10bztop('Dashboard')+`<div class="c9-in"><p class="c9-lede">Everything you offer, in one place. Your customers see the user side of NeuAmigo.</p>
+   ${r.map(k=>{const R=C10R.find(x=>x[0]===k),A=C10A[k];return `<div class="c9-pan c10-bz">${c9i(R[1])}<b class="c9-h2">${esc(R[2])}</b><small class="c9-sub">${esc(R[3])}</small><button class="c9-btn" data-a="p15open" data-v="${A[0][1]}">${esc(A[0][0])}</button><button class="c9-btn g" data-a="p15open" data-v="${A[1][1]}">${esc(A[1][0])}</button></div>`}).join('')}
+   ${biz.length?`<div class="c9-rh" style="margin:22px 0 10px"><h2>My plans</h2></div>${biz.filter(b=>b.kind!=='advertiser').map(b=>`<div class="c9-pan c10-pl"><b>${esc(b.name||'')}</b><small>${planOn15(b)?'Active until '+esc(until15(b.planUntil)):'Plan not active'}</small></div>`).join('')}`:''}
+   <button class="c9-btn g" data-a="c10roleedit">Change what I offer</button></div>`)}
+function c10bzreq(){const r=c10roles();
+  const L=[['home','bedside','People looking for a home','Room Wanted requests in your city','inbox:agent'],['work','resume','Job applicants','See who applied to your jobs','jobs'],['events','hall','Bookings','Who booked your events','hostboard'],['service','boxes','Customer requests','Quote requests you can answer with a price','svcleads'],['sell','sofa','Buyers','People who want your items','mysale']].filter(x=>r.includes(x[0]));
+  return c9wrap(c10bztop('Requests')+`<div class="c9-in">${L.length?L.map(([k,p,t,s,v])=>`<button class="c9-pan c9-job" data-a="p15open" data-v="${v}">${c9i(p)}<span><b>${esc(t)}</b><small>${esc(s)}</small></span></button>`).join(''):`<div class="c9-pan c9-empty">${c9i('boxes')}<b>Pick what you offer first</b><button class="c9-btn" data-a="c10roleedit">Choose</button></div>`}</div>`)}
+function c10bzlist(){const r=c10roles();
+  const L=[['home','rentsign','My homes','Post or mark homes as taken','rooms'],['work','hiring','My jobs','Post jobs, close filled ones','jobs'],['events','table','My events','Create, edit, check in guests','hostboard'],['service','tools','My services','Your plan and prices','svcplan'],['sell','saletags','My sale items','Add, edit, mark sold','mysale']].filter(x=>r.includes(x[0]));
+  return c9wrap(c10bztop('My listings')+`<div class="c9-in">${L.map(([k,p,t,s,v])=>`<button class="c9-pan c9-job" data-a="p15open" data-v="${v}">${c9i(p)}<span><b>${esc(t)}</b><small>${esc(s)}</small></span></button>`).join('')}</div>`)}
+function c10post(){const R=[['rentsign','A home to rent','postroom'],['hiring','A job','postjob'],['hall','An event','newev'],['tools','My service','svcplan'],['saletags','Things to sell','mysale'],['bedside','I need a home','ask:room']];
+  return c9wrap(c9back('')+`<div class="c9-in"><h1 class="c9-h1">What do you want to post?</h1><div class="c9-g2">${R.map(([p,t,v])=>`<button class="c9-pk" data-a="c10postgo" data-v="${v}">${c9i(p)}<b>${esc(t)}</b></button>`).join('')}</div></div>`)}
+(function(){
+  Object.assign(P15V,{plan30:c10plan,bzlist:c10bzlist,bzreq:c10bzreq,bzhome:c10bzhome});
+  const _cr=P15V.create;P15V.create=function(){return C10()&&!c10biz()?c10post():_cr.apply(this,arguments)};
+  const _h=home15;home15=function(){if(!C10())return _h();if(c10biz())return c10bzhome();const p=c10get('nm.path',null);if(!p)return c10path();if(p!=='local'&&!c9need())c10set('nm.need',['home','work','people','help']);return _h()};
+  const _m=me15;me15=function(){const h=_m.apply(this,arguments);if(!C10())return h;
+    const card=c10biz()?`<button class="c9-pan c10-sw" data-a="c10bizoff">${c9i('city')}<span><b>Switch to using NeuAmigo</b><small>Find homes, jobs and events</small></span></button>`
+      :`<button class="c9-pan c10-sw" data-a="c10bizon">${c9i('office')}<span><b>NeuAmigo for Business</b><small>Rent a home, post a job, run events, offer services, sell items</small></span></button>`;
+    const plan=(c10get('nm.path','')||'')!=='local'?`<button class="c9-pan c10-sw" data-a="p15open" data-v="plan30">${c9i('keys')}<span><b>My 30-day plan</b><small>${c10bar().d} of ${c10bar().n} steps done</small></span></button>`:'';
+    return h.replace('<div class="c9-old">',`<div class="c9-in">${plan}${card}</div><div class="c9-old">`)};
+  Object.assign(A,{
+    c10path(el){P15.c10p=el.dataset.k;render()},
+    c10pathgo(){const k=P15.c10p;if(!k)return;c10set('nm.path',k);if(k==='local'){try{localStorage.removeItem('nm.need')}catch(e){}}render();try{document.querySelector('#main').scrollTo(0,0)}catch(e){}},
+    c10tick(el){const d=c10done(),k=el.dataset.k,i=d.indexOf(k);if(i<0)d.push(k);else d.splice(i,1);c10set('nm.plan30',d);render()},
+    c10bizon(){c10set('nm.biz',true);P15.v=null;S.tab='matches';render();try{document.querySelector('#main').scrollTo(0,0)}catch(e){}},
+    c10bizoff(){c10set('nm.biz',false);P15.v=null;S.tab='matches';render();try{document.querySelector('#main').scrollTo(0,0)}catch(e){}},
+    c10role(el){const n=P15.c10r=P15.c10r||[],k=el.dataset.k,i=n.indexOf(k);if(i<0)n.push(k);else n.splice(i,1);render()},
+    c10rolego(){const n=P15.c10r||[];if(!n.length)return;c10set('nm.bizr',n);render()},
+    c10roleedit(){P15.c10r=c10roles().slice();c10set('nm.bizr',[]);P15.v=null;S.tab='matches';render()},
+    c10postgo(el){const v=el.dataset.v;if(v!=='ask:room'){const r=c10roles(),m={postroom:'home',postjob:'work',newev:'events',svcplan:'service',mysale:'sell'}[v];if(m&&!r.includes(m))c10set('nm.bizr',r.concat(m))}A.p15open({dataset:{v}})}});
+  const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);if(!C10()||!c10biz())return;const nav=document.querySelector('.navwrap .nav');if(!nav)return;
+    const v=String(P15.v||''),cur=v==='bzlist'?'l':v==='bzreq'?'r':!v&&S.tab==='me'?'me':!v?'d':'';
+    const b=(k,l,a)=>`<button ${a} class="${cur===k?'on':''}"><span>${l}</span></button>`;
+    nav.innerHTML=b('d','Dashboard','data-a="tab" data-k="matches"')+b('l','Listings','data-a="p15open" data-v="bzlist"')+b('r','Requests','data-a="p15open" data-v="bzreq"')+b('me','Me','data-a="tab" data-k="me"');nav.classList.add('c10biz')};
+})();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
