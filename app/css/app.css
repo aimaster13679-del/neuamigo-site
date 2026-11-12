@@ -2875,3 +2875,32 @@ html.c9on .c9 .c9-pill.au{background:var(--c9pri);color:var(--c9prt)}
 html.c9on .c9-pk em{background:var(--c9au);color:#fff}
 html.c9on.gl-lt .c9 .c9-chip.k.on{color:#0F52BA;border-color:#0F52BA}
 html.c9on .c9 .c9-chip.k.on{color:var(--c9tag);border-color:var(--c9au)}
+.c9-tt{font-size:17px;font-weight:800}.c9 .c9-pill.ghost{visibility:hidden}
+.c9-tabs{gap:10px;margin-top:12px}.c9 .c9-tab{flex:0 0 104px;display:block;text-align:center;opacity:.72;scroll-snap-align:start}.c9 .c9-tab.on{opacity:1}
+.c9-tab .c9-ph{border-radius:12px}.c9-tab b{display:block;font-size:13px;font-weight:700;margin-top:6px;line-height:1.3}.c9-tab.on b{font-weight:800;box-shadow:inset 0 -3px 0 var(--c9tx);padding-bottom:4px}
+.c9-home{margin-top:18px;position:relative}.c9-n{position:absolute;top:10px;right:10px;background:rgba(7,11,24,.72);color:#fff;font-size:12px;font-weight:700;padding:5px 9px;border-radius:9px}
+.c9-hrow{display:flex;align-items:center;gap:8px;margin-top:10px}.c9-sub{display:block;color:var(--c9t2);font-size:13px;font-weight:600;line-height:1.4;margin-top:2px}
+.c9-sp{display:inline-block;font-size:11px;font-weight:800;padding:3px 7px;border-radius:7px;background:var(--c9gl);color:var(--c9t2);border:1px solid var(--c9hl)}.c9-sp.b{color:var(--c9tag);margin-top:4px}
+.c9-ct{padding:12px 14px;margin-top:10px}.c9-ct b{display:block;font-size:14.5px}.c9-ct small{display:block;color:var(--c9t2);font-size:13px;margin-top:2px}
+.c9-acts2{margin-top:22px}
+.c9 .c9-wp,.c9 .c9-job{display:flex;gap:12px;align-items:center;width:100%;padding:10px;margin-top:12px}
+.c9-wp>.c9-ph,.c9-job>.c9-ph{width:112px;flex:0 0 112px;border-radius:12px}
+.c9-wp b,.c9-job b{display:block;font-size:16px;font-weight:800;line-height:1.3}.c9-wp small,.c9-job small{display:block;color:var(--c9t2);font-size:12.5px;font-weight:600;line-height:1.4}
+.c9-jp{display:block;font-size:17px;font-weight:800;margin-top:4px}.c9-jp small{display:inline;font-size:12px}
+.c9 .c9-club{display:block;width:100%;margin-top:14px;border-radius:20px;padding:18px 18px 16px;background:linear-gradient(135deg,#1B3A78,#0B1226 62%);border:1px solid rgba(91,155,255,.45);color:#fff}
+.c9-club .c9-brand{justify-content:space-between}.c9-club .c9-brand>span{flex:1}.c9-club .c9-brand b{font-size:16px}.c9-club em{font-style:normal;font-size:11.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#8DB6FF}
+.c9-cn{display:block;font-size:22px;font-weight:800;margin-top:24px;line-height:1.25}.c9-club small{display:block;color:#A9B4D0;font-size:13px;font-weight:600}
+.c9-club.off{background:linear-gradient(135deg,#16203F,#0B1226 62%)}
+.c9 .c9-g2 .c9-pk b:only-of-type{margin-bottom:2px}
+.c9-old{padding:6px 0 0}
+html.c9on .nav.c9nav{display:flex!important;gap:2px!important;padding:6px!important}
+html.c9on .nav.c9nav>button{flex:1 1 0!important;min-width:0!important;justify-content:center!important;padding:10px 2px!important;border-radius:14px!important}
+html.c9on .nav.c9nav>button span{font-size:13px!important;font-weight:700!important;white-space:nowrap}
+html.c9on.p15v6.p15on.p15on.p15on.p15on.p15on.p15on.p15on .navwrap .nav.x6nav.c9nav{display:grid!important;grid-template-columns:repeat(5,1fr)!important;border-radius:20px!important;height:62px;padding:6px!important}
+html.c9on.p15v6.p15on.p15on.p15on.p15on.p15on.p15on.p15on .navwrap .nav.x6nav.c9nav button{border-radius:14px!important;height:50px;width:100%!important;color:var(--c9t2)!important}
+html.c9on.p15v6.p15on.p15on.p15on.p15on.p15on.p15on.p15on .navwrap .nav.x6nav.c9nav button.on{background:var(--c9pri)!important;color:var(--c9prt)!important}
+html.c9on.p15v6.p15on.p15on.p15on.p15on.p15on.p15on.p15on:not(.gl-lt) .navwrap .nav.x6nav.c9nav{background:rgba(17,26,51,.86)!important;border:1px solid rgba(255,255,255,.09)!important}
+html.c9on.p15v6.p15on.p15on.p15on.p15on.p15on.p15on.p15on.gl-lt .navwrap .nav.x6nav.c9nav{background:rgba(255,255,255,.92)!important;border:1px solid rgba(11,18,38,.08)!important}
+html.c9on .nav.c9nav .x7-ind{display:none!important}
+html.c9on .p15 .p15-btn:not(.ghost):not([disabled]){background:var(--c9pri)!important;color:var(--c9prt)!important;border:0!important;border-radius:14px!important;font-weight:800!important;box-shadow:none!important}
+html.c9on .p15 .p15-btn:not(.ghost):not([disabled]) *{color:inherit!important}

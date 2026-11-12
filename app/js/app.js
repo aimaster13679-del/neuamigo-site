@@ -5796,6 +5796,7 @@ function c9welcome(){const L=(LANGS_ALL.find(x=>x[0]===RM_I18N.lang)||LANGS_ALL[
     c9d(el){P15.c9d=el.dataset.k;render()},c9k(el){P15.c9k=el.dataset.k;render()}});
   const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);const d=document.documentElement,on=C9();d.classList.toggle('c9on',on);if(!on)return;
     try{const lt=d.classList.contains('gl-lt'),m=document.querySelector('meta[name=theme-color]');if(m)m.setAttribute('content',lt?'#F5F6FA':'#070B18');d.classList.remove('z8home')}catch(e){}
+    try{const v0=String(P15.v||'');if(v0.startsWith('evd:')){const e=evFind(v0.slice(4)),im=e&&document.querySelector('#main img');if(im){const u=c9p(c9evp(e));if(!im.src.endsWith(u))im.src=u}}}catch(e){}
     const nav=document.querySelector('.navwrap .nav');if(!nav||!(typeof P15on==='function'&&P15on())||P15.mat)return;
     const v=String(P15.v||''),h=v.split(':')[0];
     const cur=['rooms','room','postroom','myroom'].includes(h)||v==='ask:room'?'homes':['jobs','job','workprof','postjob','jobapps','hire','ready','safejobs'].includes(h)?'jobs':
@@ -5805,6 +5806,48 @@ function c9welcome(){const L=(LANGS_ALL.find(x=>x[0]===RM_I18N.lang)||LANGS_ALL[
     const b=(k,l,a)=>`<button ${a} class="${cur===k?'on':''}" aria-current="${cur===k?'page':'false'}"><span>${l}</span></button>`;
     nav.className='nav x6nav c9nav';nav.innerHTML=b('matches','Home','data-a="tab" data-k="matches"')+b('homes','Homes','data-a="p15open" data-v="rooms"')+b('jobs','Jobs','data-a="p15open" data-v="jobs"')+b('ev15','Events','data-a="tab" data-k="ev15"')+b('me','Me','data-a="tab" data-k="me"')};
 })();
+/* ---------- part 2: homes, jobs, Me in the Cinema look (same data and actions as before) ---------- */
+function c9back(t){return `<div class="c9-top"><button class="c9-pill" data-a="p15back">Back</button>${t?`<b class="c9-tt">${esc(t)}</b>`:'<span></span>'}<span class="c9-pill ghost"></span></div>`}
+function c9rooms(){const l=P15.rooms;if(l===undefined){API.rpc('rooms15',{maxrent:Number(P15.f.max||0)*100}).then(r=>{P15.rooms=r;render()}).catch(()=>{P15.rooms=[];render()});return c9wrap(c9top()+`<div class="c9-in"><h1 class="c9-h1">Find a home</h1></div><div class="c9-c" style="padding:40px 0">${spinner('Loading')}</div>`)}
+  const TY={private:['Private room','room'],shared:['Shared room','sofa'],whole:['Whole place','boxes2']},ty=P15.c9ty||'',mx=P15.f.max||'0';
+  const L=l.filter(r=>(!ty||r.type===ty)&&(mx==='0'||r.rent<=Number(mx)*100));
+  return c9wrap(c9top()+`<div class="c9-in"><h1 class="c9-h1">Find a home</h1><p class="c9-lede">Rent is shown on every listing.</p></div>
+   <div class="c9-rail c9-tabs">${[['','All homes','keys']].concat(Object.entries(TY).map(([k,[t,p]])=>[k,t,p])).map(([k,t,p])=>`<button class="c9-tab${ty===k?' on':''}" data-a="c9ty" data-k="${k}">${c9i(p)}<b>${esc(t)}</b></button>`).join('')}</div>
+   <div class="c9-chips">${[['0','Any rent'],['700','Under 700'],['900','Under 900'],['1200','Under 1,200'],['1800','Under 1,800']].map(([v,t])=>`<button class="c9-chip${mx===v?' on':''}" data-a="p15f" data-k="max" data-val="${v}">${esc(t)}</button>`).join('')}</div>
+   <div class="c9-in">${L.length?L.map(r=>{const T=TY[r.type]||['',''],ph=r.photos&&r.photos[0]&&PC15()?phUrl15(r.photos[0]):'';return `<div class="c9-home">${c9i(T[1]||'room',ph)}${r.photos&&r.photos.length>1&&PC15()?`<small class="c9-n">${r.photos.length} photos</small>`:''}
+     <div class="c9-hrow"><b class="c9-h2">${esc(r.title)}</b>${r.sponsored?'<span class="c9-sp">Sponsored</span>':''}</div>
+     <small class="c9-sub">${esc(r.area||'')}${T[0]?' · '+T[0]:''} · from ${esc(new Date(r.from).toLocaleDateString(RM_I18N.locale,{day:'numeric',month:'short'}))}${(r.tags||[]).length?' · '+esc(r.tags.join(', ')):''}</small>
+     <div class="c9-pr">${esc(money(r.rent,r.currency))}<small> /month</small></div>
+     ${r.locked?`<button class="c9-btn" data-a="p15open" data-v="plus">See contact and address</button><small class="c9-sub c9-c">Opens with NeuAmigo Plus</small>`:`<div class="c9-pan c9-ct"><b>${esc(r.address||r.area||'')}</b><small>${esc(r.contact||'')}</small></div>${r.mine?`<button class="c9-btn g" data-a="p15taken" data-id="${r.id}">Mark as taken</button>`:''}`}</div>`}).join('')
+    :`<div class="c9-pan c9-empty">${c9i('rentsign')}<b>No homes at this rent yet</b><small>New homes are posted every day. Or tell owners what you need.</small></div>`}
+   <div class="c9-g2 c9-acts2"><button class="c9-pk" data-a="p15open" data-v="ask:room">${c9i('bedside')}<b>Ask owners</b><small>Post what you need, they message you</small></button><button class="c9-pk" data-a="p15open" data-v="postroom">${c9i('rentsign')}<b>List your home</b><small>Find a tenant</small></button></div></div>`)}
+function c9jobs(){const c=P15.f.jc||'',key='j'+c,l=(P15.jb||{})[key];
+  if(l===undefined){API.rpc('jobs15',{c}).then(r=>{P15.jb=Object.assign(P15.jb||{},{[key]:r||[]});render()}).catch(()=>{P15.jb=Object.assign(P15.jb||{},{[key]:[]});render()});return c9wrap(c9top()+`<div class="c9-in"><h1 class="c9-h1">Find work</h1></div><div class="c9-c" style="padding:40px 0">${spinner('Loading')}</div>`)}
+  const wp=P15.wp;if(wp===undefined){P15.wp=null;API.rpc('workprof15',{}).then(r=>{P15.wp=r||{};render()}).catch(()=>{P15.wp={}})}
+  const done=wp&&wp.skills?[wp.skills.length,wp.langs&&wp.langs.length,wp.avail&&wp.avail.length,wp.area,wp.permit].filter(Boolean).length*20:0;
+  return c9wrap(c9top()+`<div class="c9-in"><h1 class="c9-h1">Find work</h1><p class="c9-lede">${esc(c9city()||'Your city')} · pay and hours on every job. Job seekers never pay.</p></div>
+   <div class="c9-chips">${[['','All']].concat(JOBCAT15.map(x=>[x,x])).map(([v,t])=>`<button class="c9-chip${c===v?' on':''}" data-a="p15f" data-k="jc" data-val="${esc(v)}">${esc(t)}</button>`).join('')}</div>
+   <div class="c9-in"><button class="c9-pan c9-wp" data-a="p15open" data-v="workprof">${c9i('resume')}<span><b>My work profile${done?` · ${done}%`:''}</b><small>${done>=100?'Ready: apply to any job in one tap':'Finish it once, then apply in one tap'}</small></span></button>
+   ${l.length?l.map(j=>`<button class="c9-pan c9-job" data-a="p15open" data-v="job:${j.id}">${c9i(c9jobp(j))}<span><b>${esc(j.title)}</b><small>${esc(j.employer||'')}${j.area?' · '+esc(j.area):''}</small><span class="c9-jp">${esc(money(j.pay,j.currency))}<small> /hour · ${j.hours} h/week</small></span>${j.sponsored?'<span class="c9-sp">Sponsored</span>':''}${j.mine?`<span class="c9-sp b">Your job · ${j.apps} applied</span>`:j.applied?'<span class="c9-sp b">Applied</span>':''}</span></button>`).join('')
+    :`<div class="c9-pan c9-empty">${c9i('hiring')}<b>No jobs here yet</b><small>Employers add new ones every week.</small></div>`}
+   <div class="c9-g2 c9-acts2"><button class="c9-pk" data-a="p15open" data-v="postjob">${c9i('hiring')}<b>Post a job</b><small>Family ${p15price('job_family')} · business ${p15price('job_biz')}</small></button><button class="c9-pk" data-a="p15open" data-v="safejobs">${c9i('docs')}<b>Safe jobs</b><small>Our promise to job seekers</small></button></div></div>`)}
+function c9me(orig){const me=S.me||{},d=P15.d||{};
+  const club=d.club?`<button class="c9-club" data-a="p15open" data-v="club"><span class="c9-brand">${NA_CASE('c9lg')}<span><b>Weekend Club</b></span><em>Member</em></span><b class="c9-cn">${esc(me.name||'')}</b><small>${esc(me.city||'')}${d.clubUntil?' · Member till '+esc(until15(d.clubUntil)):''}</small></button>`
+    :`<button class="c9-club off" data-a="p15open" data-v="club"><span class="c9-brand">${NA_CASE('c9lg')}<span><b>Weekend Club</b></span></span><b class="c9-cn">Book events first</b><small>See plans and prices</small></button>`;
+  const tiles=[['hall','My tickets','tickets'],['boxes','My requests','myasks'],['resume','My work profile','workprof'],['keys','Change what I need','c9redo']];
+  const rest=orig.replace(/^[\s\S]*?<div class="p15-sec"><b>Membership<\/b><\/div>/,'<div class="p15-sec"><b>Membership</b></div>').replace(/<div class="p15-sec"><b>My things<\/b><\/div>[\s\S]*?(?=<div class="p15-sec">|\$\{|<button class="p15-g p15-row" data-a="p15open" data-v="biz")/,'');
+  const rest2=rest.replace(/<button class="p15-g p15-row" data-a="p15open" data-v="tick">[\s\S]*?<\/button>/,'');const inner=rest2.replace(/^<div class="scroll p15s" id="main"><div class="main-inner p15">/,'').replace(/<\/div><\/div>$/,'');
+  return p15wrap(`<div class="c9">${c9top()}<div class="c9-in"><h1 class="c9-h1">Me</h1>${club}
+   <div class="c9-g2">${tiles.map(([p,t,v])=>`<button class="c9-pk" ${v==='c9redo'?'data-a="c9redo"':`data-a="p15open" data-v="${v}"`}>${c9i(p)}<b>${esc(t)}</b></button>`).join('')}</div></div>
+   <div class="c9-old">${inner}</div><div class="c9-end"></div></div>`)}
+(function(){
+  const _r=P15V.rooms;P15V.rooms=function(){return C9()?c9rooms():_r.apply(this,arguments)};
+  const _j=P15V.jobs;P15V.jobs=function(){return C9()?c9jobs():_j.apply(this,arguments)};
+  const _m=me15;me15=function(){const h=_m.apply(this,arguments);if(!C9())return h;try{return c9me(h)}catch(e){return h}};
+  Object.assign(A,{c9ty(el){P15.c9ty=el.dataset.k;render()}});
+})();
+/* an event opened from the home rows / Events list (their own cache) must open its page too */
+(function(){const _f=evFind;evFind=function(id){const e=_f(id);if(e)return e;const l=(P15.z8d&&P15.z8d.ev)||[];return l.find(x=>x.id===id)||null}})();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
