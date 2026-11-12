@@ -5682,7 +5682,7 @@ function zpage8(){const t=zt8(),T=ZT8.find(x=>x[0]===t)||ZT8[0],me=S.me||{},c=me
   setInterval(()=>{try{if(hold||document.hidden||matchMedia('(prefers-reduced-motion: reduce)').matches)return;const b=document.querySelector('.z8-bn:not(.one)');if(!b)return;const w=b.firstElementChild?b.firstElementChild.getBoundingClientRect().width+12:300;const nx=b.scrollLeft+w>=b.scrollWidth-b.clientWidth+4?0:b.scrollLeft+w;b.scrollTo({left:nx,behavior:'smooth'})}catch(e){}},4500)})();
 
 /* inner screens: simple icons replaced by the thing's own photo (mock until his ok: nm.p15in8) */
-const IN8_LIVE=false;
+const IN8_LIVE=true;
 function IN8(){try{return IN8_LIVE||localStorage.getItem('nm.p15in8')==='1'}catch(e){return IN8_LIVE}}
 const KW8=[[/serving|plate|pot|pan\b/i,'kitchen2'],[/studio/i,'bedside'],[/apartment|condo/i,'city'],[/^\s*house\s*$/i,'house'],[/home help|nanny|babysit/i,'clean2'],[/elder|care/i,'bedside'],[/kitchen|cook|caf|restaurant/i,'kitchen'],[/shop|store|cashier/i,'store'],[/factory|warehouse/i,'tools'],[/driv|deliver/i,'trip'],[/garden/i,'house'],[/clean/i,'clean'],[/home help|nanny|babysit/i,'clean2'],
   [/room wanted|room|flat|home|rent|landlord|agent/i,'room'],[/player|league|team|match|sport/i,'league'],[/party|catering|birthday/i,'catering'],[/quote|price|movers|moving/i,'boxes2'],[/tax/i,'docs'],[/visa|immigration/i,'passport'],[/insur/i,'insure'],
