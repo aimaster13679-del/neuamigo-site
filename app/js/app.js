@@ -5453,7 +5453,8 @@ Object.assign(P15V,{search:search15v,create:create15v});
 const V6_LIVE = false;
 function T6(){try{return localStorage.getItem('nm.p15v6t')||'A'}catch(e){return 'A'}}
 function V6(){try{return V6_LIVE||localStorage.getItem('nm.p15v6')==='1'}catch(e){return V6_LIVE}}
-const img6=(p,alt)=>`<span class="x6-ph"><img src="img/p15/${p}.webp" alt="${esc(alt||'')}" loading="lazy" decoding="async"></span>`;
+const P1617=window.P1617||{p16:['room','house','office','boxes','tools','store','docs','catering','table','league','stadium'],p17:['passport','clean','clean2','hiring','jobsnews','resume','kitchen','coffee','mic','garage','saletags','rentsign','boxes2','boxes3','calc','expert','insure','bedside','kitchen2']};
+const img6=(p,alt)=>`<span class="x6-ph"><img src="img/${P1617.p17.includes(p)?'p17':P1617.p16.includes(p)?'p16':'p15'}/${p}.webp" alt="${esc(alt||'')}" loading="lazy" decoding="async"></span>`;
 const F6={home:['room','Find a Home','Rooms, flats and roommates','rooms'],job:['office','Find a Job','Pay and hours on every job','jobs'],quote:['boxes','Get 5 Quotes','Moving, cleaning, tax, repairs','ask:service'],
   expert:['docs','Find an Expert','Visa, tax and insurance advisers','experts'],sell:['sofa','Buy & Sell Used','From people moving out','sale'],parents:['plane','Flight Helper','Someone on your parents\' flight','buddy'],
   events:['hall','Events','Meetups, matches, festivals','ev15'],club:['table','Weekend Club','Members book first','club'],friends:['table','Meet New Friends','Dinners, walks and games','meetups'],
@@ -5489,7 +5490,7 @@ function events6(){const d=P15.d||{};return p15wrap(top6()+`<h1 class="x6-h1">Ev
   `<button class="x6-club" data-a="p15open" data-v="club">${img6('hall')}<span class="x6-cb"><small>WEEKEND CLUB</small><b>${d.club?'You are a member':'Big weekend nights, members first'}</b><span>${d.club?'Book before everyone, pick your seat':'No booking fee · book 48 hours early'}</span><em>${d.club?'Open':'Join'}</em></span></button>`+
   week6()+(T6()==='C'?bento6(['friends','watch','fest','trip','league']):list6(['friends','watch','fest','trip','league']))+`<button class="x6-wide" data-a="p15open" data-v="ask:player">No team yet? <b>Find me a team →</b></button>`)}
 /* one question per screen for "Get 5 Quotes" */
-const Q6=[{k:'cat',q:'What do you need?',o:[['Movers','Moving house','boxes'],['Cleaning','Home cleaning','room'],['Tax','Tax filing','docs'],['Insurance','Insurance','keys'],['Small jobs','Repairs & fixes','tools'],['Immigration','Visa help','plane']]},
+const Q6=[{k:'cat',q:'What do you need?',o:[['Movers','Moving house','boxes'],['Cleaning','Home cleaning','clean'],['Tax','Tax filing','docs'],['Insurance','Insurance','insure'],['Small jobs','Repairs & fixes','tools'],['Immigration','Visa help','passport']]},
   {k:'what',q:'How big is the job?',o:[['Room','A room'],['1-bed','1 bedroom'],['2-bed','2 bedrooms'],['House','A house']]},
   {k:'when',q:'When?',o:[['This week','This week'],['next','Next weekend'],['Flexible','I\'m flexible']]},
   {k:'dist',q:'How far?',o:[['Same city','Same city'],['Other city','Another city']]}];
@@ -5594,7 +5595,7 @@ function post7(){if(!V6())return;const vk=S.tab+'|'+(P15.v||''),same=vk===VK7;VK
 /* v8 "Zepto style" (his reference app, 12 Nov 2026): colour header that changes per section tab,
    rolling search, dense picture tiles, rails with price + one button, banners. No icons, no circles.
    Mock only: localStorage nm.p15v8 = '1' until his ok. */
-const V8_LIVE=false;
+const V8_LIVE=true;
 function V8(){try{return V8_LIVE||localStorage.getItem('nm.p15v8')==='1'}catch(e){return V8_LIVE}}
 {const _v6=V6;V6=function(){return V8()||_v6()}}
 const ZT8=[['all','All','city','#0F52BA','#0A3A85'],['homes','Homes','house','#0F52BA','#0A3A85'],['jobs','Jobs','office','#0F52BA','#0A3A85'],
