@@ -2731,3 +2731,5 @@ html.p15v8:not(.gl-lt) .z8-cg>span .z8-cut{background:color-mix(in srgb,var(--t)
 html.p15v8 .z8-ban{background:color-mix(in srgb,#0F52BA 7%,var(--z8card))!important;border-color:color-mix(in srgb,#0F52BA 20%,transparent)!important}
 html.p15v8 .z8-head::before{content:"";position:absolute;inset:auto auto -40% -15%;width:60%;aspect-ratio:1;background:rgba(120,170,255,.16);transform:rotate(-14deg);border-radius:48px;pointer-events:none}
 @media (prefers-reduced-motion:reduce){.z9-ph.big .z8-ph,.z8-float .z9-ph{animation:none}}
+/* no blinking: same view drawn again stays still */
+html.nm-same .z8-body,html.nm-same .z8-tile,html.nm-same .z8-col,html.nm-same .x6-bt,html.nm-same .x6-today,html.nm-same .x6-row,html.nm-same .p15-pt,html.nm-same .x7-st,html.nm-same .x6-ans button,html.nm-same .x6-picks button,html.nm-same .z8-tabs button.on::after,html.nm-same .p15in-f,html.nm-same .p15in-b,html.nm-same .p15in-t{animation:none!important}

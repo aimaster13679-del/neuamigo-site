@@ -5589,7 +5589,7 @@ function post7(){if(!V6())return;const vk=S.tab+'|'+(P15.v||''),same=vk===VK7;VK
   const vt=(f)=>function(el){if(!V6()||!document.startViewTransition||matchMedia('(prefers-reduced-motion: reduce)').matches)return f.apply(this,arguments);
     const ph=el&&el.closest&&el.closest('button')&&el.closest('button').querySelector('.x6-ph');if(ph)ph.style.viewTransitionName='x7hero';
     const a=arguments,t=this;document.startViewTransition(()=>{const r=f.apply(t,a);const n=document.querySelector('#main .x6-ph, #main .p15-ph, #main img');if(ph)ph.style.viewTransitionName='';if(n&&ph)n.style.viewTransitionName='x7hero';return r});};
-  A.p15open=vt(A.p15open);A.tab=vt(A.tab);
+  /* page morph switched off 12 Nov 2026: it doubled with the page slide and looked like blinking */
 })();
 
 /* v8 "Zepto style" (his reference app, 12 Nov 2026): colour header that changes per section tab,
@@ -5602,7 +5602,7 @@ const ZT8=[['all','All','city','#0F52BA','#0A3A85'],['homes','Homes','house','#0
   ['help','Help','tools','#0F52BA','#0A3A85'],['events','Events','hall','#0F52BA','#0A3A85'],['sale','Sale','saletags','#0F52BA','#0A3A85']];
 const P16=["room","house","office","boxes","tools","store","docs","catering","table","league","stadium"];
 const P17=["passport","clean","clean2","hiring","jobsnews","resume","kitchen","coffee","mic","garage","saletags","rentsign","boxes2","boxes3","calc","expert","insure","bedside","kitchen2"];
-const ph8=(p)=>`<span class="z8-ph"><img src="img/${P17.includes(p)?"p17":P16.includes(p)?"p16":"p15"}/${p}.webp" alt="" loading="lazy" decoding="async"></span>`;
+const ph8=(p)=>`<span class="z8-ph"><img src="img/${P17.includes(p)?"p17":P16.includes(p)?"p16":"p15"}/${p}.webp" alt=""></span>`;
 const zt8=()=>P15.z8||'all';
 function zgo8(v){return v==='ev15'?'data-a="tab" data-k="ev15"':`data-a="p15open" data-v="${v}"`}
 /* tiles: [label, photo, view, quote-category] */
@@ -5639,7 +5639,8 @@ function zcol8(t){const l=ZCOL8[t]||[];if(!l.length)return '';return `<div class
 function zv8(v){return v.startsWith('q:')?`data-a="z8q" data-c="${esc(v.slice(2))}"`:zgo8(v)}
 function zbn8(list){return `<div class="z8-bn${list.length===1?' one':''}">${list.map(([v,o,t,s,c,p],i)=>`<button class="z8-ban" ${zgo8(v)} style="--i:${i}"><span class="z8-bt"><small>${esc(o)}</small><b>${esc(t)}</b><span>${esc(s)}</span><em>${esc(c)} →</em></span>${ZBC8[v]?cut8(ZBC8[v],'big'):ph8(p)}</button>`).join('')}</div>`}
 function zgrid8(list){return `<div class="z8-grid c${list.length%4===0?4:3}">${list.map(([l,p,v],i)=>`<button class="z8-tile" ${zv8(v)} style="--i:${i};--t:${TINT8[i%8]}">${ph8(p)}<b>${esc(l)}</b></button>`).join('')}</div>`}
-function zdata8(rpc,key,args){const c=P15.z8d=P15.z8d||{};if(c[key]===undefined){c[key]=null;API.rpc(rpc,args||{}).then(r=>{c[key]=r||[];render()}).catch(()=>{c[key]=[]})}return c[key]||[]}
+let RR8=null;function rr8(){clearTimeout(RR8);RR8=setTimeout(()=>render(),80)}
+function zdata8(rpc,key,args){const c=P15.z8d=P15.z8d||{};if(c[key]===undefined){c[key]=null;API.rpc(rpc,args||{}).then(r=>{c[key]=r||[];rr8()}).catch(()=>{c[key]=[]})}return c[key]||[]}
 function zrail8(title,cards,more){if(!cards.length)return '';return `<div class="z8-sec"><b>${esc(title)}</b>${more?`<button ${zgo8(more)}>See all →</button>`:''}</div><div class="z8-rail">${cards.join('')}</div>`}
 const RC8={table:'lantern',stadium:'balls',lantern:'lantern',trip:'van',league:'ball',hall:'lantern',office:'laptop',store:'laptop',catering:'laptop',sofa:'chair',boxes:'boxes'};
 const zcard8=(go,p,t,sub,price,btn)=>`<div class="z8-card">${`<button class="z8-cimg" ${go} style="--t:${TINT8[(t.length)%8]}">${RC8[p]?cut8(RC8[p]):ph8(p)}</button>`}<b>${esc(t)}</b><small>${esc(sub)}</small><div class="z8-cf"><span>${price}</span><button ${go}>${esc(btn)}</button></div></div>`;
@@ -5665,6 +5666,15 @@ function zpage8(){const t=zt8(),T=ZT8.find(x=>x[0]===t)||ZT8[0],me=S.me||{},c=me
     z8q(el){const cat=el.dataset.c;A.p15open({dataset:{v:'ask:service'}});setTimeout(()=>{P15.q={k:'service',cat};P15.qs=1;render()},140)}});
   const _r=render;render=function(){try{const d=document.documentElement,on=V8();d.classList.toggle('p15v8',on);if(on){const T=ZT8.find(x=>x[0]===zt8())||ZT8[0];d.style.setProperty('--zh',T[3]);d.style.setProperty('--zh2',T[4]);['A','B','C'].forEach(x=>d.classList.toggle('x6t-'+x,x==='A'))}}catch(e){}return _r.apply(this,arguments)};
 })();
+
+/* no blinking (12 Nov 2026): a screen that is drawn again for the same view keeps still,
+   and running animations carry on from where they were instead of starting over */
+(function(){let VK='';const T0=Date.now();
+  const _r=render;render=function(){const r=_r.apply(this,arguments);try{
+    const vk=S.screen+'|'+S.tab+'|'+(P15.v||'')+'|'+(P15.z8||'')+'|'+(P15.qs||''),d=document.documentElement;
+    d.classList.toggle('nm-same',vk===VK);VK=vk;
+    const ms=Date.now()-T0;document.querySelectorAll('.z8-roll>span,.v5-roll>span,.x6-roll>span,.z9-ph.big .z8-ph,.z8-float .z9-ph').forEach(e=>e.style.animationDelay='-'+ms+'ms');
+  }catch(e){}return r}})();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
