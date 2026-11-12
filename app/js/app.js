@@ -5720,7 +5720,7 @@ function in8(){if(!IN8())return;const m=document.querySelector('#main');if(!m||m
    Netflix + top event apps idea, our own look: "What do you need right now?" chooser, a home with ONE big
    thing on top and clean rows, poster-style events, a new welcome screen, nav Home / Homes / Jobs / Events / Me.
    Photos always whole (3:2), no icons, no round shapes, sapphire + gold, light and dark. Real data only. */
-const C9_LIVE=false;
+const C9_LIVE=true;
 function C9(){try{return C9_LIVE||localStorage.getItem('nm.c9')==='1'}catch(e){return C9_LIVE}}
 const c9p=p=>`img/${P17.includes(p)?'p17':P16.includes(p)?'p16':'p15'}/${p}.webp`;
 const c9i=(p,url)=>`<span class="c9-ph"><img src="${esc(url||c9p(p))}" alt="" decoding="sync"></span>`;
@@ -5763,11 +5763,11 @@ function c9home(){const c=c9city(),need=c9need()||['home','work','people','help'
   const more=c9row('More for your move','',c9rail([['expert','Ask an expert','experts'],['saletags','Buy used items','sale'],['plane','Travel buddy','buddy'],['table','Weekend Club','club']].map(([p,t,v])=>`<button class="c9-card s" data-a="p15open" data-v="${v}">${c9i(p)}<b>${esc(t)}</b></button>`)));
   return c9wrap(c9top()+hero+picked+order.map(k=>R[k]).join('')+more)}
 /* ---------- events ---------- */
-function c9events(){const c=c9city(),ev=zdata8('events15','ev',{k:'',cty:c}),d=P15.c9d||'wk',k=P15.c9k||'';
+function c9events(){const c=c9city(),ev=zdata8('events15','ev',{k:'',cty:c}),k=P15.c9k||'';let d=P15.c9d;
   const now=new Date(),day=x=>new Date(x).toDateString();
   const days=[...new Set(ev.filter(e=>new Date(e.startsAt)>now).map(e=>day(e.startsAt)))].slice(0,5);
   const wkEnd=(()=>{const t=new Date(now);t.setDate(t.getDate()+((7-t.getDay())%7));t.setHours(23,59);return t})();
-  let l=ev.filter(e=>new Date(e.startsAt)>now-3*36e5);
+  let l=ev.filter(e=>new Date(e.startsAt)>now-3*36e5);if(!d)d=l.some(e=>new Date(e.startsAt)<=wkEnd)?'wk':'all';
   if(d==='wk')l=l.filter(e=>new Date(e.startsAt)<=wkEnd);else if(d!=='all')l=l.filter(e=>day(e.startsAt)===d);
   if(k)l=l.filter(e=>e.kind===k);l.sort((a,b)=>new Date(a.startsAt)-new Date(b.startsAt));
   const lab=s=>new Date(s).toLocaleDateString(RM_I18N.locale,{weekday:'short',day:'numeric'});
