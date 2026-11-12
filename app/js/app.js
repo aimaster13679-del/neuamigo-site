@@ -6073,6 +6073,13 @@ document.addEventListener('input',e=>{if(e.target&&e.target.id==='c12dq'){P15.c1
       try{await load15()}catch(e){}P15.z8d={};render()},
     c12citych(){try{localStorage.removeItem('nm.dest')}catch(e){}P15.c12q='';render()}});
 })();
+/* Search in the same clean look (his video 12 Nov 17:39: giant photos, words squeezed letter by letter in a thin column) */
+function c12search(){const q=(P15.sq||'').trim().toLowerCase(),r=q?SRCH15.filter(x=>(x[0]+' '+x[1]+' '+x[4]).toLowerCase().split(/\s+/).some(w=>w.startsWith(q))||(x[0]+' '+x[4]).toLowerCase().includes(q)):SRCH15.slice(0,8);
+  const PM={rooms:'room','ask:room':'bedside',jobs:'office',referral:'hiring','ask:service':'boxes2',experts:'passport',sale:'sofa',buddy:'plane',club:'night',ev15:'stadium',tickets:'ticket'};const ph=x=>{if(PM[x[3]])return PM[x[3]];const p=kw8(x[0]+' '+x[1],'');return p&&p!=='-'?p:'keys'};
+  return c9wrap(c9back('Search')+`<div class="c9-in"><input id="v5-q" class="c12-q2" type="search" placeholder="Homes, jobs, movers, visa help…" value="${esc(P15.sq||'')}" autocomplete="off" enterkeyhint="search" aria-label="Search">
+   ${q?'':'<div class="c9-rh"><h2>Popular</h2></div>'}${r.length?r.map(x=>`<button class="c9-pan c10-sw" data-a="p15open" data-v="${x[3]}">${c9i(ph(x))}<span><b>${esc(x[0])}</b><small>${esc(x[1])}</small></span></button>`).join('')
+    :'<div class="c9-pan c9-empty"><b>Nothing found</b><small>Try "room", "job", "movers" or "visa"</small></div>'}</div>`)}
+(function(){const _s=P15V.search;P15V.search=function(){return C12()&&C9()?c12search():_s.apply(this,arguments)}})();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
