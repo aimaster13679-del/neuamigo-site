@@ -5479,7 +5479,7 @@ function week6(){const key='ev:'+((S.me||{}).city||''),l=(P15.v6ev||{})[key];
   return `<div class="x6-sec"><b>This weekend</b><button data-a="tab" data-k="ev15">See all</button></div><div class="x6-rail">${ev.length?ev.map(e=>`<button class="x6-ev" data-a="p15open" data-v="evd:${e.id}">${img6(PH[e.kind]||'hall')}<span class="x6-eb"><small>${esc(evWhen(e))}</small><b>${esc(e.title)}</b><span>${e.price?money(e.price,e.currency):'No ticket price'} · ${e.left} left</span></span></button>`).join(''):
     `<button class="x6-ev" data-a="p15open" data-v="host">${img6('hall')}<span class="x6-eb"><small>No events yet in ${esc((S.me||{}).city||'your city')}</small><b>Host the first one</b><span>Your event, your ticket price</span></span></button>`}</div>`}
 function list6(keys,start){return `<div class="x6-list">${keys.map((k,i)=>`<button class="x6-row" ${go6(k)} style="--i:${i}"><span class="x6-n">${String((start||1)+i).padStart(2,'0')}</span><span class="x6-rt"><b>${esc(F6[k][1])}</b><small>${esc(F6[k][2])}</small></span>${img6(F6[k][0])}</button>`).join('')}</div>`}
-const CB6={home:['#2B59FF','#fff'],job:['#FF6B2C','#fff'],quote:['#B8F23A','#10140A'],expert:['#FF5FA2','#fff'],sell:['#12B886','#fff'],parents:['#00B3C7','#fff'],events:['#FFC93C','#1A1405'],club:['#15130F','#fff'],
+const CB6={home:['#2B59FF','#fff'],job:['#FF6B2C','#fff'],quote:['#B8F23A','#10140A'],expert:['#FF5FA2','#fff'],sell:['#12B886','#fff'],parents:['#00B3C7','#fff'],events:['#5B9BFF','#1A1405'],club:['#15130F','#fff'],
   friends:['#FF5FA2','#fff'],watch:['#2B59FF','#fff'],fest:['#FF6B2C','#fff'],trip:['#12B886','#fff'],league:['#B8F23A','#10140A']};
 function bento6(keys){return `<div class="x6-bento">${keys.map((k,i)=>{const c=CB6[k]||['#15130F','#fff'];return `<button class="x6-bt${i===0?' big':''}" ${go6(k)} style="--bg:${c[0]};--fg:${c[1]};--i:${i}">${img6(F6[k][0])}<b>${esc(F6[k][1])}</b><small>${esc(F6[k][2])}</small></button>`}).join('')}</div>`}
 function home6(){const me=S.me||{};return p15wrap(top6()+`<h1 class="x6-h1">${esc(hi6())}${me.name?', '+esc(me.name.split(' ')[0]):''}.<br><span>What do you need today?</span></h1>`+search6()+
@@ -5714,6 +5714,96 @@ function in8(){if(!IN8())return;const m=document.querySelector('#main');if(!m||m
   function fix(e){if(!e||e._na8)return;e._na8=1;const pb=e.querySelector('.pb');if(pb)pb.innerHTML=CASE();
     let was=false;new MutationObserver(()=>{const g=e.classList.contains('go');if(was&&!g)chip();was=g}).observe(e,{attributes:true,attributeFilter:['class']})}
   new MutationObserver(()=>fix(document.getElementById('nm-ptr'))).observe(document.body,{childList:true});
+})();
+
+/* v9 "Cinema" design (his ok 12 Nov 2026 12:47; mock handoff/mocks/na-cinema-v1):
+   Netflix + top event apps idea, our own look: "What do you need right now?" chooser, a home with ONE big
+   thing on top and clean rows, poster-style events, a new welcome screen, nav Home / Homes / Jobs / Events / Me.
+   Photos always whole (3:2), no icons, no round shapes, sapphire + gold, light and dark. Real data only. */
+const C9_LIVE=false;
+function C9(){try{return C9_LIVE||localStorage.getItem('nm.c9')==='1'}catch(e){return C9_LIVE}}
+const c9p=p=>`img/${P17.includes(p)?'p17':P16.includes(p)?'p16':'p15'}/${p}.webp`;
+const c9i=(p,url)=>`<span class="c9-ph"><img src="${esc(url||c9p(p))}" alt="" decoding="sync"></span>`;
+const C9EV={meetup:'coffee',watch:'stadium',festival:'catering',trip:'trip',league:'league'};
+const C9KW=[[/cook|kitchen|food|dinner|potluck|brunch/i,'catering'],[/bingo|game|quiz|trivia|night/i,'hall'],[/football|soccer|league|cricket|basket/i,'league'],[/watch|match|final|screening/i,'stadium'],[/music|karaoke|open mic|concert|dance/i,'mic'],[/coffee|meet|friends|walk/i,'coffee'],[/trip|hike|tour|day out/i,'trip'],[/culture|festival|fair/i,'catering']];
+const c9evp=e=>{const t=e.title||'';for(const [r,p] of C9KW)if(r.test(t))return p;return C9EV[e.kind]||'hall'};
+const c9jobp=j=>j.cat==='Shop helper'?'store':j.cat==='Cooking'||j.cat==='Kitchen'?'kitchen':j.cat==='Elder care'?'bedside':'office';
+const C9NEED=[['home','A place to live','Rooms, flats, houses','keys'],['work','Work','Jobs near you','hiring'],['people','People & events','Things to do this week','coffee'],['help','Help with things','Movers, tax, repairs','tools']];
+function c9need(){try{const v=JSON.parse(localStorage.getItem('nm.need')||'null');return Array.isArray(v)?v:null}catch(e){return null}}
+function c9city(){return (S.me||{}).city||''}
+function c9top(){const c=c9city();return `<div class="c9-top"><div class="c9-brand">${NA_CASE('c9lg')}<span><b>NeuAmigo</b>${c?`<small>in <em>${esc(c)}</em></small>`:''}</span></div><div class="c9-acts"><button class="c9-pill" data-a="p15open" data-v="search">Search</button><button class="c9-pill au" data-a="p15open" data-v="create">Post</button></div></div>`}
+function c9wrap(inner){return p15wrap(`<div class="c9">${inner}<div class="c9-end"></div></div>`)}
+const c9row=(t,more,body)=>body?`<div class="c9-rh"><h2>${esc(t)}</h2>${more?`<button ${more}>See all</button>`:''}</div>${body}`:'';
+const c9rail=cards=>cards.length?`<div class="c9-rail">${cards.join('')}</div>`:'';
+/* ---------- chooser ---------- */
+function c9choose(){const n=P15.c9n=P15.c9n||(c9need()||[]).slice();
+  return c9wrap(`<div class="c9-chz"><div class="c9-brand">${NA_CASE('c9lg')}<span><b>NeuAmigo</b></span></div>
+   <h1 class="c9-h1">What do you need<br>right now?</h1><p class="c9-lede">Pick one or more. Your home screen shows these first.</p>
+   <div class="c9-g2">${C9NEED.map(([k,t,s,p])=>`<button class="c9-pk${n.includes(k)?' on':''}" data-a="c9pick" data-k="${k}" aria-pressed="${n.includes(k)}">${c9i(p)}<b>${esc(t)}</b><small>${esc(s)}</small>${n.includes(k)?'<em>Picked</em>':''}</button>`).join('')}</div>
+   <button class="c9-btn" data-a="c9go" ${n.length?'':'disabled'}>${n.length?`Continue · ${n.length} picked`:'Pick at least one'}</button>
+   <p class="c9-lede c9-c">You can change this any time in Me</p></div>`)}
+/* ---------- home ---------- */
+function c9home(){const c=c9city(),need=c9need()||['home','work','people','help'];
+  const ev=zdata8('events15','ev',{k:'',cty:c}),rooms=zdata8('rooms15','rooms',{maxrent:0}),jobs=zdata8('jobs15','jobs',{}),ma=zdata8('my_asks15','ma',{});
+  const up=ev.filter(e=>new Date(e.startsAt)>Date.now()-3*36e5).sort((a,b)=>new Date(a.startsAt)-new Date(b.startsAt));
+  const h=up[0];
+  const hero=h?`<div class="c9-in"><span class="c9-tag">Coming up in ${esc(c||'your city')}</span><button class="c9-hero" data-a="p15open" data-v="evd:${h.id}">${c9i(c9evp(h))}</button>
+     <h1 class="c9-h1 sm">${esc(h.title)}</h1><p class="c9-lede">${esc(evWhen(h))}${h.venue?' · '+esc(h.venue):''}${h.price?' · '+esc(money(h.price,h.currency)):''}</p>
+     <div class="c9-two"><button class="c9-btn" data-a="p15open" data-v="evd:${h.id}">${h.price?'Get tickets':'See details'}</button><button class="c9-btn g" data-a="tab" data-k="ev15">All events</button></div></div>`
+   :`<div class="c9-in"><span class="c9-tag">Start here</span><button class="c9-hero" data-a="p15open" data-v="rooms">${c9i('keys')}</button><h1 class="c9-h1 sm">Find your new home</h1><p class="c9-lede">Rooms and flats in ${esc(c||'your city')}, rent shown on every listing.</p><div class="c9-two"><button class="c9-btn" data-a="p15open" data-v="rooms">See homes</button><button class="c9-btn g" data-a="p15open" data-v="ask:room">Ask owners</button></div></div>`;
+  const a=ma.find(x=>x.status==='open');
+  const picked=a?c9row('Picked for you','',`<button class="c9-pan c9-req" data-a="p15open" data-v="myasks">${c9i('boxes')}<span><span class="c9-tag">Your request</span><b>${esc((a.data&&(a.data.need||[]).join(' + '))||'Your request')}</b><small>${a.connected&&a.connected.length?`<i class="c9-live"></i>${a.connected.length} replied`:`Sent to ${a.reached||0} businesses`}</small></span></button>`):'';
+  const R={
+   home:c9row('Homes near you','data-a="p15open" data-v="rooms"',c9rail(rooms.slice(0,8).map(r=>`<button class="c9-card" data-a="p15open" data-v="rooms">${c9i('room',r.photos&&r.photos[0]&&PC15()?phUrl15(r.photos[0]):'')}<span class="c9-pr">${esc(money(r.rent,r.currency))}<small> /month</small></span><b>${esc(r.title)}</b><small>${esc(r.area||'')}</small></button>`))),
+   people:(up.length>=3?c9row('Popular this week','data-a="tab" data-k="ev15"',`<div class="c9-rail t10">${up.slice().sort((x,y)=>((y.seats||0)-(y.left||0))-((x.seats||0)-(x.left||0))).slice(0,10).map((e,i)=>`<button class="c9-t10" data-a="p15open" data-v="evd:${e.id}"><i>${i+1}</i>${c9i(c9evp(e))}</button>`).join('')}</div>`):'')+
+     c9row('This week','data-a="tab" data-k="ev15"',c9rail(up.slice(h?1:0,9).map(e=>`<button class="c9-card" data-a="p15open" data-v="evd:${e.id}">${c9i(c9evp(e))}<span class="c9-pr">${e.price?esc(money(e.price,e.currency)):'No ticket'}</span><b>${esc(e.title)}</b><small>${esc(evWhen(e))}</small></button>`))),
+   work:c9row('Jobs near you','data-a="p15open" data-v="jobs"',c9rail(jobs.slice(0,8).map(j=>`<button class="c9-card" data-a="p15open" data-v="job:${j.id}">${c9i(c9jobp(j))}<span class="c9-pr">${esc(money(j.pay,j.currency))}<small> /hour</small></span><b>${esc(j.title)}</b><small>${esc(j.area||'')}${j.hours?' · '+j.hours+' h/week':''}</small></button>`))),
+   help:c9row('Get 5 prices in one go','data-a="tab" data-k="settle"',c9rail([['boxes','Movers'],['clean2','Cleaning'],['docs','Tax filing'],['tools','Repairs'],['insure','Insurance'],['passport','Visa help']].map(([p,t])=>`<button class="c9-card s" data-a="z8q" data-c="${t==='Repairs'?'Small jobs':t==='Tax filing'?'Tax':t==='Visa help'?'Immigration':t}">${c9i(p)}<b>${esc(t)}</b></button>`)))};
+  const order=need.concat(['home','work','people','help'].filter(k=>!need.includes(k)));
+  const more=c9row('More for your move','',c9rail([['expert','Ask an expert','experts'],['saletags','Buy used items','sale'],['plane','Travel buddy','buddy'],['table','Weekend Club','club']].map(([p,t,v])=>`<button class="c9-card s" data-a="p15open" data-v="${v}">${c9i(p)}<b>${esc(t)}</b></button>`)));
+  return c9wrap(c9top()+hero+picked+order.map(k=>R[k]).join('')+more)}
+/* ---------- events ---------- */
+function c9events(){const c=c9city(),ev=zdata8('events15','ev',{k:'',cty:c}),d=P15.c9d||'wk',k=P15.c9k||'';
+  const now=new Date(),day=x=>new Date(x).toDateString();
+  const days=[...new Set(ev.filter(e=>new Date(e.startsAt)>now).map(e=>day(e.startsAt)))].slice(0,5);
+  const wkEnd=(()=>{const t=new Date(now);t.setDate(t.getDate()+((7-t.getDay())%7));t.setHours(23,59);return t})();
+  let l=ev.filter(e=>new Date(e.startsAt)>now-3*36e5);
+  if(d==='wk')l=l.filter(e=>new Date(e.startsAt)<=wkEnd);else if(d!=='all')l=l.filter(e=>day(e.startsAt)===d);
+  if(k)l=l.filter(e=>e.kind===k);l.sort((a,b)=>new Date(a.startsAt)-new Date(b.startsAt));
+  const lab=s=>new Date(s).toLocaleDateString(RM_I18N.locale,{weekday:'short',day:'numeric'});
+  const K=[['','All'],['meetup','Meetups'],['watch','Watch together'],['league','Sports'],['festival','Culture'],['trip','Trips']];
+  return c9wrap(c9top()+`<div class="c9-in"><h1 class="c9-h1">Events</h1></div>
+   <div class="c9-chips">${[['wk','This weekend'],['all','All dates']].concat(days.map(x=>[x,lab(x)])).map(([v,t])=>`<button class="c9-chip${d===v?' on':''}" data-a="c9d" data-k="${esc(v)}">${esc(t)}</button>`).join('')}</div>
+   <div class="c9-chips">${K.map(([v,t])=>`<button class="c9-chip k${k===v?' on':''}" data-a="c9k" data-k="${v}">${esc(t)}</button>`).join('')}</div>
+   <div class="c9-in">${l.length?l.map(e=>{const dt=new Date(e.startsAt);return `<button class="c9-ev" data-a="p15open" data-v="evd:${e.id}">${c9i(c9evp(e))}<span class="c9-evb"><span class="c9-dt"><small>${esc(dt.toLocaleDateString(RM_I18N.locale,{weekday:'short'}).toUpperCase())}</small><b>${dt.getDate()}</b></span><span><b class="c9-h2">${esc(e.title)}</b><small>${esc(dt.toLocaleTimeString(RM_I18N.locale,{hour:'numeric',minute:'2-digit'}))}${e.venue?' · '+esc(e.venue):''}</small><span class="c9-evp">${e.price?esc(money(e.price,e.currency)):'No ticket price'}${e.seats?` <small>· ${e.left} of ${e.seats} seats left</small>`:''}</span></span></span></button>`}).join('')
+     :`<div class="c9-pan c9-empty">${c9i('hall')}<b>No events for this choice yet</b><small>Try "All dates", or host one yourself.</small><button class="c9-btn g" data-a="p15open" data-v="newev">Host an event</button></div>`}</div>`)}
+/* ---------- welcome (first screen before sign-in) ---------- */
+function c9welcome(){const L=(LANGS_ALL.find(x=>x[0]===RM_I18N.lang)||LANGS_ALL[0])[1];
+  return `<div class="scroll c9w"><div class="c9"><div class="c9-top"><div class="c9-brand">${NA_CASE('c9lg')}<span><b>NeuAmigo</b></span></div><button class="c9-pill notr" data-a="lang">${esc(L)}</button></div>
+   <div class="c9-in"><h1 class="c9-h1 xl">Everything you need<br>in your new country.</h1><p class="c9-lede">One app for people who moved to a new country, from anywhere in the world.</p>
+   <div class="c9-g2 w">${C9NEED.map(([k,t,s,p])=>`<div class="c9-pk">${c9i(p)}<b>${esc(t)}</b><small>${esc(s)}</small></div>`).join('')}</div>
+   <button class="c9-btn" data-a="start">Create my account</button><button class="c9-btn g" data-a="login">I already have an account</button>
+   <p class="c9-note">By continuing you agree to our <button class="link" data-a="legal" data-k="terms">Terms</button> and <button class="link" data-a="legal" data-k="privacy">Privacy Policy</button>. 18+ only.</p></div></div></div>`}
+(function(){
+  const _h=home15;home15=function(){if(!C9())return _h();return c9need()||P15.c9chz===false?c9home():c9choose()};
+  const _e=events15;events15=function(){return C9()?c9events():_e()};
+  const _w=renderWelcome;renderWelcome=function(){return C9()?c9welcome():_w.apply(this,arguments)};
+  if(typeof renderWelcomeC3==='function'){const _w3=renderWelcomeC3;renderWelcomeC3=function(){return C9()?c9welcome():_w3.apply(this,arguments)}}
+  Object.assign(A,{
+    c9pick(el){const n=P15.c9n=P15.c9n||[],k=el.dataset.k,i=n.indexOf(k);if(i<0)n.push(k);else n.splice(i,1);render()},
+    c9go(){const n=P15.c9n||[];if(!n.length)return;try{localStorage.setItem('nm.need',JSON.stringify(n))}catch(e){}P15.c9chz=false;render();try{document.querySelector('#main').scrollTo(0,0)}catch(e){}},
+    c9redo(){P15.c9n=(c9need()||[]).slice();try{localStorage.removeItem('nm.need')}catch(e){}P15.v=null;S.tab='matches';render()},
+    c9d(el){P15.c9d=el.dataset.k;render()},c9k(el){P15.c9k=el.dataset.k;render()}});
+  const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);const d=document.documentElement,on=C9();d.classList.toggle('c9on',on);if(!on)return;
+    try{const lt=d.classList.contains('gl-lt'),m=document.querySelector('meta[name=theme-color]');if(m)m.setAttribute('content',lt?'#F5F6FA':'#070B18');d.classList.remove('z8home')}catch(e){}
+    const nav=document.querySelector('.navwrap .nav');if(!nav||!(typeof P15on==='function'&&P15on())||P15.mat)return;
+    const v=String(P15.v||''),h=v.split(':')[0];
+    const cur=['rooms','room','postroom','myroom'].includes(h)||v==='ask:room'?'homes':['jobs','job','workprof','postjob','jobapps','hire','ready','safejobs'].includes(h)?'jobs':
+      ['evd','club','seats','tickets','credits','slots','meetups','watch','festival','trip','league','host','hostboard','newev','newleague','fixtures','events'].includes(h)?'ev15':
+      ['wallet','chats','chat','inbox','me','profile','settings','mytickets','points','plans','referral','biz','leads','svcleads','svcplan','expplan','adcheck','adspot','door'].includes(h)?'me':
+      v?'':(S.tab==='ev15'||S.tab==='me'?S.tab:'matches');
+    const b=(k,l,a)=>`<button ${a} class="${cur===k?'on':''}" aria-current="${cur===k?'page':'false'}"><span>${l}</span></button>`;
+    nav.className='nav x6nav c9nav';nav.innerHTML=b('matches','Home','data-a="tab" data-k="matches"')+b('homes','Homes','data-a="p15open" data-v="rooms"')+b('jobs','Jobs','data-a="p15open" data-v="jobs"')+b('ev15','Events','data-a="tab" data-k="ev15"')+b('me','Me','data-a="tab" data-k="me"')};
 })();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
