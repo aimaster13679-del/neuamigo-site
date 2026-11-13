@@ -5156,7 +5156,7 @@ if(typeof IC!=='undefined'&&!IC.truck)Object.assign(IC,{truck:'<path d="M3 7h11v
    Shown as a mock first: on only with localStorage nm.p15pc = '1' until he says ok (then PC15_LIVE = true).
    Photos show WHOLE in their own shape (height fixed, width follows the photo; never cropped). Chat only between people already connected;
    phone numbers stay private; anyone can report a chat. */
-const PC15_LIVE = false;
+const PC15_LIVE = true; /* his ok 13 Nov 2026 09:23 */
 function PC15(){try{return PC15_LIVE||localStorage.getItem('nm.p15pc')==='1'}catch(e){return PC15_LIVE}}
 const phUrl15=p=>/^(data:|blob:|https?:)/.test(p)?p:(window.RM_CONFIG&&RM_CONFIG.url||'')+'/storage/v1/object/public/items/'+p.split('/').map(encodeURIComponent).join('/');
 function phStrip15(l){l=l||[];if(!PC15()||!l.length)return '';return `<div class="p15-phs" role="list">${l.map((p,i)=>`<span class="p15-phw" role="listitem"><img src="${esc(phUrl15(p))}" alt="Photo ${i+1} of ${l.length}" loading="lazy" decoding="async"></span>`).join('')}</div>`}
