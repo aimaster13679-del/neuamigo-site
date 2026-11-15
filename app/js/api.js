@@ -89,7 +89,7 @@ window.RM_API = (function () {
     var body = opts.body;
     if (body !== undefined && !(body instanceof Blob)) { h['Content-Type'] = 'application/json'; body = JSON.stringify(body); }
     var r;
-    try { r = await fetch(C.url + path, { method: opts.method || 'GET', headers: h, body: body }); }
+    try { r = await tFetch(C.url + path, { method: opts.method || 'GET', headers: h, body: body }, body instanceof Blob ? 180000 : 20000); }
     catch (e) { throw new ApiError('network', friendly('network')); }
     if (r.status === 401 && opts.auth !== false && ses && !opts.retried) {
       var ok = await refresh(true);
@@ -106,15 +106,23 @@ window.RM_API = (function () {
   async function ensureFresh() {
     if (ses && ses.refresh_token && ses.expires_at && ses.expires_at - Date.now() < 90 * 1000) await refresh(false);
   }
+  /* Never wait forever (15 Nov 2026, 'app khul hi nahi rahi'): a request that gets no answer is stopped after a
+     while and counts as a network problem, so the app shows saved data or a Try again card instead of hanging. */
+  function tFetch(url, o, ms) {
+    if (typeof AbortController === 'undefined') return fetch(url, o);
+    var ac = new AbortController(), t = setTimeout(function () { ac.abort(); }, ms || 20000);
+    o = Object.assign({}, o, { signal: ac.signal });
+    return fetch(url, o).finally(function () { clearTimeout(t); });
+  }
   function refresh(force) {
     if (!ses || !ses.refresh_token) return Promise.resolve(false);
     if (refreshing) return refreshing;
     refreshing = (async function () {
       try {
-        var r = await fetch(C.url + '/auth/v1/token?grant_type=refresh_token', {
+        var r = await tFetch(C.url + '/auth/v1/token?grant_type=refresh_token', {
           method: 'POST', headers: { apikey: C.key, 'Content-Type': 'application/json' },
           body: JSON.stringify({ refresh_token: ses.refresh_token })
-        });
+        }, 15000);
         var d = await parse(r);
         if (r.ok && d && d.access_token) { saveSes(withExpiry(d)); return true; }
         if (r.status >= 400 && r.status < 500) saveSes(null);

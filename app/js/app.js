@@ -705,7 +705,7 @@ function evArt(e,hero){const up=hero?'0':'-40';const g={family:['#FFF1B0','#9FE6
   else [[262,214],[302,208],[342,214]].forEach(([x,y0])=>{const y=y0+(+up);s+=`<circle cx="${x}" cy="${y-12}" r="16" fill="url(#${id}l)"/><path d="M${x-16} ${y}q16 16 32 0z" fill="#FFE1A8"/><path d="M${x} ${y-4}c-5-6-1-14 0-18 1 4 5 12 0 18z" fill="#FFF6D8"/>`});
   return s+'</svg>'}
 /* ---------- Boot and welcome ---------- */
-function renderBoot(){return `<div class="boot"><div class="brand"><svg class="mark" viewBox="0 0 32 22" aria-hidden="true"><path class="c1" d="M11.60 18.59c-0.82 0 -8.2 -4.76 -8.2 -10.25 0 -2.71 2.13 -4.92 4.76 -4.92 1.48 0 2.71 0.74 3.44 1.89 0.74 -1.15 1.97 -1.89 3.44 -1.89 2.62 0 4.76 2.21 4.76 4.92 0 5.49 -7.38 10.25 -8.2 10.25z"/><path class="c2" d="M20.40 18.59c-0.82 0 -8.2 -4.76 -8.2 -10.25 0 -2.71 2.13 -4.92 4.76 -4.92 1.48 0 2.71 0.74 3.44 1.89 0.74 -1.15 1.97 -1.89 3.44 -1.89 2.62 0 4.76 2.21 4.76 4.92 0 5.49 -7.38 10.25 -8.2 10.25z"/></svg>NeuMarry</div>${S.bootError?`<p class="hint">${esc(S.bootError)}</p><button class="btn primary" data-a="retryBoot">Try again</button>`:spinner('Opening NeuMarry')}</div>`}
+function renderBoot(){return `<div class="boot"><div class="brand"><img class="mark" src="img/icon-192.png" alt="" style="width:40px;height:40px;border-radius:11px">NeuMarry</div>${S.bootError?`<p class="hint">${esc(S.bootError)}</p><button class="btn primary" data-a="retryBoot" style="background:#0F52BA !important;color:#fff !important;box-shadow:none">Try again</button>`:spinner('Opening NeuMarry')}</div>`}
 function renderWelcome(){
   return `<div class="scroll"><div class="welcome pad">
     <div class="wtop"><div class="brand"><svg class="mark" viewBox="0 0 32 22" aria-hidden="true"><path class="c1" d="M11.60 18.59c-0.82 0 -8.2 -4.76 -8.2 -10.25 0 -2.71 2.13 -4.92 4.76 -4.92 1.48 0 2.71 0.74 3.44 1.89 0.74 -1.15 1.97 -1.89 3.44 -1.89 2.62 0 4.76 2.21 4.76 4.92 0 5.49 -7.38 10.25 -8.2 10.25z"/><path class="c2" d="M20.40 18.59c-0.82 0 -8.2 -4.76 -8.2 -10.25 0 -2.71 2.13 -4.92 4.76 -4.92 1.48 0 2.71 0.74 3.44 1.89 0.74 -1.15 1.97 -1.89 3.44 -1.89 2.62 0 4.76 2.21 4.76 4.92 0 5.49 -7.38 10.25 -8.2 10.25z"/></svg>NeuMarry</div><button class="lang-sw notr" data-a="lang" aria-label="Language / Langue">${ic('globe')}${esc((LANGS_ALL.find(x=>x[0]===RM_I18N.lang)||LANGS_ALL[0])[1])}</button></div>
@@ -1834,8 +1834,9 @@ async function afterLogin(){
     try{const ap=(typeof naOn==='function'&&naOn())?'neuamigo':(window.NM_APP?'neumarry':'');if(ap)API.rpc('touch_app',{a:ap}).catch(()=>{})}catch(e){}  /* which app(s) a member uses (split 9 Nov 2026) */
   }catch(e){
     if(e.code==='signed_out'){cacheClear();S=fresh();S.screen='welcome';render();return}
-    if(warm&&S.screen==='app'){toast(e.code==='network'?'No internet connection. Showing what was saved on this phone.':'NeuMarry could not refresh. Pull down or try again soon.','info');return}
-    S.screen='boot';S.bootError=e.code==='network'?'No internet connection. Check your connection and try again.':'NeuMarry could not load. Please try again.';render();
+    if(warm&&S.screen==='app'){toast(e.code==='network'?'No internet connection. Showing what was saved on this phone.':(window.NM_BRAND||'NeuAmigo')+' could not refresh. Try again soon.','info');return}
+    try{const wd=document.getElementById('na-bootwd');if(wd)wd.remove()}catch(_){}
+    S.screen='boot';S.bootError=e.code==='network'?'No internet connection. Check your connection and try again.':(window.NM_BRAND||'NeuAmigo')+' could not load. Please try again.';render();
   }
 }
 async function signedOut(msg){cacheClear();view=null;sheet=null;picker=null;celebrate=null;PROFILES=[];lastMsg=0;Object.keys(URLS).forEach(k=>delete URLS[k]);S=fresh();S.screen='welcome';render();if(msg)toast(msg,'info')}
@@ -2261,7 +2262,7 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden&&S.screen==
 async function boot(){
   /* Start watchdog (15 Nov 2026, his report 'app khul hi nahi rahi'): if the app is still starting after 12 s, show
      a clear card with what it is waiting for and a Try again button, instead of an endless opening. */
-  window.__bootStage='start';setTimeout(()=>{try{if(S.screen!=='boot'&&S.loaded!==false)return;if(S.screen==='app'||S.screen==='welcome')return;
+  window.__bootStage='start';setTimeout(()=>{try{if(S.bootError)return;if(S.screen!=='boot'&&S.loaded!==false)return;if(S.screen==='app'||S.screen==='welcome')return;
     const d=document.createElement('div');d.id='na-bootwd';d.style.cssText='position:fixed;inset:auto 16px 24px;z-index:10000;background:#fff;color:#0B1226;border-radius:16px;padding:16px;box-shadow:0 8px 30px rgba(0,0,0,.25);font:15px/1.4 system-ui,sans-serif';
     d.innerHTML='<b>Still starting…</b><div style="font-size:13px;color:#555;margin:4px 0 10px">Waiting for: '+String(window.__bootStage).replace(/[<>&]/g,'')+(navigator.onLine===false?' (no internet)':'')+'</div><button style="width:100%;padding:12px;border:0;border-radius:12px;background:#0F52BA;color:#fff;font-weight:700">Try again</button>';
     d.querySelector('button').onclick=()=>location.reload();document.body.appendChild(d)}catch(e){}},12000);
