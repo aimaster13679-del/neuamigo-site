@@ -1,0 +1,2 @@
+Pexels licence: toronto.jpg = pexels 28291720 (Zhenming Wang), tacos.jpg = pexels 27588770, apartment.jpg = pexels 6527029.
+work.jpg = pexels 4402584, papers.jpg = pexels 5668469

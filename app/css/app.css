@@ -3258,3 +3258,77 @@ html.n33on .n32nav button.on img{animation:n33hop .6s cubic-bezier(.2,1.6,.4,1)}
 @media (prefers-reduced-motion:reduce){html.n33on *,html.n33on *:after{animation:none!important;transition:none!important}html.n33on .n33w{opacity:1!important;transform:none!important}.n33-snow{display:none}}
 .n33-hero p.n33-in{min-height:2.8em}
 .n33-snow i{opacity:.5}
+/* ===== part34 Arrive home (his ok 16 Nov 2026 00:00) ===== */
+@font-face{font-family:'Fraunces';src:url(../fonts/Fraunces-opsz-latin.woff2) format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:'Fraunces';src:url(../fonts/Fraunces-opsz-italic-latin.woff2) format('woff2');font-weight:100 900;font-style:italic;font-display:swap}
+html.a4on.gl-lt{--c9bg:#F7F6F2;--c9pn:#fff;--c9pn2:#EFEDE7;--c9hl:#E7E5DF}
+html.a4on.gl-lt body,html.a4on.gl-lt #main{background:#F7F6F2}
+.a4{--a4b:#0F52BA;--a4ink:var(--c9tx);--a4mute:var(--c9t2);--a4card:var(--c9pn);--a4soft:var(--c9pn2);--a4line:var(--c9hl);--a4tint:color-mix(in srgb,#0F52BA 12%,var(--c9pn));--a4sh:0 1px 2px rgba(11,16,32,.05),0 8px 24px rgba(11,16,32,.07);margin:0 -16px;padding-bottom:20px;font-family:'Plus Jakarta Sans',system-ui}
+html:not(.gl-lt) .a4{--a4sh:0 0 0 1px var(--c9hl)}
+.a4 h1,.a4 h2,.a4 h3,.a4-sig h2{font-family:'Fraunces',Georgia,serif;font-variation-settings:"opsz" 72,"SOFT" 50;letter-spacing:0}
+.a4 button{font:inherit;color:inherit;text-align:left;border:0}
+.a4-hd{display:flex;align-items:center;justify-content:space-between;padding:2px 22px 0}
+.a4-brand{display:flex;align-items:center;gap:8px;font:800 15.5px 'Plus Jakarta Sans',system-ui;color:var(--a4ink)}.a4-brand img,.a4-brand svg{width:28px;height:28px;border-radius:8px}
+.a4 .a4-plus{font:800 12.5px 'Plus Jakarta Sans',system-ui!important;color:var(--a4b)!important;background:var(--a4tint)!important;padding:8px 12px!important;border-radius:9px!important}
+.a4-greet{padding:20px 22px 0}.a4-greet small{font:800 11.5px 'Plus Jakarta Sans',system-ui;letter-spacing:1.4px;text-transform:uppercase;color:var(--a4b)}
+.a4-greet h1{font-weight:500;font-size:38px;line-height:1.04;margin:6px 0 0;color:var(--a4ink)}.a4-greet h1 em{font-style:italic;color:var(--a4b)}
+html:not(.gl-lt) .a4-greet h1 em,html:not(.gl-lt) .a4-greet small{color:#7FA6EC}
+.a4-greet p{font:500 14.5px/1.45 'Plus Jakarta Sans',system-ui;color:var(--a4mute);margin:8px 0 0;max-width:310px}
+.a4 .a4-search{display:flex!important;align-items:center;gap:12px;margin:18px 16px 0;width:calc(100% - 32px);height:58px;border-radius:16px!important;background:var(--a4card)!important;box-shadow:var(--a4sh)!important;padding:0 16px!important;color:var(--a4ink)!important}
+.a4-search b{display:block;font:700 15px 'Plus Jakarta Sans',system-ui}.a4-search b em{font-style:normal;color:var(--a4b)}html:not(.gl-lt) .a4-search b em{color:#7FA6EC}
+.a4-search small{display:block;font:600 12px 'Plus Jakarta Sans',system-ui;color:var(--a4mute)}
+.a4-sec{display:flex;justify-content:space-between;align-items:baseline;padding:28px 22px 12px}
+.a4-sec h2{font-weight:500;font-size:24px;line-height:1.1;margin:0;color:var(--a4ink)}.a4-sec p{font:600 13px 'Plus Jakarta Sans',system-ui;color:var(--a4mute);margin:3px 0 0}
+.a4-sec>button{background:none!important;padding:0!important;font:800 13px 'Plus Jakarta Sans',system-ui!important;color:var(--a4b)!important;white-space:nowrap}
+html:not(.gl-lt) .a4-sec>button{color:#7FA6EC!important}
+.a4-doors{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 16px}
+.a4 .a4-door{display:block!important;background:var(--a4card)!important;border-radius:20px!important;padding:8px 8px 12px!important;box-shadow:var(--a4sh)!important;color:var(--a4ink)!important;width:auto}
+.a4-ph,.a4-lph{display:block;width:100%;aspect-ratio:3/2;border-radius:14px;overflow:hidden}.a4-ph img,.a4-lph img{width:100%;height:100%;object-fit:cover;display:block}
+.a4-lph .c9-ph{border-radius:0;height:100%}
+.a4-t{display:flex;align-items:center;gap:7px;margin:10px 4px 0;font:800 15.5px 'Plus Jakarta Sans',system-ui}.a4-t img{width:24px;height:24px}
+.a4-door small{display:block;font:600 12px/1.35 'Plus Jakarta Sans',system-ui;color:var(--a4mute);margin:3px 4px 0}.a4-door small strong{color:var(--a4ink);font-weight:800}
+.a4-bar{display:block;height:5px;border-radius:3px;background:var(--a4soft);margin:8px 4px 0;overflow:hidden}.a4-bar i{display:block;height:100%;background:var(--a4b);border-radius:3px}
+.a4 .a4-plan{display:block!important;position:relative;margin:0 16px;width:calc(100% - 32px);border-radius:22px!important;background:#0B1020!important;color:#fff!important;padding:18px!important;overflow:hidden}
+html:not(.gl-lt) .a4 .a4-plan{background:#14254A!important}
+.a4-plan small{font:800 11.5px 'Plus Jakarta Sans',system-ui;letter-spacing:1.3px;text-transform:uppercase;color:#9DB8F0}
+.a4-plan h3{font-weight:500;font-size:24px;line-height:1.15;margin:6px 0 0;color:#fff;max-width:240px}
+.a4-p3{position:absolute;right:14px;top:12px;width:64px;transform:rotate(10deg);filter:drop-shadow(0 6px 10px rgba(0,0,0,.3))}
+.a4-pb{display:block;margin-top:12px}.a4-tr{display:block;height:6px;border-radius:3px;background:rgba(255,255,255,.14);overflow:hidden}.a4-tr i{display:block;height:100%;background:#fff;border-radius:3px}
+.a4-nx{display:flex;align-items:center;gap:12px;margin-top:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:12px}
+.a4-nx img{width:40px;height:40px}.a4-nx>span{flex:1}.a4-nx b{display:block;font:800 14.5px 'Plus Jakarta Sans',system-ui}.a4-nx small{display:block;text-transform:none;letter-spacing:0;font:600 12px 'Plus Jakarta Sans',system-ui;color:#C9D6F2}
+.a4-nx u{text-decoration:none;background:#fff;color:#0B1020;font:800 13px 'Plus Jakarta Sans',system-ui;padding:10px 14px;border-radius:11px}
+.a4 .a4-band{display:flex!important;align-items:center;gap:14px;margin:0 16px;width:calc(100% - 32px);border-radius:22px!important;background:var(--a4card)!important;box-shadow:var(--a4sh)!important;padding:16px!important;color:var(--a4ink)!important}
+.a4-band img{width:56px;height:56px;filter:drop-shadow(0 6px 10px rgba(11,16,32,.18))}.a4-band>span{flex:1}
+.a4-band small{display:block;font:800 11px 'Plus Jakarta Sans',system-ui;letter-spacing:1.2px;text-transform:uppercase;color:var(--a4b)}
+.a4-band b{display:block;font:500 19px/1.2 'Fraunces',Georgia,serif;margin-top:2px}.a4-band i{display:block;font:600 12px 'Plus Jakarta Sans',system-ui;font-style:normal;color:var(--a4mute)}
+.a4-band u,.a4-biz u{text-decoration:none;background:var(--a4b);color:#fff;font:800 13.5px 'Plus Jakarta Sans',system-ui;padding:10px 14px;border-radius:12px}
+.a4-rail{display:flex;gap:12px;padding:0 16px 6px;overflow-x:auto;scrollbar-width:none}.a4-rail::-webkit-scrollbar{display:none}
+.a4 .a4-lc{display:block!important;width:266px;flex:none;background:none!important;padding:0!important;color:var(--a4ink)!important}
+.a4-lc .a4-lph{border-radius:18px}
+.a4-tags{display:flex;gap:6px;margin:10px 2px 0;min-height:4px}.a4-tags em{font:800 10.5px 'Plus Jakarta Sans',system-ui;font-style:normal;padding:4px 7px;border-radius:6px;background:var(--a4soft)}.a4-tags em.f{background:var(--a4b);color:#fff}
+.a4-lc b{display:block;font:800 16px/1.25 'Plus Jakarta Sans',system-ui;margin:7px 2px 0}.a4-lc small{display:block;font:600 12.5px 'Plus Jakarta Sans',system-ui;color:var(--a4mute);margin:3px 2px 0}
+.a4-pr{display:block;margin:8px 2px 0;font:600 12.5px 'Plus Jakarta Sans',system-ui;color:var(--a4mute)}.a4-pr strong{font:800 20px 'Plus Jakarta Sans',system-ui;color:var(--a4ink)}
+.a4 .a4-tk{display:flex!important;margin:0 16px 12px;width:calc(100% - 32px);background:var(--a4card)!important;border-radius:18px!important;box-shadow:var(--a4sh)!important;overflow:hidden;padding:0!important;color:var(--a4ink)!important}
+.a4-dt{width:74px;flex:none;background:var(--a4tint);display:flex;flex-direction:column;align-items:center;justify-content:center;font:800 11px 'Plus Jakarta Sans',system-ui;letter-spacing:1px;color:var(--a4b);position:relative;padding:10px 0}
+html:not(.gl-lt) .a4-dt{color:#7FA6EC}
+.a4-dt b{font:500 30px/1 'Fraunces',Georgia,serif;letter-spacing:0;color:var(--a4ink);margin:2px 0}
+.a4-dt:after{content:"";position:absolute;right:-1px;top:8px;bottom:8px;border-right:2px dashed var(--a4line)}
+.a4-bd{flex:1;padding:12px;display:flex;gap:12px;align-items:center}.a4-bd .c9-ph{width:92px;flex:none;border-radius:11px}
+.a4-bd b{display:block;font:800 14.5px/1.25 'Plus Jakarta Sans',system-ui}.a4-bd small{display:block;font:600 12px 'Plus Jakarta Sans',system-ui;color:var(--a4mute);margin-top:2px}.a4-bd i{display:block;font:800 15px 'Plus Jakarta Sans',system-ui;font-style:normal;margin-top:5px}
+.a4 .a4-biz{display:block!important;position:relative;margin:28px 16px 0;width:calc(100% - 32px);border-radius:22px!important;background:#0B1020!important;color:#fff!important;padding:20px!important;overflow:hidden}
+html:not(.gl-lt) .a4 .a4-biz{background:var(--a4card)!important;box-shadow:0 0 0 1px var(--c9hl)}
+.a4-biz small{display:block;font:800 11.5px 'Plus Jakarta Sans',system-ui;letter-spacing:1.3px;text-transform:uppercase;color:#9DB8F0}
+.a4-biz h3{font-weight:500;font-size:24px;line-height:1.15;margin:6px 0;max-width:220px;color:#fff}.a4-biz p{font:600 13px/1.45 'Plus Jakarta Sans',system-ui;color:#C9D6F2;max-width:210px;margin:0 0 14px}
+.a4-biz u{background:#fff;color:#0B1020}.a4-biz img{position:absolute;right:12px;bottom:16px;width:100px;transform:rotate(-6deg);filter:drop-shadow(0 8px 12px rgba(0,0,0,.35))}
+.a4-sig{padding:34px 22px 40px}.a4-sig h2{font-weight:500;font-size:46px;line-height:1;margin:0;color:color-mix(in srgb,var(--c9tx) 18%,var(--c9bg))}.a4-sig h2 em{font-style:italic}
+.a4-sig small{display:block;font:700 12px 'Plus Jakarta Sans',system-ui;color:var(--c9t2);margin-top:10px}
+.a4-chd{position:fixed;left:0;right:0;top:0;z-index:60;display:flex;align-items:center;gap:10px;padding:calc(var(--sat,0px) + 8px) 16px 12px;background:color-mix(in srgb,var(--c9bg) 90%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--c9hl);transform:translateY(-110%);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+html.a4c .a4-chd{transform:none}
+.a4-chd b{font:500 21px 'Fraunces',Georgia,serif;color:var(--c9tx)}
+.a4-chd button{flex:1;height:42px;border-radius:12px;background:var(--c9pn);box-shadow:0 1px 2px rgba(11,16,32,.05),0 8px 24px rgba(11,16,32,.07);display:flex;align-items:center;gap:10px;padding:0 12px;font:700 13.5px 'Plus Jakarta Sans',system-ui;color:var(--c9t2);border:0}
+.a4-chd .n32-mg{width:15px;height:15px;border-width:2.2px;color:var(--c9tx)}
+.a4 button:active{transform:scale(.97);transition:transform .12s}
+@media (prefers-reduced-motion:reduce){.a4 button:active{transform:none}.a4-chd{transition:none}}
+.a4-ph,.a4-lph,.a4 .c9-ph{background:var(--c9pn2)}
+html.a4on .a4 img{opacity:0;transition:opacity .35s ease}html.a4on .a4 img.ld{opacity:1}
+@media (prefers-reduced-motion:reduce){html.a4on .a4 img{transition:none}}

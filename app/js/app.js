@@ -6523,6 +6523,67 @@ function n33motion(){const rm=window.matchMedia&&matchMedia('(prefers-reduced-mo
   const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{if(NA33()&&document.querySelector('.n32')){document.documentElement.classList.add('n33on');n33motion()}}catch(e){console.warn('[n33]',e)}};
 })();
 
+/* ===== part34: "Arrive" home (his ok 16 Nov 2026 00:00; mock handoff/mocks/na-arrive-v1) =====
+   Warm paper look + Fraunces headings, greeting in the phone's own language, "What do you need today?" doors with
+   REAL counts (rooms + lowest rent, jobs, 30-day plan progress, events), 30-day plan card, Plus band, Top picks
+   (real rooms), This weekend (ticket cards, real events), business band, sign-off. Compact header while scrolling.
+   Anything without data hides. Off switch: NA34_LIVE=false. */
+const NA34_LIVE = true;
+function NA34(){try{return NA34_LIVE||localStorage.getItem('nm.na34')==='1'}catch(e){return NA34_LIVE}}
+const a4p=n=>`img/p18/${n}.webp`;
+const a4src=img=>{const m=img.match(/^img\/(p1[5-8])\/([a-z0-9]+)\.webp$/);return m?`src="img/${m[1]}/t/${m[2]}.webp" srcset="img/${m[1]}/t/${m[2]}.webp 480w, ${img} 900w" sizes="(max-width:500px) 46vw, 300px"`:`src="${img}"`};
+let a4n=0;
+function a4hello(){const l=((navigator.language||'en')+'').toLowerCase().slice(0,2),c=((S.me||{}).country||'').toLowerCase();
+  const G={es:'Hola',fr:'Bonjour',pt:'Olá',de:'Hallo',it:'Ciao',ar:'Marhaba',tr:'Merhaba',pl:'Cześć',fil:'Kumusta',tl:'Kumusta',sw:'Habari',ko:'Annyeong',ja:'Konnichiwa',vi:'Xin chào',id:'Halo',ru:'Privet',zh:'Nǐ hǎo'};
+  if(l==='hi'&&(c==='india'||c==='in'))return 'Namaste';return G[l]||'Hello'}
+function a4money(n,cur){try{return money(n,cur)}catch(e){return ''}}
+function a4door(img,pic,t,line,a,extra){const first=(a4n++)<4;return `<button class="a4-door" data-a="${a}"><span class="a4-ph"><img ${a4src(img)} alt="" decoding="async" ${first?'fetchpriority="high"':'loading="lazy"'}></span><span class="a4-t"><img src="${f3(pic)}" alt="">${esc(t)}</span><small>${line}</small>${extra||''}</button>`}
+function a4ticket(e){const d=new Date(e.startsAt);let w='',dd='',m='';try{w=d.toLocaleDateString('en',{weekday:'short'}).toUpperCase();dd=d.getDate();m=d.toLocaleDateString('en',{month:'short'}).toUpperCase()}catch(x){}
+  return `<button class="a4-tk" data-a="p15open" data-v="evd:${e.id}"><span class="a4-dt">${w}<b>${dd}</b>${m}</span><span class="a4-bd">${c9i(c9evp(e))}<span><b>${esc(e.title)}</b><small>${esc(e.venue||'')}${e.venue?' · ':''}${esc(evWhen(e))}</small><i>${e.price?esc(a4money(e.price,e.currency)):'No ticket'}</i></span></span></button>`}
+function a4room(r){const ph=r.photos&&r.photos[0]&&PC15()?phUrl15(r.photos[0]):'';
+  return `<button class="a4-lc" data-a="p15open" data-v="rooms">${ph?`<span class="a4-lph"><img src="${esc(ph)}" alt="" loading="lazy"></span>`:`<span class="a4-lph">${c9i('room')}</span>`}<span class="a4-tags">${r.top?'<em class="f">Featured</em>':''}${(r.tags||[]).slice(0,1).map(t=>`<em>${esc(t)}</em>`).join('')}</span><b>${esc(r.title)}</b><small>${esc(r.area||'')}</small><span class="a4-pr"><strong>${esc(a4money(r.rent,r.currency))}</strong> / month</span></button>`}
+function a4home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{},name=(me.name||'').split(' ')[0];
+  const path=(typeof c10get==='function')?c10get('nm.path','local'):'local';
+  const rooms=zdata8('rooms15','rooms',{maxrent:0}),jobs=zdata8('jobs15','jobs',{}),ev=zdata8('events15','ev',{k:'',cty:c});
+  const up=ev.filter(e=>new Date(e.startsAt)>Date.now()-3*36e5).sort((a,b)=>new Date(a.startsAt)-new Date(b.startsAt));
+  const wk=up.filter(e=>new Date(e.startsAt)<Date.now()+7*864e5);
+  const minRent=rooms.length?rooms.reduce((m,r)=>(!m||r.rent<m.rent)?r:m,null):null;
+  const bar=(typeof c10bar==='function')?c10bar():null;
+  const tag=path==='moving'?'Moving to '+city:path==='arrived'?'New in '+city:'In '+city;
+  const plus=(typeof PLANS==='function'&&PLANS()),hasPlus=!!(P15.d||{}).plus;
+  const head=`<div class="a4-hd"><span class="a4-brand">${NA_CASE('c9lg')}NeuAmigo</span>${plus?`<button class="a4-plus" data-a="p15open" data-v="plans">${hasPlus?'Your plan':'Plus'}</button>`:''}</div>
+   <div class="a4-greet"><small>${esc(tag)}</small><h1>${a4hello()}${name?`, <em>${esc(name)}.</em>`:'.'}</h1><p>Everything for your new life, ready when you are.</p></div>
+   <button class="a4-search" data-a="p15open" data-v="search"><span class="n32-mg"></span><span><b>Search <em class="n33-type">rooms</em> in ${esc(city)}</b><small>Rooms, jobs, papers, events, help</small></span></button>`;
+  const doors=[
+    a4door(a4p('apartment'),'house_with_garden','A home',rooms.length?`<strong>${rooms.length} ${rooms.length===1?'room':'rooms'}</strong>${minRent?` from <strong>${esc(a4money(minRent.rent,minRent.currency))}</strong>`:''}`:'Homes to rent in '+esc(city),'p15open" data-v="rooms'),
+    a4door(a4p('work'),'briefcase','Work',jobs.length?`<strong>${jobs.length} ${jobs.length===1?'job':'jobs'}</strong>, pay shown`:'Jobs with pay shown','p15open" data-v="jobs'),
+    a4door(a4p('papers'),'clipboard','Papers',bar?`<strong>${bar.d} of ${bar.n}</strong> done`:'Your step-by-step plan','p15open" data-v="plan30',bar?`<span class="a4-bar"><i style="width:${bar.pct}%"></i></span>`:''),
+    a4door('img/p17/clean.webp','delivery_truck','Help','Movers, tax, cleaning · <strong>5 prices</strong>','p15open" data-v="c12svc'),
+    a4door('img/p17/feast.webp','handshake','Friends',wk.length?`<strong>${wk.length} ${wk.length===1?'meetup':'meetups'}</strong> this week`:'Meet people near you','tab" data-k="ev15'),
+    a4door('img/p17/football.webp','party_popper','Fun',up.length?`<strong>${up.length} ${up.length===1?'event':'events'}</strong> coming up`:'Events near you','tab" data-k="ev15')].join('');
+  const doorsSec=`<div class="a4-sec"><h2>What do you need today?</h2></div><div class="a4-doors">${doors}</div>`;
+  let plan='';
+  if(bar&&(path==='moving'||path==='arrived')){const done=c10done(),nx=c10all().find(s=>!done.includes(s[0]));
+    plan=`<div class="a4-sec"><h2>Your settle-in plan</h2></div><button class="a4-plan" data-a="p15open" data-v="plan30"><img class="a4-p3" src="${f3('calendar')}" alt=""><small>${bar.d} of ${bar.n} steps done</small><h3>One step today.<br>That is enough.</h3><span class="a4-pb"><span class="a4-tr"><i style="width:${bar.pct}%"></i></span></span>${nx?`<span class="a4-nx"><img src="${f3('clipboard')}" alt=""><span><b>${esc(nx[2])}</b><small>${esc(nx[3])}</small></span><u>Start</u></span>`:''}</button>`}
+  const pband=(plus&&!hasPlus)?`<div class="a4-sec"><h2>Unlock every door</h2><button data-a="p15open" data-v="plans">See plans</button></div><button class="a4-band" data-a="p15open" data-v="plans"><img src="${f3('key')}" alt=""><span><small>NeuAmigo Plus</small><b>Call landlords and employers directly</b><i>${esc(p15price('plus_m')||'')}${p15price('plus_m')?' a month · ':''}alerts first</i></span><u>See</u></button>`:'';
+  const picks=rooms.length?`<div class="a4-sec"><div><h2>Top picks for you</h2><p>Rooms in ${esc(city)}</p></div><button data-a="p15open" data-v="rooms">See all</button></div><div class="a4-rail">${rooms.slice(0,8).map(a4room).join('')}</div>`:'';
+  const tix=up.length?`<div class="a4-sec"><h2>Coming up</h2><button data-a="tab" data-k="ev15">See all</button></div>${up.slice(0,3).map(a4ticket).join('')}`:'';
+  const biz=`<button class="a4-biz" data-a="p15open" data-v="plans" data-t="biz"><small>For businesses</small><h3>Be the first name new arrivals see.</h3><p>Show your homes, jobs, services or events in ${esc(city)}.</p><u>See prices</u><img src="${f3('briefcase')}" alt=""></button>`;
+  const sig=`<div class="a4-sig"><h2>Welcome<br><em>home</em>${name?', '+esc(name):''}.</h2><small>NeuAmigo · for people who move</small></div>`;
+  const chd=`<div class="a4-chd" aria-hidden="true"><b>${esc(city)}</b><button data-a="p15open" data-v="search"><span class="n32-mg"></span>Search rooms, jobs, help</button></div>`;
+  return c9wrap(`<div class="a4">${head}${doorsSec}${plan}${pband}${picks}${tix}${biz}${sig}</div>`)+chd}
+(function(){
+  const _h=c12home;c12home=function(){if(!NA34())return _h.apply(this,arguments);try{return a4home()}catch(e){console.warn('[a4]',e);return _h.apply(this,arguments)}};
+  const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{const on=NA34()&&!!document.querySelector('.a4');document.documentElement.classList.toggle('a4on',on);
+    if(!on)return;if(typeof n33motion==='function')n33motion();
+    const m=document.getElementById('main');if(m&&!m.dataset.a4){m.dataset.a4='1';m.addEventListener('scroll',()=>{document.documentElement.classList.toggle('a4c',!!document.querySelector('.a4')&&m.scrollTop>230)},{passive:true})}
+    document.documentElement.classList.toggle('a4c',!!(m&&m.scrollTop>230));
+    /* photos fade in when ready, never a blank box */
+    document.querySelectorAll('.a4 img').forEach(im=>{if(im.complete&&im.naturalWidth)im.classList.add('ld');else if(!im.dataset.lw){im.dataset.lw='1';im.addEventListener('load',()=>im.classList.add('ld'),{once:true});im.addEventListener('error',()=>im.classList.add('ld'),{once:true})}})}catch(e){console.warn('[a4]',e)}};
+  /* "For businesses" band opens the plans page on the business tab */
+  const _o=A.p15open;A.p15open=function(el){try{if(el&&el.dataset&&el.dataset.t==='biz'){P15.pltab='biz'}}catch(e){}return _o.apply(this,arguments)};
+})();
+
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
 })();
