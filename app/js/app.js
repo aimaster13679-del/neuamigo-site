@@ -6452,6 +6452,77 @@ function n32home(){const c=c9city(),city=c||'your city';
     nav.querySelectorAll('button').forEach(b=>{const t=(b.textContent||'').trim();if(PIC[t]&&!b.querySelector('img'))b.insertAdjacentHTML('afterbegin',`<img src="${f3(PIC[t])}" alt="">`)})}catch(e){}};
 })();
 
+/* ===== part33: "alive" home (his video 15 Nov 2026 22:29: learn from Blinkit, alive != only sliding) =====
+   1. Category tabs under the search bar (All, Rooms, Jobs, Events, Movers & help, Buy & Sell) with 3D pictures;
+      each tab re-themes the hero (colour, headline, 3D pictures) like Blinkit's per-tab headers, and shows that
+      section's own content (real data only).
+   2. Motion with meaning: floating 3D pictures + parallax on scroll, soft snow in winter cities, the search hint types
+      itself (rooms → jobs → movers …), tiles and cards rise in as they come into view, pressed things squash a little,
+      the 5-prices truck drives in and the banner gets a light sweep, the chosen bottom-bar picture hops once.
+      Text, prices and buttons never move after they appear; 'reduce motion' phones get still screens.
+   Preview: localStorage nm.na33 = '1'. Live after his ok (NA33_LIVE). */
+const NA33_LIVE = false;
+function NA33(){try{return NA33_LIVE||localStorage.getItem('nm.na33')==='1'}catch(e){return NA33_LIVE}}
+let n33tab='all';
+const N33T=[
+ {k:'all',t:'All',p:'world_map',bg:'#0F52BA',h:'Your new<br>city, sorted.',s:'Rooms, jobs, events and help. Every price open.',pr:[['airplane',250,52,84,-12],['luggage',312,124,62,10],['sparkles',340,40,30,0]]},
+ {k:'rooms',t:'Rooms',p:'house_with_garden',bg:'#0B3F91',h:'Find your<br>room.',s:'Rooms in {c}, rent shown upfront.',pr:[['house_with_garden',244,50,96,-6],['key',326,128,50,18],['bed',262,146,58,4]]},
+ {k:'jobs',t:'Jobs',p:'briefcase',bg:'#12305F',h:'Work that<br>pays fair.',s:'Pay shown on every job.',pr:[['briefcase',248,56,88,-8],['dollar_banknote',326,120,56,14],['calendar',262,150,50,-6]]},
+ {k:'events',t:'Events',p:'party_popper',bg:'#0A1F4A',h:'Your weekend,<br>planned.',s:'Sports, food nights and music near you.',pr:[['party_popper',250,48,86,8],['soccer_ball',322,128,52,0],['ticket',258,150,56,-14]]},
+ {k:'help',t:'Movers & help',p:'delivery_truck',bg:'#155EAF',h:'Ask once.<br>Get 5 prices.',s:'Movers, tax help, cleaning, small jobs.',pr:[['delivery_truck',236,58,104,-6],['receipt',324,128,50,12],['toolbox',258,152,52,-4]]},
+ {k:'sell',t:'Buy & Sell',p:'shopping_bags',bg:'#0B1226',h:'Buy and sell<br>near you.',s:'Furniture and more from people moving.',pr:[['couch_and_lamp',240,54,96,-4],['shopping_bags',322,126,56,8],['package',262,150,50,-10]]}];
+const N33HINT=['rooms','jobs','movers','football','tax help','a sofa','cleaning'];
+const N33SNOW=['toronto','montreal','calgary','vancouver','ottawa','edmonton','winnipeg','new york','chicago','boston','london','berlin','paris','amsterdam','dublin','stockholm','oslo','warsaw','moscow','seoul','tokyo','beijing'];
+function n33snow(c){const m=new Date().getMonth();if(!(m>=10||m<=1))return '';if(!N33SNOW.includes((c||'').toLowerCase()))return '';
+  let o='';for(let i=0;i<12;i++){const l=(i*37)%100,d=(6+(i*7)%7),dl=-(i*1.3)%9,sz=3+(i%3);o+=`<i style="left:${l}%;width:${sz}px;height:${sz}px;animation-duration:${d}s;animation-delay:${dl}s"></i>`}
+  return `<div class="n33-snow" aria-hidden="true">${o}</div>`}
+const n33prop=(p,i)=>`<img class="n32-p n33-f" src="${f3(p[0])}" alt="" aria-hidden="true" style="left:${p[1]}px;top:${p[2]}px;width:${p[3]}px;--r:${p[4]}deg;--d:${i*0.9}s">`;
+function n33tabs(){return `<div class="n33-tabs" role="tablist">${N33T.map(t=>`<button role="tab" aria-selected="${t.k===n33tab}" class="${t.k===n33tab?'on':''}" data-a="n33tab" data-v="${t.k}"><img src="${f3(t.p)}" alt="">${esc(t.t)}</button>`).join('')}</div>`}
+function n33hero(c){const T=N33T.find(t=>t.k===n33tab)||N33T[0],city=c||'your city';
+  const plus=(typeof PLANS==='function'&&PLANS())?`<button class="n32-plus" data-a="p15open" data-v="plans">${(P15.d||{}).plus?'Your plan':'Plus'}</button>`:'';
+  return `<div class="n32-hero n33-hero" style="--hb:${T.bg}">${n33snow(c)}<div class="n32-top"><div class="c9-brand">${NA_CASE('c9lg')}<span><b>NeuAmigo</b><small>in <em>${esc(city)}</em></small></span></div>${plus}</div>
+   <div class="n33-props" key="${T.k}">${T.pr.map(n33prop).join('')}</div>
+   <h1 class="n33-in">${T.h}</h1><p class="n33-in">${esc(T.s.replace('{c}',city))}</p></div>
+   <button class="n32-search" data-a="p15open" data-v="search"><span class="n32-mg"></span><span><b>Search <em class="n33-type">${N33HINT[0]}</em> in ${esc(city)}</b><small>Rooms, jobs, events, help</small></span></button>${n33tabs()}`}
+const n33job=j=>`<button class="n32-c" data-a="p15open" data-v="jobs">${c9i('hiring')}<b>${esc(j.title)}</b><small>${esc(j.area||'')}${j.hours?' · '+esc(j.hours):''}</small><span class="n32-pr"><i>${j.pay?esc(money(j.pay,j.currency)):'Pay on request'}</i><u>Apply</u></span></button>`;
+const n33sale=s=>`<button class="n32-c" data-a="p15open" data-v="sale">${c9i(kw8((s.cat||'')+' '+s.title,'sofa')==='-'?'sofa':kw8((s.cat||'')+' '+s.title,'sofa'))}<b>${esc(s.title)}</b><small>${esc(s.area||'')}</small><span class="n32-pr"><i>${esc(money(s.price,s.currency))}</i><u>View</u></span></button>`;
+function n33empty(pic,t,s,a,b){return `<div class="n33-empty"><img src="${f3(pic)}" alt=""><b>${t}</b><small>${s}</small><button data-a="${a}">${b}</button></div>`}
+function n33tabBody(c){const city=c||'your city';
+  if(n33tab==='rooms'){const r=zdata8('rooms15','rooms',{maxrent:0});return `<div class="n32-h"><h2>Rooms in ${esc(city)}</h2><button data-a="p15open" data-v="rooms">See all ›</button></div>`+(r.length?`<div class="n32-rail">${r.slice(0,10).map(n32room).join('')}</div>`:n33empty('house_with_garden','No rooms posted yet','Be the first to know when one is posted in '+esc(city)+'.','p15open" data-v="rooms','Look for a room'))}
+  if(n33tab==='jobs'){const j=zdata8('jobs15','jobs',{});return `<div class="n32-h"><h2>Jobs in ${esc(city)}</h2><button data-a="p15open" data-v="jobs">See all ›</button></div>`+(j.length?`<div class="n32-rail">${j.slice(0,10).map(n33job).join('')}</div>`:n33empty('briefcase','No jobs posted yet','Pay is always shown when jobs are posted here.','p15open" data-v="jobs','Open jobs'))}
+  if(n33tab==='events'){const e=zdata8('events15','ev',{k:'',cty:c}).filter(x=>new Date(x.startsAt)>Date.now()-3*36e5);return `<div class="n32-h"><h2>Coming up</h2><button data-a="tab" data-k="ev15">See all ›</button></div>`+(e.length?`<div class="n32-rail">${e.slice(0,10).map(n32ev).join('')}</div>`:n33empty('party_popper','No events yet','New events in '+esc(city)+' show here first.','tab" data-k="ev15','Open events'))}
+  if(n33tab==='help'){return `<div class="n32-grid">${n32tile('delivery_truck','Movers','Ask once','z8q" data-c="Movers','5 prices',1)+n32tile('receipt','Tax help','Ask once','z8q" data-c="Tax','5 prices')+n32tile('toolbox','Small jobs','Fix, build','z8q" data-c="Small jobs','5 prices')+n32tile('sparkles','Cleaning','Ask once','z8q" data-c="Cleaning','5 prices')+n32tile('shield','Insurance','Ask once','z8q" data-c="Insurance','5 prices')}</div>`}
+  if(n33tab==='sell'){const s=zdata8('sales15','sale',{});return `<div class="n32-h"><h2>For sale in ${esc(city)}</h2><button data-a="p15open" data-v="c12sell">See all ›</button></div>`+(s.length?`<div class="n32-rail">${s.slice(0,10).map(n33sale).join('')}</div>`:n33empty('couch_and_lamp','Nothing for sale yet','People moving out sell furniture and more here.','p15open" data-v="c12sell','Open Buy & Sell'))}
+  return ''}
+/* ---- motion helpers (one set of timers for the whole app) ---- */
+let n33ti=0,n33io=null;
+function n33motion(){const rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* typing search hint */
+  if(!n33ti&&!rm){let w=0,ch=0,del=false,hold=0;n33ti=setInterval(()=>{const el=document.querySelector('.n33-type');if(!el)return;
+    const word=N33HINT[w];if(hold>0){hold--;return}
+    if(!del){ch++;el.textContent=word.slice(0,ch);if(ch>=word.length){del=true;hold=18}}
+    else{ch--;el.textContent=word.slice(0,Math.max(ch,0))||' ';if(ch<=0){del=false;w=(w+1)%N33HINT.length;hold=3}}},90)}
+  /* rise-in as things come into view */
+  const items=document.querySelectorAll('.n32 .n32-t,.n32 .n32-c,.n32 .n32-pop button,.n32 .n32-ban,.n32 .n32-trust div,.n33-empty');
+  if(rm||!('IntersectionObserver' in window)){items.forEach(e=>e.classList.add('n33v'));return}
+  if(!n33io)n33io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('n33v');n33io.unobserve(en.target)}}),{rootMargin:'0px 40px -20px 40px'});
+  let i=0;items.forEach(e=>{if(e.classList.contains('n33v')||e.dataset.n33)return;e.dataset.n33='1';e.style.setProperty('--n33i',(i++%6));e.classList.add('n33w');n33io.observe(e)});
+  setTimeout(()=>items.forEach(e=>e.classList.add('n33v')),2500);
+  /* parallax of the hero pictures while scrolling */
+  const sc=document.getElementById('main')||window;if(!sc.dataset||sc.dataset.n33p)return;sc.dataset.n33p='1';
+  sc.addEventListener('scroll',()=>{const p=document.querySelector('.n33-props');if(p)p.style.transform=`translateY(${Math.min((sc.scrollTop||0)*0.25,60)}px)`},{passive:true})}
+(function(){
+  Object.assign(A,{n33tab(el){n33tab=(el&&el.dataset&&el.dataset.v)||'all';render();try{const m=document.getElementById('main');if(m)m.scrollTop=0;const t=document.querySelector('.n33-tabs .on');if(t)t.scrollIntoView({inline:'center',block:'nearest'})}catch(e){}}});
+  const _h=n32home;n32home=function(){if(!NA33())return _h.apply(this,arguments);
+    const html=_h.apply(this,arguments),c=c9city();
+    /* swap the v3 hero + search for the alive hero + tabs */
+    const a=html.indexOf('<div class="n32-hero">'),b=html.indexOf('</button>',html.indexOf('class="n32-search"'))+9;
+    if(a<0||b<9)return html;let out=html.slice(0,a)+n33hero(c)+html.slice(b);
+    if(n33tab!=='all'){const s=out.indexOf('<div class="n32-grid">'),e=out.indexOf('<div class="n32-trust">');if(s>0&&e>s)out=out.slice(0,s)+n33tabBody(c)+out.slice(e)}
+    return out};
+  const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{if(NA33()&&document.querySelector('.n32')){document.documentElement.classList.add('n33on');n33motion()}}catch(e){console.warn('[n33]',e)}};
+})();
+
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
 })();

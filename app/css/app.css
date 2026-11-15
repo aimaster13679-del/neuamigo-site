@@ -3217,3 +3217,44 @@ html:not(.gl-lt) .n32-ban{background:var(--c9pn)!important;box-shadow:0 0 0 1px 
 .n32nav>button img{width:26px;height:26px;display:block}
 .n32nav>button span{font-size:11px!important}
 html.n32on.c9on .nav.c9nav.n32nav.c12nav button.on.on.on.on.on.on.on,html.n32on .nav.c9nav.n32nav button.on.on.on.on.on.on{background:color-mix(in srgb,#0F52BA 14%,transparent)!important;color:var(--c9au)!important}
+/* ===== part33 alive home (his video 15 Nov 2026 22:29) ===== */
+.n33-hero{background-color:var(--hb)!important;transition:background-color .5s ease}
+html:not(.gl-lt) .n33-hero{background-color:color-mix(in srgb,var(--hb) 72%,#050A18)!important}
+.n33-props{position:absolute;inset:0;pointer-events:none;will-change:transform}
+.n33-f{animation:n33pop .55s cubic-bezier(.2,1.4,.4,1) both,n33float 5.5s ease-in-out .6s infinite;animation-delay:calc(var(--d) * .15),calc(var(--d) + .6s)}
+@keyframes n33pop{from{opacity:0;transform:translateY(18px) scale(.6) rotate(var(--r))}to{opacity:1;transform:rotate(var(--r))}}
+@keyframes n33float{0%,100%{transform:translateY(0) rotate(var(--r))}50%{transform:translateY(-9px) rotate(calc(var(--r) + 3deg))}}
+.n33-in{animation:n33rise .45s cubic-bezier(.2,.8,.2,1) both}.n33-hero p.n33-in{animation-delay:.08s}
+@keyframes n33rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.n33-snow{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.n33-snow i{position:absolute;top:-12px;background:#fff;border-radius:1.5px;opacity:.75;animation:n33fall linear infinite}
+@keyframes n33fall{from{transform:translate(0,0) rotate(0)}to{transform:translate(18px,300px) rotate(180deg)}}
+.n33-type{display:inline-block;min-width:1ch}
+.n33-type:after{content:"";display:inline-block;width:2px;height:1em;background:currentColor;margin-left:1px;vertical-align:-2px;animation:n33blink 1s steps(1) infinite}
+@keyframes n33blink{50%{opacity:0}}
+.n33-tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;padding:14px 8px 0;border-bottom:1px solid var(--c9hl);margin-top:2px}
+.n33-tabs::-webkit-scrollbar{display:none}
+.n33-tabs button{flex:none;display:flex!important;flex-direction:column;align-items:center;gap:4px;padding:0 9px 10px!important;background:none!important;border:0!important;border-radius:0!important;color:var(--c9t2)!important;font:700 12px/1.2 'Plus Jakarta Sans',system-ui;position:relative;animation:none!important}
+.n33-tabs button img{width:32px;height:32px;filter:drop-shadow(0 4px 5px rgba(11,18,38,.15));transition:transform .25s}
+.n33-tabs button.on{color:var(--c9tx)!important}
+.n33-tabs button.on:after{content:"";position:absolute;left:9px;right:9px;bottom:-1px;height:3px;background:var(--c9tx);border-radius:2px}
+.n33-tabs button.on img{animation:n33hop .6s cubic-bezier(.2,1.6,.4,1)}
+@keyframes n33hop{0%{transform:translateY(0) scale(1)}35%{transform:translateY(-7px) scale(1.12)}70%{transform:translateY(1px) scale(.97)}100%{transform:none}}
+html.n33on .n33w{opacity:0;transform:translateY(16px);transition:opacity .45s ease,transform .55s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--n33i,0) * 60ms)}
+html.n33on .n33w.n33v{opacity:1;transform:none}
+html.n33on .n32-t:active,html.n33on .n32-c:active,html.n33on .n32-ban:active,html.n33on .n32-pop button:active,html.n33on .n32-search:active,html.n33on .n33-tabs button:active{transform:scale(.96)!important;transition:transform .12s!important}
+html.n33on .n32-t img{animation:n33bob 6s ease-in-out infinite}
+html.n33on .n32-t:nth-child(2) img{animation-delay:-1.5s}html.n33on .n32-t:nth-child(3) img{animation-delay:-3s}html.n33on .n32-t:nth-child(4) img{animation-delay:-4.5s}html.n33on .n32-t:nth-child(5) img{animation-delay:-2.2s}
+@keyframes n33bob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-4px) rotate(-3deg)}}
+html.n33on .n32-ban:after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.16) 50%,transparent 62%);transform:translateX(-110%);animation:n33sheen 5.5s ease-in-out 1.5s infinite;pointer-events:none;z-index:3}
+@keyframes n33sheen{0%{transform:translateX(-110%)}35%,100%{transform:translateX(110%)}}
+html.n33on .n32-ban.n33v .n32-p:first-of-type{animation:n33drive 1s cubic-bezier(.2,.8,.2,1) both}
+@keyframes n33drive{from{transform:translateX(-190px) rotate(-6deg)}70%{transform:translateX(6px) rotate(-6deg)}to{transform:rotate(-6deg)}}
+html.n33on .n32nav button.on img{animation:n33hop .6s cubic-bezier(.2,1.6,.4,1)}
+.n33-empty{margin:0 18px;border-radius:18px;background:var(--c9pn2);padding:18px;display:grid;justify-items:center;text-align:center;gap:4px}
+.n33-empty img{width:72px;height:72px;filter:drop-shadow(0 8px 10px rgba(11,18,38,.18));animation:n33bob 6s ease-in-out infinite}
+.n33-empty b{font:800 16px/1.2 'Plus Jakarta Sans',system-ui;color:var(--c9tx)}.n33-empty small{font:600 12.5px/1.4 'Plus Jakarta Sans',system-ui;color:var(--c9t2);max-width:260px}
+.n33-empty button{margin-top:8px;background:#0F52BA!important;color:#fff!important;border:0;border-radius:11px;padding:11px 16px;font:800 13.5px/1 'Plus Jakarta Sans',system-ui}
+@media (prefers-reduced-motion:reduce){html.n33on *,html.n33on *:after{animation:none!important;transition:none!important}html.n33on .n33w{opacity:1!important;transform:none!important}.n33-snow{display:none}}
+.n33-hero p.n33-in{min-height:2.8em}
+.n33-snow i{opacity:.5}
