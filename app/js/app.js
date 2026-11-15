@@ -4364,7 +4364,7 @@ function me15(){const me=S.me||{},d=P15.d||{},biz=(d.biz||[]).filter(b=>b.kind!=
   const row=(icn,tone,t,s,a,v)=>`<button class="p15-g p15-row" data-a="${a}"${v?` data-v="${v}"`:''}><span class="p15-b ${tone}">${ic(icn)}</span><span class="tx"><b>${t}</b><small>${s}</small></span>${ic('chev2')}</button>`;
   return p15wrap(p15top('Me')+`<div class="p15-g p15-pad p15-mehd"><span class="p15-av">${esc(((me.name||'?').trim()[0]||'?').toUpperCase())}</span><span class="tx"><b>${esc(me.name||'')}${d.tick?` <span class="p15-pill">${ic('shield2')} Verified</span>`:''}</b><small>${esc([me.city,me.country].filter(Boolean).join(', '))}</small></span></div>
   <div class="p15-sec"><b>Membership</b></div>
-  ${row('star2','lem','NeuMarry Plus',d.plus?'Active until '+esc(until15(d.plusUntil)):'Full details, early booking · '+p15price('plus_m')+' a month','p15open','plus')}
+  ${row('star2','lem','NeuAmigo Plus',d.plus?'Active until '+esc(until15(d.plusUntil)):'Full details, early booking · '+p15price('plus_m')+' a month','p15open','plus')}
   ${row('shield2','mint','Verified Tick',d.tick?'Active until '+esc(until15(d.tickUntil)):'People trust you faster · '+p15price('tick'),'p15open','tick')}
   <div class="p15-sec"><b>My things</b></div>
   ${row('party','fern','My Tickets','Your seats with their QR codes','p15open','tickets')}
@@ -6300,6 +6300,67 @@ function askhLine(a){const who=(ASK15[a.kind]||{}).who||'businesses',city=esc(a.
     /* swap the old 'Reached N · N of 5 connected' line for the plain status, one per request in the same order */
     let i=0;return h.replace(/<small class="p15-dim">Reached [^<]*<\/small>/g,()=>{const a=P15.ma[i++];return a?askhLine(a):''})
       .replace(/<span class="p15-pill([^"]*)">ended<\/span>/g,'<span class="p15-pill y">Ended</span>')};
+})();
+
+/* ===== part31: PLANS EVERYWHERE (his ask 15 Nov 2026 16:29: "subscription plans kahi dikh hi nahi rahe ... turant pata
+   chale, professional, users asani se subscription le sake, har jagah behtarin tarike se display"; his ok for the mock 17:09).
+   1) home: one plan strip under the categories (or "You're on Plus" when active)
+   2) one Plans page: For you (Plus, Weekend Club, what each gives) / For businesses (every business plan with its price)
+   3) Me: "Your plan" card at the top
+   Real prices only (price15 in the member's money); launch price shown honestly; nothing free, no fake urgency.
+   Mock first: on only with localStorage nm.plans = '1' until he says ok. ===== */
+const PLANS_LIVE = true; /* his ok 15 Nov 2026 17:21 */
+function PLANS(){try{return PLANS_LIVE||localStorage.getItem('nm.plans')==='1'}catch(e){return PLANS_LIVE}}
+function pl31until(t){try{return new Date(t).toLocaleDateString(RM_I18N.locale,{day:'numeric',month:'short'})}catch(e){return ''}}
+/* home strip */
+function pl31strip(){const d=P15.d||{};
+  if(d.plus)return `<button class="pl31-strip on" data-a="p15open" data-v="plans">${c9i('keys')}<span><em>Your plan</em><b>NeuAmigo Plus</b><small>Active until ${esc(pl31until(d.plusUntil))}</small></span><i>Plans</i></button>`;
+  const p=p15price('plus_m');
+  return `<button class="pl31-strip" data-a="p15open" data-v="plans">${c9i('keys')}<span><em>NeuAmigo Plus</em><b>Contacts, chat, alerts</b><small>${p?esc(p)+' / month':'Monthly plan'}</small></span><i>See plans</i></button>`}
+/* Plans page */
+function pl31(){const d=P15.d||{},tab=P15.pltab||'you',yr=!!P15.ply;
+  const tabs=`<div class="pl31-seg" role="tablist">${[['you','For you'],['biz','For businesses']].map(([k,t])=>`<button class="${tab===k?'on':''}" data-a="pl31tab" data-v="${k}" role="tab" aria-selected="${tab===k}">${t}</button>`).join('')}</div>`;
+  const tag=k=>{const l=p15later(k);return l?`<span class="pl31-lp"><i>Launch price</i>Later ${esc(l)}</span>`:''};
+  const li=a=>`<ul class="pl31-li">${a.map(x=>`<li><b>${esc(x[0])}</b><small>${esc(x[1])}</small></li>`).join('')}</ul>`;
+  let body='';
+  if(tab==='you'){
+    const pk=yr?'plus_y':'plus_m',pp=p15price(pk);
+    const plus=`<section class="pl31-card hero">${c9i('keys')}<div class="pl31-in">
+      <div class="pl31-hd"><h2>NeuAmigo Plus</h2>${d.plus?`<em class="pl31-on">Active until ${esc(pl31until(d.plusUntil))}</em>`:''}</div>
+      <p class="pl31-for">For people finding a home, a job or friends in a new city</p>
+      <div class="pl31-per">${[['m','Monthly'],['y','Yearly']].map(([k,t])=>`<button class="${(k==='y')===yr?'on':''}" data-a="pl31yr" data-v="${k}">${t}</button>`).join('')}</div>
+      <div class="pl31-price"><b>${esc(pp||'—')}</b><small>${yr?'a year':'a month'}</small>${tag(pk)}</div>
+      ${li([['Every contact detail','Call or write to landlords, employers and sellers'],['Chat in the app','Talk to people you are connected with'],['Alerts first','New homes and jobs in your city, the moment they are posted']])}
+      ${d.plus?'':`<button class="pl31-btn" data-a="p15open" data-v="plus">Get Plus${pp?' · '+esc(pp):''}</button>`}</div></section>`;
+    const ck=P15.plct==='weekend'?'wc_weekend_a':'wc_month_a',cp=p15price(ck);
+    const club=`<section class="pl31-card">${c9i('night')}<div class="pl31-in">
+      <div class="pl31-hd"><h2>Weekend Club Membership</h2>${d.club?`<em class="pl31-on">Member until ${esc(pl31until(d.clubUntil))}</em>`:''}</div>
+      <p class="pl31-for">For people who go to events and meet-ups</p>
+      <div class="pl31-per">${[['month','One month'],['weekend','One weekend']].map(([k,t])=>`<button class="${(P15.plct||'month')===k?'on':''}" data-a="pl31ct" data-v="${k}">${t}</button>`).join('')}</div>
+      <div class="pl31-price"><b>${esc(cp||'—')}</b><small>adult · family plan too</small>${tag(ck)}</div>
+      ${li([['No booking fee','Others pay a fee on every seat'],['Book 48 hours early','Seats before the big events fill up'],['Members-only nights','Some nights are just for members']])}
+      ${d.club?'':`<button class="pl31-btn" data-a="p15open" data-v="club">See Weekend Club</button>`}</div></section>`;
+    const row=(t,a,b)=>`<tr><th>${esc(t)}</th><td>${a?'Included':'—'}</td><td>${b?'Included':'—'}</td></tr>`;
+    const cmp=`<section class="pl31-cmp"><h3>Which one is for me?</h3><table><thead><tr><th></th><th>Plus</th><th>Weekend Club</th></tr></thead><tbody>
+      ${row('Contact details and chat',1,0)}${row('Alerts for new homes and jobs',1,0)}${row('No booking fee on events',0,1)}${row('Book events 48 hours early',0,1)}${row('Members-only nights',0,1)}</tbody></table>
+      <p>You can have both. Prices are in your money and include tax where it applies. Nothing is charged until you tap Pay.</p></section>`;
+    body=plus+club+cmp;
+  }else{
+    const B=[['rentsign','Homes to rent','Landlords and agents: post homes, answer requests','agent_plan','biz'],['hiring','Jobs to fill','Families and businesses: post jobs, meet ready-to-work people','hire_plan','hire'],
+      ['hall','Events to run','Hosts: tickets, seat maps, check-in at the door','host_pro','host'],['tools','Event services','Caterers, DJs, decorators: answer quote requests','services_plan','svcplan'],
+      ['expert','Experts','Visa, tax and insurance experts: answer people who ask','expert_plan','expplan'],['saletags','Things to sell','Moving out? Sell your items to people moving in','sale_one','c12sell']];
+    body=`<p class="pl31-lede">Pick what your business does. Every plan shows its price before you pay.</p><div class="pl31-biz">${B.map(([p,t,s,k,v])=>{const pr=p15price(k);
+      return `<button class="pl31-bz" data-a="p15open" data-v="${v}">${c9i(p)}<span class="pl31-bt"><b>${esc(t)}</b><small>${esc(s)}</small><span class="pl31-bp">${pr?`<em>from</em> <b>${esc(pr)}</b>`:''}<i>See plan</i></span></span></button>`}).join('')}</div>`;
+  }
+  return c9wrap(c9back('Plans')+`<div class="c9-in pl31"><h1 class="c9-h1">Plans</h1>${tabs}${body}</div>`)}
+/* Me: your plan card */
+function pl31me(){const d=P15.d||{};const on=[d.plus?'NeuAmigo Plus':'',d.club?'Weekend Club':''].filter(Boolean);
+  return `<button class="pl31-me${on.length?' on':''}" data-a="p15open" data-v="plans"><span><em>Your plan</em><b>${on.length?esc(on.join(' + ')):'No plan yet'}</b><small>${on.length?'See what is included or add more':'Plus from '+esc(p15price('plus_m')||'')+' a month · Weekend Club · business plans'}</small></span><i>${on.length?'Manage':'See plans'}</i></button>`}
+(function(){
+  P15V.plans=function(){return pl31()};
+  Object.assign(A,{pl31tab(el){P15.pltab=el.dataset.v;render()},pl31yr(el){P15.ply=el.dataset.v==='y';render()},pl31ct(el){P15.plct=el.dataset.v;render()}});
+  const _h=c12home;c12home=function(){const h=_h();if(!PLANS())return h;const k='<div class="c9-in"><h1 class="c9-h1 sm c12-q">';return h.includes(k)?h.replace(k,'<div class="c9-in">'+pl31strip()+'<h1 class="c9-h1 sm c12-q">'):h};
+  if(typeof c11me==='function'){const _m=c11me;c11me=function(){const h=_m.apply(this,arguments);if(!PLANS())return h;const k='<div class="c9-rh"><h2>Your things</h2></div>';return h.includes(k)?h.replace(k,pl31me()+k):h}}
 })();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
