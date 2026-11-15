@@ -6206,7 +6206,7 @@ function nad29(){
      ${rows(d.products,p=>`<button class="nad2-r" data-a="nadl" data-k="pays" data-r="all" data-q="${esc(p.label||'')}"><span>${esc(p.label)}</span><b>${n(p.n)} · ${usd(p.usd_cents)}</b></button>`)}</div>
    </div>
    <div class="nad2-card"><div class="nad2-ch"><b>Newest members</b><button class="nad2-all" data-a="nadl" data-k="members" data-r="all">See all</button></div>
-    ${rows(d.recent_members,r=>`<button class="nad2-r" data-a="nadl" data-k="members" data-r="all" data-q="${esc(r.name||'')}"><span class="nad2-av">${ini(r.name)}</span><span><b>${esc(r.name||'Member')}</b><small>${esc([r.city,r.country].filter(Boolean).join(', '))}</small></span><em>${esc(when(r.at))}</em></button>`)}</div>
+    ${rows(d.recent_members,r=>`<button class="nad2-r" ${r.id?`data-a="nadu" data-u="${esc(r.id)}"`:`data-a="nadl" data-k="members" data-r="all" data-q="${esc(r.name||'')}"`}><span class="nad2-av">${ini(r.name)}</span><span><b>${esc(r.name||'Member')}</b><small>${esc([r.city,r.country].filter(Boolean).join(', '))}</small></span><em>${esc(when(r.at))}</em></button>`)}</div>
    <div class="nad2-card"><div class="nad2-ch"><b>Latest payments</b><button class="nad2-all" data-a="nadl" data-k="pays" data-r="all">See all</button></div>
     ${rows(d.recent_pays,p=>`<button class="nad2-r" data-a="nadl" data-k="pays" data-r="all" data-q="${esc(p.label||'')}"><span><b>${esc(p.label)}</b><small>${esc(when(p.at))}${p.test?' · test':''}</small></span><em class="m">${esc(money(p.cents,p.currency))}</em></button>`)}</div>
    <button class="c9-btn g nad-old" data-a="openAdmin">Old panel: reports, checks, members</button>
@@ -6236,6 +6236,7 @@ function nadList29(d){
     else if(L.k==='seats'){t=r.title;s=r.city||'';x=tag(n(r.qty)+' seat'+(r.qty==1?'':'s'));more=[['Status',r.status],['Event on',when(r.event_at)],['Booked',when(r.at)]]}
     else if(L.k==='pays'){t=r.label;s=when(r.at);x=`<b class="m">${esc(money(r.cents,r.currency))}</b>`+(r.test?tag('test'):'')+(r.status!=='paid'?tag(r.status,'w'):'');more=[['Status',r.status]]}
     const key=(t+' '+s).toLowerCase(),hid=q&&!key.includes(q);
+    if(L.k==='members'&&r.id)return `<button class="nad2-li nad2-lb" data-a="nadu" data-u="${esc(r.id)}" data-s="${esc(key)}"${hid?' hidden':''}><span class="nad2-av">${esc(String(t||'?').trim().charAt(0).toUpperCase())}</span><span class="nad2-lt"><b>${esc(t)}</b><small>${esc(s)}${r.seen?' · active '+esc(new Date(r.seen).toLocaleDateString('en',{day:'numeric',month:'short'})):''}</small></span><span class="nad2-lx">${x}<span class="nad2-ar">›</span></span></button>`;
     return `<details class="nad2-li" data-s="${esc(key)}"${hid?' hidden':''}><summary><span class="nad2-av">${esc(String(t||'?').trim().charAt(0).toUpperCase())}</span><span class="nad2-lt"><b>${esc(t)}</b><small>${esc(s)}</small></span><span class="nad2-lx">${x}</span></summary><div class="nad2-mo">${more.map(m=>`<div><small>${esc(m[0])}</small><b>${esc(m[1])}</b></div>`).join('')}</div>${more.why?`<p class="nad2-why">${esc(more.why)}</p>`:''}</details>`};
   return c9wrap(head+`<div class="c9-in nad2">
    <div class="nad2-lh"><b>${n(rs.length)}</b><small>${esc(RN[L.r]||'')}${rs.length>=300?' · newest 300':''}</small></div>
@@ -6261,6 +6262,37 @@ function nadRange29(L){const iso=x=>x.toISOString().slice(0,10),t=new Date(),b=n
       if(P15.nadl.q)setTimeout(()=>window.__nadq(P15.nadl&&P15.nadl.q),0)},
     nadx(){P15.nadl=null;render()}});
   const _re=A.nadre;A.nadre=function(el){P15.nadl=null;return _re(el)};
+})();
+/* ===== member page (his ask 13 Nov 2026 08:25: "admin me user ko activity vagera sab details me dikhe"): tap any member
+   (newest members, members list, search) -> one page: who they are, status, money, counts, and every action as a timeline. ===== */
+function nadMember29(){
+  const M=P15.nadu,head=`<div class="c9-top"><button class="c9-pill" data-a="nadux">Back</button><b class="c9-tt">Member</b><span class="c9-pill ghost"></span></div>`;
+  if(M.d===undefined){M.d=null;API.rpc('admin_na_member',{u:M.id}).then(r=>{if(P15.nadu===M){M.d=r||{};render()}}).catch(e=>{if(P15.nadu===M){M.d={err:String(e&&e.message||e)};render()}})}
+  if(!M.d)return c9wrap(head+`<div class="c9-in">${spinner('Loading')}</div>`);
+  if(M.d.err)return c9wrap(head+(/admin_na_member|PGRST202|does not exist|schema cache/i.test(M.d.err)?`<div class="c9-in"><div class="c9-pan c9-empty"><b>Member details are being switched on</b><small>This page starts working as soon as the database update is done. Nothing else changes.</small></div></div>`:`<div class="c9-in"><div class="c9-pan c9-empty"><b>Could not load</b><small>${esc(M.d.err)}</small></div></div>`));
+  const d=M.d,now=Date.now(),n=x=>Number(x||0).toLocaleString('en');
+  const ago=t=>{if(!t)return 'never';const s=(now-new Date(t).getTime())/1e3;if(s<90)return 'just now';if(s<3600)return Math.round(s/60)+' min ago';if(s<86400)return Math.round(s/3600)+' h ago';if(s<86400*30)return Math.round(s/86400)+' days ago';return new Date(t).toLocaleDateString('en',{day:'numeric',month:'short',year:'numeric'})};
+  const day=t=>new Date(t).toLocaleDateString('en',{weekday:'short',day:'numeric',month:'short'}),hm=t=>new Date(t).toLocaleTimeString('en',{hour:'2-digit',minute:'2-digit'});
+  const act=u=>u&&new Date(u).getTime()>now;
+  const tags=[act(d.plus_until)?`<em class="nad2-tg g">Plus till ${esc(day(d.plus_until))}</em>`:'',act(d.club_until)?`<em class="nad2-tg g">Club till ${esc(day(d.club_until))}</em>`:'',
+    (d.biz||[]).length?`<em class="nad2-tg g">Business</em>`:'',d.banned?`<em class="nad2-tg w">Blocked</em>`:'',d.phone_ok?`<em class="nad2-tg">Phone confirmed</em>`:''].join('');
+  const c=d.counts||{},K={join:['Joined','j'],ask:['Request','a'],post:['Post','p'],seat:['Seats','s'],pay:['Payment','m'],biz:['Business','b']};
+  let last='';const tl=(d.activity||[]).map(x=>{const dd=day(x.at),h=dd!==last?`<div class="nadm-day">${esc(dd)}</div>`:'';last=dd;const k=K[x.k]||['','j'];
+    return h+`<div class="nadm-ev"><span class="nadm-k ${k[1]}">${esc(k[0])}</span><span class="nadm-tx"><b>${esc(x.t)}</b><small>${esc(x.d||'')}</small></span><em>${esc(hm(x.at))}</em></div>`}).join('');
+  const tile=(t,v)=>`<div class="nadm-st"><b>${v}</b><small>${esc(t)}</small></div>`;
+  const row=(t,v)=>v?`<div class="nadm-r"><small>${esc(t)}</small><b>${v}</b></div>`:'';
+  return c9wrap(head+`<div class="c9-in nad2">
+   <div class="nad2-card nadm-hd"><span class="nad2-av big">${esc(String(d.name||'?').trim().charAt(0).toUpperCase())}</span><div><h1>${esc(d.name||'Member')}</h1><small>${esc([d.city,d.country].filter(Boolean).join(', ')||'City not set')}</small><div class="nadm-tags">${tags}</div></div></div>
+   <div class="nadm-sts">${tile('Requests',n(c.asks))}${tile('Posts',n(c.posts))}${tile('Seats',n(c.seats))}${tile('Paid',(d.paid||[]).length?(d.paid||[]).map(p=>esc(money(p.cents,p.cur))).join(' + '):'0')}</div>
+   <div class="nad2-card nadm-info">${row('Last active',esc(ago(d.seen)))}${row('Joined',esc(day(d.joined)+' · '+ago(d.joined)))}${row('Email',d.email?`<a href="mailto:${esc(d.email)}">${esc(d.email)}</a>`:'')}${row('Language',esc((d.lang||'').toUpperCase()))}${row('Came from',esc(d.source||''))}
+    ${(d.biz||[]).map(b=>row('Business',esc(b.name+' · '+b.kind+(b.city?' · '+b.city:'')+(act(b.plan_until)?' · plan till '+day(b.plan_until):' · no plan')))).join('')}</div>
+   <div class="nad2-card"><div class="nad2-ch"><b>Everything they did</b><span>${n((d.activity||[]).length)}</span></div>${tl||'<div class="nad2-r e"><span>Nothing yet</span></div>'}</div>
+  </div>`);
+}
+(function(){
+  const _v=P15V.nadmin;P15V.nadmin=function(){return NAD2()&&P15.nadu?nadMember29():_v()};
+  const _bk=A.p15back;A.p15back=function(el){if(P15.v==='nadmin'&&P15.nadu){P15.nadu=null;render();return}return _bk(el)};
+  Object.assign(A,{nadu(el){P15.nadu={id:el.dataset.u};render();try{document.querySelector('#main').scrollTo(0,0)}catch(e){}},nadux(){P15.nadu=null;render()}});
 })();
 
 /* ===== part30: honest answers on requests (his ask 13 Nov 2026 00:37: "us insaan ko kuch javab to dena padega ...
