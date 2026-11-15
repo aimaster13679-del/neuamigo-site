@@ -6209,7 +6209,7 @@ function nad29(){
     ${rows(d.recent_members,r=>`<button class="nad2-r" ${r.id?`data-a="nadu" data-u="${esc(r.id)}"`:`data-a="nadl" data-k="members" data-r="all" data-q="${esc(r.name||'')}"`}><span class="nad2-av">${ini(r.name)}</span><span><b>${esc(r.name||'Member')}</b><small>${esc([r.city,r.country].filter(Boolean).join(', '))}</small></span><em>${esc(when(r.at))}</em></button>`)}</div>
    <div class="nad2-card"><div class="nad2-ch"><b>Latest payments</b><button class="nad2-all" data-a="nadl" data-k="pays" data-r="all">See all</button></div>
     ${rows(d.recent_pays,p=>`<button class="nad2-r" data-a="nadl" data-k="pays" data-r="all" data-q="${esc(p.label||'')}"><span><b>${esc(p.label)}</b><small>${esc(when(p.at))}${p.test?' · test':''}</small></span><em class="m">${esc(money(p.cents,p.currency))}</em></button>`)}</div>
-   <button class="c9-btn g nad-old" data-a="openAdmin">Old panel: reports, checks, members</button>
+   <button class="c9-btn g nad-old" data-a="openAdmin">Old panel: reports, checks, members</button>${(()=>{const v=window.__naVer;if(v===undefined){window.__naVer=null;try{const ap=window.Capacitor&&Capacitor.Plugins&&Capacitor.Plugins.App;if(ap&&ap.getInfo)ap.getInfo().then(i=>{window.__naVer=i;render()}).catch(()=>{window.__naVer=0})}catch(e){window.__naVer=0}}return v?`<p class="nad2-ver">This phone has app version <b>${esc(v.version||"")}</b> · build <b>${esc(String(v.build||""))}</b></p>`:""})()}
   </div>`);
 }
 /* one list behind a tile: search box filters on the phone (no reload), tap a row to see all its details */

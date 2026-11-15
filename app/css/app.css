@@ -3149,3 +3149,5 @@ html.c9on .c12-q2:focus,html.c9on #v5-q.c12-q2:focus{outline:none;border-color:#
 .nadm-k.a{background:rgba(242,169,59,.18);color:#B86E00}.nadm-k.m{background:rgba(28,154,98,.15);color:#13804F}.nadm-k.p,.nadm-k.b{background:rgba(15,82,186,.12);color:var(--c9au)}.nadm-k.s{background:rgba(120,90,220,.14);color:#6A4BD0}
 .nadm-tx{flex:1;min-width:0;display:flex;flex-direction:column}.nadm-tx b{font-weight:700;font-size:13.5px;color:var(--c9tx)}.nadm-tx small{font-weight:600;font-size:12.5px;color:var(--c9t2);line-height:1.4}
 .nadm-ev>em{font-style:normal;font-size:12px;font-weight:700;color:var(--c9t2);white-space:nowrap}
+
+.nad2-ver{margin:14px 4px 0;font-size:13px;color:var(--mut,#6b7280);text-align:center}
