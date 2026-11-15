@@ -5610,7 +5610,7 @@ function V8(){try{return V8_LIVE||localStorage.getItem('nm.p15v8')==='1'}catch(e
 const ZT8=[['all','All','city','#0F52BA','#0A3A85'],['homes','Homes','house','#0F52BA','#0A3A85'],['jobs','Jobs','office','#0F52BA','#0A3A85'],
   ['help','Services','tools','#0F52BA','#0A3A85'],['events','Events','hall','#0F52BA','#0A3A85'],['sale','Sale','saletags','#0F52BA','#0A3A85']];
 const P16=["room","house","office","boxes","tools","store","docs","catering","table","league","stadium"];
-const P17=["passport","clean","clean2","hiring","jobsnews","resume","kitchen","coffee","mic","garage","saletags","rentsign","boxes2","boxes3","calc","expert","insure","bedside","kitchen2"];
+const P17=["passport","clean","clean2","hiring","jobsnews","resume","kitchen","coffee","mic","garage","saletags","rentsign","boxes2","boxes3","calc","expert","insure","bedside","kitchen2","football","feast"];
 const ph8=(p)=>`<span class="z8-ph"><img src="img/${P17.includes(p)?"p17":P16.includes(p)?"p16":"p15"}/${p}.webp" alt=""></span>`;
 const zt8=()=>P15.z8||'all';
 function zgo8(v){return v==='ev15'?'data-a="tab" data-k="ev15"':`data-a="p15open" data-v="${v}"`}
@@ -5747,7 +5747,7 @@ const c9p=p=>`img/${P17.includes(p)?'p17':P16.includes(p)?'p16':'p15'}/${p}.webp
 const c9t=p=>c9p(p).replace(/\/([^/]+)$/,'/t/$1');
 const c9i=(p,url)=>url?`<span class="c9-ph"><img src="${esc(url)}" alt="" loading="lazy" decoding="async"></span>`:`<span class="c9-ph"><img src="${esc(c9p(p))}" srcset="${esc(c9t(p))} 600w, ${esc(c9p(p))} 1200w" sizes="auto, (max-width:600px) 60vw, 360px" alt="" loading="lazy" decoding="async"></span>`;
 const C9EV={meetup:'coffee',watch:'stadium',festival:'catering',trip:'trip',league:'league'};
-const C9KW=[[/cook|kitchen|food|dinner|potluck|brunch/i,'catering'],[/bingo|game|quiz|trivia|night/i,'hall'],[/football|soccer|league|cricket|basket/i,'league'],[/watch|match|final|screening/i,'stadium'],[/music|karaoke|open mic|concert|dance/i,'mic'],[/coffee|meet|friends|walk/i,'coffee'],[/trip|hike|tour|day out/i,'trip'],[/culture|festival|fair/i,'catering']];
+const C9KW=[[/culture night|food night|feast|mezze|cook|kitchen|food|dinner|potluck|brunch/i,'feast'],[/football|soccer|futsal/i,'football'],[/bingo|game|quiz|trivia|night/i,'hall'],[/football|soccer|league|cricket|basket/i,'league'],[/watch|match|final|screening/i,'stadium'],[/music|karaoke|open mic|concert|dance/i,'mic'],[/coffee|meet|friends|walk/i,'coffee'],[/trip|hike|tour|day out/i,'trip'],[/culture|festival|fair/i,'catering']];
 const c9evp=e=>{const t=e.title||'';for(const [r,p] of C9KW)if(r.test(t))return p;return C9EV[e.kind]||'hall'};
 const c9jobp=j=>j.cat==='Shop helper'?'store':j.cat==='Cooking'||j.cat==='Kitchen'?'kitchen':j.cat==='Elder care'?'bedside':'office';
 const C9NEED=[['home','A place to live','Rooms, flats, houses','keys'],['work','Work','Jobs near you','hiring'],['people','People & events','Things to do this week','coffee'],['help','Help with things','Movers, tax, repairs','tools']];
@@ -6400,6 +6400,56 @@ function pl31me(){const d=P15.d||{};const on=[d.plus?'NeuAmigo Plus':'',d.club?'
   Object.assign(A,{pl31tab(el){P15.pltab=el.dataset.v;render()},pl31yr(el){P15.ply=el.dataset.v==='y';render()},pl31ct(el){P15.plct=el.dataset.v;render()}});
   const _h=c12home;c12home=function(){const h=_h();if(!PLANS())return h;const k='<div class="c9-in"><h1 class="c9-h1 sm c12-q">';return h.includes(k)?h.replace(k,'<div class="c9-in">'+(()=>{try{return pl31strip()}catch(e){return ''}})()+'<h1 class="c9-h1 sm c12-q">'):h};
   if(typeof c11me==='function'){const _m=c11me;c11me=function(){const h=_m.apply(this,arguments);if(!PLANS())return h;const k='<div class="c9-rh"><h2>Your things</h2></div>';return h.includes(k)?h.replace(k,(()=>{try{return pl31me()}catch(e){return ''}})()+k):h}}
+})();
+
+/* ===== part32: design v3 "rich home" (his ok 15 Nov 2026 21:02, mock handoff/mocks/na-air-v1/mock3.html) =====
+   BuyHatke-style richness + Airbnb-style calm: sapphire hero with floating 3D pictures, big + small picture tiles,
+   a dark "Move-in week" band and a light "Weekend picks" band (chips + card rails), "Popular in <city>" photo grid,
+   "Ask once. Get 5 prices." banner, an honest trust row, a big grey sign-off, a floating bottom bar with 3D pictures
+   and a one-time "Every price is open" sheet. Real data only: a rail with no data is hidden. 3D pictures: Fluent Emoji
+   3D (MIT), img/f3d. Turn off with NA32_LIVE=false. */
+const NA32_LIVE = true;
+function NA32(){try{return NA32_LIVE||localStorage.getItem('nm.na32')==='1'}catch(e){return NA32_LIVE}}
+const f3=n=>`img/f3d/${n}.webp`;
+const n32p=(n,x,y,w,r)=>`<img class="n32-p" src="${f3(n)}" alt="" aria-hidden="true" style="left:${x}px;top:${y}px;width:${w}px;transform:rotate(${r||0}deg)">`;
+const n32tile=(n,t,s,a,tag,big)=>`<button class="n32-t${big?' big':''}" data-a="${a}">${tag?`<em>${esc(tag)}</em>`:''}<img src="${f3(n)}" alt=""><b>${esc(t)}</b><small>${esc(s)}</small></button>`;
+const n32ev=e=>`<button class="n32-c" data-a="p15open" data-v="evd:${e.id}">${c9i(c9evp(e))}<b>${esc(e.title)}</b><small>${esc(evWhen(e))}</small><span class="n32-pr"><i>${e.price?esc(money(e.price,e.currency)):'No ticket'}</i><u>Book</u></span></button>`;
+const n32room=r=>`<button class="n32-c" data-a="p15open" data-v="rooms">${c9i('room',r.photos&&r.photos[0]&&PC15()?phUrl15(r.photos[0]):'')}<b>${esc(r.title)}</b><small>${esc(r.area||'')}</small><span class="n32-pr"><i>${esc(money(r.rent,r.currency))}<s> /month</s></i><u>View</u></span></button>`;
+const n32chips=L=>`<div class="n32-chips">${L.map(([t,a],i)=>`<button class="${i?'':'on'}" data-a="${a}">${esc(t)}</button>`).join('')}</div>`;
+function n32home(){const c=c9city(),city=c||'your city';
+  const ev=zdata8('events15','ev',{k:'',cty:c}),rooms=zdata8('rooms15','rooms',{maxrent:0});
+  const up=ev.filter(e=>new Date(e.startsAt)>Date.now()-3*36e5).sort((a,b)=>new Date(a.startsAt)-new Date(b.startsAt));
+  const plus=(typeof PLANS==='function'&&PLANS())?`<button class="n32-plus" data-a="p15open" data-v="plans">${(P15.d||{}).plus?'Your plan':'Plus'}</button>`:'';
+  const hero=`<div class="n32-hero"><div class="n32-top"><div class="c9-brand">${NA_CASE('c9lg')}<span><b>NeuAmigo</b><small>in <em>${esc(city)}</em></small></span></div>${plus}</div>
+    ${n32p('airplane',250,52,84,-12)}${n32p('luggage',312,124,62,10)}${n32p('snowflake',266,152,34)}${n32p('sparkles',340,40,30)}
+    <h1>Your new<br>city, sorted.</h1><p>Rooms, jobs, events and help. Every price open.</p></div>
+    <button class="n32-search" data-a="p15open" data-v="search"><span class="n32-mg"></span><span><b>Search <em>rooms</em> in ${esc(city)}</b><small>Try: movers, tax help, football</small></span></button>`;
+  const grid=`<div class="n32-grid">${n32tile('house_with_garden','Rooms',city+' · prices shown','p15open" data-v="rooms','',1)+n32tile('briefcase','Jobs','Pay shown','p15open" data-v="jobs')
+    +n32tile('delivery_truck','Movers','Ask once','z8q" data-c="Movers','5 prices')+n32tile('receipt','Tax help','Ask once','z8q" data-c="Tax','5 prices')+n32tile('toolbox','Small jobs','Fix, clean','z8q" data-c="Small jobs','5 prices')}</div>`;
+  const wk=up.slice(0,8);
+  const week=wk.length?`<div class="n32-h"><h2>This weekend</h2><button data-a="tab" data-k="ev15">See all ›</button></div><div class="n32-rail">${wk.map(n32ev).join('')}</div>`:'';
+  const rr=rooms.slice(0,8);
+  const move=`<div class="n32-band dk">${n32p('key',312,6,52,18)}${n32p('package',262,36,54,-10)}<h3>Move-in week</h3><p>Everything for your first home, all in one place</p>
+    ${n32chips([['Rooms','p15open" data-v="rooms'],['Movers','z8q" data-c="Movers'],['Furniture','p15open" data-v="c12sell'],['Cleaning','z8q" data-c="Cleaning']])}
+    ${rr.length?`<div class="n32-rail">${rr.map(n32room).join('')}</div><button class="n32-more" data-a="p15open" data-v="rooms">See all rooms ›</button>`:`<button class="n32-more" data-a="p15open" data-v="rooms">Look for a room in ${esc(city)} ›</button>`}</div>`;
+  const picks=up.slice(0,8);
+  const wkp=picks.length?`<div class="n32-band lt">${n32p('party_popper',300,6,58,10)}${n32p('confetti_ball',252,32,42,-8)}${n32p('ticket',318,66,46,-14)}<h3>Weekend picks</h3><p>Meet people near you</p>
+    ${n32chips([['All','tab" data-k="ev15'],['Sports','tab" data-k="ev15'],['Food','tab" data-k="ev15'],['Music','tab" data-k="ev15']])}<div class="n32-rail">${picks.map(n32ev).join('')}</div></div>`:'';
+  const pop=`<div class="n32-h"><h2>Popular in ${esc(city)}</h2></div><div class="n32-pop">${[['room','Rooms','p15open" data-v="rooms'],['hiring','Jobs','p15open" data-v="jobs'],['football','Sports','tab" data-k="ev15'],['feast','Food nights','tab" data-k="ev15'],['sofa','Furniture','p15open" data-v="c12sell'],['clean','Cleaning','z8q" data-c="Cleaning']].map(([p,t,a])=>`<button data-a="${a}">${c9i(p)}<b>${t}</b></button>`).join('')}</div>`;
+  const ban=`<button class="n32-ban" data-a="p15open" data-v="c12svc">${n32p('delivery_truck',214,22,118,-6)}${n32p('receipt',296,84,54,12)}<b>Ask once.<br>Get 5 prices.</b><small>Movers, tax help, cleaning. Answers in 24 h.</small><u>Ask for prices</u></button>`;
+  const trust=`<div class="n32-trust"><div><img src="${f3('dollar_banknote')}" alt=""><b>Open prices</b>see before you ask</div><div><img src="${f3('handshake')}" alt=""><b>Pay directly</b>to the business</div><div><img src="${f3('shield')}" alt=""><b>Report</b>anything in 1 tap</div></div>`;
+  const sig=`<div class="n32-sig">Settle in.<br>Feel at home.<small>NeuAmigo · made for people who move</small></div>`;
+  let seen=1;try{seen=localStorage.getItem('na32.sheet')==='1'}catch(e){}
+  const sheet=seen?'':`<div class="n32-dim" data-a="na32ok"></div><div class="n32-sheet" role="dialog" aria-label="Every price is open"><button class="n32-x" data-a="na32ok" aria-label="Close">✕</button><img src="${f3('receipt')}" alt=""><h3>Every price is open.<br>No hidden fees.</h3><p>You see the full price before you ask. You pay the business directly, never a surprise extra.</p><button class="n32-got" data-a="na32ok">Got it</button></div>`;
+  return c9wrap(`<div class="n32">${hero}${grid}${typeof c10pre==='function'?c10pre():''}${week}${move}${wkp}${pop}${ban}${trust}${sig}</div>`)+sheet}
+(function(){
+  Object.assign(A,{na32ok(){try{localStorage.setItem('na32.sheet','1')}catch(e){}render()}});
+  const _h=c12home;c12home=function(){if(!NA32())return _h.apply(this,arguments);try{return n32home()}catch(e){console.warn('[n32]',e);return _h.apply(this,arguments)}};
+  /* bottom bar: floating, with a 3D picture over every word */
+  const PIC={'Home':'world_map','Settle In':'house_with_garden','Events':'party_popper','Buy & Sell':'shopping_bags','Me':'luggage'};
+  const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{if(!NA32())return;document.documentElement.classList.add('n32on');
+    const nav=document.querySelector('.navwrap .nav.c12nav');if(!nav)return;nav.classList.add('n32nav');
+    nav.querySelectorAll('button').forEach(b=>{const t=(b.textContent||'').trim();if(PIC[t]&&!b.querySelector('img'))b.insertAdjacentHTML('afterbegin',`<img src="${f3(PIC[t])}" alt="">`)})}catch(e){}};
 })();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
