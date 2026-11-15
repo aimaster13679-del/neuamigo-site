@@ -6391,8 +6391,8 @@ function pl31me(){const d=P15.d||{};const on=[d.plus?'NeuAmigo Plus':'',d.club?'
 (function(){
   P15V.plans=function(){return pl31()};
   Object.assign(A,{pl31tab(el){P15.pltab=el.dataset.v;render()},pl31yr(el){P15.ply=el.dataset.v==='y';render()},pl31ct(el){P15.plct=el.dataset.v;render()}});
-  const _h=c12home;c12home=function(){const h=_h();if(!PLANS())return h;const k='<div class="c9-in"><h1 class="c9-h1 sm c12-q">';return h.includes(k)?h.replace(k,'<div class="c9-in">'+pl31strip()+'<h1 class="c9-h1 sm c12-q">'):h};
-  if(typeof c11me==='function'){const _m=c11me;c11me=function(){const h=_m.apply(this,arguments);if(!PLANS())return h;const k='<div class="c9-rh"><h2>Your things</h2></div>';return h.includes(k)?h.replace(k,pl31me()+k):h}}
+  const _h=c12home;c12home=function(){const h=_h();if(!PLANS())return h;const k='<div class="c9-in"><h1 class="c9-h1 sm c12-q">';return h.includes(k)?h.replace(k,'<div class="c9-in">'+(()=>{try{return pl31strip()}catch(e){return ''}})()+'<h1 class="c9-h1 sm c12-q">'):h};
+  if(typeof c11me==='function'){const _m=c11me;c11me=function(){const h=_m.apply(this,arguments);if(!PLANS())return h;const k='<div class="c9-rh"><h2>Your things</h2></div>';return h.includes(k)?h.replace(k,(()=>{try{return pl31me()}catch(e){return ''}})()+k):h}}
 })();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
