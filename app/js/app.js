@@ -6584,6 +6584,52 @@ function a4home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{},name=(m
   const _o=A.p15open;A.p15open=function(el){try{if(el&&el.dataset&&el.dataset.t==='biz'){P15.pltab='biz'}}catch(e){}return _o.apply(this,arguments)};
 })();
 
+/* ===== part35: Arrive phase 2-3 (his ok 16 Nov 2026 00:00 + 00:14) =====
+   1) Premium headings everywhere (Fraunces) + warm paper background on every customer page.
+   2) Me page: big "Business desk · Switch" card (customer and business sides stay apart).
+   3) Business desk: own dark ink look, "BUSINESS DESK" label + "Back to NeuAmigo" on top, bottom bar
+      Dashboard · Listings · Requests · Boost · Me with 3D pictures, dashboard tiles show what you offer with the
+      real "from" price, new Boost page with real prices (each opens the real buying page). */
+const NA35_LIVE = true;
+function NA35(){try{return NA35_LIVE||localStorage.getItem('nm.na35')==='1'}catch(e){return NA35_LIVE}}
+const BZPIC={home:'house_with_garden',work:'briefcase',events:'party_popper',service:'delivery_truck',sell:'couch_and_lamp'};
+const BZPR={home:'agent_plan',work:'hire_plan',events:'host_basic',service:'services_plan',sell:'sale_one'};
+function bz35top(t,sub){return `<div class="bz-top"><span class="bz-tag">Business desk</span><button class="bz-back" data-a="c10bizoff">Back to NeuAmigo</button></div>${t?`<div class="bz-h"><small>${esc(sub||'')}</small><h1>${t}</h1></div>`:''}`}
+function bz35pr(k){const p=BZPR[k];if(!p)return '';const v=p15price(p);if(!v)return '';return `<em>from <b>${esc(v)}</b>${p==='sale_one'?' / item':' / month'}</em>`}
+function bz35home(){const r=c10roles();if(!r.length)return bz35pick();const d=P15.d||{},biz=(d.biz||[]);const name=((S.me||{}).name||'').split(' ')[0];
+  const tiles=r.map(k=>{const R=C10R.find(x=>x[0]===k),A=C10A[k];return `<div class="bz-card"><img class="bz-p3" src="${f3(BZPIC[k]||'briefcase')}" alt=""><b>${esc(R[2])}</b><small>${esc(R[3])}</small>${bz35pr(k)}<div class="bz-two"><button data-a="p15open" data-v="${A[0][1]}">${esc(A[0][0])}</button><button class="g" data-a="p15open" data-v="${A[1][1]}">${esc(A[1][0])}</button></div></div>`}).join('');
+  const plans=biz.filter(b=>b.kind!=='advertiser');
+  return c9wrap(`<div class="bz">${bz35top('Good to see you'+(name?', '+esc(name):'')+'.','Dashboard')}
+   <div class="bz-sec">What you offer</div><div class="bz-grid">${tiles}</div>
+   ${plans.length?`<div class="bz-sec">My plans</div>${plans.map(b=>`<div class="bz-plan"><img src="${f3('briefcase')}" alt=""><span><b>${esc(b.name||'')}</b><small>${planOn15(b)?'Active until '+esc(until15(b.planUntil)):'Plan not active'}</small></span></div>`).join('')}`:''}
+   <button class="bz-boostcta" data-a="p15open" data-v="bzboost"><img src="${f3('sparkles')}" alt=""><span><b>Be the first name people see</b><small>Boost a listing or take a city spot</small></span><u>Boost</u></button>
+   <button class="bz-ghost" data-a="c10roleedit">Change what I offer</button></div>`)}
+function bz35pick(){const n=P15.c10r=P15.c10r||c10roles().slice();
+  return c9wrap(`<div class="bz">${bz35top('What do you<br>offer people?','Welcome')}<p class="bz-lede">Pick one or more. Every plan shows its price before you pay. Your customers never see this desk.</p>
+   <div class="bz-grid">${C10R.map(([k,p,t,s])=>`<button class="bz-card bz-pk${n.includes(k)?' on':''}" data-a="c10role" data-k="${k}"><img class="bz-p3" src="${f3(BZPIC[k]||'briefcase')}" alt=""><b>${esc(t)}</b><small>${esc(s)}</small>${bz35pr(k)}</button>`).join('')}</div>
+   <button class="bz-main" data-a="c10rolego" ${n.length?'':'disabled'}>${n.length?`Continue · ${n.length} picked`:'Pick at least one'}</button></div>`)}
+function bz35boost(){const B=[['sparkles','Feature a job','Top of the jobs list for 7 days','job_feature','7 days','jobs'],['couch_and_lamp','Boost an item for sale','Top of Buy & Sell for 7 days','sale_boost','7 days','mysale'],['party_popper','Feature an event','Top of events for 7 days, marked Sponsored','event_feature','7 days','hostboard'],['delivery_truck','Category spot','First in one category for a week','ad_cat_w','1 week','adspot'],['world_map','City Spotlight','On your city\'s home page for a week','ad_city_w','1 week','adspot']];
+  return c9wrap(`<div class="bz">${bz35top('Be the first name<br>they see.','Boost')}<p class="bz-lede">Your offer moves to the top with a clear "Featured" or "Sponsored" label. One price, paid once, no surprise charges.</p>
+   ${B.map(([p,t,s,k,per,v])=>{const pr=p15price(k);return `<button class="bz-boost" data-a="p15open" data-v="${v}"><img src="${f3(p)}" alt=""><span><b>${esc(t)}</b><small>${esc(s)}</small></span><i>${pr?esc(pr):''}<small>${esc(per)}</small></i></button>`}).join('')}
+   <p class="bz-fine">Prices are in your country's money, tax included where it applies.</p></div>`)}
+(function(){
+  if(!NA35())return;
+  c10bzhome=bz35home;c10bzpick=bz35pick;
+  const _bt=c10bztop;c10bztop=function(t){return `<div class="bz bz-inl">${bz35top(t?esc(t):'','Business desk')}</div>`};
+  try{P15V.bzboost=bz35boost}catch(e){}
+  /* Me page: the switch as a big dark card */
+  const _me=c11me;c11me=function(){let h=_me.apply(this,arguments);
+    if(!c10biz())h=h.replace(/<button class="c9-pan c10-sw" data-a="c10bizon">[\s\S]*?<\/button>/,`<button class="a4-switch" data-a="c10bizon"><img src="${f3('briefcase')}" alt=""><span><b>Business desk</b><small>Sell a service, post a home, a job or an event</small></span><u>Switch</u></button>`);
+    return h};
+  const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{const R=document.documentElement;R.classList.add('a4ui');const bz=typeof c10biz==='function'&&c10biz();R.classList.toggle('a4bz',bz);
+    const nv=document.querySelector('.navwrap .nav');if(!bz&&nv&&nv.classList.contains('bznav')){nv.classList.remove('bznav');['background','border','display','grid-template-columns'].forEach(p=>nv.style.removeProperty(p))}
+    if(!bz)return;const nav=document.querySelector('.navwrap .nav');if(!nav)return;
+    const v=String(P15.v||''),cur=v==='bzlist'?'l':v==='bzreq'?'r':v==='bzboost'?'b':!v&&S.tab==='me'?'me':!v?'d':'';
+    const b=(k,l,p,a)=>`<button ${a} class="${cur===k?'on':''}"><img src="${f3(p)}" alt=""><span>${l}</span></button>`;
+    nav.innerHTML=b('d','Dashboard','world_map','data-a="tab" data-k="matches"')+b('l','Listings','clipboard','data-a="p15open" data-v="bzlist"')+b('r','Requests','handshake','data-a="p15open" data-v="bzreq"')+b('b','Boost','sparkles','data-a="p15open" data-v="bzboost"')+b('me','Me','luggage','data-a="tab" data-k="me"');
+    nav.classList.add('c10biz','bznav');nav.style.setProperty('background','#121827','important');nav.style.setProperty('border','1px solid #222A3C','important');nav.style.setProperty('display','flex','important');nav.style.setProperty('grid-template-columns','none','important')}catch(e){console.warn('[bz35]',e)}};
+})();
+
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
 })();
