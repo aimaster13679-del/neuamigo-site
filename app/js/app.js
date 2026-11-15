@@ -1825,7 +1825,7 @@ async function afterLogin(){
   try{
     /* Faster start (29 Oct): blocks and events do not need my profile, so load them while it loads. */
     const pre=Promise.all([loadBlocks().catch(()=>{}),loadEvents().catch(()=>{})]);
-    const me=await loadMe();
+    window.__bootStage='your profile';const me=await loadMe();window.__bootStage='your home';
     if(!me){cacheClear();startSignup();return}
     if(me.banned){cacheClear();await API.signOut();S=fresh();S.screen='welcome';render();toast('This account has been suspended. Write to us if you think this is a mistake.','shield');return}
     S.screen='app';if(!['matches','events','connections','me'].includes(S.tab))S.tab='matches';render();
@@ -2259,12 +2259,18 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden&&S.screen==
 
 /* ---------- Boot ---------- */
 async function boot(){
+  /* Start watchdog (15 Nov 2026, his report 'app khul hi nahi rahi'): if the app is still starting after 12 s, show
+     a clear card with what it is waiting for and a Try again button, instead of an endless opening. */
+  window.__bootStage='start';setTimeout(()=>{try{if(S.screen!=='boot'&&S.loaded!==false)return;if(S.screen==='app'||S.screen==='welcome')return;
+    const d=document.createElement('div');d.id='na-bootwd';d.style.cssText='position:fixed;inset:auto 16px 24px;z-index:10000;background:#fff;color:#0B1226;border-radius:16px;padding:16px;box-shadow:0 8px 30px rgba(0,0,0,.25);font:15px/1.4 system-ui,sans-serif';
+    d.innerHTML='<b>Still starting…</b><div style="font-size:13px;color:#555;margin:4px 0 10px">Waiting for: '+String(window.__bootStage).replace(/[<>&]/g,'')+(navigator.onLine===false?' (no internet)':'')+'</div><button style="width:100%;padding:12px;border:0;border-radius:12px;background:#0F52BA;color:#fff;font-weight:700">Try again</button>';
+    d.querySelector('button').onclick=()=>location.reload();document.body.appendChild(d)}catch(e){}},12000);
   S.screen='boot';S.bootError='';render();console.info('[boot] start',isNative?'native':'web');
   if(location.hash&&/access_token|error_description/.test(location.hash)){const h=location.href;history.replaceState(null,'',location.pathname+location.search);if(await handleAuthUrl(h))return}
   /* A cold start from the sign-in return link: handle it in the background, never hold up the first screen. */
   if(isNative&&Plug().App){try{Promise.resolve(Plug().App.getLaunchUrl()).then(l=>{if(l&&l.url&&l.url.startsWith(CFG.redirect))handleAuthUrl(l.url)}).catch(()=>{})}catch(e){}}
   console.info('[boot] session',!!API.session());
-  if(!API.session()){S.screen='welcome';render();console.info('[boot] welcome shown');return}
+  window.__bootStage='sign-in check';if(!API.session()){S.screen='welcome';render();console.info('[boot] welcome shown');return}
   await afterLogin();
   payReturn().catch(()=>{});
   console.info('[boot] signed in, screen',S.screen);
