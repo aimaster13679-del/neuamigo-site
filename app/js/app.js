@@ -6763,7 +6763,7 @@ function a7home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{};
     work:(jobs.length?`<div class="a7-sec"><div><h2>Jobs in ${esc(city)}</h2><p>Pay shown on every job</p></div></div><div class="a7-g2">${jobs.slice(0,6).map(a7job).join('')}</div><button class="a7-more" data-a="p15open" data-v="jobs">See all jobs ›</button>`:a7empty('briefcase','New jobs show up here','Make your work profile once and apply in one tap.','Make my work profile','p15open" data-v="workprof'))+`<button class="a7-plus" data-a="p15open" data-v="workprof"><img src="${f3('identification_card')}" alt=""><span><small>Work profile</small><b>Apply to any job in one tap</b><i>Your skills, hours and languages</i></span><u>Open</u></button>`,
     papers:steps||a7empty('clipboard','Your step-by-step plan','Bank, phone, ID, tax number: one step at a time.','Open my plan','p15open" data-v="plan30'),
     help:svc,
-    fun:(tx||a7empty('party_popper','Events show up here','Football, food nights and meetups in your city.','See events','tab" data-k="ev15'))+`<button class="a7-plus" data-a="p15open" data-v="club"><img src="${f3('party_popper')}" alt=""><span><small>Weekend Club</small><b>No booking fee, book 48 hours early</b><i>${p15price('wc_month_a')?esc(p15price('wc_month_a'))+' a month':'See the price'}</i></span><u>See</u></button>`};
+    fun:(tx||a7empty('party_popper','Events show up here','Football, food nights and meetups in your city.','See events','tab" data-k="ev15'))+`<button class="a7-plus" data-a="p15open" data-v="club"><img src="${f3('party_popper')}" alt=""><span><small>Weekend Club</small><b>No booking fee, book 48 hours early</b><i>${p15price('wc_month_a')?esc(p15price('wc_month_a'))+' a month':'See the price'}</i></span><u>See</u></button><button class="a7-plus" data-a="p15open" data-v="quest"><img src="${f3('compass')}" alt=""><span><small>City Quest</small><b>Learn your city in one walk</b><i>Free to play · earn a badge</i></span><u>Play</u></button>`};
   const pans=A7TABS.map(([k])=>`<div class="a7-pn" data-p="${k}">${P[k]}</div>`).join('');
   const foot=`<div class="a7-ft"><h2>Your new city,<br>made easy.</h2><small>NeuAmigo · for people who move</small></div>`;
   return c9wrap(`<div class="a7" data-t="${t}">${head}<div class="a7-bans">${bans}</div>${pans}${foot}</div>`)}
@@ -6830,6 +6830,7 @@ function a8home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{};
            a8pick('img/p17/calc.webp','receipt','Tax filing',`Tell us once, <strong>up to 5 prices</strong>`,'Get prices','z8q" data-c="Tax')],
     life:[a8pick('img/p19/party.webp','party_popper','Weekends',up.length?`<strong>${up.length} ${up.length===1?'event':'events'}</strong> coming up`:'Events near you','See events','tab" data-k="ev15'),
           a8pick('img/p18/tacos.webp','hot_beverage','Taste of home','Food from your country, cooked nearby','See dishes','p15open" data-v="food'),
+          a8pick('img/p18/toronto.webp','compass','City Quest','Walk your new city, <strong>earn a badge</strong>','Play free','p15open" data-v="quest'),
           a8pick('img/p19/sofa.webp','couch_and_lamp','Buy and sell',sales.length?`<strong>${sales.length} ${sales.length===1?'item':'items'}</strong> near you`:'Things for your home','See items','p15open" data-v="c12sell')]};
   const grid=L=>`<div class="a7-grid">${L.map(x=>a7tile(...x)).join('')}</div>`;
   const stepRows=L=>L.length?`<div class="a7-list">${L.map(s=>{const ok=done.includes(s[0]);return `<button class="a7-row${ok?' ok':''}" data-a="p15open" data-v="plan30"><span class="a7-ck"></span><span><b>${esc(s[2])}</b><small>${esc(s[3])}</small></span><i>${ok?'Done':'›'}</i></button>`}).join('')}</div>`:'';
@@ -7146,6 +7147,64 @@ Object.assign(A,{
   const _o=A.p15open;A.p15open=function(el){const v=String((el&&el.dataset&&el.dataset.v)||'');if(v.startsWith('food:')){P15.fq=1;P15V[v]=()=>a44dish(v.slice(5))}if(v==='foodorders')P15.fo=undefined;if(v==='food')P15.food=undefined;return _o.apply(this,arguments)};
   /* business desk: new role "Home food" */
   try{if(!C10R.some(r=>r[0]==='food')){C10R.push(['food','kitchen2','Home food','Home cooks: dishes from your country']);C10A.food=[['Add a dish','foodpost'],['Orders','foodorders']];BZPIC.food='hot_beverage';BZPR.food='cook_plan'}}catch(e){}
+})();
+
+/* ===== part45: City Quest (his ok 16 Nov 2026 11:56 'ok dono'). Free walks with stops and a badge at the end.
+   No money to play, no cash prizes. Local businesses pay to be a 'Sponsored' stop (Quest Stop plan).
+   Check-in = tap when you are there (we never track location). Admin makes quests and adds business stops. */
+const A45PH={toronto:'img/p18/toronto.webp',feast:'img/p17/feast.webp',lang:'img/p17/lang.webp',party:'img/p19/party.webp',medal:'img/p17/medal.webp',compass:'img/p17/compass.webp',coffee:'img/p17/kitchen2.webp',apartment:'img/p18/apartment.webp',work:'img/p19/work.webp',sofa:'img/p19/sofa.webp',football:'img/p17/football.webp',mic:'img/p17/mic.webp',night:'img/p17/night.webp'};
+const a45ph=k=>A45PH[k]||A45PH.compass;
+const a45sp=s=>{const n=(s.name+' '+(s.note||'')).toLowerCase();return A45PH[s.photo]&&s.photo!=='feast'?A45PH[s.photo]:/market|food|restaurant|kitchen|bakery/.test(n)?A45PH.feast:/caf|coffee|tea/.test(n)?A45PH.coffee:/library|book|school|museum/.test(n)?A45PH.lang:/park|field|sport|stadium/.test(n)?A45PH.football:/music|bar|club|night/.test(n)?A45PH.night:/shop|store|mall/.test(n)?A45PH.sofa:(/toronto/i.test(c9city()||'')?A45PH.toronto:A45PH.compass)};
+function a45load(){if(P15.qs===undefined){P15.qs=null;API.rpc('quests15',{}).then(r=>{P15.qs=r||[];render()}).catch(()=>{P15.qs=[];render()})}return P15.qs}
+function a45head(t,small,sub){return `<div class="a7-hd"><div class="a7-top"><button class="a7-sq a40-bk" data-a="p15back" aria-label="Back">‹</button><span class="a7-where"><small>${small}</small><b>${t}</b><i>${sub}</i></span></div></div>`}
+function a45list(){const L=a45load(),city=c9city()||'your city',adm=!!(S.me||{}).isAdmin;
+  if(L===null)return c9wrap(`<div class="a7 a41 a45" data-t="help">${a45head('City Quest','Fun in '+esc(city),'Explore your new city, collect badges')}<div class="a7-pn on" data-p="help" style="padding:40px 16px">${spinner('Loading')}</div></div>`);
+  const badges=L.filter(q=>q.stops.length&&q.stops.every(s=>s.done));
+  const ban=`<div class="a7-ban on a45-ban" data-p="help"><span class="a7-bt"><small>Free to play · no money, no cash prizes</small><h3>Learn your city<br>in one walk.</h3><p>Stops, a badge, new places you will love.</p></span><span class="a7-bp"><img class="b0" src="${f3('compass')}" alt=""><img class="b1" src="${f3('round_pushpin')}" alt=""><img class="b2" src="${f3('sparkles')}" alt=""></span></div>`;
+  const bd=badges.length?`<div class="a45-bdg">${badges.map(q=>`<span><img src="${f3('sparkles')}" alt="">${esc(q.badge)}</span>`).join('')}</div>`:'';
+  const card=q=>{const d=q.stops.filter(s=>s.done).length,n=q.stops.length;return `<div class="a41-card"><button class="a41-ph a44-ph" data-a="p15open" data-v="quest:${q.id}"><img src="${a45ph(q.photo)}" alt="" loading="lazy">${q.stops.some(s=>s.sponsored)?'<em>Sponsored stops</em>':''}</button>
+    <div class="a41-bd"><span class="a41-nm">${esc(q.title)}</span><small class="a41-ln">${n} stops · about ${Math.round(q.minutes/60*10)/10} h${q.area?' · '+esc(q.area):''}</small>
+    <span class="a41-tags"><span>Badge: ${esc(q.badge)}</span><span>Free</span>${d?`<span>${d} of ${n} done</span>`:''}</span>
+    <button class="a41-btn" data-a="p15open" data-v="quest:${q.id}">${d===n&&n?'See your badge':d?'Continue quest':'Start quest'}</button></div></div>`};
+  const list=L.length?`<div class="a7-sec"><div><h2>Quests in ${esc(city)}</h2><p>${L.length} ${L.length===1?'quest':'quests'}</p></div></div><div class="a41-list">${L.map(card).join('')}</div>`
+    :a7empty('compass','No quests in your city yet','New quests are added city by city. We will show them here first.','','').replace('a7-empty','a7-empty in');
+  const adminB=adm?`<div class="a9-two"><button class="a9-dr" data-a="p15open" data-v="questnew"><span class="a9-ph"><img src="${A45PH.lang}" alt=""></span><b>Make a quest</b><small>Admin only</small></button><button class="a9-dr" data-a="p15open" data-v="questreqs"><span class="a9-ph"><img src="${A45PH.feast}" alt=""></span><b>Stop requests</b><small>Businesses waiting</small></button></div>`:'';
+  const biz=`<button class="a7-biz" data-a="p15open" data-v="questask"><img src="${f3('megaphone')}" alt=""><span><small>For local places</small><b>Be a stop on a City Quest</b><i>New people walk through your door${p15price('quest_stop')?' · '+esc(p15price('quest_stop'))+' a month':''}</i></span><u>Start</u></button>`;
+  return c9wrap(`<div class="a7 a41 a45" data-t="help">${a45head('City Quest','Fun in '+esc(city),'Explore your new city, collect badges')}<div class="a7-bans">${ban}</div><div class="a7-pn on" data-p="help">${bd}${list}${adminB}${biz}</div></div>`)}
+function a45quest(id){const L0=a45load();if(L0===null)return c9wrap(`<div class="a7 a41 a45" data-t="help">${a45head('City Quest','Fun','')}<div class="a7-pn on" data-p="help" style="padding:40px 16px">${spinner('Loading')}</div></div>`);const q=(L0||[]).find(x=>String(x.id)===String(id));
+  if(!q)return c9wrap(c9back('City Quest')+`<div class="c9-in">${a7empty('compass','This quest is not available','It may have closed.','See quests','p15open" data-v="quest').replace('a7-empty','a7-empty in')}</div>`);
+  const n=q.stops.length,d=q.stops.filter(s=>s.done).length,next=q.stops.find(s=>!s.done);
+  const rows=q.stops.map(s=>`<div class="a45-row${s.done?' ok':''}"><span class="a45-n">${s.done?'':s.n}</span><span class="a45-th"><img src="${a45sp(s)}" alt="" loading="lazy"></span><span class="a45-tx"><b>${esc(s.name)}</b><small>${s.sponsored?'Sponsored · ':''}${esc(s.offer||s.note||'')}</small></span>${s.done?'<i>Done</i>':next&&next.id===s.id?`<button data-a="a45here" data-id="${s.id}">I am here</button>`:'<i>›</i>'}</div>`).join('');
+  const end=d===n&&n?`<div class="a45-won"><img src="${f3('sparkles')}" alt=""><span><small>Badge earned</small><b>${esc(q.badge)}</b><i>You finished ${esc(q.title)}</i></span></div>`:'';
+  return c9wrap(`<div class="a7 a41 a45" data-t="help">${a45head(esc(q.title),'City Quest',`${d} of ${n} stops done`)}<div class="a7-pn on" data-p="help">
+   <span class="a42-tr a45-tr"><i style="width:${n?Math.round(d/n*100):0}%"></i></span>${end}
+   <div class="a7-sec"><div><h2>Your stops</h2><p>Tap "I am here" when you reach each place</p></div></div><div class="a45-rows">${rows}</div>
+   <p class="a44-note">Free to play. No money, no cash prizes. We do not track your location. Sponsored stops are local places that pay to be part of the walk.</p></div></div>`)}
+function a45form(t,small,fields,btn,act){return c9wrap(`<div class="a7 a41 a44 a45" data-t="help">${a45head(t,small,'')}<div class="a7-pn on" data-p="help"><div class="a44-form">${fields}<button class="a41-btn" data-a="${act}">${btn}</button></div></div></div>`)}
+function a45ask(){return a45form('Be a quest stop','Quest Stop plan'+(p15price('quest_stop')?' · '+esc(p15price('quest_stop'))+' a month':''),
+  `<label>Your place's name<input id="a45n" maxlength="60" placeholder="e.g. Corner Café"></label><label>Area<input id="a45a" maxlength="60" placeholder="e.g. Harbourfront"></label><label>Small offer for walkers (optional)<input id="a45o" maxlength="80" placeholder="e.g. 10% off a drink"></label><p class="a44-note">Your place is marked "Sponsored" in the quest. We add you to a quest in your city and tell you when you are live.</p>`,'Send request','a45asksave')}
+function a45new(){const c=(S.me||{}).city||'';return a45form('Make a quest','Admin',
+  `<label>City<input id="a45c" value="${esc(c)}"></label><label>Title<input id="a45t" maxlength="80" placeholder="e.g. Waterfront first walk"></label><label>Area<input id="a45r" maxlength="60" placeholder="e.g. Harbourfront"></label><label>Minutes<input id="a45m" inputmode="numeric" value="120"></label><label>Badge name<input id="a45b" maxlength="40" placeholder="e.g. Harbour Explorer"></label><label>Stops, one per line: name - note<textarea id="a45s" rows="6" placeholder="Harbour view - Start here&#10;City library - Free library card desk&#10;Weekend market - Open Sat and Sun"></textarea></label>`,'Create quest','a45newsave')}
+function a45reqs(){const L=P15.qr;if(L===undefined){P15.qr=null;API.rpc('quest_reqs15',{}).then(r=>{P15.qr=r||[];render()}).catch(()=>{P15.qr=[];render()})}
+  const adm=!!(S.me||{}).isAdmin,Q=a45load()||[];
+  const body=!L?spinner('Loading'):L.length?`<div class="a44-ol">${L.map(r=>`<div class="a44-ord"><span><b>${esc(r.name)}</b><small>${esc(r.area||'')}${r.offer?' · '+esc(r.offer):''}${r.city?' · '+esc(r.city):''}</small><i class="s-${r.status==='added'?'ready':r.status}">${r.status==='waiting'?'Waiting':r.status==='added'?'Live in a quest':'Declined'}</i></span>${adm&&r.status==='waiting'&&Q.length?`<span class="a44-ob">${Q.slice(0,3).map(q=>`<button data-a="a45add" data-r="${r.id}" data-q="${q.id}">Add to: ${esc(q.title)}</button>`).join('')}</span>`:''}</div>`).join('')}</div>`
+    :a7empty('compass','No requests yet','Local places that want to be a stop show here.','','').replace('a7-empty','a7-empty in');
+  return c9wrap(`<div class="a7 a41 a44 a45" data-t="help">${a45head('Stop requests','City Quest','')}<div class="a7-pn on" data-p="help">${body}</div></div>`)}
+const a45v=id=>{const e=document.getElementById(id);return e?e.value.trim():''};
+Object.assign(A,{
+  async a45here(el){try{await API.rpc('quest_check15',{sid:el.dataset.id});P15.qs=undefined;a45load();toast('Checked in. Keep going!','info')}catch(e){toast('Could not check in. Try again.','info')}},
+  async a45asksave(){const n=a45v('a45n');if(n.length<2){toast('Add your place name.','info');return}
+    try{await API.rpc('quest_ask15',{nm:n,ar:a45v('a45a'),ofr:a45v('a45o')});P15.qr=undefined;toast('Request sent. We tell you when you are live.','info');A.p15open({dataset:{v:'questreqs'}})}catch(e){toast('Could not send. Try again.','info')}},
+  async a45newsave(){const st=a45v('a45s').split('\n').map(l=>l.trim()).filter(Boolean).map(l=>{const i=l.indexOf(' - ');return i>0?{name:l.slice(0,i),note:l.slice(i+3)}:{name:l,note:''}});
+    if(a45v('a45t').length<3||st.length<2){toast('Add a title and at least 2 stops.','info');return}
+    try{await API.rpc('quest_new15',{c:a45v('a45c'),cc:(S.me||{}).country||'',t:a45v('a45t'),ar:a45v('a45r'),mins:Number(a45v('a45m')||120),bd:a45v('a45b'),ph:/toronto/i.test(a45v('a45c'))?'toronto':'compass',stops:st});P15.qs=undefined;toast('Quest created.','info');A.p15open({dataset:{v:'quest'}})}
+    catch(e){toast('Could not create it. Check the details.','info')}},
+  async a45add(el){try{await API.rpc('quest_req_add15',{rid:el.dataset.r,qid:el.dataset.q});P15.qr=undefined;P15.qs=undefined;render()}catch(e){toast('Could not add it.','info')}}
+});
+(function(){
+  Object.assign(P15V,{quest:a45list,questask:a45ask,questnew:a45new,questreqs:a45reqs});
+  const _o=A.p15open;A.p15open=function(el){const v=String((el&&el.dataset&&el.dataset.v)||'');if(v.startsWith('quest:'))P15V[v]=()=>a45quest(v.slice(6));if(v==='quest')P15.qs=undefined;if(v==='questreqs')P15.qr=undefined;return _o.apply(this,arguments)};
+  try{if(!C10R.some(r=>r[0]==='quest')){C10R.push(['quest','compass','Quest stop','Cafés, shops, places: be a stop on a city walk']);C10A.quest=[['Ask to be a stop','questask'],['My stop requests','questreqs']];BZPIC.quest='compass';BZPR.quest='quest_stop'}}catch(e){}
 })();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
