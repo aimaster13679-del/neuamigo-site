@@ -6924,6 +6924,48 @@ Object.assign(A,{a9f(el){const r=document.querySelector('.a9');if(!r)return;r.da
   const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{if(document.querySelector('.a9')){a9apply();document.querySelectorAll('.a9 .a9-it,.a9 .a7-empty').forEach(e=>e.classList.add('in'))}}catch(e){}};
 })();
 
+/* ===== part40: Plans page in the Bazaar look (his 10:09 'kaam bina ruke pura karo'; Events/Buy&Sell ok 10:16).
+   Colour band header, two picture tabs (For you / For businesses) that switch instantly, plan cards like products:
+   3D picture, who it is for, big price, monthly/yearly switch, what you get, one clear button.
+   Removes the old hand photo (no people photos). Real prices only (p15price). Sample first: nm.na40=1. */
+const NA40_LIVE = false;
+function NA40(){try{return NA40_LIVE||localStorage.getItem('nm.na40')==='1'}catch(e){return NA40_LIVE}}
+function a40ben(L){return `<div class="a40-ben">${L.map(([t,s])=>`<div><span class="a40-ck"></span><span><b>${esc(t)}</b><small>${esc(s)}</small></span></div>`).join('')}</div>`}
+function a40seg(L,cur,act){return `<div class="a40-seg">${L.map(([k,t])=>`<button class="${k===cur?'on':''}" data-a="${act}" data-v="${k}">${t}</button>`).join('')}</div>`}
+function a40plans(){const d=P15.d||{},tab=P15.pltab==='biz'?'biz':'you',yr=!!P15.ply,city=c9city()||'your city';
+  const later=k=>{const l=p15later(k);return l?`<span class="a40-lp">Launch price · later ${esc(l)}</span>`:''};
+  const tabs=`<div class="a7-tabs a40-tabs" role="tablist">${[['you','For you','key'],['biz','For businesses','briefcase']].map(([k,l,p])=>`<button role="tab" data-a="pl31tab" data-v="${k}" data-k="${k==='you'?'all':'work'}" class="${k===tab?'on':''}"><img src="${f3(p)}" alt=""><span>${l}</span></button>`).join('')}</div>`;
+  const head=`<div class="a7-hd"><div class="a7-top"><button class="a7-sq a40-bk" data-a="p15back" aria-label="Back">‹</button><span class="a7-where"><small>NeuAmigo plans</small><b>${tab==='you'?'Pick what helps you':'Grow your business'}</b><i>${tab==='you'?'Nothing is charged until you tap Pay':'Every plan shows its price before you pay'}</i></span></div>${tabs}</div>`;
+  let body='';
+  if(tab==='you'){
+    const pk=yr?'plus_y':'plus_m',pp=p15price(pk),ck=P15.plct==='weekend'?'wc_weekend_a':'wc_month_a',cp=p15price(ck);
+    const plus=`<section class="a40-card"><div class="a40-top"><span class="a40-pic"><img src="${f3('key')}" alt=""></span><span><small>For homes, jobs and friends</small><h2>NeuAmigo Plus</h2></span>${d.plus?`<em class="a40-on">Active</em>`:''}</div>
+      ${a40seg([['m','Monthly'],['y','Yearly']],yr?'y':'m','pl31yr')}
+      <div class="a40-pr"><b>${esc(pp||'—')}</b><small>${yr?'a year':'a month'}</small></div>${later(pk)}
+      ${a40ben([['Every contact detail','Call or write to landlords, employers and sellers'],['Chat in the app','Talk to people you are connected with'],['Alerts first','New homes and jobs in '+city+', the moment they are posted']])}
+      ${d.plus?`<p class="a40-act">Active until ${esc(pl31until(d.plusUntil))}</p>`:`<button class="a40-btn" data-a="p15open" data-v="plus">Get Plus${pp?' · '+esc(pp):''}</button>`}</section>`;
+    const club=`<section class="a40-card a40-club"><div class="a40-top"><span class="a40-pic"><img src="${f3('party_popper')}" alt=""></span><span><small>For events and meetups</small><h2>Weekend Club</h2></span>${d.club?`<em class="a40-on">Member</em>`:''}</div>
+      ${a40seg([['month','One month'],['weekend','One weekend']],P15.plct||'month','pl31ct')}
+      <div class="a40-pr"><b>${esc(cp||'—')}</b><small>adult · family plan too</small></div>${later(ck)}
+      ${a40ben([['No booking fee','Others pay a fee on every seat'],['Book 48 hours early','Seats before the big events fill up'],['Members-only nights','Some nights are just for members']])}
+      ${d.club?`<p class="a40-act">Member until ${esc(pl31until(d.clubUntil))}</p>`:`<button class="a40-btn" data-a="p15open" data-v="club">See Weekend Club${cp?' · '+esc(cp):''}</button>`}</section>`;
+    const row=(t,a,b)=>`<div class="a40-cr"><span>${esc(t)}</span><i class="${a?'y':''}">${a?'Yes':'—'}</i><i class="${b?'y':''}">${b?'Yes':'—'}</i></div>`;
+    const cmp=`<div class="a7-sec"><div><h2>Which one is for me?</h2><p>You can have both</p></div></div><div class="a40-cmp"><div class="a40-cr a40-ch"><span></span><i>Plus</i><i>Club</i></div>${row('Contact details and chat',1,0)}${row('Alerts for new homes and jobs',1,0)}${row('No booking fee on events',0,1)}${row('Book events 48 hours early',0,1)}${row('Members-only nights',0,1)}</div>`;
+    const trust=`<div class="a40-tr">${[['receipt','Pay once','No automatic charges'],['shield','Tax included','Where the law asks for it'],['handshake','Help any time','Write to support from Me']].map(([p,t,s])=>`<div><img src="${f3(p)}" alt=""><b>${t}</b><small>${s}</small></div>`).join('')}</div>`;
+    body=plus+club+cmp+trust;
+  }else{
+    const B=[['house_with_garden','Homes to rent','Landlords and agents: post homes, answer requests','agent_plan','biz'],['briefcase','Jobs to fill','Families and businesses: post jobs, meet people ready to work','hire_plan','hire'],
+      ['party_popper','Events to run','Hosts: tickets, seat maps, check-in at the door','host_pro','host'],['delivery_truck','Event and home services','Caterers, movers, cleaners: answer price requests','services_plan','svcplan'],
+      ['light_bulb','Experts','Visa, tax and insurance experts: answer people who ask','expert_plan','expplan'],['couch_and_lamp','Things to sell','Moving out? Sell your items to people moving in','sale_one','c12sell']];
+    body=`<div class="a40-biz">${B.map(([p,t,s,k,v])=>{const pr=p15price(k);return `<button class="a40-bz" data-a="p15open" data-v="${v}"><span class="a40-pic"><img src="${f3(p)}" alt="" loading="lazy"></span><span class="a40-bt"><b>${esc(t)}</b><small>${esc(s)}</small>${pr?`<span class="a40-bp">from <strong>${esc(pr)}</strong></span>`:''}</span><u>See plan</u></button>`}).join('')}</div>
+     <button class="a7-biz" data-a="p15open" data-v="bzboost"><img src="${f3('sparkles')}" alt=""><span><small>Already on a plan?</small><b>Boost a listing</b><i>Be the first name people see in ${esc(city)}</i></span><u>Boost</u></button>`;
+  }
+  return c9wrap(`<div class="a7 a40" data-t="${tab==='you'?'all':'work'}">${head}<div class="a7-pn on" data-p="${tab==='you'?'all':'work'}">${body}</div></div>`)}
+(function(){
+  if(!NA40())return;
+  const _p=P15V.plans;P15V.plans=function(){try{return a40plans()}catch(e){console.warn('[a40]',e);return _p.apply(this,arguments)}};
+})();
+
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
 })();
