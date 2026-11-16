@@ -7039,6 +7039,37 @@ function a42svc(){const city=c9city()||'your city';
   const _s=P15V.c12svc;P15V.c12svc=function(){try{return a42svc()}catch(e){console.warn('[a42]',e);return _s.apply(this,arguments)}};
 })();
 
+/* ===== part43: inner detail pages (event, job, home, tickets, requests...) get the same Bazaar finish:
+   coloured top band per section, premium cards and buttons, no line icons in labels, a whole photo on the job page,
+   and real empty states (picture + one next step) instead of a plain sentence.
+   Sample first: NA43_LIVE=false, preview with localStorage nm.na43=1. Booking and apply flows stay exactly the same. */
+const NA43_LIVE = false;
+function NA43(){try{return NA43_LIVE||localStorage.getItem('nm.na43')==='1'}catch(e){return NA43_LIVE}}
+function a43tone(){const v=String(P15.v||'');
+  if(/^evd|^tickets|^club|^hostboard|^newev|^ev-/.test(v))return 'fun';
+  if(/^job|^workprof|^postjob|^hire|^safejobs/.test(v))return 'work';
+  if(/^room|^postroom|^ask:room/.test(v))return 'homes';
+  if(/^myasks|^ask|^experts|^svc|^z8/.test(v))return 'help';
+  if(/^sale|^mysale|^c12sell/.test(v))return 'papers';
+  return 'all'}
+const A43EMPTY=[[/No tickets yet/i,'ticket','No tickets yet','Book a seat at a meetup, a match or a food night.','See events','data-a="tab" data-k="ev15"'],
+  [/No requests yet/i,'receipt','No requests yet','Ask once and up to 5 businesses send you their price.','Get prices','data-a="p15open" data-v="c12svc"'],
+  [/No (items|sale)/i,'couch_and_lamp','Nothing here yet','Sell what you do not need, in one minute.','Sell an item','data-a="p15open" data-v="mysale"'],
+  [/No (jobs|applicants)/i,'briefcase','Nothing here yet','New jobs come every week.','See jobs','data-a="p15open" data-v="jobs"'],
+  [/No (homes|rooms)/i,'house_with_garden','Nothing here yet','New homes are posted every day.','See homes','data-a="p15open" data-v="rooms"']];
+function a43fix(){const m=document.querySelector('.main-inner.p15');const R=document.documentElement;
+  if(!m||m.querySelector('.a7')){R.classList.remove('a43on');return}
+  R.classList.add('a43on');R.dataset.a43=a43tone();
+  m.querySelectorAll('.p15-pill svg,.p15-pill .ic').forEach(s=>s.remove());
+  m.querySelectorAll('.p15-note').forEach(n=>{if(n.dataset.a43)return;const t=n.textContent.trim();const E=A43EMPTY.find(x=>x[0].test(t));if(!E||t.length>90)return;n.dataset.a43='1';
+    n.outerHTML=`<div class="a43-empty"><img src="${f3(E[1])}" alt=""><b>${E[2]}</b><small>${E[3]}</small><button ${E[5]}>${E[4]}</button></div>`});
+  const v=String(P15.v||'');if(/^job:/.test(v)&&!m.querySelector('.a43-hero')){const id=v.slice(4);let j=null;Object.values(P15.jb||{}).forEach(L=>(L||[]).forEach(x=>{if(String(x.id)===id)j=x}));
+    const top=m.querySelector('.p15-top');if(j&&top)top.insertAdjacentHTML('afterend',`<div class="a43-hero">${c9i(c9jobp(j))}</div>`)}}
+(function(){
+  if(!NA43())return;
+  const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{a43fix()}catch(e){console.warn('[a43]',e)}};
+})();
+
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
 })();
