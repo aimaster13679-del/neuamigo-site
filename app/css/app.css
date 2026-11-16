@@ -3824,3 +3824,13 @@ html.a4bz .main-inner.p15 .chip,html.a4bz .main-inner.p15 .p15-chip,html.a4bz .m
 html.a4bz .main-inner.p15 .chip.on,html.a4bz .main-inner.p15 .p15-chip.on,html.a4bz .main-inner.p15 .chips button.on{background:#3D7BFF!important;border-color:#3D7BFF!important;color:#fff!important}
 html.a4bz .main-inner.p15 .btn.primary,html.a4bz .main-inner.p15 .p15-btn{background:#3D7BFF!important;border-color:#3D7BFF!important;color:#fff!important;border-radius:14px!important;font-weight:800!important}
 html.a4bz .main-inner.p15 input,html.a4bz .main-inner.p15 textarea,html.a4bz .main-inner.p15 select{background:#1A2235!important;color:#F2F3F7!important;border:1px solid #2A3348!important}
+/* business plan cards: one colour logic (his note 16 Nov 11:50) */
+html.a4bz .main-inner.p15 .p15-plan.on,html.a4bz .main-inner.p15 .p15-plan.on *{color:#F2F3F7!important;-webkit-text-fill-color:#F2F3F7}
+html.a4bz .main-inner.p15 .p15-plan.on small{color:#B9C3DA!important;-webkit-text-fill-color:#B9C3DA}
+html.a4bz .main-inner.p15 .p15-plan.on{background:#14254A!important;border-color:#3D7BFF!important}
+html.a4bz .main-inner.p15 .p15-spon{background:#3D7BFF!important;color:#fff!important;-webkit-text-fill-color:#fff;border:0!important;border-radius:7px!important;padding:2px 8px!important;font-style:normal}
+html.a4bz .main-inner.p15 .p15-lp .lt{background:#3D7BFF!important;color:#fff!important;-webkit-text-fill-color:#fff;border:0!important;border-radius:7px!important}
+html.a4bz .main-inner.p15 .p15-lp .lat i{background:#1A2235!important;color:#98A0B3!important;-webkit-text-fill-color:#98A0B3;border:1px solid #2A3348!important;border-radius:7px!important}
+html.a4bz .main-inner.p15 .p15-lp .lat{color:#98A0B3!important;-webkit-text-fill-color:#98A0B3}
+html.a4bz .main-inner.p15 .p15-plan.on .p15-lp .lat,html.a4bz .main-inner.p15 .p15-plan.on .p15-lp .lat i{color:#98A0B3!important;-webkit-text-fill-color:#98A0B3}
+html.a4bz .main-inner.p15 .p15-lp b{color:#fff!important;-webkit-text-fill-color:#fff}
