@@ -1,0 +1,21 @@
+/* neuamigo.com small pages in the new look (16 Nov 2026): same font, colours and cards as the new home page */
+@font-face{font-family:'Plus Jakarta Sans';src:url(img/v2/PlusJakartaSans-var-latin.woff2) format('woff2');font-weight:200 800;font-display:swap}
+:root{--sap:#0F52BA;--ink:#0B1226;--t2:#5A6584;--bg:#F5F6FA;--pn:#fff;--band:#DCE7FF}
+@media (prefers-color-scheme:dark){:root{--ink:#F2F3F7;--t2:#A9B4D0;--bg:#070B18;--pn:#111A33;--band:#12306E}}
+html,body{background:var(--bg)!important;color:var(--ink)!important}
+body,body *{font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif!important;letter-spacing:0!important}
+header{background:var(--band)!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important}
+header .brand{font-weight:800!important;font-size:19px!important;color:var(--ink)!important;display:flex;align-items:center;gap:9px}
+header .brand img.bmk{content:url(img/v2/icon-192.png);width:34px!important;height:34px!important;border-radius:10px}
+header nav a{background:var(--pn)!important;color:var(--ink)!important;border-radius:12px!important;font-weight:800!important;padding:10px 14px!important;box-shadow:0 2px 10px rgba(11,18,38,.1)!important;border:0!important}
+.phero{background:linear-gradient(180deg,var(--band) 0%,var(--band) 75%,var(--bg) 100%)!important;color:var(--ink)!important;padding-bottom:26px!important}
+.phero h1{color:var(--ink)!important;font-weight:800!important}
+.phero .meta,.phero p{background:var(--pn)!important;color:var(--sap)!important;border:0!important;border-radius:10px!important;font-weight:700!important}
+.phero .langsw a{background:var(--pn)!important;color:var(--ink)!important;border:0!important;border-radius:10px!important}
+main h2{font-weight:800!important;color:var(--ink)!important}
+main h2::before,main h2::after,main hr{background:var(--sap)!important;border-color:var(--sap)!important}
+main a,footer a{color:var(--sap)!important}
+@media (prefers-color-scheme:dark){main a,footer a{color:#9DC0FF!important}}
+.box,.card,.pcard,.panel{background:var(--pn)!important;border:0!important;border-radius:20px!important;box-shadow:0 1px 2px rgba(11,16,32,.05),0 12px 30px rgba(11,16,32,.08)!important;color:var(--ink)!important}
+main p,main li{color:var(--ink)}
+footer{background:var(--bg)!important;color:var(--t2)!important;border-top:1px solid rgba(11,18,38,.08)!important}
