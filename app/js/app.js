@@ -6797,7 +6797,7 @@ Object.assign(A,{a7tab(el){const r=document.querySelector('.a7');if(!r)return;co
    Every stop shows exactly what people need at that moment, shop-style (picture, price, one button).
    The journey track at the top follows you while you scroll (the stop in view lights up).
    NOT live yet: mock for his ok (turn on with localStorage nm.na38=1). Real numbers only. */
-const NA38_LIVE = false; /* 16 Nov 09:54: Journey = the Settle In tab (Home stays the Bazaar home he picked) */
+const NA38_LIVE = true; /* 16 Nov 09:54: Journey = the Settle In tab (Home stays the Bazaar home he picked) */
 function NA38(){try{return NA38_LIVE||localStorage.getItem('nm.na38')==='1'}catch(e){return NA38_LIVE}}
 const A8ST=[['fly','Before you fly','airplane'],['week','First week','key'],['month','First month','briefcase'],['life','Life here','party_popper']];
 function a8stage(path,bar){if(path==='moving')return 'fly';if(path==='local')return 'life';return bar&&bar.d>=4?'month':'week'}
