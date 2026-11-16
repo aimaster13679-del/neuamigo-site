@@ -6928,7 +6928,7 @@ Object.assign(A,{a9f(el){const r=document.querySelector('.a9');if(!r)return;r.da
    Colour band header, two picture tabs (For you / For businesses) that switch instantly, plan cards like products:
    3D picture, who it is for, big price, monthly/yearly switch, what you get, one clear button.
    Removes the old hand photo (no people photos). Real prices only (p15price). Sample first: nm.na40=1. */
-const NA40_LIVE = false;
+const NA40_LIVE = true;
 function NA40(){try{return NA40_LIVE||localStorage.getItem('nm.na40')==='1'}catch(e){return NA40_LIVE}}
 function a40ben(L){return `<div class="a40-ben">${L.map(([t,s])=>`<div><span class="a40-ck"></span><span><b>${esc(t)}</b><small>${esc(s)}</small></span></div>`).join('')}</div>`}
 function a40seg(L,cur,act){return `<div class="a40-seg">${L.map(([k,t])=>`<button class="${k===cur?'on':''}" data-a="${act}" data-v="${k}">${t}</button>`).join('')}</div>`}
