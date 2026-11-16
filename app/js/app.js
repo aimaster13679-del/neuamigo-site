@@ -7013,7 +7013,7 @@ function a41jobs(){const c=P15.f.jc||'',key='j'+c,l=(P15.jb||{})[key];
 /* ===== part42: My 30-day plan and Services (5 prices) in the Bazaar look, so the whole app feels the same.
    Same data and actions as before (C10S steps, c10tick, c10go, z8q quote requests, experts).
    Sample first: NA42_LIVE=false, preview with localStorage nm.na42=1. */
-const NA42_LIVE = false;
+const NA42_LIVE = true;
 function NA42(){try{return NA42_LIVE||localStorage.getItem('nm.na42')==='1'}catch(e){return NA42_LIVE}}
 const A42STP=['airplane','key','briefcase','party_popper'];
 function a42plan(){const done=c10done(),b=c10bar(),path=c10get('nm.path','moving');
