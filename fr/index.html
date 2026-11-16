@@ -1,157 +1,176 @@
-<!doctype html>
-<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NeuAmigo : chambres, emplois, événements et amis pour les personnes qui vivent à l’étranger</title>
-<meta name="description" content="Chambres, recommandations d’emploi, compagnon de voyage pour les parents, événements et amis pour les personnes qui vivent à l’étranger."><link rel="canonical" href="https://neuamigo.com/fr/"><link rel="alternate" hreflang="en" href="https://neuamigo.com/"><link rel="alternate" hreflang="fr" href="https://neuamigo.com/fr/"><meta property="og:title" content="NeuAmigo"><meta property="og:description" content="Chambres, recommandations d’emploi, compagnon de voyage pour les parents, événements et amis pour les personnes qui vivent à l’étranger."><meta property="og:url" content="https://neuamigo.com/fr/"><meta property="og:image" content="https://neuamigo.com/img/share.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:type" content="website"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://neuamigo.com/img/share.png">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NeuAmigo · S’installer à l’étranger, simplement</title>
+<meta name="description" content="Logement, emploi, démarches, services et amis pour les personnes qui s’installent dans un nouveau pays. Les prix sont affichés avant de payer.">
+<meta name="theme-color" content="#DCE7FF">
+<link rel="icon" href="../img/v2/icon-192.png">
 <style>
-:root{--bg:#F3F2F8;--bg2:#ECEAF5;--tx:#16152A;--mt:#5E5C74;--gl:rgba(255,255,255,.72);--gl2:rgba(255,255,255,.9);--edge:rgba(255,255,255,.95);--ln:rgba(40,36,80,.08);
- --mint1:#EEEBFF;--mint2:#D7D0FF;--mintx:#3F35A6;--lem:#E7F2FF;--lemx:#1D4C86;--sh:0 18px 40px -24px rgba(60,50,140,.26),0 2px 6px -2px rgba(60,50,140,.08);color-scheme:light}
-@media (prefers-color-scheme:dark){body{background:radial-gradient(900px 600px at 10% -10%,rgba(255,255,255,.06),transparent 60%),var(--bg)!important}:root{--bg:#08080A;--bg2:#101013;--tx:#F3F3F5;--mt:rgba(243,243,245,.7);--gl:rgba(30,30,34,.62);--gl2:rgba(36,36,42,.82);--edge:rgba(255,255,255,.1);--ln:rgba(255,255,255,.08);
- --mint1:rgba(255,255,255,.14);--mint2:rgba(255,255,255,.22);--mintx:#FFFFFF;--lem:rgba(255,255,255,.06);--lemx:#EDEDF1;--sh:0 20px 44px -26px rgba(0,0,0,.7);color-scheme:dark}}
-*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
-body{margin:0;font:500 16px/1.55 'Plus Jakarta Sans',system-ui,sans-serif;color:var(--tx);background:radial-gradient(900px 600px at 10% -10%,var(--mint1),transparent 60%),radial-gradient(800px 600px at 100% 0%,var(--lem),transparent 55%),radial-gradient(700px 500px at 50% 100%,#FFEFF4,transparent 60%),var(--bg);-webkit-user-select:none;user-select:none}
-main{overflow-x:clip}img{display:block;max-width:100%;height:auto}a{color:inherit}
-.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
-.g{background:var(--gl);border:1px solid var(--edge);-webkit-backdrop-filter:blur(18px) saturate(1.3);backdrop-filter:blur(18px) saturate(1.3);box-shadow:var(--sh);border-radius:24px}
-nav{position:sticky;top:0;z-index:5;padding:12px 0}
-nav .wrap{display:flex;align-items:center;gap:14px}
-nav .bar{display:flex;align-items:center;gap:12px;width:100%;padding:8px 8px 8px 14px;border-radius:999px}
-.logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:18px;text-decoration:none}.logo img{width:30px;height:30px;border-radius:9px}
-.nl{display:flex;gap:4px;margin-left:auto}.nl a{text-decoration:none;font-weight:700;font-size:14px;padding:8px 12px;border-radius:999px;color:var(--mt)}.nl a:hover{color:var(--tx);background:var(--ln)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:800 15px 'Plus Jakarta Sans',sans-serif;text-decoration:none;padding:13px 22px;border-radius:999px;border:1px solid transparent;cursor:pointer;white-space:nowrap}
-.btn.p{background:linear-gradient(150deg,#EEEBFF,#D7D0FF);color:#2F2690;border-color:rgba(255,255,255,.9);box-shadow:0 10px 24px -12px rgba(91,79,214,.55)}
-@media (prefers-color-scheme:dark){.btn.p{background:linear-gradient(150deg,rgba(255,255,255,.22),rgba(255,255,255,.08));color:#fff;border-color:rgba(255,255,255,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}}
-.btn.s{background:var(--gl2);border-color:var(--edge);color:var(--tx)}
-.btn.sm{padding:9px 16px;font-size:14px}
-.hero{padding:34px 0 10px}
-.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:34px;align-items:center}
-.kick{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:800;padding:7px 13px;border-radius:999px;color:var(--mintx);background:var(--mint1);border:1px solid var(--edge)}
-.kick i{width:8px;height:8px;border-radius:50%;background:#5B4FD6;animation:pl 2.4s infinite}
-@keyframes pl{0%{box-shadow:0 0 0 0 rgba(91,79,214,.5)}70%{box-shadow:0 0 0 9px rgba(91,79,214,0)}100%{box-shadow:0 0 0 0 rgba(91,79,214,0)}}
-h1{font-size:clamp(36px,5.4vw,60px);line-height:1.06;font-weight:800;margin:16px 0 14px;letter-spacing:0}
-h1 em{font-style:normal;background:linear-gradient(120deg,#5B4FD6,#3B82C4);-webkit-background-clip:text;background-clip:text;color:transparent}
-@media (prefers-color-scheme:dark){h1 em{background:linear-gradient(120deg,#FFFFFF,#BDBDC8);-webkit-background-clip:text;background-clip:text}}
-.lead{font-size:18px;color:var(--mt);max-width:520px;margin:0 0 22px}
+@font-face{font-family:'Plus Jakarta Sans';src:url(../img/v2/PlusJakartaSans-var-latin.woff2) format('woff2');font-weight:200 800;font-display:swap}
+:root{--sap:#0F52BA;--ink:#0B1226;--t2:#5A6584;--bg:#F5F6FA;--pn:#fff;--hl:rgba(11,18,38,.08);--band:#DCE7FF;--sh:0 1px 2px rgba(11,16,32,.05),0 12px 30px rgba(11,16,32,.08)}
+@media (prefers-color-scheme:dark){:root{--ink:#F2F3F7;--t2:#A9B4D0;--bg:#070B18;--pn:#111A33;--hl:rgba(255,255,255,.09);--band:#12306E;--sh:0 0 0 1px #222A3C}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+/* header band */
+.band{background:linear-gradient(180deg,var(--band) 0%,var(--band) 82%,var(--bg) 100%);padding:14px 0 30px}
+.top{display:flex;align-items:center;gap:10px}
+.logo{display:flex;align-items:center;gap:9px;font:800 19px 'Plus Jakarta Sans';flex:1}.logo img{width:34px;height:34px;border-radius:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:13px;font:800 14.5px 'Plus Jakarta Sans';padding:12px 18px;white-space:nowrap}
+.btn.p{background:var(--sap);color:#fff}.btn.w{background:var(--pn);color:var(--ink);box-shadow:0 2px 10px rgba(11,18,38,.1)}
+@media (prefers-color-scheme:dark){.btn.p{background:#3D7BFF}}
+.top .btn{padding:10px 14px;font-size:13.5px}
+.hero{display:grid;grid-template-columns:1fr;gap:28px;margin-top:30px;align-items:center}
+.kick{display:inline-block;background:var(--pn);border-radius:10px;padding:6px 11px;font:700 13px 'Plus Jakarta Sans';color:var(--sap);box-shadow:0 2px 8px rgba(11,18,38,.08)}
+@media (prefers-color-scheme:dark){.kick{color:#9DC0FF}}
+h1{font:800 clamp(34px,7.6vw,58px)/1.06 'Plus Jakarta Sans';margin:16px 0 14px;letter-spacing:0}
+h1 em{font-style:normal;color:var(--sap)}@media (prefers-color-scheme:dark){h1 em{color:#9DC0FF}}
+.lede{font:600 17px/1.5 'Plus Jakarta Sans';color:var(--t2);margin:0 0 20px;max-width:520px}
+.type{display:flex;align-items:center;gap:10px;background:var(--pn);border-radius:15px;padding:15px 16px;box-shadow:0 2px 12px rgba(11,18,38,.1);font:600 16px 'Plus Jakarta Sans';color:var(--t2);max-width:520px;margin-bottom:18px}
+.type b{color:var(--ink)}.type b::after{content:'';display:inline-block;width:2px;height:1.05em;background:var(--sap);margin-left:2px;vertical-align:-2px;animation:cur 1s steps(1) infinite}
+@keyframes cur{50%{opacity:0}}
+.mg{width:18px;height:18px;border:2.5px solid var(--t2);border-radius:50%;position:relative;flex:none}.mg::after{content:'';position:absolute;width:7px;height:2.5px;background:var(--t2);right:-6px;bottom:-3px;transform:rotate(45deg);border-radius:2px}
 .cta{display:flex;gap:10px;flex-wrap:wrap}
-.trust{display:flex;gap:16px;flex-wrap:wrap;margin-top:18px;font-size:13.5px;font-weight:700;color:var(--mt)}
-.trust span{display:flex;align-items:center;gap:6px}.trust svg{width:16px;height:16px;color:var(--mintx)}
-.mosaic{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:170px 150px 170px;gap:12px}
-.ph{position:relative;overflow:hidden;border-radius:22px;border:1px solid var(--edge);box-shadow:var(--sh)}
-.ph img{width:100%;height:100%;object-fit:cover}
-.ph b{position:absolute;left:10px;bottom:10px;font-size:13px;font-weight:800;padding:6px 11px;border-radius:999px;background:var(--gl2);border:1px solid var(--edge);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
-.mosaic .a{grid-row:span 2}.mosaic .d{grid-column:span 2}
-.flags{margin:26px 0 6px;overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.flags .row{display:flex;gap:10px;width:max-content;animation:mq 60s linear infinite}
-.flags span{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;padding:8px 13px;border-radius:999px;background:var(--gl);border:1px solid var(--edge);white-space:nowrap}
-.flags span i{font-style:normal;font-size:17px}
-@keyframes mq{to{transform:translateX(-50%)}}
-section{padding:56px 0 8px}
-.sh{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px}
-h2{font-size:clamp(26px,3.4vw,38px);line-height:1.15;margin:0;font-weight:800}
-.sh p{margin:6px 0 0;color:var(--mt);max-width:560px}
-.bento{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.t{overflow:hidden;display:flex;flex-direction:column;text-decoration:none}
-.t .ph{border:0;border-radius:0;box-shadow:none;height:150px}
-.t .tx{padding:14px 16px 16px}.t .tx b{display:block;font-size:17px;font-weight:800}.t .tx small{display:block;color:var(--mt);font-size:14px;margin-top:3px}
-.t .pr{display:inline-block;margin-top:10px;font-size:12.5px;font-weight:800;padding:5px 10px;border-radius:999px;background:var(--mint1);color:var(--mintx)}
-.t.w2{grid-column:span 2}.t.w2 .ph{height:190px}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.st{padding:22px}.st .n{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-weight:800;background:linear-gradient(150deg,var(--mint1),var(--mint2));color:var(--mintx)}
-.st b{display:block;font-size:18px;margin:12px 0 4px}.st small{color:var(--mt);font-size:14.5px}
-.pl{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:14px}
-.pc{padding:22px}.pc h3{margin:0;font-size:20px}.pc .big{font-size:34px;font-weight:800;margin:8px 0 2px}.pc small{color:var(--mt)}
-.pc ul{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px;font-size:14.5px}.pc li{display:flex;gap:8px}.pc li:before{content:'';flex:0 0 18px;height:18px;border-radius:50%;background:var(--mint1) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235B4FD6' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 12.5l4 4L18 8'/%3E%3C/svg%3E") center/12px no-repeat;margin-top:2px}
-.pc.hi{background:linear-gradient(150deg,var(--mint1),var(--gl))}
-.biz{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch}
-.bz{text-decoration:none;display:grid;grid-template-columns:150px 1fr;overflow:hidden}.bz .ph{border:0;border-radius:0;box-shadow:none;height:100%}
-.bz .tx{padding:16px}.bz b{font-size:17px}.bz small{display:block;color:var(--mt);font-size:14px;margin-top:3px}.bz .pr{display:inline-block;margin-top:8px;font-size:12.5px;font-weight:800;color:var(--mintx)}
-.faq{display:grid;gap:10px;max-width:820px}
-details{padding:16px 18px}summary{font-weight:800;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px}summary::-webkit-details-marker{display:none}
-summary:after{content:'+';font-size:22px;line-height:1;color:var(--mintx)}details[open] summary:after{content:'–'}details p{margin:10px 0 0;color:var(--mt)}
-.final{margin:56px 0 0;padding:36px;text-align:center;background:linear-gradient(150deg,var(--mint1),var(--lem))}
-.final h2{margin-bottom:8px}.final p{color:var(--mt);margin:0 0 18px}.final .cta{justify-content:center}
-footer{padding:34px 0 40px;color:var(--mt);font-size:14px}footer .wrap{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center}footer a{text-decoration:none;font-weight:700}
-.lang{margin-left:auto}
-@media (max-width:900px){.hero .wrap{grid-template-columns:1fr}.bento{grid-template-columns:1fr 1fr}.t.w2{grid-column:span 2}.pl{grid-template-columns:1fr}.biz{grid-template-columns:1fr}.steps{grid-template-columns:1fr}.nl{display:none}}
-@media (max-width:520px){.wrap{padding:0 16px}.bento{gap:10px}.t .ph{height:110px}.t.w2 .ph{height:150px}.t .tx{padding:11px 12px 13px}.t .tx b{font-size:15px}.t .tx small{font-size:13px}
- .mosaic{grid-template-rows:130px 120px 130px;gap:10px}.bz{grid-template-columns:110px 1fr}.final{padding:26px 18px}.lead{font-size:16.5px}.sh{display:block}}
-@media (prefers-reduced-motion:reduce){.flags .row,.kick i{animation:none}}
-</style><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',region:["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "LI", "NO", "GB", "CH"]});gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'granted'});try{var nmC=localStorage.getItem('nm.analytics');if(nmC==='granted'||nmC==='denied')gtag('consent','update',{analytics_storage:nmC})}catch(e){}gtag('js',new Date());gtag('config','G-R90LWK3JJB',{allow_google_signals:false,allow_ad_personalization_signals:false});</script><script async src="https://www.googletagmanager.com/gtag/js?id=G-R90LWK3JJB"></script><script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');(function(){var tz='',c=null;try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';c=localStorage.getItem('nm.ads')}catch(e){}var eu=/^(Europe\/|Atlantic\/(Reykjavik|Canary|Madeira|Faroe|Azores))/.test(tz);window.nmEU=eu;var gpc=navigator.globalPrivacyControl===true;window.nmGPC=gpc;if(c==='denied'||((eu||gpc)&&c!=='granted'))fbq('consent','revoke');fbq('init','1427089529012759');fbq('track','PageView');document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(a&&/(^|\/)app\/?(\?|#|$)/.test(a.getAttribute('href')))fbq('track','Lead')},true)})();</script></head>
-<body><main>
-<nav><div class="wrap"><div class="bar g"><a class="logo" href="/fr/"><img src="/app/img/icon-192.png" alt="">NeuAmigo</a>
- <div class="nl"><a href="#settle">S’installer</a><a href="#events">Événements</a><a href="#plus">Abonnement</a><a href="#biz">Entreprises</a></div>
- <a class="btn p sm" href="/app/">Ouvrir l’app</a></div></div></nav>
-
-<header class="hero"><div class="wrap">
- <div><span class="kick"><i></i>Maintenant ouvert à Toronto</span>
-  <h1>Les vôtres,<br><em>où que vous viviez</em></h1>
-  <p class="lead">Chambres, recommandations d’emploi, un compagnon pour le vol de vos parents, événements et nouveaux amis de vos racines. Une seule app pour les personnes qui vivent à l’étranger.</p>
-  <div class="cta"><a class="btn p" href="/app/">Ouvrir l’app, gratuit</a><a class="btn s" href="https://play.google.com/store/apps/details?id=com.neuconet.neumarry" rel="noopener">Disponible sur Google Play</a></div>
-  <div class="trust"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>Membres vérifiés</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Prix affichés avant de payer</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Aucun faux chiffre, aucun frais caché</span></div></div>
- <div class="mosaic">
-  <div class="ph a"><img src="/app/img/p15/room.webp" alt="Une chambre meublée lumineuse"><b>Trouver une chambre</b></div>
-  <div class="ph"><img src="/app/img/p15/plane.webp" alt="Vue du hublot au-dessus des nuages"><b>Compagnon de voyage</b></div>
-  <div class="ph"><img src="/app/img/p15/lantern.webp" alt="Lanternes de festival"><b>Festivals</b></div>
-  <div class="ph d"><img src="/app/img/p15/stadium.webp" alt="Un stade la nuit"><b>Soirées match</b></div>
+.trust{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px;font:700 13px 'Plus Jakarta Sans';color:var(--t2)}
+.trust span::before{content:'';display:inline-block;width:8px;height:8px;border-radius:2px;background:#1F9D5B;margin-right:7px;vertical-align:1px}
+.phones{position:relative;display:flex;justify-content:center;gap:14px}
+.ph{width:min(260px,62vw);aspect-ratio:390/844;border-radius:34px;background:#0B1226;padding:8px;box-shadow:0 30px 60px rgba(11,18,38,.25)}
+.ph img{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:27px}
+.ph.b{display:none}
+/* tabs row */
+.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:6px -20px 0;padding:6px 20px 4px}.tabs::-webkit-scrollbar{display:none}
+.tabs a{flex:none;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:84px;padding:10px 8px;border-radius:16px;background:var(--pn);box-shadow:var(--sh);font:700 13px 'Plus Jakarta Sans'}
+.tabs img{width:38px;height:38px;transition:transform .3s cubic-bezier(.3,1.6,.5,1)}.tabs a:hover img{transform:scale(1.15) rotate(-6deg)}
+/* sections */
+section{padding:44px 0 0}
+h2{font:800 clamp(24px,4.6vw,34px)/1.15 'Plus Jakarta Sans';margin:0 0 6px;letter-spacing:0}
+.sub{font:600 15px/1.5 'Plus Jakarta Sans';color:var(--t2);margin:0 0 20px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:var(--pn);border-radius:22px;box-shadow:var(--sh);overflow:hidden;display:flex;flex-direction:column}
+.card .im{aspect-ratio:3/2;overflow:hidden}.card .im img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.card:hover .im img{transform:scale(1.04)}
+.card .bd{padding:14px 16px 16px}.card b{display:block;font:800 16.5px 'Plus Jakarta Sans'}.card small{display:block;font:600 13px/1.45 'Plus Jakarta Sans';color:var(--t2);margin-top:4px}
+.card .tag{display:inline-block;margin-top:10px;font:800 12px 'Plus Jakarta Sans';color:var(--sap);background:color-mix(in srgb,var(--sap) 10%,transparent);padding:5px 9px;border-radius:8px}
+@media (prefers-color-scheme:dark){.card .tag{color:#9DC0FF}}
+.steps{display:grid;grid-template-columns:1fr;gap:12px}
+.step{display:flex;gap:14px;align-items:center;background:var(--pn);border-radius:20px;padding:16px;box-shadow:var(--sh)}
+.step .n{flex:none;width:34px;height:34px;border-radius:11px;background:var(--sap);color:#fff;display:grid;place-items:center;font:800 15px 'Plus Jakarta Sans'}
+.step img{width:46px;height:46px;flex:none}.step b{display:block;font:800 16px 'Plus Jakarta Sans'}.step small{font:600 13.5px 'Plus Jakarta Sans';color:var(--t2)}
+.plans{display:grid;grid-template-columns:1fr;gap:16px}
+.plan{background:var(--pn);border-radius:24px;padding:20px;box-shadow:var(--sh)}
+.plan .hd{display:flex;align-items:center;gap:14px}.plan .pic{width:60px;height:60px;border-radius:18px;display:grid;place-items:center;background:color-mix(in srgb,var(--c,#0F52BA) 12%,var(--bg))}
+.plan .pic img{width:42px;height:42px;animation:bob 3.2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:none}50%{transform:translateY(-6px) rotate(-3deg)}}
+.plan h3{font:800 21px 'Plus Jakarta Sans';margin:0}.plan .for{font:700 12.5px 'Plus Jakarta Sans';color:var(--c,#0F52BA)}
+.plan ul{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:11px}
+.plan li{display:flex;gap:11px;font:600 14px/1.4 'Plus Jakarta Sans'}.plan li::before{content:'';flex:none;width:20px;height:20px;border-radius:6px;background:var(--c,#0F52BA) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3.2 3L15 6.5' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat}
+.plan .pr{margin-top:16px;font:700 13.5px 'Plus Jakarta Sans';color:var(--t2)}
+.biz{background:#0B1226;color:#fff;border-radius:26px;padding:24px;display:grid;grid-template-columns:1fr;gap:18px;align-items:center}
+@media (prefers-color-scheme:dark){.biz{background:#16203F}}
+.biz h2{color:#fff}.biz .sub{color:#A9B4D0;margin-bottom:14px}
+.biz .chips{display:flex;flex-wrap:wrap;gap:8px}.biz .chips span{background:rgba(255,255,255,.1);border-radius:10px;padding:7px 11px;font:700 13px 'Plus Jakarta Sans'}
+.biz .btn{background:#fff;color:#0B1226;margin-top:16px}
+.biz .art{display:flex;gap:10px;justify-content:center}.biz .art img{width:84px;height:84px;animation:bob 3.4s ease-in-out infinite}.biz .art img:nth-child(2){animation-delay:.5s}.biz .art img:nth-child(3){animation-delay:1s}
+.honest{display:grid;grid-template-columns:1fr;gap:12px}
+.honest div{background:var(--pn);border-radius:18px;padding:16px;box-shadow:var(--sh);border-top:3px solid var(--sap)}
+.honest b{display:block;font:800 15px 'Plus Jakarta Sans'}.honest small{font:600 13px/1.45 'Plus Jakarta Sans';color:var(--t2)}
+details{background:var(--pn);border-radius:16px;padding:14px 16px;box-shadow:var(--sh);margin-bottom:10px}
+summary{font:800 15px 'Plus Jakarta Sans';cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:10px}summary::after{content:'+';color:var(--sap);font-size:20px;line-height:1}details[open] summary::after{content:'–'}
+details p{font:600 14px/1.55 'Plus Jakarta Sans';color:var(--t2);margin:10px 0 0}
+.end{margin:46px 0 0;background:var(--band);border-radius:28px;padding:30px 22px;text-align:center}
+.end h2{margin-bottom:8px}.end .cta{justify-content:center;margin-top:16px}
+footer{padding:34px 0 40px;font:600 13px/1.8 'Plus Jakarta Sans';color:var(--t2)}
+footer .links{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:8px}footer a{color:var(--ink)}
+.big{font:800 clamp(34px,8vw,64px)/1.04 'Plus Jakarta Sans';color:color-mix(in srgb,var(--ink) 16%,var(--bg));margin:34px 0 0}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .6s cubic-bezier(.2,.9,.3,1.1)}.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+@media (min-width:860px){
+ .hero{grid-template-columns:1.05fr .95fr}.ph.b{display:block;transform:translateY(40px)}
+ .grid{grid-template-columns:repeat(3,1fr)}.steps{grid-template-columns:repeat(3,1fr)}.plans{grid-template-columns:1fr 1fr}
+ .biz{grid-template-columns:1.3fr .7fr;padding:36px}.honest{grid-template-columns:repeat(3,1fr)}
+ .tabs{justify-content:center;margin:20px 0 0}
+}
+</style>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',region:["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "LI", "NO", "GB", "CH"]});gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'granted'});try{var nmC=localStorage.getItem('nm.analytics');if(nmC==='granted'||nmC==='denied')gtag('consent','update',{analytics_storage:nmC})}catch(e){}gtag('js',new Date());gtag('config','G-R90LWK3JJB',{allow_google_signals:false,allow_ad_personalization_signals:false});</script><script async src="https://www.googletagmanager.com/gtag/js?id=G-R90LWK3JJB"></script><script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');(function(){var tz='',c=null;try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';c=localStorage.getItem('nm.ads')}catch(e){}var eu=/^(Europe\/|Atlantic\/(Reykjavik|Canary|Madeira|Faroe|Azores))/.test(tz);window.nmEU=eu;var gpc=navigator.globalPrivacyControl===true;window.nmGPC=gpc;if(c==='denied'||((eu||gpc)&&c!=='granted'))fbq('consent','revoke');fbq('init','1427089529012759');fbq('track','PageView');document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(a&&/(^|\/)app\/?(\?|#|$)/.test(a.getAttribute('href')))fbq('track','Lead')},true)})();</script></head>
+<body>
+<div class="band"><div class="wrap">
+ <div class="top"><a class="logo" href="#"><img src="../img/v2/icon-192.png" alt="">NeuAmigo</a><a class="btn w" href="../app/">Ouvrir l’app</a></div>
+ <div class="hero">
+  <div>
+   <span class="kick">Pour celles et ceux qui changent de pays</span>
+   <h1>Votre nouvelle ville,<br><em>en toute simplicité.</em></h1>
+   <p class="lede">Un logement, un emploi, vos démarches, des déménageurs et de nouveaux amis. Tout pour votre installation, dans une seule app, avec le prix affiché avant de payer.</p>
+   <div class="type"><span class="mg"></span><span>Trouver <b id="tw">une chambre</b></span></div>
+   <div class="cta"><a class="btn p" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate">Disponible sur Google Play</a><a class="btn w" href="../app/">Ouvrir dans le navigateur</a></div>
+   <div class="trust"><span>Prix affichés d’abord</span><span>Aucun renouvellement automatique</span><span>Supprimez votre compte quand vous voulez</span></div>
+  </div>
+  <div class="phones"><div class="ph"><img src="../img/v2/app-home.webp" alt="Écran d’accueil NeuAmigo"></div><div class="ph b"><img src="../img/v2/app-events.webp" alt="Écran des événements NeuAmigo"></div></div>
  </div>
-</div>
-<div class="flags" aria-label="Des gens de nombreux pays"><div class="row" id="fl"></div></div>
-</header>
-
-<section id="settle"><div class="wrap">
- <div class="sh"><div><h2>S’installer</h2><p>Tout pour vos premiers mois dans un nouveau pays, grâce à ceux qui l’ont fait avant vous.</p></div></div>
- <div class="bento">
-  <a class="t g w2" href="/app/"><div class="ph"><img src="/app/img/p15/room.webp" alt="Une chambre meublée"></div><div class="tx"><b>Trouver une chambre</b><small>Chambres et colocations par quartier et budget. Contacts visibles avec Plus.</small><span class="pr">Publier une chambre · 9,99 $ (prix de lancement)</span></div></a>
-  <a class="t g" href="/app/"><div class="ph"><img src="/app/img/p15/plane.webp" alt="Hublot d’avion"></div><div class="tx"><b>Compagnon de voyage pour les parents</b><small>Un membre vérifié sur le même vol les aide.</small><span class="pr">29 $ une fois jumelé</span></div></a>
-  <a class="t g" href="/app/"><div class="ph"><img src="/app/img/p15/office.webp" alt="Des bureaux"></div><div class="tx"><b>Recommandation d’emploi</b><small>Demandez à quelqu’un dans l’entreprise. Sans réponse en 7 jours, votre demande vous revient.</small><span class="pr">9 $ · 5 pour 35 $</span></div></a>
-  <a class="t g" href="/app/"><div class="ph"><img src="/app/img/p15/docs.webp" alt="Des papiers et une calculatrice"></div><div class="tx"><b>Experts de confiance</b><small>Immigration, impôts, assurance, déménageurs. Permis vérifié.</small><span class="pr">Prix sur chaque page</span></div></a>
-  <a class="t g" href="/app/"><div class="ph"><img src="/app/img/p15/sofa.webp" alt="Un canapé dans un salon"></div><div class="tx"><b>Vente de déménagement</b><small>Achetez et vendez quand les gens déménagent. Bientôt ouvert.</small><span class="pr">Forfait Vendeur · 4,99 $</span></div></a>
-  <a class="t g w2" href="/app/"><div class="ph"><img src="/app/img/p15/house.webp" alt="Une maison moderne"></div><div class="tx"><b>De la première nuit à votre propre maison</b><small>Commencez par une chambre, trouvez les vôtres, puis prenez racine dans votre nouvelle ville.</small></div></a>
- </div></div></section>
-
-<section id="events"><div class="wrap">
- <div class="sh"><div><h2>Événements et amis</h2><p>Des hôtes de votre ville les organisent. Vous réservez simplement une place. Billets avec code QR. Si l’hôte annule, il vous rend le prix du billet.</p></div></div>
- <div class="bento">
-  <a class="t g w2" href="/app/"><div class="ph"><img src="/app/img/p15/table.webp" alt="Une table garnie"></div><div class="tx"><b>Rencontres entre amis</b><small>Repas, balades et jeux avec des gens de vos racines.</small></div></a>
-  <a class="t g" href="/app/"><div class="ph"><img src="/app/img/p15/stadium.webp" alt="Un stade"></div><div class="tx"><b>Soirées match</b><small>Les grands matchs sur grand écran, ensemble.</small></div></a>
-  <a class="t g" href="/app/"><div class="ph"><img src="/app/img/p15/lantern.webp" alt="Lanternes"></div><div class="tx"><b>Festivals</b><small>Diwali, Aïd, Nouvel An lunaire, Noël et plus.</small></div></a>
-  <a class="t g" href="/app/"><div class="ph"><img src="/app/img/p15/trip.webp" alt="Une excursion en route"></div><div class="tx"><b>Excursions</b><small>Sorties en autobus avec un hôte.</small></div></a>
-  <a class="t g" href="/app/"><div class="ph"><img src="/app/img/p15/league.webp" alt="Un terrain de sport"></div><div class="tx"><b>Ligues sportives</b><small>Rejoignez une équipe ou trouvez des joueurs.</small></div></a>
-  <a class="t g w2" href="/app/"><div class="ph"><img src="/app/img/p15/hall.webp" alt="Une salle de réception"></div><div class="tx"><b>Organisez les vôtres</b><small>Organisez des événements dans votre ville. Pour le moment, les invités vous paient directement. Forfaits Hôte dès 19 $ par mois, 14 jours gratuits.</small></div></a>
- </div></div></section>
-
-<section><div class="wrap"><div class="sh"><div><h2>Comment ça marche</h2></div></div>
- <div class="steps"><div class="st g"><span class="n">1</span><b>Ouvrez l’app</b><small>Gratuit. Connectez-vous avec Google ou un courriel. Dites-nous où vous vivez et d’où vous venez.</small></div>
- <div class="st g"><span class="n">2</span><b>Choisissez ce qu’il vous faut</b><small>Une chambre, une recommandation, un compagnon pour vos parents ou une place à l’événement de ce week-end.</small></div>
- <div class="st g"><span class="n">3</span><b>Voyez le prix d’abord</b><small>Chaque prix et chaque frais sont affichés d’abord. Nos frais se paient sur notre site Web avec PayPal.</small></div></div></div></section>
-
-<section id="plus"><div class="wrap"><div class="sh"><div><h2>Abonnement</h2><p>La plupart de NeuAmigo se consulte gratuitement. Plus ouvre les détails.</p></div></div>
- <div class="pl"><div class="pc g hi"><h3>NeuAmigo Plus</h3><span style="display:inline-block;font-size:10px;font-weight:800;letter-spacing:.06em;padding:2px 8px;border-radius:99px;background:linear-gradient(90deg,#FFF1CC,#E9C46A);color:#2A2108;margin-bottom:4px">PRIX DE LANCEMENT</span><br><div class="big">4,99 $<small style="font-size:15px"> / mois</small></div><small>ou 39 $ par an · PLUS TARD 9,99 $ / 89 $ pour les nouveaux membres · votre prix reste tant que vous restez</small>
-  <ul><li>Contact et adresse de chaque chambre</li><li>Détails complets des événements, réservation 24 h plus tôt</li><li>Prix et contact de chaque expert</li><li>2 demandes de recommandation par mois</li></ul></div>
-  <div class="pc g"><h3>Badge vérifié</h3><div class="big">4,99 $</div><small>pour un an</small><ul><li>Pièce d’identité et selfie vérifiés</li><li>Photo de la pièce supprimée après la vérification</li><li>On vous dit oui plus vite</li></ul></div>
-  <div class="pc g"><h3>Gratuit</h3><div class="big">0 $</div><small>toujours</small><ul><li>Voir les chambres, événements et experts</li><li>Réserver des places</li><li>Demander un compagnon de voyage</li></ul></div></div></div></section>
-
-<section id="biz"><div class="wrap"><div class="sh"><div><h2>Pour les entreprises</h2><p>Rejoignez les personnes qui viennent d’arriver dans votre ville. Vous payez d’abord un forfait, sans commission cachée.</p></div></div>
- <div class="biz">
-  <a class="bz g" href="/app/"><div class="ph"><img src="/app/img/p15/hall.webp" alt="Salle de réception"></div><div class="tx"><b>Forfaits Hôte</b><small>Rencontres, soirées match, festivals et excursions.</small><span class="pr">Prix de lancement dès 19 $ par mois · 14 jours gratuits, sans carte</span></div></a>
-  <a class="bz g" href="/app/"><div class="ph"><img src="/app/img/p15/docs.webp" alt="Des papiers"></div><div class="tx"><b>Experts et agents de location</b><small>Une page avec votre permis, vos services et vos prix.</small><span class="pr">Prix de lancement 49 $ par mois (plus tard 99 $ agents, 149 $ experts) · 14 jours gratuits, sans carte</span></div></a>
-  <a class="bz g" href="/app/"><div class="ph"><img src="/app/img/p15/catering.webp" alt="Un buffet traiteur"></div><div class="tx"><b>Services d’événements</b><small>Traiteur, décor, musique et photos pour les hôtes.</small><span class="pr">49 $ par mois</span></div></a>
-  <a class="bz g" href="/app/"><div class="ph"><img src="/app/img/p15/city.webp" alt="Les tours d’une ville"></div><div class="tx"><b>Espace publicitaire</b><small>Un seul encadré « Commandité » dans votre ville. Vrais affichages et vraies touches.</small><span class="pr">500 $ par ville et par mois</span></div></a>
- </div></div></section>
-
-<section><div class="wrap"><div class="sh"><div><h2>Questions</h2></div></div><div class="faq">
- <details class="g" open><summary>NeuAmigo est-elle une app de mariage ?</summary><p>Non. NeuAmigo aide les personnes qui vivent à l’étranger pour tout ce qui entoure une nouvelle vie : chambres, emplois, voyages des parents, événements et amis. Pour le mariage, notre application distincte est NeuMarry (neumarry.com).</p></details>
- <details class="g"><summary>Qui organise les événements ?</summary><p>Des hôtes indépendants de votre ville. Ils paient un forfait pour organiser. Chaque billet a un code QR et, si l’hôte annule, il doit vous rendre le prix du billet.</p></details>
- <details class="g"><summary>Mon argent est-il en sécurité ?</summary><p>Nos propres frais se paient sur notre site Web avec PayPal. Pour le moment, les billets d’événements se paient directement à l’hôte, de la façon indiquée sur votre billet : payez seulement à ces coordonnées. Les paiements de la Vente de déménagement ouvriront plus tard avec un partenaire de paiement agréé.</p></details>
- <details class="g"><summary>Quelles villes ?</summary><p>Toronto d’abord, puis d’autres villes au Canada, aux États-Unis, en Australie et en Allemagne.</p></details>
-</div></div></section>
-
-<div class="wrap"><div class="final g"><h2>Trouvez les vôtres dans votre nouvelle ville</h2><p>Gratuit à ouvrir. Payez seulement ce que vous utilisez.</p><div class="cta"><a class="btn p" href="/app/">Ouvrir l’app</a><a class="btn s" href="https://play.google.com/store/apps/details?id=com.neuconet.neumarry" rel="noopener">Disponible sur Google Play</a></div></div></div>
+ <nav class="tabs" aria-label="Ce que NeuAmigo propose">
+  <a href="#homes"><img src="../img/v2/house_with_garden.webp" alt="">Logement</a><a href="#homes"><img src="../img/v2/briefcase.webp" alt="">Emploi</a><a href="#homes"><img src="../img/v2/clipboard.webp" alt="">Démarches</a><a href="#homes"><img src="../img/v2/toolbox.webp" alt="">Services</a><a href="#homes"><img src="../img/v2/party_popper.webp" alt="">Événements</a><a href="#homes"><img src="../img/v2/couch_and_lamp.webp" alt="">Acheter et vendre</a>
+ </nav>
+</div></div>
+<main class="wrap">
+ <section id="homes">
+  <h2>Tout pour votre installation</h2><p class="sub">Étape par étape, d’avant le départ à la vie dans votre nouvelle ville.</p>
+  <div class="grid">
+   <a class="card rv" href="../app/"><span class="im"><img src="../img/v2/apartment.webp" alt="" loading="lazy"></span><span class="bd"><b>Trouver un logement</b><small>Chambres et appartements de propriétaires et d’agents. Loyer sur chaque annonce.</small><span class="tag">Loyer affiché d’abord</span></span></a>
+   <a class="card rv" href="../app/"><span class="im"><img src="../img/v2/hiring.webp" alt="" loading="lazy"></span><span class="bd"><b>Trouver un emploi</b><small>Salaire et horaires affichés. Postulez en un geste. Les candidats ne paient jamais.</small><span class="tag">Salaire affiché d’abord</span></span></a>
+   <a class="card rv" href="../app/"><span class="im"><img src="../img/v2/passport.webp" alt="" loading="lazy"></span><span class="bd"><b>Votre plan de 30 jours</b><small>Banque, pièce d’identité, numéro fiscal, téléphone : une étape claire à la fois.</small><span class="tag">Étape par étape</span></span></a>
+   <a class="card rv" href="../app/"><span class="im"><img src="../img/v2/boxes2.webp" alt="" loading="lazy"></span><span class="bd"><b>Déménagement, ménage, impôts</b><small>Dites-le une fois. Jusqu’à 5 entreprises locales vous envoient leur prix.</small><span class="tag">Jusqu’à 5 prix</span></span></a>
+   <a class="card rv" href="../app/"><span class="im"><img src="../img/v2/football.webp" alt="" loading="lazy"></span><span class="bd"><b>Événements et amis</b><small>Football, soirées repas et rencontres. Réservez une place, rencontrez du monde.</small><span class="tag">Chaque week-end</span></span></a>
+   <a class="card rv" href="../app/"><span class="im"><img src="../img/v2/saletags.webp" alt="" loading="lazy"></span><span class="bd"><b>Acheter et vendre</b><small>Canapés, bureaux et cuisine, de personnes qui arrivent ou qui partent.</small><span class="tag">Prix sur chaque article</span></span></a>
+  </div>
+ </section>
+ <section>
+  <h2>Comment ça marche</h2><p class="sub">Trois étapes. Pas de longs formulaires.</p>
+  <div class="steps">
+   <div class="step rv"><span class="n">1</span><img src="../img/v2/airplane.webp" alt=""><span><b>Dites-nous où vous allez</b><small>Votre ville et où vous en êtes.</small></span></div>
+   <div class="step rv"><span class="n">2</span><img src="../img/v2/clipboard.webp" alt=""><span><b>Voyez ce qu’il vous faut, dans l’ordre</b><small>Logement, emploi, démarches et services, avec les prix.</small></span></div>
+   <div class="step rv"><span class="n">3</span><img src="../img/v2/handshake.webp" alt=""><span><b>Réservez, postulez ou demandez</b><small>Un geste. Vous traitez directement avec l’autre personne.</small></span></div>
+  </div>
+ </section>
+ <section>
+  <h2>Formules</h2><p class="sub">Tout le monde peut parcourir l’app. Chaque prix est affiché dans votre monnaie avant de payer, et rien ne se renouvelle tout seul.</p>
+  <div class="plans">
+   <div class="plan rv"><div class="hd"><span class="pic"><img src="../img/v2/key.webp" alt=""></span><span><span class="for">Pour le logement, l’emploi et les amis</span><h3>NeuAmigo Plus</h3></span></div><ul><li>Toutes les coordonnées : appelez ou écrivez aux propriétaires, employeurs et vendeurs</li><li>Discutez dans l’app avec vos contacts</li><li>Alertes en premier pour les nouveaux logements et emplois de votre ville</li></ul><p class="pr">Au mois ou à l’année · prix dans votre monnaie dans l’app</p></div>
+   <div class="plan rv" style="--c:#C2255C"><div class="hd"><span class="pic"><img src="../img/v2/party_popper.webp" alt=""></span><span><span class="for">Pour les événements et rencontres</span><h3>Weekend Club</h3></span></div><ul><li>Pas de frais de réservation</li><li>Réservez 48 heures avant tout le monde</li><li>Soirées réservées aux membres</li></ul><p class="pr">Un mois ou un week-end · prix dans votre monnaie dans l’app</p></div>
+  </div>
+ </section>
+ <section>
+  <div class="biz rv"><div><h2>Pour les entreprises</h2><p class="sub">Soyez le premier nom que voient les nouveaux arrivants. Chaque formule affiche son prix avant de payer.</p>
+   <div class="chips"><span>Propriétaires et agents</span><span>Employeurs</span><span>Organisateurs d’événements</span><span>Déménageurs et ménage</span><span>Experts visa, impôts et assurance</span></div>
+   <a class="btn" href="../app/">Voir les formules entreprises</a></div>
+   <div class="art"><img src="../img/v2/megaphone.webp" alt=""><img src="../img/v2/briefcase.webp" alt=""><img src="../img/v2/sparkles.webp" alt=""></div></div>
+ </section>
+ <section>
+  <h2>Honnête par principe</h2><p class="sub">Ce que nous faisons, et ce que nous ne faisons pas.</p>
+  <div class="honest">
+   <div class="rv"><b>Prix affichés d’abord</b><small>Every plan, fee and listing shows its price before you tap Pay.</small></div>
+   <div class="rv"><b>Nous sommes une plateforme</b><small>NeuAmigo met les gens en relation. Nous ne vérifions pas les membres ni les entreprises : rencontrez-vous en public et ne payez jamais avant d’avoir vu un logement.</small></div>
+   <div class="rv"><b>Signalez tout problème</b><small>Chaque annonce a un bouton de signalement. Nous retirons ce qui enfreint les règles.</small></div>
+  </div>
+ </section>
+ <section>
+  <h2>Questions</h2>
+  <details><summary>Dans quelles villes est NeuAmigo ?</summary><p>Vous choisissez votre ville à l’ouverture de l’app. Logements, emplois et événements viennent des personnes et entreprises de cette ville : certaines villes en ont plus que d’autres pendant que nous grandissons.</p></details>
+  <details><summary>Faut-il payer pour l’utiliser ?</summary><p>Vous pouvez parcourir l’app sans payer. Les coordonnées, la discussion et quelques extras viennent avec une formule. Demander des prix ne vous coûte rien : ce sont les entreprises qui paient.</p></details>
+  <details><summary>NeuAmigo est-elle une app de mariage ?</summary><p>Non. NeuAmigo aide pour tout ce qui entoure une nouvelle vie à l’étranger. Pour le mariage, notre app distincte est NeuMarry.</p></details>
+  <details><summary>Comment supprimer mon compte ?</summary><p>Dans l’app : Moi, puis Paramètres et aide, puis Supprimer mon compte. Ou voir la <a href="../delete-account.html" style="color:var(--sap)">page de suppression du compte</a>.</p></details>
+ </section>
+ <div class="end rv"><h2>Vous déménagez bientôt ? Commencez ici.</h2><p class="sub" style="margin:0">Une seule app pour toute votre installation.</p><div class="cta"><a class="btn p" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate">Disponible sur Google Play</a><a class="btn w" href="../app/">Ouvrir dans le navigateur</a></div></div>
+ <p class="big">Votre nouvelle ville,<br>en toute simplicité.</p>
+ <footer>NeuAmigo · NEUCONET PRIVATE LIMITED · Surat, Gujarat, India · support@neuamigo.com
+  <div class="links"><a href="privacy.html">Politique de confidentialité</a><a href="terms.html">Conditions d’utilisation</a><a href="../delete-account.html">Supprimer le compte</a><a href="../child-safety.html">Sécurité des enfants</a><a href="../">English</a></div></footer>
 </main>
-<footer><div class="wrap"><span>NeuAmigo · © 2026</span><a href="../fr/privacy.html">Politique de confidentialité</a><a href="../fr/terms.html">Conditions d’utilisation</a><a href="../delete-account.html">Delete account</a><a href="../child-safety.html">Child safety</a><a href="mailto:support@neuamigo.com">support@neuamigo.com</a><a class="lang" href="../" hreflang="en">English</a></div></footer>
 <script>
-const C=[['🇨🇦','Canada'],['🇺🇸','États-Unis'],['🇲🇽','Mexique'],['🇧🇷','Brésil'],['🇨🇴','Colombie'],['🇬🇧','Royaume-Uni'],['🇮🇪','Irlande'],['🇫🇷','France'],['🇩🇪','Allemagne'],['🇮🇹','Italie'],['🇪🇸','Espagne'],['🇵🇱','Pologne'],['🇺🇦','Ukraine'],['🇹🇷','Turquie'],['🇪🇬','Égypte'],['🇳🇬','Nigéria'],['🇬🇭','Ghana'],['🇰🇪','Kenya'],['🇪🇹','Éthiopie'],['🇿🇦','Afrique du Sud'],['🇱🇧','Liban'],['🇦🇪','Émirats'],['🇮🇷','Iran'],['🇵🇰','Pakistan'],['🇮🇳','Inde'],['🇳🇵','Népal'],['🇧🇩','Bangladesh'],['🇱🇰','Sri Lanka'],['🇨🇳','Chine'],['🇰🇷','Corée'],['🇯🇵','Japon'],['🇵🇭','Philippines'],['🇻🇳','Viêt Nam'],['🇮🇩','Indonésie'],['🇦🇺','Australie'],['🇳🇿','Nouvelle-Zélande']];
-const h=C.map(c=>`<span><i>${c[0]}</i>${c[1]}</span>`).join('');document.getElementById('fl').innerHTML=h+h;
+(function(){var W=['une chambre','un emploi','un déménageur','de l’aide fiscale','un canapé','des amis','un match de foot','du ménage'],el=document.getElementById('tw'),w=0,c=W[0].length,d=true,h=20;
+ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)setInterval(function(){if(h>0){h--;return}var s=W[w];if(!d){c++;el.textContent=s.slice(0,c);if(c>=s.length){d=true;h=20}}else{c--;el.textContent=s.slice(0,Math.max(c,0))||' ';if(c<=0){d=false;w=(w+1)%W.length;h=3}}},85);
+ var L=document.querySelectorAll('.rv');if(!('IntersectionObserver' in window)){L.forEach(function(e){e.classList.add('in')});return}
+ var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{rootMargin:'0px 0px -6% 0px'});L.forEach(function(e){io.observe(e)})})();
 </script>
-<div id="nm-consent" role="dialog" aria-live="polite" aria-label="Cookie settings" hidden><style>#nm-consent{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:60;max-width:560px;margin:0 auto;background:#fff;color:#13201A;border:1px solid #DDEEE5;border-radius:18px;box-shadow:0 10px 30px rgba(20,60,40,.16);padding:14px 16px;font:14px/1.5 "Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif}#nm-consent p{margin:0 0 10px}#nm-consent a{color:#0E7A55;font-weight:700}#nm-consent .b{display:flex;gap:10px}#nm-consent button{flex:1;min-height:42px;border-radius:999px;font:700 14px/1 "Nunito Sans",system-ui,sans-serif;cursor:pointer}#nm-consent .y{background:linear-gradient(150deg,#D8F8EA,#9FE6C6);color:#0B4D36;border:1px solid #fff}#nm-consent .n{background:#fff;color:#13201A;border:1px solid #D0E3C9}.nm-alink{background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer}</style><p>This website uses Google Analytics to count visits and the Meta Pixel to measure our ads on Facebook and Instagram. We never sell your data. <a href="privacy.html">Privacy Policy</a></p><div class="b"><button type="button" class="n" data-c="denied">Decline</button><button type="button" class="y" data-c="granted">Accept</button></div></div><script>(function(){var tz='';try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){}var eu=/^(Europe\/|Atlantic\/(Reykjavik|Canary|Madeira|Faroe|Azores))/.test(tz);var d=document.getElementById('nm-consent'),c=null;try{c=localStorage.getItem('nm.ads')}catch(e){}function set(v){try{localStorage.setItem('nm.ads',v);if(eu||v==='denied')localStorage.setItem('nm.analytics',v)}catch(e){}if(eu||v==='denied')gtag('consent','update',{analytics_storage:v});if(window.fbq)fbq('consent',v==='granted'?'grant':'revoke');d.hidden=true}d.addEventListener('click',function(e){var v=e.target&&e.target.getAttribute('data-c');if(v)set(v)});if(c!=='granted'&&c!=='denied')d.hidden=false;var f=document.querySelector('footer .wrap');if(f){var a=document.createElement('button');a.type='button';a.className='nm-alink link';a.textContent='Cookie settings';a.addEventListener('click',function(){d.hidden=false});f.appendChild(a)}})();</script></body></html>
+<div id="nm-consent" role="dialog" aria-live="polite" aria-label="Cookie settings" hidden><style>#nm-consent{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:60;max-width:560px;margin:0 auto;background:#fff;color:#13201A;border:1px solid #DDEEE5;border-radius:18px;box-shadow:0 10px 30px rgba(20,60,40,.16);padding:14px 16px;font:14px/1.5 "Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif}#nm-consent p{margin:0 0 10px}#nm-consent a{color:#0E7A55;font-weight:700}#nm-consent .b{display:flex;gap:10px}#nm-consent button{flex:1;min-height:42px;border-radius:999px;font:700 14px/1 "Nunito Sans",system-ui,sans-serif;cursor:pointer}#nm-consent .y{background:linear-gradient(150deg,#D8F8EA,#9FE6C6);color:#0B4D36;border:1px solid #fff}#nm-consent .n{background:#fff;color:#13201A;border:1px solid #D0E3C9}.nm-alink{background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer}</style><p>This website uses Google Analytics to count visits and the Meta Pixel to measure our ads on Facebook and Instagram. We never sell your data. <a href="privacy.html">Privacy Policy</a></p><div class="b"><button type="button" class="n" data-c="denied">Decline</button><button type="button" class="y" data-c="granted">Accept</button></div></div><script>(function(){var tz='';try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){}var eu=/^(Europe\/|Atlantic\/(Reykjavik|Canary|Madeira|Faroe|Azores))/.test(tz);var d=document.getElementById('nm-consent'),c=null;try{c=localStorage.getItem('nm.ads')}catch(e){}function set(v){try{localStorage.setItem('nm.ads',v);if(eu||v==='denied')localStorage.setItem('nm.analytics',v)}catch(e){}if(eu||v==='denied')gtag('consent','update',{analytics_storage:v});if(window.fbq)fbq('consent',v==='granted'?'grant':'revoke');d.hidden=true}d.addEventListener('click',function(e){var v=e.target&&e.target.getAttribute('data-c');if(v)set(v)});if(c!=='granted'&&c!=='denied')d.hidden=false;var f=document.querySelector('footer .wrap');if(f){var a=document.createElement('button');a.type='button';a.className='nm-alink link';a.textContent='Cookie settings';a.addEventListener('click',function(){d.hidden=false});f.appendChild(a)}})();</script></body>
+</html>
