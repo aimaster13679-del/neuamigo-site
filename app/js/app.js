@@ -6792,21 +6792,17 @@ Object.assign(A,{a7tab(el){const r=document.querySelector('.a7');if(!r)return;co
   const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{const on=!!document.querySelector('.a7');document.documentElement.classList.toggle('a7on',on);if(on){a7sync();a7motion()}else delete document.documentElement.dataset.a7}catch(e){}};
 })();
 
-/* ===== part38: "Journey" home v2 (his notes 16 Nov 2026 09:34: no cartoon icons, nothing glued together,
-   clear active chip, professional + fun + HD). The app is laid out as the move itself:
-   Before you fly -> First week -> First month -> Life here. Only real HD photos (no people), clean type,
-   generous spacing, a numbered stop track that follows the scroll, smooth free scrolling (no snapping).
-   NOT live yet: sample for his ok (localStorage nm.na38=1). Real numbers only. */
-const NA38_LIVE = false;
+/* ===== part38: "Journey" home, a new way of thinking (his ask 16 Nov 2026 09:16, 'puri soch badlo').
+   The app is laid out like the move itself: Before you fly -> First week -> First month -> Life here.
+   Every stop shows exactly what people need at that moment, shop-style (picture, price, one button).
+   The journey track at the top follows you while you scroll (the stop in view lights up).
+   NOT live yet: mock for his ok (turn on with localStorage nm.na38=1). Real numbers only. */
+const NA38_LIVE = false; /* 16 Nov 09:54: Journey = the Settle In tab (Home stays the Bazaar home he picked) */
 function NA38(){try{return NA38_LIVE||localStorage.getItem('nm.na38')==='1'}catch(e){return NA38_LIVE}}
-const A8ST=[['fly','Before you fly','passport'],['week','First week','boxes3'],['month','First month','work'],['life','Life here','night']];
-const a8p=n=>['apartment','papers','work','toronto','tacos'].includes(n)?`img/p18/${n}.webp`:`img/p17/${n}.webp`;
-const a8im=(n,eager)=>`<img ${a4src(a8p(n))} alt="" decoding="async" ${eager?'fetchpriority="high"':'loading="lazy"'}>`;
+const A8ST=[['fly','Before you fly','airplane'],['week','First week','key'],['month','First month','briefcase'],['life','Life here','party_popper']];
 function a8stage(path,bar){if(path==='moving')return 'fly';if(path==='local')return 'life';return bar&&bar.d>=4?'month':'week'}
-function a8pick(ph,t,line,btn,a,eager){return `<button class="a8-pk" data-a="${a}"><span class="a8-ph">${a8im(ph,eager)}</span><span class="a8-pb"><b>${esc(t)}</b><span class="a8-pf"><small>${line}</small><u>${btn}</u></span></span></button>`}
-function a8tile(ph,t,s,a){return `<button class="a8-ti" data-a="${a}"><span class="a8-ph">${a8im(ph)}</span><b>${esc(t)}</b><small>${s}</small></button>`}
-function a8head(n,t,ph,sub){return `<div class="a8-sh"><span class="a8-no">0${n}</span><span class="a8-st"><small>${sub}</small><h2>${t}</h2></span><span class="a8-sp">${a8im(ph)}</span></div>`}
-function a8band(ph,small,t,i,btn,a,dark){return `<button class="a8-band${dark?' dk':''}" data-a="${a}"><span class="a8-bph">${a8im(ph)}</span><span class="a8-bt"><small>${small}</small><b>${t}</b><i>${i}</i></span><u>${btn}</u></button>`}
+function a8pick(img,pic,t,line,btn,a){return `<button class="a8-pk" data-a="${a}"><span class="a8-ph"><img ${a4src(img)} alt="" decoding="async" loading="lazy"></span><span class="a8-pb"><span class="a8-pt"><img src="${f3(pic)}" alt=""><b>${esc(t)}</b></span><span class="a8-pf"><small>${line}</small><u>${btn}</u></span></span></button>`}
+function a8head(k,t,pic,sub){return `<div class="a8-sh"><img src="${f3(pic)}" alt=""><span><small>${sub}</small><h2>${t}</h2></span></div>`}
 function a8home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{};
   const path=(typeof c10get==='function')?c10get('nm.path','local'):'local';
   const rooms=zdata8('rooms15','rooms',{maxrent:0}),jobs=zdata8('jobs15','jobs',{}),ev=zdata8('events15','ev',{k:'',cty:c}),sales=zdata8('sales15','sale',{});
@@ -6817,68 +6813,64 @@ function a8home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{};
   const order=path==='local'?['life','month','week','fly']:['fly','week','month','life'];
   const title=path==='moving'?`Your move to <em>${esc(city)}</em>`:path==='arrived'?`Your first days in <em>${esc(city)}</em>`:`Life in <em>${esc(city)}</em>`;
   let st='';for(let i=0;i<26;i++)st+=`<i style="left:${(i*97)%100}%;top:${(i*41)%100}%;animation-delay:${(i%7)*.3}s"></i>`;
-  const track=`<div class="a8-trk" role="tablist">${order.map((k,i)=>{const S8=A8ST.find(x=>x[0]===k);return `<button data-a="a8go" data-k="${k}" class="${k===now?'on':''}"><em>${i+1}</em><span>${S8[1]}</span></button>`}).join('')}</div>`;
-  const plus=(typeof PLANS==='function'&&PLANS()),hasPlus=!!(P15.d||{}).plus;
-  const roomsLine=rooms.length?`${rooms.length} ${rooms.length===1?'room':'rooms'}${minRent?' from <strong>'+esc(a4money(minRent.rent,minRent.currency))+'</strong>':''}`:'Rooms and flats to rent';
-  const head=`<div class="a8-hd"><div class="a8-sky">${st}</div><svg class="a8-route" viewBox="0 0 390 120" preserveAspectRatio="none"><path d="M -10 110 C 120 20, 260 10, 400 60" fill="none" stroke="rgba(157,184,240,.4)" stroke-width="1.6" stroke-dasharray="5 7"/></svg>
-   <div class="a8-bar"><span class="a8-lg"><img src="img/icon-192.png" alt=""><b>NeuAmigo</b></span>${plus?`<button class="a8-pill" data-a="p15open" data-v="plans">${hasPlus?'Your plan':'Plans'}</button>`:''}<button class="a8-sq" data-a="tab" data-k="me" aria-label="Me">${ini}</button></div>
-   <h1>${title}</h1><p>${bar&&path!=='local'?`<strong>${bar.d} of ${bar.n}</strong> steps done · everything you need, stop by stop`:'Everything you need, stop by stop'}</p>
-   ${bar&&path!=='local'?`<span class="a8-prog"><i style="width:${Math.max(3,bar.pct)}%"></i></span>`:''}
+  const track=`<div class="a8-trk" role="tablist">${order.map(k=>{const S8=A8ST.find(x=>x[0]===k);return `<button data-a="a8go" data-k="${k}" class="${k===now?'on':''}"><img src="${f3(S8[2])}" alt=""><span>${S8[1]}</span></button>`}).join('')}</div>`;
+  const head=`<div class="a8-hd"><div class="a8-sky">${st}</div><svg class="a8-route" viewBox="0 0 390 120" preserveAspectRatio="none"><path d="M -10 110 C 120 20, 260 10, 400 60" fill="none" stroke="rgba(157,184,240,.45)" stroke-width="2" stroke-dasharray="6 7"/></svg>
+   <div class="a8-bar"><span class="a8-lg"><img src="img/icon-192.png" alt=""><b>NeuAmigo</b></span><button class="a8-sq" data-a="p15open" data-v="plans" aria-label="Plans"><img src="${f3('key')}" alt=""></button><button class="a8-sq" data-a="tab" data-k="me" aria-label="Me">${ini}</button></div>
+   <h1>${title}</h1><p>${bar&&path!=='local'?`<strong>${bar.d} of ${bar.n}</strong> steps done. Everything you need, stop by stop.`:'Everything you need, stop by stop.'}</p>
    <button class="a8-search" data-a="p15open" data-v="search"><span class="n32-mg"></span><span>Search <em class="a7-type">${A7HINT[0]}</em></span></button></div><div class="a8-tw">${track}</div>`;
-  const stepRows=L=>L.length?`<div class="a8-steps">${L.map(s=>{const ok=done.includes(s[0]);return `<button class="a8-row${ok?' ok':''}" data-a="p15open" data-v="plan30"><span class="a8-ck"></span><span><b>${esc(s[2])}</b><small>${esc(s[3])}</small></span><i>${ok?'Done':'Start'}</i></button>`}).join('')}</div>`:'';
-  const third=Math.ceil(steps.length/3),q5='Tell us once, <strong>up to 5 prices</strong>';
-  const g=L=>`<div class="a8-g">${L.map(x=>a8tile(...x)).join('')}</div>`;
-  const sec=(t,s)=>`<div class="a8-sub"><h3>${t}</h3>${s?`<p>${s}</p>`:''}</div>`;
+  const picks={
+    fly:[a8pick(a4p('apartment'),'house_with_garden','A home before you land',rooms.length?`${rooms.length} ${rooms.length===1?'room':'rooms'}${minRent?' from <strong>'+esc(a4money(minRent.rent,minRent.currency))+'</strong>':''}`:'Rooms and flats to rent','See homes','p15open" data-v="rooms'),
+         a8pick(a4p('papers'),'clipboard','Papers, step by step',bar?`<strong>${bar.d} of ${bar.n}</strong> done`:'Your 30-day plan','Open plan','p15open" data-v="plan30'),
+         a8pick('img/p17/boxes2.webp','delivery_truck','Movers',`Tell us once, <strong>up to 5 prices</strong>`,'Get prices','z8q" data-c="Movers')],
+    week:[a8pick(a4p('apartment'),'house_with_garden','A place to live',rooms.length?`${rooms.length} ${rooms.length===1?'room':'rooms'}${minRent?' from <strong>'+esc(a4money(minRent.rent,minRent.currency))+'</strong>':''}`:'Rooms and flats to rent','See homes','p15open" data-v="rooms'),
+          a8pick(a4p('papers'),'identification_card','Bank, ID, tax number',bar?`<strong>${bar.d} of ${bar.n}</strong> done`:'One step at a time','Open plan','p15open" data-v="plan30'),
+          a8pick('img/p17/clean.webp','sparkles','Cleaning',`Tell us once, <strong>up to 5 prices</strong>`,'Get prices','z8q" data-c="Cleaning')],
+    month:[a8pick(a4p('work'),'briefcase','Work',jobs.length?`<strong>${jobs.length} ${jobs.length===1?'job':'jobs'}</strong>, pay shown`:'Jobs with pay shown','See jobs','p15open" data-v="jobs'),
+           a8pick('img/p17/resume.webp','identification_card','Work profile','Apply to any job in <strong>one tap</strong>','Make it','p15open" data-v="workprof'),
+           a8pick('img/p17/calc.webp','receipt','Tax filing',`Tell us once, <strong>up to 5 prices</strong>`,'Get prices','z8q" data-c="Tax')],
+    life:[a8pick('img/p17/football.webp','soccer_ball','Weekends',up.length?`<strong>${up.length} ${up.length===1?'event':'events'}</strong> coming up`:'Events near you','See events','tab" data-k="ev15'),
+          a8pick('img/p17/feast.webp','hot_beverage','Taste of home','Food nights and meetups','See events','tab" data-k="ev15'),
+          a8pick('img/p17/saletags.webp','couch_and_lamp','Buy and sell',sales.length?`<strong>${sales.length} ${sales.length===1?'item':'items'}</strong> near you`:'Things for your home','See items','p15open" data-v="c12sell')]};
+  const grid=L=>`<div class="a7-grid">${L.map(x=>a7tile(...x)).join('')}</div>`;
+  const stepRows=L=>L.length?`<div class="a7-list">${L.map(s=>{const ok=done.includes(s[0]);return `<button class="a7-row${ok?' ok':''}" data-a="p15open" data-v="plan30"><span class="a7-ck"></span><span><b>${esc(s[2])}</b><small>${esc(s[3])}</small></span><i>${ok?'Done':'›'}</i></button>`}).join('')}</div>`:'';
+  const third=Math.ceil(steps.length/3);
   const body={
-    fly:a8head(1,'Before you fly','passport','Plan from home')+`<div class="a8-rail">${[
-        a8pick('apartment','A home before you land',roomsLine,'See homes','p15open" data-v="rooms',1),
-        a8pick('plan','Papers, step by step',bar?`<strong>${bar.d} of ${bar.n}</strong> done`:'Your 30-day plan','Open plan','p15open" data-v="plan30',1),
-        a8pick('boxes2','Movers',q5,'Get prices','z8q" data-c="Movers')].join('')}</div>`
-      +g([['insure','Homes',rooms.length?`${rooms.length} to rent`:'To rent','p15open" data-v="rooms'],['passport','Visa and papers','Ask an expert','p15open" data-v="experts'],['boxes3','Movers','5 prices','z8q" data-c="Movers'],['compass','30-day plan',bar?`${bar.d} of ${bar.n} done`:'Step by step','p15open" data-v="plan30']])
-      +(path!=='local'&&steps.length?sec('Your next steps','From your 30-day plan')+stepRows(steps.slice(0,Math.min(3,third))):'')
-      +(rooms.length?sec('Homes for you',`Rooms in ${esc(city)}`)+`<div class="a8-rail">${rooms.slice(0,8).map(a7room).join('')}</div>`:''),
-    week:a8head(2,'First week','boxes3','Settle in')+`<div class="a8-rail">${[
-        a8pick('apartment','A place to live',roomsLine,'See homes','p15open" data-v="rooms'),
-        a8pick('papers','Bank, ID, tax number',bar?`<strong>${bar.d} of ${bar.n}</strong> done`:'One step at a time','Open plan','p15open" data-v="plan30'),
-        a8pick('clean','Cleaning',q5,'Get prices','z8q" data-c="Cleaning')].join('')}</div>`
-      +g([['clean2','Cleaning','5 prices','z8q" data-c="Cleaning'],['lock','Insurance','5 prices','z8q" data-c="Insurance'],['kitchen','Repairs','5 prices','z8q" data-c="Small jobs'],['garage','Buy and sell',sales.length?`${sales.length} items`:'Near you','p15open" data-v="c12sell']])
-      +(path!=='local'&&steps.length?sec('This week','From your 30-day plan')+stepRows(steps.slice(third,third*2).slice(0,3)):'')
-      +(sales.length?sec('Things for your new home','From people who are moving out')+`<div class="a8-rail">${sales.slice(0,8).map(a7item).join('')}</div>`:''),
-    month:a8head(3,'First month','work','Work and money')+`<div class="a8-rail">${[
-        a8pick('hiring','Work',jobs.length?`<strong>${jobs.length} ${jobs.length===1?'job':'jobs'}</strong>, pay shown`:'Jobs with pay shown','See jobs','p15open" data-v="jobs'),
-        a8pick('resume','Work profile','Apply in <strong>one tap</strong>','Make it','p15open" data-v="workprof'),
-        a8pick('calc','Tax filing',q5,'Get prices','z8q" data-c="Tax')].join('')}</div>`
-      +g([['jobsnews','Jobs',jobs.length?`${jobs.length} open`:'Pay shown','p15open" data-v="jobs'],['resume','Work profile','One tap apply','p15open" data-v="workprof'],['calc','Tax filing','5 prices','z8q" data-c="Tax'],['expert','Ask an expert','Visa, tax, insurance','p15open" data-v="experts']])
-      +(jobs.length?sec('Jobs near you','Pay shown on every job')+`<div class="a8-rail">${jobs.slice(0,8).map(a7job).join('')}</div>`:''),
-    life:a8head(4,'Life here','night','Friends and weekends')+`<div class="a8-rail">${[
-        a8pick('football','Weekends',up.length?`<strong>${up.length} ${up.length===1?'event':'events'}</strong> coming up`:'Events near you','See events','tab" data-k="ev15'),
-        a8pick('feast','Food nights','Meet people over dinner','See events','tab" data-k="ev15'),
-        a8pick('mic','Open mic and music','Evenings in the city','See events','tab" data-k="ev15')].join('')}</div>`
-      +(up.length?sec('Coming up','Book a seat, meet people')+`<div class="a8-rail a8-evr">${up.slice(0,8).map(a7ev).join('')}</div>`:'')
-      +a8band('seats','Weekend Club','No booking fee, book 48 hours early',p15price('wc_month_a')?esc(p15price('wc_month_a'))+' a month':'See the price','See','p15open" data-v="club')};
+    fly:a8head('fly','Before you fly','airplane','Stop 1')+`<div class="a8-rail">${picks.fly.join('')}</div>`
+      +grid([['house_with_garden','Homes','p15open" data-v="rooms'],['clipboard','30-day plan','p15open" data-v="plan30'],['delivery_truck','Movers','z8q" data-c="Movers'],['light_bulb','Ask an expert','p15open" data-v="experts']])
+      +(path!=='local'?stepRows(steps.slice(0,Math.min(3,third))):'')
+      +a7rail('Homes for you',`Rooms in ${esc(city)}`,rooms.slice(0,8).map(a7room),rooms.length>2?'See all homes':'','p15open" data-v="rooms'),
+    week:a8head('week','First week','key','Stop 2')+`<div class="a8-rail">${picks.week.join('')}</div>`
+      +grid([['identification_card','Bank and ID','p15open" data-v="plan30'],['sparkles','Cleaning','z8q" data-c="Cleaning'],['toolbox','Repairs','z8q" data-c="Small jobs'],['shield','Insurance','z8q" data-c="Insurance']])
+      +(path!=='local'?stepRows(steps.slice(third,third*2).slice(0,3)):'')
+      +a7rail('Things for your new home','From people who are moving out',sales.slice(0,8).map(a7item),sales.length>2?'See all items':'','p15open" data-v="c12sell'),
+    month:a8head('month','First month','briefcase','Stop 3')+`<div class="a8-rail">${picks.month.join('')}</div>`
+      +grid([['briefcase','Jobs','p15open" data-v="jobs'],['identification_card','Work profile','p15open" data-v="workprof'],['receipt','Tax filing','z8q" data-c="Tax'],['light_bulb','Ask an expert','p15open" data-v="experts']])
+      +a7rail('Jobs near you','Pay shown on every job',jobs.slice(0,8).map(a7job),jobs.length>2?'See all jobs':'','p15open" data-v="jobs'),
+    life:a8head('life','Life here','party_popper','Stop 4')+`<div class="a8-rail">${picks.life.join('')}</div>`
+      +(up.length?`<div class="a7-sec"><div><h2>Coming up</h2><p>Book a seat, meet people</p></div></div><div class="a7-rail a7-evr">${up.slice(0,8).map(a7ev).join('')}</div><button class="a7-more" data-a="tab" data-k="ev15">See all events ›</button>`:a7empty('party_popper','Events show up here','Football, food nights and meetups in your city.','See events','tab" data-k="ev15'))
+      +`<button class="a7-plus" data-a="p15open" data-v="club"><img src="${f3('party_popper')}" alt=""><span><small>Weekend Club</small><b>No booking fee, book 48 hours early</b><i>${p15price('wc_month_a')?esc(p15price('wc_month_a'))+' a month':'See the price'}</i></span><u>See</u></button>`};
   const secs=order.map(k=>`<section class="a8-s a8-${k}" data-s="${k}">${body[k]}</section>`).join('');
-  const pl=(plus&&!hasPlus)?a8band('lock','NeuAmigo Plus','Call landlords and employers directly',(p15price('plus_m')?esc(p15price('plus_m'))+' a month · ':'')+'alerts first','See plans','p15open" data-v="plans'):'';
-  const trust=`<div class="a8-tr">${[['Prices shown first','No surprise fees'],['Report anything','We remove what breaks the rules'],['Real members','People and local businesses']].map(([t,s])=>`<div><b>${t}</b><small>${s}</small></div>`).join('')}</div>`;
-  const biz=a8band('hiring','For businesses','Be the first name new arrivals see',`Homes, jobs, services or events in ${esc(city)}`,'Prices','p15open" data-v="plans" data-t="biz',1);
+  const plus=(typeof PLANS==='function'&&PLANS()),hasPlus=!!(P15.d||{}).plus;
+  const pl=(plus&&!hasPlus)?`<button class="a7-plus" data-a="p15open" data-v="plans"><img src="${f3('key')}" alt=""><span><small>NeuAmigo Plus</small><b>Call landlords and employers directly</b><i>${p15price('plus_m')?esc(p15price('plus_m'))+' a month · ':''}alerts first</i></span><u>See plans</u></button>`:'';
+  const trust=`<div class="a8-tr">${[['receipt','Prices shown first','No surprise fees'],['shield','Report anything','We remove what breaks the rules'],['handshake','Real people','Members and local businesses']].map(([p,t,s])=>`<div><img src="${f3(p)}" alt=""><b>${t}</b><small>${s}</small></div>`).join('')}</div>`;
+  const biz=`<button class="a7-biz" data-a="p15open" data-v="plans" data-t="biz"><img src="${f3('megaphone')}" alt=""><span><small>For businesses</small><b>Be the first name new arrivals see</b><i>Homes, jobs, services or events in ${esc(city)}</i></span><u>Prices</u></button>`;
   const foot=`<div class="a7-ft"><h2>Your new city,<br>made easy.</h2><small>NeuAmigo · for people who move</small></div>`;
   return c9wrap(`<div class="a7 a8" data-t="all">${head}${secs}<div class="a8-end">${pl}${trust}${biz}</div>${foot}</div>`)}
-let a8io=null,a8lock=0;
+let a8io=null;
 function a8watch(){if(a8io)a8io.disconnect();if(!('IntersectionObserver' in window))return;
-  a8io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting&&Date.now()>a8lock){a8mark(x.target.dataset.s)}}),{rootMargin:'-40% 0px -55% 0px'});
+  a8io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){const k=x.target.dataset.s;document.querySelectorAll('.a8-trk button').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
+    const on=document.querySelector('.a8-trk button.on'),tr=document.querySelector('.a8-trk');try{if(on&&tr)tr.scrollTo({left:on.offsetLeft-tr.clientWidth/2+on.offsetWidth/2,behavior:'smooth'})}catch(e){}}}),{rootMargin:'-45% 0px -50% 0px'});
   document.querySelectorAll('.a8-s').forEach(s=>a8io.observe(s));
-  const L=document.querySelectorAll('.a8 .a7-pc,.a8 .a8-row,.a8 .a7-ev,.a8 .a8-pk,.a8 .a8-ti');const rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const L=document.querySelectorAll('.a8 .a7-ti,.a8 .a7-pc,.a8 .a7-row,.a8 .a7-ev,.a8 .a8-pk,.a8 .a7-empty');const rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(rm||!('IntersectionObserver' in window)){L.forEach(e=>e.classList.add('in'));return}
-  const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){const el=x.target;el.style.transitionDelay=(([...el.parentNode.children].indexOf(el)%4)*60)+'ms';el.classList.add('in');io.unobserve(el)}}),{rootMargin:'0px 0px -4% 0px'});
+  const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){const el=x.target;el.style.transitionDelay=(([...el.parentNode.children].indexOf(el)%6)*50)+'ms';el.classList.add('in');io.unobserve(el)}}),{rootMargin:'0px 0px -6% 0px'});
   L.forEach(e=>io.observe(e))}
-function a8mark(k){const tr=document.querySelector('.a8-trk');if(!tr)return;tr.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
-  const on=tr.querySelector('button.on');try{if(on)tr.scrollTo({left:on.offsetLeft-16,behavior:'smooth'})}catch(e){}}
-Object.assign(A,{a8go(el){const k=el.dataset.k,s=document.querySelector(`.a8-s[data-s="${k}"]`);if(!s)return;a8lock=Date.now()+900;a8mark(k);
-  const m=document.getElementById('main'),off=(document.querySelector('.a8-tw')||{offsetHeight:56}).offsetHeight+4;
+Object.assign(A,{a8go(el){const s=document.querySelector(`.a8-s[data-s="${el.dataset.k}"]`);if(!s)return;const m=document.getElementById('main'),off=(document.querySelector('.a8-tw')||{offsetHeight:56}).offsetHeight+8;
   if(m&&m.scrollHeight>m.clientHeight)m.scrollTo({top:m.scrollTop+s.getBoundingClientRect().top-m.getBoundingClientRect().top-off,behavior:'smooth'});else window.scrollTo({top:s.getBoundingClientRect().top+window.scrollY-off,behavior:'smooth'})}});
 (function(){
   if(!NA38())return;
-  const _h=c12home;c12home=function(){try{return a8home()}catch(e){console.warn('[a8]',e);return _h.apply(this,arguments)}};
-  const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{const on=!!document.querySelector('.a8');document.documentElement.classList.toggle('a8on',on);if(on){a7motion();a8watch()}}catch(e){}};
+  const _s=settle15;settle15=function(){try{return a8home()}catch(e){console.warn('[a8]',e);return _s.apply(this,arguments)}};
+  const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{const sb=[...document.querySelectorAll('.navwrap .nav button')].find(b=>/Settle/.test(b.textContent));if(sb){sb.dataset.a='tab';sb.dataset.k='settle';delete sb.dataset.v;const on=S.tab==='settle'&&!P15.v;if(on){document.querySelectorAll('.navwrap .nav button.on').forEach(b=>b.classList.remove('on'));sb.classList.add('on')}};const on=!!document.querySelector('.a8');document.documentElement.classList.toggle('a8on',on);if(on){a7motion();a8watch()}}catch(e){}};
 })();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
