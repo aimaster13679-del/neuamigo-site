@@ -3653,3 +3653,74 @@ html:not(.gl-lt) .a8 .a7-grid .a7-ti span{background:#141B2E!important}
 .a8 .a8-trk button.on span{color:#fff!important;-webkit-text-fill-color:#fff}
 html:not(.gl-lt) .a8 .a8-trk button.on span{color:#0B1226!important;-webkit-text-fill-color:#0B1226}
 .a8 .a8-trk button span,.a8 .a8-trk button.on span{-webkit-text-fill-color:currentColor!important}
+/* ===== part38 v2: photo-only, airy, professional ===== */
+.a8{--ink:#0B1226;--sap:#0F52BA;font-family:'Plus Jakarta Sans',system-ui}
+.a8-hd{padding:calc(env(safe-area-inset-top,0px) + 14px) 20px 22px}
+.a8 .a8-pill{background:rgba(255,255,255,.14)!important;border:1px solid rgba(255,255,255,.22)!important;color:#fff!important;-webkit-text-fill-color:#fff;font:800 13px 'Plus Jakarta Sans',system-ui!important;padding:0 14px!important;height:40px;border-radius:12px!important}
+.a8 .a8-sq{width:40px;height:40px}
+.a8-hd h1{font-size:31px;margin:26px 0 8px}
+.a8-prog{position:relative;display:block;height:5px;border-radius:3px;background:rgba(255,255,255,.16);margin:14px 0 2px;overflow:hidden}
+.a8-prog i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,#7FA8FF,#fff);animation:a8grow 1.2s .3s cubic-bezier(.2,.8,.2,1) both}
+@keyframes a8grow{from{width:0}}
+.a8 .a8-search{margin-top:18px}
+.a8-tw{padding:10px 0}
+.a8-trk{gap:8px;padding:0 20px}
+.a8 .a8-trk button{gap:9px;padding:9px 14px 9px 9px!important;background:var(--c9pn)!important;color:var(--c9tx)!important;-webkit-text-fill-color:currentColor;border:1px solid var(--c9hl)!important;font:700 13.5px 'Plus Jakarta Sans',system-ui!important;box-shadow:none}
+.a8-trk em{font-style:normal;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;background:var(--c9pn2);color:var(--c9t2);-webkit-text-fill-color:currentColor;font:800 11.5px 'Plus Jakarta Sans',system-ui}
+.a8 .a8-trk button.on,html:not(.gl-lt) .a8 .a8-trk button.on{background:var(--sap)!important;border-color:var(--sap)!important;color:#fff!important;transform:none}
+.a8 .a8-trk button.on span,html:not(.gl-lt) .a8 .a8-trk button.on span{color:#fff!important;-webkit-text-fill-color:#fff!important}
+.a8 .a8-trk button.on em{background:rgba(255,255,255,.22);color:#fff}
+html:not(.gl-lt) .a8 .a8-trk button.on,html:not(.gl-lt) .a8 .a8-trk button.on span{background-color:#3D7BFF!important;border-color:#3D7BFF!important}
+html:not(.gl-lt) .a8 .a8-trk button.on span{background:transparent!important}
+.a8-s{padding:8px 20px 34px;margin-top:18px;border-radius:30px 30px 0 0}
+.a8-sh{display:flex;align-items:center;gap:14px;margin:22px 0 18px}
+.a8-sh img{animation:none!important}
+.a8-no{flex:none;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--a7d);color:#fff;-webkit-text-fill-color:#fff;font:800 16px 'Plus Jakarta Sans',system-ui;letter-spacing:.02em}
+html:not(.gl-lt) .a8-no{color:#0B1226;-webkit-text-fill-color:#0B1226}
+.a8-st{flex:1;min-width:0}.a8-st small{display:block;font:700 12.5px 'Plus Jakarta Sans',system-ui;color:var(--a7d);letter-spacing:0;text-transform:none}
+.a8-st h2{font:800 25px/1.15 'Plus Jakarta Sans',system-ui;margin:2px 0 0;color:var(--c9tx)}
+.a8-sp{flex:none;width:84px;aspect-ratio:3/2;border-radius:12px;overflow:hidden;box-shadow:0 6px 16px rgba(11,16,32,.14)}.a8-sp img{width:100%;height:100%;object-fit:cover;display:block}
+.a8-rail{gap:14px;margin:0 -20px 22px;padding:2px 20px 10px;scroll-snap-type:none;scroll-padding-left:20px;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.a8-rail::after{content:'';flex:0 0 6px}
+.a8 .a8-pk{flex:0 0 80%;padding:0!important;border-radius:22px!important;overflow:hidden;box-shadow:0 1px 2px rgba(11,16,32,.06),0 12px 30px rgba(11,16,32,.09)}
+html:not(.gl-lt) .a8 .a8-pk{box-shadow:0 0 0 1px #222A3C}
+.a8-pk .a8-ph{border-radius:0}
+.a8-ph img{transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.a8-pk:active .a8-ph img,.a8-ti:active .a8-ph img{transform:scale(1.05)}
+.a8-pb{padding:14px 16px 16px}
+.a8-pb b{font:800 17px 'Plus Jakarta Sans',system-ui;color:var(--c9tx)}
+.a8-pf{margin-top:8px}.a8-pf small{font:600 13px 'Plus Jakarta Sans',system-ui;color:var(--c9t2)}
+.a8-pf u{position:static!important;padding:9px 14px!important;border-radius:11px!important}
+.a8-g{display:grid;grid-template-columns:1fr 1fr;gap:16px 14px;margin-bottom:6px}
+.a8 .a8-ti{display:flex!important;flex-direction:column;align-items:stretch;background:transparent!important;border:0!important;padding:0!important;border-radius:0!important;text-align:left;color:var(--c9tx)!important;opacity:0;transform:translateY(14px);transition:opacity .45s ease,transform .5s cubic-bezier(.2,.9,.3,1.1)}
+.a8-ti .a8-ph{border-radius:16px;box-shadow:0 6px 18px rgba(11,16,32,.08)}
+.a8-ti b{font:800 14.5px 'Plus Jakarta Sans',system-ui;margin-top:9px}.a8-ti small{font:600 12.5px 'Plus Jakarta Sans',system-ui;color:var(--c9t2);margin-top:2px}
+.a8-sub{margin:26px 0 12px}.a8-sub h3{font:800 18px 'Plus Jakarta Sans',system-ui;margin:0;color:var(--c9tx)}.a8-sub p{margin:3px 0 0;font:600 12.5px 'Plus Jakarta Sans',system-ui;color:var(--c9t2)}
+.a8-steps{background:var(--c9pn);border-radius:20px;box-shadow:0 1px 2px rgba(11,16,32,.05),0 8px 22px rgba(11,16,32,.06);overflow:hidden}
+html:not(.gl-lt) .a8-steps{box-shadow:0 0 0 1px #222A3C}
+.a8 .a8-row{display:flex!important;align-items:center;gap:14px;width:100%;background:transparent!important;border:0!important;border-radius:0!important;padding:15px 16px!important;text-align:left;color:var(--c9tx)!important;opacity:0;transform:translateY(10px);transition:opacity .4s,transform .45s}
+.a8-row+.a8-row{border-top:1px solid var(--c9hl)!important}
+.a8-ck{width:22px;height:22px;border-radius:7px;border:2px solid color-mix(in srgb,var(--c9t2) 60%,transparent);flex:none;box-sizing:border-box}
+.a8-row.ok .a8-ck{background:#1F9D5B;border-color:#1F9D5B}
+.a8-row span:nth-child(2){flex:1;min-width:0}.a8-row b{display:block;font:800 14.5px 'Plus Jakarta Sans',system-ui}.a8-row small{display:block;color:var(--c9t2);font:600 12px 'Plus Jakarta Sans',system-ui;margin-top:2px}
+.a8-row i{font-style:normal;font:800 12.5px 'Plus Jakarta Sans',system-ui;color:var(--a7d);background:color-mix(in srgb,var(--a7d) 12%,transparent);padding:6px 10px;border-radius:9px}
+.a8-row.ok i{color:#1F9D5B;background:color-mix(in srgb,#1F9D5B 12%,transparent)}.a8-row.ok b{color:var(--c9t2);text-decoration:line-through}
+.a8 .a8-rail .a7-pc{flex:0 0 44%}
+.a8-evr .a7-ev{flex:0 0 76%!important}
+.a8 .a8-band{display:flex!important;align-items:center;gap:14px;width:100%;margin:18px 0 0;border:0!important;border-radius:22px!important;padding:12px 14px 12px 12px!important;text-align:left;background:var(--c9pn)!important;color:var(--c9tx)!important;box-shadow:0 1px 2px rgba(11,16,32,.05),0 10px 26px rgba(11,16,32,.07)}
+html:not(.gl-lt) .a8 .a8-band{box-shadow:0 0 0 1px #222A3C}
+.a8 .a8-band.dk{background:#0B1226!important;color:#fff!important;box-shadow:none}
+html:not(.gl-lt) .a8 .a8-band.dk{background:#16203F!important}
+.a8-bph{flex:none;width:92px;aspect-ratio:3/2;border-radius:14px;overflow:hidden}.a8-bph img{width:100%;height:100%;object-fit:cover;display:block}
+.a8-bt{flex:1;min-width:0}.a8-bt small{display:block;font:700 12px 'Plus Jakarta Sans',system-ui;color:var(--c9t2)}.a8-band.dk .a8-bt small,.a8-band.dk .a8-bt i{color:#A9B4D0}
+.a8-bt b{display:block;font:800 15px/1.25 'Plus Jakarta Sans',system-ui;margin-top:2px}.a8-bt i{display:block;font-style:normal;font:600 12px 'Plus Jakarta Sans',system-ui;color:var(--c9t2);margin-top:3px}
+.a8-band u{flex:none;text-decoration:none;background:var(--sap);color:#fff;-webkit-text-fill-color:#fff;font:800 12.5px 'Plus Jakarta Sans',system-ui;padding:9px 13px;border-radius:11px}
+.a8-band.dk u{background:#fff;color:#0B1226;-webkit-text-fill-color:#0B1226}
+.a8-end{padding:4px 20px 0}
+.a8-tr{gap:12px;margin-top:22px}.a8-tr div{border-top:3px solid var(--sap);border-radius:14px;padding:14px 12px}
+.a8-tr b{margin-top:0;font-size:13.5px}
+.a8 .a7-ft{padding:46px 20px 34px}
+/* bottom bar without cartoon pictures while the Journey home is shown */
+html.a8on .navwrap .nav button img{display:none!important}
+html.a8on .navwrap .nav button{min-height:46px}
+html.a8on .navwrap .nav button span{font:700 13px 'Plus Jakarta Sans',system-ui!important}
