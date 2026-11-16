@@ -6969,7 +6969,7 @@ function a40plans(){const d=P15.d||{},tab=P15.pltab==='biz'?'biz':'you',yr=!!P15
 /* ===== part41: Homes (Find a home) and Jobs (Find work) in the Bazaar look, so every page feels like Home.
    Same data and actions as before (rooms15 / jobs15, c9ty, p15f, plus, workprof, postroom, postjob).
    Sample first: NA41_LIVE=false, preview with localStorage nm.na41=1. Real numbers only. */
-const NA41_LIVE = false;
+const NA41_LIVE = true;
 function NA41(){try{return NA41_LIVE||localStorage.getItem('nm.na41')==='1'}catch(e){return NA41_LIVE}}
 function a41head(t,small,sub,tabs,cur,act){return `<div class="a7-hd"><div class="a7-top"><button class="a7-sq a40-bk" data-a="p15back" aria-label="Back">‹</button><span class="a7-where"><small>${small}</small><b>${t}</b><i>${sub}</i></span></div>
    <button class="a7-search" data-a="p15open" data-v="search"><span class="n32-mg"></span><span>Search <em class="a7-type">${A7HINT[0]}</em></span></button>
