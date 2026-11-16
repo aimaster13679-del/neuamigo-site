@@ -3665,3 +3665,17 @@ html:not(.gl-lt) .a8 .a8-trk button.on{background:#2F6BE0!important;border-color
 .a8-s{contain:layout paint}
 .a8-sky i,.a8-route path{will-change:opacity}
 .a8 .a8-pk{will-change:transform}
+/* ===== part39: Events + Buy and sell in the Bazaar look ===== */
+.a9 .a9-list:not(.a7-g2){display:flex;flex-direction:column;gap:16px}
+.a9 .a9-list .a7-ev{background:var(--c9pn);border-radius:20px;box-shadow:0 1px 2px rgba(11,16,32,.05),0 10px 26px rgba(11,16,32,.07);padding:10px;display:flex;flex-direction:column;gap:10px}
+html:not(.gl-lt) .a9 .a9-list .a7-ev{box-shadow:0 0 0 1px #222A3C}
+.a9 .a7-evf>span{display:flex;flex-direction:column}
+.a9-left{font:700 12px 'Plus Jakarta Sans',system-ui;color:var(--a7d);margin-top:2px}
+.a9-two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+.a9 .a9-dr{display:flex!important;flex-direction:column;align-items:stretch;background:var(--c9pn)!important;border:0!important;border-radius:20px!important;padding:8px 8px 12px!important;text-align:left;color:var(--c9tx)!important;box-shadow:0 1px 2px rgba(11,16,32,.05),0 10px 24px rgba(11,16,32,.07)}
+html:not(.gl-lt) .a9 .a9-dr{box-shadow:0 0 0 1px #222A3C}
+.a9-ph{display:block;aspect-ratio:3/2;border-radius:14px;overflow:hidden;background:var(--c9pn2)}.a9-ph img{width:100%;height:100%;object-fit:cover;display:block}
+.a9-dr b{font:800 15px 'Plus Jakarta Sans',system-ui;margin:10px 4px 0}.a9-dr small{font:600 12.5px 'Plus Jakarta Sans',system-ui;color:var(--c9t2);margin:2px 4px 0}
+.a9 .a7-g2{gap:18px 14px}
+.a9 .a7-pn{padding-bottom:6px!important}
+.a9 .a7-biz{margin-top:24px}

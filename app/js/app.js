@@ -6873,6 +6873,57 @@ Object.assign(A,{a8go(el){const s=document.querySelector(`.a8-s[data-s="${el.dat
   const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{const sb=[...document.querySelectorAll('.navwrap .nav button')].find(b=>/Settle/.test(b.textContent));if(sb){sb.dataset.a='tab';sb.dataset.k='settle';delete sb.dataset.v;const on=S.tab==='settle'&&!P15.v;if(on){document.querySelectorAll('.navwrap .nav button.on').forEach(b=>b.classList.remove('on'));sb.classList.add('on')}};const on=!!document.querySelector('.a8');document.documentElement.classList.toggle('a8on',on);if(on){a7motion();a8watch()}}catch(e){}};
 })();
 
+/* ===== part39: Events and Buy & Sell in the Bazaar look (his pick 16 Nov 09:47 = the live Bazaar home;
+   10:09 'kaam bina ruke pura karo'). Same pattern as Home: colour band header, typing search, picture tab row
+   that filters instantly (no reload), living banner, product-style cards with one button, real empty states.
+   Sample first: NA39_LIVE=false, preview with localStorage nm.na39=1. Real numbers only. */
+const NA39_LIVE = false;
+function NA39(){try{return NA39_LIVE||localStorage.getItem('nm.na39')==='1'}catch(e){return NA39_LIVE}}
+function a9head(t,small,sub,city,tabs,cur){return `<div class="a7-hd"><div class="a7-top"><span class="a7-where"><small>${small}</small><b>${t}</b><i>${sub}</i></span>
+   <button class="a7-sq" data-a="tab" data-k="me" aria-label="Me">${esc((((S.me||{}).name||'?').trim()[0]||'?').toUpperCase())}</button></div>
+   <button class="a7-search" data-a="p15open" data-v="search"><span class="n32-mg"></span><span>Search <em class="a7-type">${A7HINT[0]}</em></span></button>
+   <div class="a7-tabs a9-tabs" role="tablist">${tabs.map(([k,l,p])=>`<button role="tab" data-a="a9f" data-k="${k}" class="${k===cur?'on':''}"><img src="${f3(p)}" alt=""><span>${l}</span></button>`).join('')}</div></div>`}
+function a9evcard(e,cat,wk){const d=new Date(e.startsAt);let w='',dd='',m='',tm='';try{w=d.toLocaleDateString('en',{weekday:'short'});dd=d.getDate();m=d.toLocaleDateString('en',{month:'short'});tm=d.toLocaleTimeString('en',{hour:'numeric',minute:'2-digit'})}catch(x){}
+  const left=(typeof e.left==='number')?e.left:null;
+  return `<div class="a7-ev a9-it" data-c="${cat}${wk?' wk':''}"><button class="a7-pp" data-a="p15open" data-v="evd:${e.id}">${c9i(c9evp(e))}</button><span class="a7-evd"><span class="a7-dt"><small>${esc(m)}</small><b>${dd}</b><small>${esc(w)}</small></span><span class="a7-evt"><b>${esc(e.title)}</b><small>${esc(tm)}${e.venue?' · '+esc(e.venue):''}</small></span></span><span class="a7-evf"><span><strong>${e.price?esc(a4money(e.price,e.currency)):'No ticket'}</strong>${left!==null?`<small class="a9-left">${left} ${left===1?'seat':'seats'} left</small>`:''}</span><button data-a="p15open" data-v="evd:${e.id}">Book</button></span></div>`}
+function a9events(){const c=c9city(),city=c||'your city',ev=zdata8('events15','ev',{k:'',cty:c}),now=new Date();
+  const wkEnd=(()=>{const t=new Date(now);t.setDate(t.getDate()+((7-t.getDay())%7));t.setHours(23,59);return t})();
+  const l=ev.filter(e=>new Date(e.startsAt)>now-3*36e5).sort((a,b)=>new Date(a.startsAt)-new Date(b.startsAt));
+  const wk=l.filter(e=>new Date(e.startsAt)<=wkEnd);
+  const K=[['all','All','party_popper'],['wk','This weekend','calendar'],['meetup','Meetups','hot_beverage'],['league','Sports','soccer_ball'],['festival','Culture','confetti_ball'],['watch','Watch together','ticket'],['trip','Trips','luggage']].filter(([k])=>k==='all'||k==='wk'||l.some(e=>e.kind===k));
+  let cur='all';try{cur=sessionStorage.getItem('na.a9e')||'all'}catch(x){}
+  const ban=`<button class="a7-ban on" data-p="fun" data-a="p15open" data-v="club"><span class="a7-bt"><small>Weekend Club</small><h3>Every weekend,<br>new friends.</h3><p>${l.length?`${l.length} ${l.length===1?'event':'events'} coming up`:'Events and meetups near you'}</p><u>${p15price('wc_month_a')?'From '+esc(p15price('wc_month_a'))+' a month':'See the club'}</u></span><span class="a7-bp"><img class="b0" src="${f3('party_popper')}" alt=""><img class="b1" src="${f3('soccer_ball')}" alt=""><img class="b2" src="${f3('confetti_ball')}" alt=""></span></button>`;
+  const cards=l.map(e=>a9evcard(e,e.kind||'other',new Date(e.startsAt)<=wkEnd)).join('');
+  const list=l.length?`<div class="a7-sec"><div><h2>Coming up in ${esc(city)}</h2><p class="a9-count" data-n="${l.length}">${l.length} ${l.length===1?'event':'events'}</p></div></div><div class="a9-list">${cards}</div>${a7empty('calendar','Nothing in this group yet','Try another group, or host your own event.','Host an event','p15open" data-v="newev').replace('a7-empty','a7-empty a9-none in')}`
+    :a7empty('party_popper','Events show up here','Football, food nights and meetups in your city. Hosts post new ones every week.','Host an event','p15open" data-v="newev');
+  const host=`<button class="a7-biz" data-a="p15open" data-v="newev"><img src="${f3('megaphone')}" alt=""><span><small>For hosts</small><b>Run your own event</b><i>Sell seats to people new in ${esc(city)}</i></span><u>Host</u></button>`;
+  return c9wrap(`<div class="a7 a9" data-t="fun" data-a9="${cur}">${a9head(`Events`,`In ${esc(city)}`,'Meet people, every weekend',city,K,cur)}<div class="a7-bans">${ban}</div><div class="a7-pn on" data-p="fun">${list}${host}</div><div class="a7-ft"><h2>Your new city,<br>made easy.</h2><small>NeuAmigo · for people who move</small></div></div>`)}
+const A9CAT=[['furniture',/sofa|couch|chair|table|desk|bed|mattress|shelf|wardrobe|lamp|furniture/i,'Furniture','couch_and_lamp'],['kitchen',/kitchen|pan|pot|plate|microwave|kettle|toaster|fridge|cook/i,'Kitchen','hot_beverage'],['tech',/tv|laptop|phone|monitor|speaker|headphone|camera|console|electronic/i,'Electronics','light_bulb'],['move',/bike|bicycle|scooter|luggage|suitcase|box/i,'Bikes and bags','luggage']];
+function a9cat(s){const t=(s.cat||'')+' '+(s.title||'');for(const [k,r] of A9CAT)if(r.test(t))return k;return 'other'}
+function a9sell(){const sl=P15.sl;if(sl===undefined||sl===null){if(sl===undefined){P15.sl=null;API.rpc('sales15',{}).then(r=>{P15.sl=r||[];render()}).catch(()=>{P15.sl=[];render()})}}
+  const c=c9city(),city=c||'your city',l=(sl||[]).filter(s=>s.status==='open'||s.mine||s.bought);
+  const K=[['all','All','shopping_bags'],...A9CAT.filter(([k])=>l.some(s=>a9cat(s)===k)).map(([k,,lab,p])=>[k,lab,p]),...(l.some(s=>a9cat(s)==='other')?[['other','Other','package']]:[])];
+  let cur='all';try{cur=sessionStorage.getItem('na.a9s')||'all'}catch(x){}
+  const ban=`<button class="a7-ban on" data-p="papers" data-a="p15open" data-v="mysale"><span class="a7-bt"><small>Moving out?</small><h3>Sell what you<br>cannot carry.</h3><p>Post in 1 minute, with photos and your price</p><u>Sell an item</u></span><span class="a7-bp"><img class="b0" src="${f3('couch_and_lamp')}" alt=""><img class="b1" src="${f3('package')}" alt=""><img class="b2" src="${f3('dollar_banknote')}" alt=""></span></button>`;
+  const two=`<div class="a9-two"><button class="a9-dr" data-a="p15open" data-v="sale"><span class="a9-ph"><img ${a4src('img/p17/saletags.webp')} alt="" loading="lazy"></span><b>See all items</b><small>${l.length?`${l.length} in ${esc(city)}`:'In your city'}</small></button><button class="a9-dr" data-a="p15open" data-v="mysale"><span class="a9-ph"><img ${a4src('img/p17/garage.webp')} alt="" loading="lazy"></span><b>My items</b><small>Add, edit, mark sold</small></button></div>`;
+  const grid=l.length?`<div class="a7-sec"><div><h2>Used items near you</h2><p class="a9-count" data-n="${l.length}">${l.length} ${l.length===1?'item':'items'}</p></div></div><div class="a7-g2 a9-list">${l.slice(0,30).map(s=>a7item(s).replace('class="a7-pc"',`class="a7-pc a9-it" data-c="${a9cat(s)}"`)).join('')}</div>`
+    :a7empty('couch_and_lamp','Nothing for sale in your city yet','People moving out post sofas, desks and kitchen things here. Be the first.','Sell an item','p15open" data-v="mysale');
+  return c9wrap(`<div class="a7 a9" data-t="papers" data-a9="${cur}">${a9head('Buy and sell',`In ${esc(city)}`,'From people moving in and out',city,K,cur)}<div class="a7-bans">${ban}</div><div class="a7-pn on" data-p="papers">${two}${grid}</div><div class="a7-ft"><h2>Your new city,<br>made easy.</h2><small>NeuAmigo · for people who move</small></div></div>`)}
+function a9apply(){const r=document.querySelector('.a9');if(!r)return;const k=r.dataset.a9||'all';let n=0;
+  r.querySelectorAll('.a9-it').forEach(el=>{const c=(el.dataset.c||'').split(' ');const show=k==='all'||c.includes(k);el.style.display=show?'':'none';if(show)n++});
+  r.querySelectorAll('.a9-tabs button').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
+  const ct=r.querySelector('.a9-count');if(ct){const isEv=r.dataset.t==='fun';ct.textContent=`${n} ${isEv?(n===1?'event':'events'):(n===1?'item':'items')}`}
+  const none=r.querySelector('.a9-none');if(none)none.style.display=n?'none':''}
+Object.assign(A,{a9f(el){const r=document.querySelector('.a9');if(!r)return;r.dataset.a9=el.dataset.k;try{sessionStorage.setItem(r.dataset.t==='fun'?'na.a9e':'na.a9s',el.dataset.k)}catch(e){}
+  a9apply();try{const tr=el.parentNode;tr.scrollTo({left:el.offsetLeft-tr.clientWidth/2+el.offsetWidth/2,behavior:'smooth'})}catch(e){}
+  r.querySelectorAll('.a9-it').forEach(e=>{if(e.style.display!=='none'){e.classList.remove('in');void e.offsetWidth;e.classList.add('in')}})}});
+(function(){
+  if(!NA39())return;
+  const _e=events15;events15=function(){try{return a9events()}catch(e){console.warn('[a9]',e);return _e.apply(this,arguments)}};
+  const _s=P15V.c12sell;P15V.c12sell=function(){try{return a9sell()}catch(e){console.warn('[a9]',e);return _s.apply(this,arguments)}};
+  const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{if(document.querySelector('.a9')){a9apply();document.querySelectorAll('.a9 .a9-it,.a9 .a7-empty').forEach(e=>e.classList.add('in'))}}catch(e){}};
+})();
+
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
 })();
