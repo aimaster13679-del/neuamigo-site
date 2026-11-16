@@ -705,7 +705,7 @@ function evArt(e,hero){const up=hero?'0':'-40';const g={family:['#FFF1B0','#9FE6
   else [[262,214],[302,208],[342,214]].forEach(([x,y0])=>{const y=y0+(+up);s+=`<circle cx="${x}" cy="${y-12}" r="16" fill="url(#${id}l)"/><path d="M${x-16} ${y}q16 16 32 0z" fill="#FFE1A8"/><path d="M${x} ${y-4}c-5-6-1-14 0-18 1 4 5 12 0 18z" fill="#FFF6D8"/>`});
   return s+'</svg>'}
 /* ---------- Boot and welcome ---------- */
-function renderBoot(){return `<div class="boot"><div class="brand"><img class="mark" src="img/icon-192.png" alt="" style="width:40px;height:40px;border-radius:11px">NeuMarry</div>${S.bootError?`<p class="hint">${esc(S.bootError)}</p><button class="btn primary" data-a="retryBoot" style="background:#0F52BA !important;color:#fff !important;box-shadow:none">Try again</button>`:spinner('Opening NeuMarry')}</div>`}
+function renderBoot(){return `<div class="boot"><div class="brand"><img class="mark" src="img/icon-192.png" alt="" style="width:40px;height:40px;border-radius:11px">${esc(window.NM_BRAND||"NeuAmigo")}</div>${S.bootError?`<p class="hint">${esc(S.bootError)}</p><button class="btn primary" data-a="retryBoot" style="background:#0F52BA !important;color:#fff !important;box-shadow:none">Try again</button>`:spinner('Opening NeuMarry')}</div>`}
 function renderWelcome(){
   return `<div class="scroll"><div class="welcome pad">
     <div class="wtop"><div class="brand"><svg class="mark" viewBox="0 0 32 22" aria-hidden="true"><path class="c1" d="M11.60 18.59c-0.82 0 -8.2 -4.76 -8.2 -10.25 0 -2.71 2.13 -4.92 4.76 -4.92 1.48 0 2.71 0.74 3.44 1.89 0.74 -1.15 1.97 -1.89 3.44 -1.89 2.62 0 4.76 2.21 4.76 4.92 0 5.49 -7.38 10.25 -8.2 10.25z"/><path class="c2" d="M20.40 18.59c-0.82 0 -8.2 -4.76 -8.2 -10.25 0 -2.71 2.13 -4.92 4.76 -4.92 1.48 0 2.71 0.74 3.44 1.89 0.74 -1.15 1.97 -1.89 3.44 -1.89 2.62 0 4.76 2.21 4.76 4.92 0 5.49 -7.38 10.25 -8.2 10.25z"/></svg>NeuMarry</div><button class="lang-sw notr" data-a="lang" aria-label="Language / Langue">${ic('globe')}${esc((LANGS_ALL.find(x=>x[0]===RM_I18N.lang)||LANGS_ALL[0])[1])}</button></div>
@@ -4243,7 +4243,7 @@ function sale15v(){const l=P15.sl;if(l===undefined){API.rpc('sales15',{}).then(r
 function expPlan15(){const f=P15.f;f.ek2=f.ek2||'expert';const b=((P15.d&&P15.d.biz)||[]).find(x=>x.kind===f.ek2),me=S.me||{};
   return p15wrap(p15top('Expert or Agent',true)+chips15('ek2',[['expert','I am an expert'],['agent','I am a rental agent']],f.ek2)+
   `<div class="p15-g p15-form"><label>Business name</label><input id="p15-xn" maxlength="60" value="${esc(f.xn||(b&&b.name)||'')}">
-   ${f.ek2==='expert'?`<label>What you do</label>${chips15('xc',[['Immigration','Immigration'],['Tax','Tax'],['Insurance','Insurance'],['Movers','Movers'],['Cleaning','Cleaning'],['Small jobs','Small jobs']],f.xc||'Immigration')}`:''}
+   ${f.ek2==='expert'?`<label>What you do</label>${chips15('xc',[['Used cars','Used cars'],['Immigration','Visa help'],['Tax','Tax'],['Insurance','Insurance'],['Cleaning','Cleaning'],['Small jobs','Repairs'],['Driving','Driving'],['Translation','Translation'],['Childcare','Childcare'],['Airport','Airport ride'],['Phone','Phone plan']],f.xc||'Immigration')}`:''}
    <label>Licence number (optional · shows as shared by you, not checked by NeuAmigo)</label><input id="p15-xl" maxlength="40" value="${esc(f.xl||'')}">
    <label>One line about you</label><input id="p15-xa" maxlength="160" value="${esc(f.xa||'')}">
    ${f.ek2==='expert'?`<label>Your services and prices (${esc(cur15())})</label>${[0,1,2].map(i=>`<div class="p15-svc"><input id="p15-s${i}t" maxlength="80" placeholder="Service ${i+1}" value="${esc(f['s'+i+'t']||'')}"><input id="p15-s${i}p" inputmode="numeric" maxlength="6" placeholder="Price" value="${esc(f['s'+i+'p']||'')}"></div>`).join('')}`:''}
@@ -5888,7 +5888,7 @@ const c10get=(k,d)=>{try{const v=localStorage.getItem(k);return v===null?d:JSON.
 const c10set=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 const C10P=[['moving','I am moving soon','Plan your move before you fly','plane'],['arrived','I just arrived','Your first 30 days, step by step','keys'],['local','I live here already','Homes, jobs, events and help near you','city']];
 const C10S=[['Before you fly',[['ahead','keys','Find a home before you land','Owners and agents send you homes','ask:room'],['papers','passport','Ask an expert about visa and papers','Licensed experts, price shown first','experts'],['buddy','plane','Find a travel buddy for the flight','Help for you or your parents','buddy'],['wp','resume','Make your work profile','Then apply to jobs in one tap','workprof']]],
- ['Week 1 · after you land',[['home','room','Choose your home','Rent shown on every listing','rooms'],['movers','boxes','Get 5 prices from movers','You choose and pay them directly','q:Movers'],['bank','expert','Phone plan and bank account','Ask an expert what to bring','experts']]],
+ ['Week 1 · after you land',[['home','room','Choose your home','Rent shown on every listing','rooms'],['car','garage','Find a used car','Dealers send cars that fit your budget','q:Used cars'],['bank','expert','Phone plan and bank account','Ask an expert what to bring','experts']]],
  ['Weeks 2 and 3',[['jobs','hiring','Apply for jobs','Pay and hours on every job','jobs'],['furn','sofa','Get used furniture','From people moving out','sale'],['clean','clean2','Book home cleaning','Get 5 prices','q:Cleaning']]],
  ['Week 4',[['event','hall','Go to your first event','Meet people near you','ev15'],['club','table','Join the Weekend Club','Members book first','club']]]];
 const c10all=()=>C10S.flatMap(x=>x[1]);
@@ -6491,7 +6491,7 @@ function n33tabBody(c){const city=c||'your city';
   if(n33tab==='rooms'){const r=zdata8('rooms15','rooms',{maxrent:0});return `<div class="n32-h"><h2>Rooms in ${esc(city)}</h2><button data-a="p15open" data-v="rooms">See all ›</button></div>`+(r.length?`<div class="n32-rail">${r.slice(0,10).map(n32room).join('')}</div>`:n33empty('house_with_garden','No rooms posted yet','Be the first to know when one is posted in '+esc(city)+'.','p15open" data-v="rooms','Look for a room'))}
   if(n33tab==='jobs'){const j=zdata8('jobs15','jobs',{});return `<div class="n32-h"><h2>Jobs in ${esc(city)}</h2><button data-a="p15open" data-v="jobs">See all ›</button></div>`+(j.length?`<div class="n32-rail">${j.slice(0,10).map(n33job).join('')}</div>`:n33empty('briefcase','No jobs posted yet','Pay is always shown when jobs are posted here.','p15open" data-v="jobs','Open jobs'))}
   if(n33tab==='events'){const e=zdata8('events15','ev',{k:'',cty:c}).filter(x=>new Date(x.startsAt)>Date.now()-3*36e5);return `<div class="n32-h"><h2>Coming up</h2><button data-a="tab" data-k="ev15">See all ›</button></div>`+(e.length?`<div class="n32-rail">${e.slice(0,10).map(n32ev).join('')}</div>`:n33empty('party_popper','No events yet','New events in '+esc(city)+' show here first.','tab" data-k="ev15','Open events'))}
-  if(n33tab==='help'){return `<div class="n32-grid">${n32tile('delivery_truck','Movers','Ask once','z8q" data-c="Movers','5 prices',1)+n32tile('receipt','Tax help','Ask once','z8q" data-c="Tax','5 prices')+n32tile('toolbox','Small jobs','Fix, build','z8q" data-c="Small jobs','5 prices')+n32tile('sparkles','Cleaning','Ask once','z8q" data-c="Cleaning','5 prices')+n32tile('shield','Insurance','Ask once','z8q" data-c="Insurance','5 prices')}</div>`}
+  if(n33tab==='help'){return `<div class="n32-grid">${n32tile('automobile','Used cars','Ask once','z8q" data-c="Used cars','5 prices',1)+n32tile('receipt','Tax help','Ask once','z8q" data-c="Tax','5 prices')+n32tile('toolbox','Small jobs','Fix, build','z8q" data-c="Small jobs','5 prices')+n32tile('sparkles','Cleaning','Ask once','z8q" data-c="Cleaning','5 prices')+n32tile('shield','Insurance','Ask once','z8q" data-c="Insurance','5 prices')}</div>`}
   if(n33tab==='sell'){const s=zdata8('sales15','sale',{});return `<div class="n32-h"><h2>For sale in ${esc(city)}</h2><button data-a="p15open" data-v="c12sell">See all ›</button></div>`+(s.length?`<div class="n32-rail">${s.slice(0,10).map(n33sale).join('')}</div>`:n33empty('couch_and_lamp','Nothing for sale yet','People moving out sell furniture and more here.','p15open" data-v="c12sell','Open Buy & Sell'))}
   return ''}
 /* ---- motion helpers (one set of timers for the whole app) ---- */
@@ -6531,7 +6531,7 @@ function n33motion(){const rm=window.matchMedia&&matchMedia('(prefers-reduced-mo
 const NA34_LIVE = true;
 function NA34(){try{return NA34_LIVE||localStorage.getItem('nm.na34')==='1'}catch(e){return NA34_LIVE}}
 const a4p=n=>`img/p18/${n}.webp`;
-const a4src=img=>{const m=img.match(/^img\/(p1[5-9])\/([a-z0-9]+)\.webp$/);return m?`src="img/${m[1]}/t/${m[2]}.webp" srcset="img/${m[1]}/t/${m[2]}.webp 480w, ${img} 900w" sizes="(max-width:500px) 46vw, 300px"`:`src="${img}"`};
+const a4src=img=>{const m=img.match(/^img\/(p(?:1[5-9]|20))\/([a-z0-9]+)\.webp$/);return m?`src="img/${m[1]}/t/${m[2]}.webp" srcset="img/${m[1]}/t/${m[2]}.webp 480w, ${img} 900w" sizes="(max-width:500px) 46vw, 300px"`:`src="${img}"`};
 let a4n=0;
 function a4hello(){const l=((navigator.language||'en')+'').toLowerCase().slice(0,2),c=((S.me||{}).country||'').toLowerCase();
   const G={es:'Hola',fr:'Bonjour',pt:'Olá',de:'Hallo',it:'Ciao',ar:'Marhaba',tr:'Merhaba',pl:'Cześć',fil:'Kumusta',tl:'Kumusta',sw:'Habari',ko:'Annyeong',ja:'Konnichiwa',vi:'Xin chào',id:'Halo',ru:'Privet',zh:'Nǐ hǎo'};
@@ -6708,7 +6708,7 @@ function a6bzrows(title,sub,L,emptyT){const r=c10roles();
    empty states with a big picture and one next step. Real numbers only. Tabs switch instantly (no reload). */
 const NA37_LIVE = true;
 function NA37(){try{return NA37_LIVE||localStorage.getItem('nm.na37')==='1'}catch(e){return NA37_LIVE}}
-const A7HINT=['a room','a job','movers','tax help','a sofa','friends','football','cleaning'];
+const A7HINT=['a room','a job','a used car','tax help','a sofa','friends','football','cleaning'];
 const A7TABS=[['all','All','world_map'],['homes','Homes','house_with_garden'],['work','Work','briefcase'],['papers','Papers','clipboard'],['help','Services','toolbox'],['fun','Fun','party_popper']];
 function a7cnt(n,one,many){return `<strong>${n}</strong> ${n===1?one:many}`}
 function a7tile(p,t,a){return `<button class="a7-ti" data-a="${a}"><span><img src="${f3(p)}" alt="" loading="lazy"></span><b>${esc(t)}</b></button>`}
@@ -6743,18 +6743,19 @@ function a7home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{};
     a7ban('homes','Homes in '+esc(city),'Find your<br>new home.',rooms.length?`${rooms.length} ${rooms.length===1?'room':'rooms'}${minRent?' from '+esc(a4money(minRent.rent,minRent.currency)):''}`:'Rooms and flats to rent','See homes','p15open" data-v="rooms',['house_with_garden','key','bed']),
     a7ban('work','Work in '+esc(city),'Jobs with<br>the pay shown.',jobs.length?`${jobs.length} ${jobs.length===1?'job':'jobs'} open now`:'Apply in one tap','See jobs','p15open" data-v="jobs',['briefcase','dollar_banknote','handshake']),
     a7ban('papers','Your papers','One step today.<br>That is enough.',bar?`${bar.d} of ${bar.n} steps done`:'A clear step-by-step plan','Open my plan','p15open" data-v="plan30',['identification_card','page_facing_up','check_mark_button']),
-    a7ban('help','Services','Get 5 prices.<br>Pick the best.','Movers, cleaning, tax, repairs','Ask for prices','p15open" data-v="c12svc',['delivery_truck','toolbox','receipt']),
+    a7ban('help','Services','Get 5 prices.<br>Pick the best.','Used cars, visa, tax, cleaning','Ask for prices','p15open" data-v="c12svc',['delivery_truck','toolbox','receipt']),
     a7ban('fun','Fun in '+esc(city),'Weekends<br>with new friends.',up.length?`${up.length} ${up.length===1?'event':'events'} coming up`:'Events and meetups near you','See events','tab" data-k="ev15',['party_popper','soccer_ball','confetti_ball'])].join('');
   const grid=`<div class="a7-sec"><div><h2>What do you need?</h2></div></div><div class="a7-grid">${[
-    ['house_with_garden','Rooms','p15open" data-v="rooms'],['briefcase','Jobs','p15open" data-v="jobs'],['clipboard','30-day plan','p15open" data-v="plan30'],['delivery_truck','Movers','z8q" data-c="Movers'],
-    ['sparkles','Cleaning','z8q" data-c="Cleaning'],['receipt','Tax filing','z8q" data-c="Tax'],['toolbox','Repairs','z8q" data-c="Small jobs'],['shield','Insurance','z8q" data-c="Insurance'],
-    ['party_popper','Events','tab" data-k="ev15'],['hot_beverage','Taste of home','p15open" data-v="food'],['couch_and_lamp','Buy and sell','p15open" data-v="c12sell'],['light_bulb','Ask an expert','p15open" data-v="experts']].map(x=>a7tile(...x)).join('')}</div>`;
+    ['house_with_garden','Rooms','p15open" data-v="rooms'],['briefcase','Jobs','p15open" data-v="jobs'],['clipboard','30-day plan','p15open" data-v="plan30'],['books','Childcare','z8q" data-c="Childcare'],
+    ['sparkles','Cleaning','z8q" data-c="Cleaning'],['receipt','Tax filing','z8q" data-c="Tax'],['shield','Insurance','z8q" data-c="Insurance'],['toolbox','Repairs','z8q" data-c="Small jobs'],
+    ['automobile','Used cars','z8q" data-c="Used cars'],['vertical_traffic_light','Driving lessons','z8q" data-c="Driving'],['airplane_arrival','Airport pickup','z8q" data-c="Airport'],['scroll','Visa help','z8q" data-c="Immigration'],
+    ['party_popper','Events','tab" data-k="ev15'],['hot_beverage','Taste of home','p15open" data-v="food'],['couch_and_lamp','Buy and sell','p15open" data-v="c12sell'],['world_map','All services','p15open" data-v="services']].map(x=>a7tile(...x)).join('')}</div>`;
   const rr=a7rail('Homes for you',`Rooms in ${esc(city)}`,rooms.slice(0,8).map(a7room),rooms.length>2?'See all homes':'','p15open" data-v="rooms');
   const jr=a7rail('Jobs near you','Pay shown on every job',jobs.slice(0,8).map(a7job),jobs.length>2?'See all jobs':'','p15open" data-v="jobs');
   const sr=a7rail('Things for your new home','From people who are moving out',sales.slice(0,8).map(a7item),sales.length>2?'See all items':'','p15open" data-v="c12sell');
   const tx=up.length?`<div class="a7-sec"><div><h2>Coming up</h2><p>Book a seat, meet people</p></div></div><div class="a7-rail a7-evr">${up.slice(0,8).map(a7ev).join('')}</div><button class="a7-more" data-a="tab" data-k="ev15">See all events ›</button>`:'';
   let steps='';if(bar){const done=c10done(),L=c10all();steps=`<div class="a7-sec"><div><h2>Your 30-day plan</h2><p>${bar.d} of ${bar.n} steps done</p></div></div><span class="a7-trk"><i style="width:${bar.pct}%"></i></span><div class="a7-list">${L.slice(0,6).map(s=>{const ok=done.includes(s[0]);return `<button class="a7-row${ok?' ok':''}" data-a="p15open" data-v="plan30"><span class="a7-ck"></span><span><b>${esc(s[2])}</b><small>${esc(s[3])}</small></span><i>${ok?'Done':'›'}</i></button>`}).join('')}</div><button class="a7-more" data-a="p15open" data-v="plan30">See the whole plan ›</button>`}
-  const svc=`<div class="a7-sec"><div><h2>Services</h2><p>Tell us once. Up to 5 businesses send their price.</p></div></div><div class="a7-sv">${[['delivery_truck','Movers','z8q" data-c="Movers'],['sparkles','Cleaning','z8q" data-c="Cleaning'],['receipt','Tax filing','z8q" data-c="Tax'],['toolbox','Repairs','z8q" data-c="Small jobs'],['shield','Insurance','z8q" data-c="Insurance'],['light_bulb','Ask an expert','p15open" data-v="experts']].map(([p,tt,a])=>`<div class="a7-svc"><span><img src="${f3(p)}" alt="" loading="lazy"></span><b>${tt}</b><button data-a="${a}">${tt==='Ask an expert'?'See experts':'Get prices'}</button></div>`).join('')}</div>`;
+  const svc=`<div class="a7-sec"><div><h2>Services</h2><p>Tell us once. Up to 5 businesses send their price.</p></div></div><div class="a7-sv">${[['automobile','Used cars','z8q" data-c="Used cars'],['mobile_phone','Phone and internet','z8q" data-c="Phone'],['globe_with_meridians','Translation','z8q" data-c="Translation'],['books','Childcare and tutors','z8q" data-c="Childcare'],['light_bulb','Ask an expert','p15open" data-v="experts'],['world_map','All services','p15open" data-v="services']].map(([p,tt,a])=>`<div class="a7-svc"><span><img src="${f3(p)}" alt="" loading="lazy"></span><b>${tt}</b><button data-a="${a}">${tt==='Ask an expert'?'See experts':tt==='All services'?'See all':'Get prices'}</button></div>`).join('')}</div>`;
   const plan=(plus&&!hasPlus)?`<button class="a7-plus" data-a="p15open" data-v="plans"><img src="${f3('key')}" alt=""><span><small>NeuAmigo Plus</small><b>Call landlords and employers directly</b><i>${p15price('plus_m')?esc(p15price('plus_m'))+' a month · ':''}alerts first</i></span><u>See plans</u></button>`:'';
   const biz=`<button class="a7-biz" data-a="p15open" data-v="plans" data-t="biz"><img src="${f3('megaphone')}" alt=""><span><small>For businesses</small><b>Be the first name new arrivals see</b><i>Homes, jobs, services or events in ${esc(city)}</i></span><u>Prices</u></button>`;
   const P={
@@ -6821,7 +6822,7 @@ function a8home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{};
   const picks={
     fly:[a8pick(a4p('apartment'),'house_with_garden','A home before you land',rooms.length?`${rooms.length} ${rooms.length===1?'room':'rooms'}${minRent?' from <strong>'+esc(a4money(minRent.rent,minRent.currency))+'</strong>':''}`:'Rooms and flats to rent','See homes','p15open" data-v="rooms'),
          a8pick(a4p('papers'),'clipboard','Papers, step by step',bar?`<strong>${bar.d} of ${bar.n}</strong> done`:'Your 30-day plan','Open plan','p15open" data-v="plan30'),
-         a8pick('img/p17/boxes2.webp','delivery_truck','Movers',`Tell us once, <strong>up to 5 prices</strong>`,'Get prices','z8q" data-c="Movers')],
+         a8pick('img/p19/usedcar.webp','automobile','Used cars',`Dealers send cars <strong>for your budget</strong>`,'Get prices','z8q" data-c="Used cars')],
     week:[a8pick(a4p('apartment'),'house_with_garden','A place to live',rooms.length?`${rooms.length} ${rooms.length===1?'room':'rooms'}${minRent?' from <strong>'+esc(a4money(minRent.rent,minRent.currency))+'</strong>':''}`:'Rooms and flats to rent','See homes','p15open" data-v="rooms'),
           a8pick(a4p('papers'),'identification_card','Bank, ID, tax number',bar?`<strong>${bar.d} of ${bar.n}</strong> done`:'One step at a time','Open plan','p15open" data-v="plan30'),
           a8pick('img/p17/clean.webp','sparkles','Cleaning',`Tell us once, <strong>up to 5 prices</strong>`,'Get prices','z8q" data-c="Cleaning')],
@@ -6837,7 +6838,7 @@ function a8home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{};
   const third=Math.ceil(steps.length/3);
   const body={
     fly:a8head('fly','Before you fly','airplane','Stop 1')+`<div class="a8-rail">${picks.fly.join('')}</div>`
-      +grid([['house_with_garden','Homes','p15open" data-v="rooms'],['clipboard','30-day plan','p15open" data-v="plan30'],['delivery_truck','Movers','z8q" data-c="Movers'],['light_bulb','Ask an expert','p15open" data-v="experts']])
+      +grid([['house_with_garden','Homes','p15open" data-v="rooms'],['clipboard','30-day plan','p15open" data-v="plan30'],['automobile','Used cars','z8q" data-c="Used cars'],['light_bulb','Ask an expert','p15open" data-v="experts']])
       +(path!=='local'?stepRows(steps.slice(0,Math.min(3,third))):'')
       +a7rail('Homes for you',`Rooms in ${esc(city)}`,rooms.slice(0,8).map(a7room),rooms.length>2?'See all homes':'','p15open" data-v="rooms'),
     week:a8head('week','First week','key','Stop 2')+`<div class="a8-rail">${picks.week.join('')}</div>`
@@ -6899,7 +6900,7 @@ function a9events(){const c=c9city(),city=c||'your city',ev=zdata8('events15','e
     :a7empty('party_popper','Events show up here','Football, food nights and meetups in your city. Hosts post new ones every week.','Host an event','p15open" data-v="newev');
   const host=`<button class="a7-biz" data-a="p15open" data-v="newev"><img src="${f3('megaphone')}" alt=""><span><small>For hosts</small><b>Run your own event</b><i>Sell seats to people new in ${esc(city)}</i></span><u>Host</u></button>`;
   return c9wrap(`<div class="a7 a9" data-t="fun" data-a9="${cur}">${a9head(`Events`,`In ${esc(city)}`,'Meet people, every weekend',city,K,cur)}<div class="a7-bans">${ban}</div><div class="a7-pn on" data-p="fun">${list}${host}</div><div class="a7-ft"><h2>Your new city,<br>made easy.</h2><small>NeuAmigo · for people who move</small></div></div>`)}
-const A9CAT=[['furniture',/sofa|couch|chair|table|desk|bed|mattress|shelf|wardrobe|lamp|furniture/i,'Furniture','couch_and_lamp'],['kitchen',/kitchen|pan|pot|plate|microwave|kettle|toaster|fridge|cook/i,'Kitchen','hot_beverage'],['tech',/tv|laptop|phone|monitor|speaker|headphone|camera|console|electronic/i,'Electronics','light_bulb'],['move',/bike|bicycle|scooter|luggage|suitcase|box/i,'Bikes and bags','luggage']];
+const A9CAT=[['cars',/\b(car|suv|sedan|hatchback|minivan|van|toyota|honda|hyundai|kia|ford|mazda|nissan|volkswagen|tesla)\b/i,'Cars','automobile'],['furniture',/sofa|couch|chair|table|desk|bed|mattress|shelf|wardrobe|lamp|furniture/i,'Furniture','couch_and_lamp'],['kitchen',/kitchen|pan|pot|plate|microwave|kettle|toaster|fridge|cook/i,'Kitchen','hot_beverage'],['tech',/tv|laptop|phone|monitor|speaker|headphone|camera|console|electronic/i,'Electronics','light_bulb'],['move',/bike|bicycle|scooter|luggage|suitcase|box/i,'Bikes and bags','luggage']];
 function a9cat(s){const t=(s.cat||'')+' '+(s.title||'');for(const [k,r] of A9CAT)if(r.test(t))return k;return 'other'}
 function a9sell(){const sl=P15.sl;if(sl===undefined||sl===null){if(sl===undefined){P15.sl=null;API.rpc('sales15',{}).then(r=>{P15.sl=r||[];render()}).catch(()=>{P15.sl=[];render()})}}
   const c=c9city(),city=c||'your city',l=(sl||[]).filter(s=>s.status==='open'||s.mine||s.bought);
@@ -7027,12 +7028,12 @@ function a42plan(){const done=c10done(),b=c10bar(),path=c10get('nm.path','moving
      <div class="a7-list">${steps.map(([k,p,t,s,v])=>{const ok=done.includes(k);return `<div class="a42-row${ok?' ok':''}"><button class="a42-ck" data-a="c10tick" data-k="${k}" aria-label="${ok?'Mark as not done':'Mark as done'}"></button><button class="a42-tx" ${c10go(v)}><b>${esc(t)}</b><small>${esc(s)}</small></button><button class="a42-go" ${c10go(v)}>${ok?'Open':'Do it'}</button></div>`}).join('')}</div></div>`}).join('');
   return c9wrap(`<div class="a7 a42" data-t="papers">${head}<div class="a7-pn on" data-p="papers">${next}${stages}<p class="a42-note">Government steps (tax number, health card) are free: ask an expert where to find them.</p></div></div>`)}
 function a42svc(){const city=c9city()||'your city';
-  const S=[['delivery_truck','Movers','Movers'],['sparkles','Cleaning','Cleaning'],['receipt','Tax filing','Tax'],['toolbox','Repairs','Small jobs'],['shield','Insurance','Insurance']];
+  const S=[['automobile','Used cars','Used cars'],['sparkles','Cleaning','Cleaning'],['receipt','Tax filing','Tax'],['toolbox','Repairs','Small jobs'],['shield','Insurance','Insurance']];
   const head=`<div class="a7-hd"><div class="a7-top"><button class="a7-sq a40-bk" data-a="p15back" aria-label="Back">‹</button><span class="a7-where"><small>Services in ${esc(city)}</small><b>Get 5 prices</b><i>Tell us once. Up to 5 businesses send their price.</i></span></div></div>`;
   const grid=`<div class="a42-sv">${S.map(([p,t,c])=>`<button class="a42-svc" data-a="z8q" data-c="${c}"><span class="a40-pic"><img src="${f3(p)}" alt="" loading="lazy"></span><b>${t}</b><small>Up to 5 prices</small><u>Get prices</u></button>`).join('')}<button class="a42-svc" data-a="p15open" data-v="experts"><span class="a40-pic"><img src="${f3('light_bulb')}" alt="" loading="lazy"></span><b>Ask an expert</b><small>Visa, tax, insurance</small><u>See experts</u></button></div>`;
   const how=`<div class="a7-sec"><div><h2>How it works</h2><p>Asking costs you nothing</p></div></div><div class="a42-how">${[['clipboard','Tell us what you need','A few taps, no long forms'],['handshake','Get up to 5 prices','Businesses answer within 24 hours'],['check_mark_button','Pick the best one','You choose and pay them directly']].map(([p,t,s],i)=>`<div><span class="a42-n">${i+1}</span><img src="${f3(p)}" alt=""><span><b>${t}</b><small>${s}</small></span></div>`).join('')}</div>`;
   const mine=`<button class="a7-plus" data-a="p15open" data-v="myasks"><img src="${f3('receipt')}" alt=""><span><small>Already asked?</small><b>My requests and prices</b><i>See every answer in one place</i></span><u>Open</u></button>`;
-  const biz=`<button class="a7-biz" data-a="p15open" data-v="plans" data-t="biz"><img src="${f3('megaphone')}" alt=""><span><small>For businesses</small><b>Get customers who are asking now</b><i>Movers, cleaners, tax and repairs in ${esc(city)}</i></span><u>Prices</u></button>`;
+  const biz=`<button class="a7-biz" data-a="p15open" data-v="plans" data-t="biz"><img src="${f3('megaphone')}" alt=""><span><small>For businesses</small><b>Get customers who are asking now</b><i>Car dealers, cleaners, tax and repairs in ${esc(city)}</i></span><u>Prices</u></button>`;
   return c9wrap(`<div class="a7 a42" data-t="help">${head}<div class="a7-pn on" data-p="help">${grid}${how}${mine}${biz}</div></div>`)}
 (function(){
   if(!NA42())return;
@@ -7205,6 +7206,319 @@ Object.assign(A,{
   Object.assign(P15V,{quest:a45list,questask:a45ask,questnew:a45new,questreqs:a45reqs});
   const _o=A.p15open;A.p15open=function(el){const v=String((el&&el.dataset&&el.dataset.v)||'');if(v.startsWith('quest:'))P15V[v]=()=>a45quest(v.slice(6));if(v==='quest')P15.qs=undefined;if(v==='questreqs')P15.qr=undefined;return _o.apply(this,arguments)};
   try{if(!C10R.some(r=>r[0]==='quest')){C10R.push(['quest','compass','Quest stop','Cafés, shops, places: be a stop on a city walk']);C10A.quest=[['Ask to be a stop','questask'],['My stop requests','questreqs']];BZPIC.quest='compass';BZPR.quest='quest_stop'}}catch(e){}
+})();
+
+/* ===== part46: every service asks ITS OWN questions + new categories (his ask 16 Nov 2026 17:02:
+   'sabhi me ek hi tarike ki options ... tax me bedroom kaha se aaya ... secondhand car aur jo bhi videsh me jaruri').
+   Questions are taps only. Requests still go to max 5 businesses of THAT category (ask_post15 / ask_fill15). */
+const SV46={
+  Cleaning:{t:'Cleaning',p:'sparkles',g:'Home',q:[
+    ['what','What kind of cleaning?',[['Regular','Regular clean','Dust, floors, kitchen, bathroom'],['Deep','Deep clean','Inside cupboards, oven, behind things'],['Move-out','Move-out clean','To get your deposit back'],['After party','After a party','Back to normal in hours']]],
+    ['size','How big is the home?',[['Studio','Studio or room'],['1-2 bed','1-2 bedrooms'],['3+ bed','3 bedrooms or more']]],
+    ['when','When?',[['This week','This week'],['next','Next weekend'],['Flexible',"I'm flexible"]]]]},
+  'Small jobs':{t:'Repairs',p:'toolbox',g:'Home',q:[
+    ['what','What needs fixing?',[['Plumbing','Plumbing, leaks'],['Electrical','Lights, sockets'],['Furniture','Put furniture together'],['Appliance','Washer, fridge, oven'],['Painting','Painting'],['TV mount','Hang a TV or shelves']]],
+    ['when','How soon?',[['Today','Today'],['This week','This week'],['Flexible',"I'm flexible"]]]]},
+  Tax:{t:'Tax filing',p:'receipt',g:'Papers',q:[
+    ['what','Which tax return?',[['Personal','Personal','Income from a job'],['Self-employed','Self-employed','Freelance, gig or contract work'],['Business','Small business','A company you own']]],
+    ['first','Is this your first year in this country?',[['First year','Yes, first year'],['Not first','No']]],
+    ['when','By when?',[['This month','This month'],['Deadline','Before the deadline'],['Not sure','Not sure yet']]]]},
+  Insurance:{t:'Insurance',p:'shield',g:'Papers',q:[
+    ['what','What do you want to insure?',[['Health','Health','Doctor, medicine, hospital'],['Car','Car'],['Renters','My rented home','Your things and liability'],['Travel','Travel'],['Life','Life']]],
+    ['who','Who is covered?',[['Just me','Just me'],['Couple','Me and my partner'],['Family','My family']]],
+    ['when','Start when?',[['Now','As soon as possible'],['This month','This month'],['Next month','Next month']]]]},
+  Immigration:{t:'Visa help',p:'scroll',g:'Papers',q:[
+    ['what','What help do you need?',[['Work permit','Work permit'],['Study permit','Study permit'],['PR','Permanent residence'],['Visitor','Visitor visa'],['Family','Bring my family']]],
+    ['who','For whom?',[['Me','Me'],['Partner','My partner'],['Family','My family'],['Parents','My parents']]],
+    ['when','When do you want to apply?',[['Now','Now'],['3 months','In 3 months'],['Planning','Just planning']]]]},
+  Translation:{t:'Translation',p:'globe_with_meridians',g:'Papers',q:[
+    ['what','What needs translating?',[['ID','Passport or ID'],['Degree','Degree or marks'],['Licence','Driving licence'],['Certificates','Birth or marriage papers'],['Other','Other documents']]],
+    ['pages','How many pages?',[['1-2','1-2 pages'],['3-5','3-5 pages'],['6+','6 pages or more']]],
+    ['when','By when?',[['3 days','Within 3 days'],['This week','This week'],['Flexible',"I'm flexible"]]]]},
+  'Used cars':{t:'Used cars',p:'automobile',g:'Car and travel',q:[
+    ['what','What kind of car?',[['Small','Small car','Easy to park, low fuel'],['Sedan','Sedan','4 doors, a proper boot'],['SUV','SUV','Higher, good in snow'],['Van','Van or 7 seats','For a big family']]],
+    ['budget','Your budget?',[['Low','Lowest price','Older car, good condition'],['Middle','Middle price','A few years old'],['High','Newer car','Close to new']]],
+    ['age','How old can it be?',[['Up to 3','Up to 3 years'],['Up to 6','Up to 6 years'],['Any','Any age']]]]},
+  Driving:{t:'Driving lessons',p:'vertical_traffic_light',g:'Car and travel',q:[
+    ['what','What do you need?',[['Test prep','Pass the road test','You can drive, need the local test'],['Full course','Learn from the start','Never driven before'],['Refresher','Refresher','Learn the local rules and roads']]],
+    ['car','Which car?',[['Automatic','Automatic'],['Manual','Manual']]],
+    ['when','When do you want to start?',[['This week','This week'],['This month','This month'],['Flexible',"I'm flexible"]]]]},
+  Airport:{t:'Airport pickup',p:'airplane_arrival',g:'Car and travel',q:[
+    ['who','How many people?',[['1','Just me'],['2','2 people'],['3-4','3-4 people'],['5+','5 or more']]],
+    ['bags','How many bags?',[['1-2','1-2 bags'],['3-4','3-4 bags'],['5+','5 or more']]],
+    ['when','When do you land?',[['This week','This week'],['This month','This month'],['Later','Later']]]]},
+  Phone:{t:'Phone and internet',p:'mobile_phone',g:'Car and travel',q:[
+    ['what','What do you need?',[['SIM','Phone plan'],['Internet','Home internet'],['Both','Both']]],
+    ['use','How much do you use?',[['Light','Light: calls, chat'],['Regular','Regular: video, maps'],['Heavy','Heavy: work from home']]],
+    ['when','Start when?',[['Now','As soon as possible'],['On arrival','The day I arrive'],['Flexible',"I'm flexible"]]]]},
+  Childcare:{t:'Childcare and tutors',p:'books',g:'Family',q:[
+    ['what','What do you need?',[['Daycare','Daycare'],['Babysitter','Babysitter'],['Tutor','Tutor for school'],['Language','Language classes for kids']]],
+    ['age','Child age?',[['0-3','0-3 years'],['4-9','4-9 years'],['10+','10 years or older']]],
+    ['when','How often?',[['Daily','Every weekday'],['Few days','A few days a week'],['Once','Just once']]]]}
+};
+const SVP46={'Cleaning':['img/p17/clean2.webp','Regular, deep or move-out cleaning'],'Small jobs':['img/p15/tools.webp','Plumbing, lights, furniture, painting'],'Tax':['img/p19/tax.webp','Personal, self-employed or business'],'Insurance':['img/p17/insure.webp','Health, car, home and travel'],'Immigration':['img/p17/passport.webp','Work, study, PR and family'],'Translation':['img/p18/papers.webp','Certified translation of your papers'],'Used cars':['img/p19/usedcar.webp','Dealers send cars that fit your budget'],'Driving':['img/p19/driving.webp','Pass the road test in your new country'],'Airport':['img/p15/plane.webp','From the airport to your door'],'Phone':['img/p19/router.webp','Phone plans and home internet'],'Childcare':['img/p19/kids.webp','Daycare, babysitters and tutors']};
+const SVG46=[['Car <em>and travel</em>',['Used cars','Driving','Airport']],['Papers <em>sorted</em>',['Immigration','Tax','Insurance','Translation']],['Home <em>help</em>',['Cleaning','Small jobs','Phone']],['Family <em>first</em>',['Childcare']]];
+const TOP46=['Used cars','Immigration','Tax','Cleaning','Driving','Insurance'];
+const SVT46=[['home','Home','img/p19/sofa.webp','Settling in,','sorted near you','Cleaning, repairs, phone and internet near you',['Cleaning','Small jobs','Phone','Childcare']],
+  ['papers','Papers','img/p19/tax.webp','Papers done,','without the stress','Tax, insurance, visa and certified translation',['Tax','Insurance','Immigration','Translation']],
+  ['car','Car','img/p19/usedcar.webp','On the road,','from week one','Used cars, driving lessons and airport pickup',['Used cars','Driving','Airport','Insurance']],
+  ['family','Family','img/p19/kids.webp','Family first,','help close by','Daycare, babysitters, tutors and more',['Childcare','Translation','Airport','Phone']]];
+const a46th=()=>{try{return localStorage.getItem('na.a46th')||'light'}catch(e){return 'light'}};
+function sv46list(){const city=(S.me||{}).city||'your city',tk=P15.a46t||'home',T=SVT46.find(x=>x[0]===tk)||SVT46[0],dk=a46th()==='dark';
+  const pick=c=>`<button class="a46-pk" data-a="z8q" data-c="${esc(c)}"><span class="a46-pi"><img ${a4src(SVP46[c][0])} alt="" loading="lazy"><i>+</i></span><b>${esc(SV46[c].t)}</b><small>Get prices</small></button>`;
+  const hero=`<div class="a46-h4"><img class="a46-hb" src="${T[2]}" alt=""><div class="a46-hs"></div>
+    <div class="a46-hbar"><button class="a46-gl" data-a="p15back" aria-label="Back">‹</button><span class="a46-gl a46-loc"><b>${esc(city)}</b><small>Services near you</small></span><button class="a46-gl a46-thb" data-a="a46theme">${dk?'Light':'Dark'}</button></div>
+    <div class="a46-ht"><span class="a46-tag">${esc(T[1])}</span><h1>${esc(T[3])}<br><em>${esc(T[4])}</em></h1><p>${esc(T[5])}</p></div>
+    <div class="a46-pg"><div class="a46-pgh"><b>${esc(T[1])} picks</b><span>No charge to ask</span></div><div class="a46-pr">${T[6].map(pick).join('')}</div></div></div>`;
+  const tabs=`<div class="a46-tabs">${SVT46.map(x=>`<button class="${x[0]===tk?'on':''}" data-a="a46tab" data-k="${x[0]}">${esc(x[1])}</button>`).join('')}</div>
+    <button class="a46-sr" data-a="a46all"><span>Search <b>"visa help"</b></span><u>Ask nearby</u></button>`;
+  const bt=(c,big)=>`<button class="a46-bt${big?' big':''}" data-a="z8q" data-c="${esc(c)}"><img ${a4src(SVP46[c][0])} alt="" loading="lazy"><span class="a46-bs"></span><span class="a46-bl"><b>${esc(SV46[c].t)}</b>${big?`<small>${esc(SVP46[c][1])}</small>`:''}</span>${big?'<em>Popular</em>':''}</button>`;
+  const bento=`<div class="a46-sec"><h2>Popular <em>now</em></h2><span>${esc(city)}</span></div><div class="a46-bento">${bt('Used cars',1)}${bt('Immigration')}${bt('Tax')}${bt('Driving')}${bt('Cleaning')}</div>`;
+  const ask=`<button class="a46-ask" data-a="a46all"><span><small>ASK BUSINESSES NEARBY</small><b>Can't find it?<br>Ask 5 at once.</b></span><span class="a46-af"><i>Tell us once, get 5 prices</i><u>Ask ›</u></span></button>`;
+  const rails=SVG46.map(([g,L])=>`<div class="a46-sec"><h2>${g}</h2><span>${L.length} services</span></div><div class="a46-rl">${L.map(c=>`<button class="a46-rc" data-a="z8q" data-c="${esc(c)}"><span class="a46-rcp"><img ${a4src(SVP46[c][0])} alt="" loading="lazy"></span><b>${esc(SV46[c].t)}</b><small>${esc(SVP46[c][1])}</small><span class="a46-rcb"><i>Free to ask</i><u>+</u></span></button>`).join('')}</div>`).join('');
+  return c9wrap(`<div class="a46v4${dk?' dk':''}">${hero}${tabs}<div class="a46-in">${bento}${ask}<div id="a46all"></div>${rails}
+   <p class="a46-nt">NeuAmigo does not check businesses. Ask for their licence or insurance when it matters, and pay the one you pick directly.</p></div></div>`)}
+function quote46(){const q=P15.q&&P15.q.k==='service'?P15.q:(P15.q={k:'service'}),SV=SV46[q.cat];
+  if(!SV)return sv46list();
+  const steps=SV.q,st=Math.max(0,Math.min((P15.qs||1)-1,steps.length)),dk=a46th()==='dark',city=(S.me||{}).city||'your city',done=st>=steps.length;
+  const head=(title)=>`<div class="a46-qh"><img class="a46-hb" src="${SVP46[q.cat][0]}" alt=""><div class="a46-hs"></div>
+    <div class="a46-hbar"><button class="a46-gl" data-a="${st?'x6qprev':'p15back'}" aria-label="Back">‹</button><span class="a46-gl a46-loc"><b>${esc(SV.t)}</b><small>${done?'Ready to send':'Step '+(st+1)+' of '+steps.length}</small></span></div>
+    <div class="a46-qbar">${steps.map((_,i)=>`<i class="${i<st||done?'d':i===st?'c':''}"></i>`).join('')}</div>
+    <h1 class="a46-qt">${title}</h1></div>`;
+  if(done){const sum=askSum15('service',q);
+    return p15wrap(`<div class="a46v4 a46qv${dk?' dk':''}">${head('Here is <em>your request</em>')}<div class="a46-in">
+     <div class="a46-sumc"><small>${esc(SV.t.toUpperCase())}</small><b>${esc(sum)}</b><span>Goes to at most 5 businesses in ${esc(city)}, then closes. No charge to ask.</span></div>
+     <p class="a46-nt">NeuAmigo does not check businesses. Ask for their licence or insurance when it matters, and pay the one you pick directly.</p>
+     <button class="a46-cta" data-a="p15askPost" data-k="service"${P15.busy==='ask'?' disabled':''}>${P15.busy==='ask'?'Sending…':'Send to 5 businesses'}</button></div></div>`)}
+  const [k,qq,o]=steps[st],words=qq.split(' '),t2=words.length>2?esc(words.slice(0,-2).join(' '))+' <em>'+esc(words.slice(-2).join(' '))+'</em>':'<em>'+esc(qq)+'</em>';
+  return p15wrap(`<div class="a46v4 a46qv${dk?' dk':''}">${head(t2)}<div class="a46-in">
+   <div class="a46-ans">${o.map(([v,l,d],i)=>`<button class="${q[k]===v?'on':''}" data-a="a46ans" data-k="${k}" data-val="${esc(v)}" style="--i:${i}"><span><b>${esc(l)}</b>${d?`<small>${esc(d)}</small>`:''}</span><i></i></button>`).join('')}</div>
+   <p class="a46-nt">Tap one. No typing. Your request goes to at most 5 businesses in ${esc(city)}.</p></div></div>`)}
+(function(){
+  Object.assign(P15V,{services:sv46list,c12svc:sv46list});
+  const _ar=afterRenderEvents;afterRenderEvents=function(){const r=_ar.apply(this,arguments);try{document.documentElement.classList.toggle('a46dk',!!document.querySelector('.a46v4.dk'))}catch(e){}return r};
+  const _af=askForm15;askForm15=function(k){return k==='service'&&(typeof V6!=='function'||V6()||true)?quote46():_af(k)};
+  const _s=askSum15;askSum15=(k,d)=>{if(k!=='service'||!d||!SV46[d.cat])return _s(k,d);const S=SV46[d.cat];
+    return [S.t].concat(S.q.map(([kk,,o])=>{const f=o.find(x=>x[0]===d[kk]);return f?f[1]:(d[kk]||'')})).filter(Boolean).join(' · ')};
+  Object.assign(A,{
+    a46ans(el){const q=P15.q=P15.q&&P15.q.k==='service'?P15.q:{k:'service'};q[el.dataset.k]=el.dataset.val==='next'?((typeof wkDays15==='function'&&wkDays15()[0])||'Next weekend'):el.dataset.val;render();setTimeout(()=>{P15.qs=(P15.qs||1)+1;render()},240)},
+    x6qprev(){P15.qs=Math.max(1,(P15.qs||1)-1);render()},
+    a46tab(el){P15.a46t=el.dataset.k;render()},
+    a46theme(){try{localStorage.setItem('na.a46th',a46th()==='dark'?'light':'dark')}catch(e){}render()},
+    a46all(){const e=document.getElementById('a46all');if(e)e.scrollIntoView({behavior:'smooth',block:'start'})}
+  });
+  const _z=A.z8q;A.z8q=function(el){const cat=el.dataset.c;if(!SV46[cat])return _z(el);A.p15open({dataset:{v:'ask:service'}});P15.q={k:'service',cat};P15.qs=1;setTimeout(render,60)};
+  try{if(typeof CATL15==='object')Object.keys(SV46).forEach(c=>{if(!CATL15[c])CATL15[c]=SV46[c].t})}catch(e){}
+  try{if(typeof LEADK15==='object')Object.assign(LEADK15,{'Used cars':'lead_car',Driving:'lead_mid',Airport:'lead_lite',Phone:'lead_lite',Translation:'lead_mid',Childcare:'lead_mid'})}catch(e){}
+})();
+
+/* ===== part47: NEW HOME, journey first (his ask 16 Nov 2026 17:53: 'pura naye se banao ... jo video bheja us tarah ...
+   dusri country me jata he uski journey, jo pehle chahiye wo pehle dikhao'). Neutant-like: photo hero with editorial headline,
+   journey tabs instead of time-of-day tabs, glass picks rail, search, next steps, needs-first bento, real rails. Light + dark. */
+const NA47_LIVE=false;   /* mock only until his ok */
+const STG47=[
+ ['fly','Before you fly','img/p17/passport.webp','Moving abroad?','Start here.','Papers, a first home and a phone that works on landing',
+   [['visa','Visa help'],['rooms','A first home'],['Airport','Airport pickup'],['Phone','Phone plan']],
+   [['Immigration',1],['rooms'],['Airport'],['Phone'],['Translation']]],
+ ['week','First week','img/p18/apartment.webp','First week,','sorted near you.','Your home, phone, papers and the basics',
+   [['rooms','Homes'],['Phone','Phone plan'],['Translation','Translation'],['sell','Things for home']],
+   [['rooms',1],['Phone'],['sell'],['Translation'],['Cleaning']]],
+ ['month','First month','img/p19/work.webp','First month,','settled for real.','Work, a car, insurance and tax',
+   [['jobs','Jobs'],['Used cars','Used cars'],['Driving','Driving lessons'],['Insurance','Insurance']],
+   [['jobs',1],['Used cars'],['Driving'],['Insurance'],['Tax']]],
+ ['home','Settled','img/p19/lakeview.webp','Feel at home,','make it yours.','Friends, events, food from home and city walks',
+   [['events','Events'],['food','Taste of home'],['quest','City Quest'],['Childcare','Childcare']],
+   [['events',1],['food'],['quest'],['Childcare'],['club']]]];
+const O47={ /* non-service doors: photo, title, line, action */
+  visa:['img/p17/passport.webp','Visa help','Work, study, PR and family','z8q" data-c="Immigration'],
+  rooms:['img/p18/apartment.webp','Homes','Rent shown on every home','p15open" data-v="rooms'],
+  jobs:['img/p19/work.webp','Jobs','Pay shown on every job','p15open" data-v="jobs'],
+  sell:['img/p19/sofa.webp','Things for home','From people moving out','p15open" data-v="c12sell'],
+  events:['img/p19/party.webp','Events','Meet people every week','tab" data-k="ev15'],
+  food:['img/p18/tacos.webp','Taste of home','Food from your country','p15open" data-v="food'],
+  quest:['img/p18/toronto.webp','City Quest','Learn your city in one walk','p15open" data-v="quest'],
+  club:['img/p17/seats.webp','Weekend Club','Members book first','p15open" data-v="club']};
+const SH47={Phone:'Phone plan',Childcare:'Childcare','Small jobs':'Repairs',Immigration:'Visa help',Driving:'Driving',Airport:'Airport pickup'};
+const d47=k=>O47[k]?O47[k]:(SV46[k]?[SVP46[k][0],SH47[k]||SV46[k].t,SVP46[k][1],'z8q" data-c="'+k]:O47.rooms);
+const TZ47={toronto:'America/Toronto',vancouver:'America/Vancouver',calgary:'America/Edmonton',montreal:'America/Toronto',ottawa:'America/Toronto',london:'Europe/London',sydney:'Australia/Sydney',melbourne:'Australia/Melbourne',dubai:'Asia/Dubai',new_york:'America/New_York','new york':'America/New_York',berlin:'Europe/Berlin',auckland:'Pacific/Auckland',singapore:'Asia/Singapore'};
+const from47=()=>{try{return localStorage.getItem('na.from')||''}catch(e){return ''}};
+const stage47=()=>{let s='';try{s=localStorage.getItem('na.stage')||''}catch(e){}if(STG47.some(x=>x[0]===s))return s;const p=(typeof c10get==='function')?c10get('nm.path','local'):'local';return p==='moving'?'fly':p==='arrived'?'week':'week'};
+function h47(){const c=c9city(),city=c||'your city',me=S.me||{},dk=a46th()==='dark',sk=stage47(),T=STG47.find(x=>x[0]===sk);
+  const rooms=zdata8('rooms15','rooms',{maxrent:0}),jobs=zdata8('jobs15','jobs',{}),ev=zdata8('events15','ev',{k:'',cty:c}),sales=zdata8('sales15','sale',{});
+  const up=ev.filter(e=>new Date(e.startsAt)>Date.now()-3*36e5).sort((a,b)=>new Date(a.startsAt)-new Date(b.startsAt));
+  const minR=rooms.length?rooms.reduce((m,r)=>(!m||r.rent<m.rent)?r:m,null):null;
+  const real=k=>k==='rooms'&&minR?'From '+a4money(minR.rent,minR.currency):k==='jobs'&&jobs.length?jobs.length+' open now':k==='sell'&&sales.length?sales.length+' items':k==='events'&&up.length?up.length+' coming up':SV46[k]?'Free to ask':'Open';
+  const ini=esc(((me.name||'?').trim()[0]||'?').toUpperCase());
+  const pick=([k,l])=>{const d=d47(k==='visa'?'visa':k);return `<button class="a46-pk" data-a="${d[3]}"><span class="a46-pi"><img ${a4src(d[0])} alt="" loading="lazy"><i>+</i></span><b>${esc(l)}</b><small>${esc(real(k))}</small></button>`};
+  const hero=`<div class="a46-h4 h47-h"><img class="a46-hb" src="${T[2]}" alt=""><div class="a46-hs"></div>
+    <div class="a46-hbar"><span class="h47-brand"><img src="img/icon-192.png" alt=""><b>NeuAmigo</b></span><button class="a46-gl a46-thb" data-a="a46theme">${dk?'Light':'Dark'}</button><button class="a46-gl h47-me" data-a="tab" data-k="me" aria-label="Me">${ini}</button></div>
+    <div class="a46-ht"><span class="a46-tag">${esc(T[1])}</span><h1>${esc(T[3])}<br><em>${esc(T[4])}</em></h1><p>${esc(T[5])}</p></div>
+    <div class="a46-pg"><div class="a46-pgh"><b>Do these first</b><span>${esc(T[1])}</span></div><div class="a46-pr">${T[6].map(pick).join('')}</div></div></div>`;
+  const tabs=`<div class="a46-tabs h47-tabs">${STG47.map(x=>`<button class="${x[0]===sk?'on':''}" data-a="h47stage" data-k="${x[0]}">${esc(x[1])}</button>`).join('')}</div>
+    <button class="a46-sr" data-a="p15open" data-v="search"><span>Search <b class="a7-type">${esc((typeof A7HINT!=='undefined'?A7HINT:['a room'])[0])}</b></span><u>Ask nearby</u></button>`;
+  let steps='';try{const b=c10bar(),done=c10done(),L=c10all().filter(s=>!done.includes(s[0])).slice(0,3);
+    if(L.length)steps=`<div class="a46-sec"><h2><s>01</s>Your next <em>steps</em></h2><span>${b.d} of ${b.n} done</span></div><div class="h47-st"><span class="h47-tr"><i style="width:${Math.max(4,b.pct)}%"></i></span>${L.map((s,i)=>`<button class="h47-sr" data-a="p15open" data-v="plan30"><span class="h47-n">${i+1}</span><span class="h47-tx"><b>${esc(s[2])}</b><small>${esc(s[3])}</small></span><u>›</u></button>`).join('')}<button class="h47-all" data-a="p15open" data-v="plan30">See your whole plan</button></div>`}catch(e){}
+  const bt=([k,big])=>{const d=d47(k==='Immigration'?'Immigration':k);return `<button class="a46-bt${big?' big':''}" data-a="${d[3]}"><img ${a4src(d[0])} alt="" loading="lazy"><span class="a46-bs"></span><span class="a46-bl"><b>${esc(d[1])}</b>${big?`<small>${esc(real(k)==='Open'||real(k)==='Free to ask'?d[2]:real(k))}</small>`:''}</span>${big?'<em>Needed first</em>':''}</button>`};
+  const bento=`<div class="a46-sec"><h2><s>02</s>Needed <em>first</em></h2><span>${esc(T[1])}</span></div><div class="a46-bento">${T[7].map(bt).join('')}</div>`;
+  const card=(img,pr,unit,t,ln,a)=>`<button class="h47-c" data-a="${a}"><span class="a46-rcp">${img}</span>${pr?`<span class="h47-pr">${esc(pr)}${unit?`<small>${unit}</small>`:''}</span>`:''}<b>${esc(t)}</b><small>${esc(ln)}</small></button>`;
+  const rail=(h,sub,cards,more,a)=>cards.length?`<div class="a46-sec"><h2>${h}</h2><button class="h47-more" data-a="${a}">${more} ›</button></div><div class="a46-rl">${cards.join('')}</div>`:'';
+  const R={
+    rooms:rail('Homes <em>near you</em>','',rooms.slice(0,8).map(r=>card(r.photos&&r.photos[0]&&PC15()?`<img src="${esc(phUrl15(r.photos[0]))}" alt="" loading="lazy">`:c9i('room'),a4money(r.rent,r.currency),' /month',r.title,r.area||'','p15open" data-v="rooms')),'See all','p15open" data-v="rooms'),
+    jobs:rail('Work, <em>pay shown</em>','',jobs.slice(0,8).map(j=>card(c9i(c9jobp(j)),a4money(j.pay,j.currency),' /hour',j.title,(j.area||'')+(j.hours?' · '+j.hours+' h/week':''),'p15open" data-v="job:'+j.id)),'See all','p15open" data-v="jobs'),
+    sell:rail('For your <em>new place</em>','',sales.slice(0,8).map(s=>{const p=kw8((s.cat||'')+' '+s.title,'sofa');return card(c9i(p==='-'?'sofa':p),a4money(s.price,s.currency),'',s.title,(s.area||'')+(s.cond?' · '+s.cond:''),'p15open" data-v="c12sell')}),'See all','p15open" data-v="c12sell'),
+    events:rail('This <em>week</em>','',up.slice(0,8).map(e=>{let w='';try{w=new Date(e.startsAt).toLocaleDateString('en',{weekday:'short',day:'numeric',month:'short'})}catch(x){}return card(c9i(c9evp(e)),e.price?a4money(e.price,e.currency):'No ticket','',e.title,w+(e.venue?' · '+e.venue:''),'p15open" data-v="evd:'+e.id)}),'See all','tab" data-k="ev15')};
+  const order={fly:['rooms','jobs','sell','events'],week:['rooms','sell','jobs','events'],month:['jobs','rooms','sell','events'],home:['events','sell','rooms','jobs']}[sk];
+  const ask=`<button class="a46-ask" data-a="p15open" data-v="services"><span><small>EVERY SERVICE, ONE PLACE</small><b>Need help?<br>Ask 5 at once.</b></span><span class="a46-af"><i>Visa, tax, cars, cleaning and more</i><u>Open ›</u></span></button>`;
+  const trust=`<div class="h47-tr2"><span><b>Price first</b><small>On every home, job and service</small></span><span><b>No middleman</b><small>You pay them directly</small></span><span><b>Your data</b><small>Never sold</small></span></div>`;
+  let lt='';try{const z=TZ47[(c||'').toLowerCase()];if(z)lt=new Date().toLocaleTimeString('en',{hour:'numeric',minute:'2-digit',timeZone:z})}catch(e){}
+  let bb={d:0,n:12,pct:0};try{bb=c10bar()}catch(e){}
+  const fr=from47(),cc=(me.country||'').slice(0,3).toUpperCase()||'';
+  const pass=`<button class="h47-pass" data-a="p15open" data-v="plan30"><span class="h47-pl"><small>FROM</small><b>${fr?esc(fr.split(',')[0]):'Home'}</b><i>${fr&&fr.includes(',')?esc(fr.split(',')[1].trim()):'Your country'}</i></span>
+    <span class="h47-pm"><i class="h47-dash"></i><img src="${f3('airplane')}" alt=""><i class="h47-dash"></i><small>${esc(T[1])}</small></span>
+    <span class="h47-pl r"><small>TO</small><b>${esc(city)}</b><i>${lt?esc(lt)+' now':esc(cc)}</i></span>
+    <span class="h47-pf"><span><small>YOUR MOVE</small><b>${bb.d} of ${bb.n} steps</b></span><span class="h47-pb"><i style="width:${Math.max(4,bb.pct)}%"></i></span><u>Open plan ›</u></span></button>`;
+  return c9wrap(`<div class="a46v4 h47${dk?' dk':''}">${hero}${pass}${tabs}<div class="a46-in">${steps}${bento}${R[order[0]]}${ask}${R[order[1]]}${R[order[2]]}${R[order[3]]}${trust}</div></div>`)}
+(function(){
+  Object.assign(A,{h47stage(el){try{localStorage.setItem('na.stage',el.dataset.k)}catch(e){}render();try{(document.querySelector('.c9-main,main,#app')||window).scrollTo({top:0,behavior:'smooth'})}catch(e){}}});
+  Object.assign(P15V,{home47:h47});
+  const _ar=afterRenderEvents;afterRenderEvents=function(){const r=_ar.apply(this,arguments);try{document.documentElement.classList.toggle('h47on',!!document.querySelector('.a46v4'))}catch(e){}return r};
+  if(NA47_LIVE){const _h=c12home;c12home=function(){try{return h47()}catch(e){console.warn('[h47]',e);return _h.apply(this,arguments)}}}
+})();
+
+/* ===== part48: HOME v7 (his ok 16 Nov 2026 18:40, 'ab ye sahi lag raha he').
+   Recipe (his words 18:26): Neutant = structure/display/theme, Airbnb = decoration + premium feel,
+   Blinkit = categories understood at once, colour per tab, lively motion. Mock: handoff/mocks/na-home-v7.
+   Real data only: every number/price comes from live lists; a rail with no data is hidden. ===== */
+const H48_LIVE=true;
+const P48=n=>`img/p20/${n}.webp`;
+const H48TABS=[['all','All','#1652C8','#0F2F7A'],['rooms','Rooms','#0E6B5E','#0B3F38'],['jobs','Jobs','#3A3F9E','#22265E'],
+  ['cars','Cars','#1F2633','#161B25'],['papers','Papers','#5B2A86','#36194F'],['events','Events','#B23A2A','#5E1F17']];
+const H48T=[ /* photo, label, service key or view, real-number getter key */
+  ['room','Rooms','v:rooms','rooms'],['work','Jobs','v:jobs','jobs'],['car','Used cars','t:cars','cars'],['visa','Visa help','q:Immigration',''],
+  ['tax','Tax return','q:Tax',''],['keys','Insurance','q:Insurance',''],['clean','Cleaning','q:Cleaning',''],['airport','Airport ride','q:Airport','']];
+const h48tab=()=>{try{const t=localStorage.getItem('na.h48tab');if(H48TABS.some(x=>x[0]===t))return t}catch(e){}return 'all'};
+const h48dk=()=>{try{return a46th()==='dark'}catch(e){return false}};
+function h48act(s){const [k,v]=[s.slice(0,1),s.slice(2)];
+  return k==='k'?`data-a="tab" data-k="${esc(v)}"`:k==='v'?`data-a="p15open" data-v="${esc(v)}"`:k==='t'?`data-a="h48tab" data-k="${esc(v)}"`:`data-a="z8q" data-c="${esc(v)}"`}
+function h48data(){const c=c9city();
+  const rooms=zdata8('rooms15','rooms',{maxrent:0})||[],jobs=zdata8('jobs15','jobs',{})||[],ev=zdata8('events15','ev',{k:'',cty:c})||[],sales=zdata8('sales15','sale',{})||[];
+  const up=ev.filter(e=>new Date(e.startsAt)>Date.now()-3*36e5).sort((a,b)=>new Date(a.startsAt)-new Date(b.startsAt));
+  const cars=sales.filter(s=>{try{return a9cat(s)==='cars'}catch(e){return false}});
+  return {c,rooms,jobs,up,sales,cars}}
+function h48min(l,f){let m=null;for(const x of l){const v=+x[f];if(v>0&&(!m||v<+m[f]))m=x}return m}
+function h48sub(k,D){
+  if(k==='rooms'){const m=h48min(D.rooms,'rent');return m?'from '+a4money(m.rent,m.currency):'Ask owners'}
+  if(k==='jobs')return D.jobs.length?D.jobs.length+' open':'Post a need';
+  if(k==='cars'){const m=h48min(D.cars,'price');return m?'from '+a4money(m.price,m.currency):'Buy or sell'}
+  return 'See prices'}
+function h48ph(item,fb){try{if(item&&item.photos&&item.photos[0]&&PC15())return `<img class="h48-ph" src="${esc(phUrl15(item.photos[0]))}" alt="" loading="lazy">`}catch(e){}
+  return `<img class="h48-ph" ${a4src(P48(fb))} alt="" loading="lazy">`}
+function h48card(ph,t,s,pr,unit,btn,act){return `<button class="h48-cd" ${act}>${ph}<span class="h48-ci"><b>${esc(t)}</b><small>${esc(s)}</small><span class="h48-pr"><b>${pr}${unit?`<small>${unit}</small>`:''}</b><u>${btn}</u></span></span></button>`}
+function h48sec(h,s,more){return `<div class="h48-sec"><div><h2>${h}</h2>${s?`<small>${s}</small>`:''}</div>${more||''}</div>`}
+function h48rails(D){
+  const RP=['livingy','studio','living','bed'],JP=['warehouse','barista','office','work'],CP=['car','carlux','carcity'];
+  const rooms=D.rooms.slice(0,8).map((r,i)=>h48card(h48ph(r,RP[i%4]),r.title||'Room',r.area||'',esc(a4money(r.rent,r.currency)),' /month','View','data-a="p15open" data-v="rooms"'));
+  const jobs=D.jobs.slice(0,8).map((j,i)=>h48card(h48ph(null,JP[i%4]),j.title||'Job',(j.area||'')+(j.hours?' · '+j.hours+' h/week':''),j.pay?esc(a4money(j.pay,j.currency)):'Pay on ask',j.pay?' /hour':'','Apply',`data-a="p15open" data-v="job:${esc(j.id)}"`));
+  const cars=D.cars.slice(0,8).map((s,i)=>h48card(h48ph(s,CP[i%3]),s.title||'Car',(s.area||'')+(s.cond?' · '+s.cond:''),esc(a4money(s.price,s.currency)),'','View','data-a="p15open" data-v="c12sell"'));
+  const ev=D.up.slice(0,8).map((e,i)=>{let w='';try{w=new Date(e.startsAt).toLocaleDateString('en',{weekday:'short',day:'numeric',month:'short'})}catch(x){}
+    return h48card(h48ph(e,['dinner','cafe','arrivals'][i%3]),e.title||'Event',w+(e.venue?' · '+e.venue:''),e.price?esc(a4money(e.price,e.currency)):'No ticket','','Book',`data-a="p15open" data-v="evd:${esc(e.id)}"`)});
+  const more=(a,l)=>`<button class="h48-more" ${a}>${l||'See all'}</button>`;
+  const rail=(h,s,c,a)=>c.length?h48sec(h,s,more(a))+`<div class="h48-rl">${c.join('')}</div>`:'';
+  return {rooms:rail('Rooms near you',"Owner's price, no hidden fee",rooms,'data-a="p15open" data-v="rooms"'),
+    jobs:rail('Hiring now','Pay shown on every job',jobs,'data-a="p15open" data-v="jobs"'),
+    cars:rail('Used cars','Price and km on every car',cars,'data-a="h48tab" data-k="cars"'),
+    events:rail('Coming up','Meet people who also just arrived',ev,'data-a="tab" data-k="ev15"'),
+    n:{rooms:rooms.length,jobs:jobs.length,cars:cars.length,events:ev.length}}}
+function h48grid(D,list){return `<div class="h48-gd${(list&&list.length===3)?" g3":""}">${(list||H48T).map(([p,l,a,k])=>`<button class="h48-tl" ${h48act(a)}><span class="h48-tp"><img ${a4src(P48(p))} alt="" loading="lazy"></span><b>${esc(l)}</b><small>${esc(h48sub(k,D))}</small></button>`).join('')}</div>`}
+function h48plan(){let b={d:0,n:8,pct:0};try{b=c10bar()}catch(e){}let nx='';
+  try{const done=c10done(),L=c10all().filter(s=>!done.includes(s[0]));if(L[0])nx=L[0][2]}catch(e){}
+  return `<button class="h48-plan" data-a="p15open" data-v="plan30"><img ${a4src(P48('living'))} alt=""><span class="h48-pi"><span class="h48-row"><b>Your first 30 days</b><s>${b.d} of ${b.n}</s></span><small>${nx?'Next: '+esc(nx):'Every step for a new city'}</small><span class="h48-bar"><i style="width:${Math.max(4,b.pct)}%"></i></span><u>Continue</u></span></button>`}
+function h48empty(t,s,btn,a){return `<div class="h48-emp"><b>${t}</b><small>${s}</small>${btn?`<button ${a}>${btn}</button>`:''}</div>`}
+function h48body(tab,D){const R=h48rails(D),city=D.c||'your city';
+  const head=(k,h,em)=>`<div class="h48-pad"><div class="h48-hi">${esc(k)}</div><h1>${h}<br><em>${em}</em></h1></div>`;
+  let lt='';try{const z=TZ47[(D.c||'').toLowerCase()];if(z)lt=new Date().toLocaleTimeString('en',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:z})}catch(e){}
+  const hr=(()=>{try{const z=TZ47[(D.c||'').toLowerCase()];const h=+new Date().toLocaleTimeString('en',{hour:'numeric',hour12:false,timeZone:z||undefined});return h<12?'GOOD MORNING':h<17?'GOOD AFTERNOON':'GOOD EVENING'}catch(e){return 'WELCOME'}})();
+  const trust=`<div class="h48-trust"><span><b>Price first</b>Every price before you tap</span><span><b>Direct</b>Pay them directly</span><span><b>Your data</b>Never sold</span></div>`;
+  if(tab==='all')return head(hr+(lt?' · '+lt+' IN '+city.toUpperCase():''),'Your new city,','sorted step by step.')
+    +h48sec('What do you need?','Tap a picture, see prices first')+h48grid(D)+`<div class="h48-pad">${h48plan()}</div>`
+    +R.rooms+R.jobs+R.cars+R.events
+    +`<button class="h48-ask" data-a="p15open" data-v="services"><span><b>Need something else?</b><small>Ask 5 local businesses at once and compare prices</small></span><u>Ask</u></button>`+trust;
+  if(tab==='rooms')return head('ROOMS · '+city.toUpperCase(),'A room you like,','price shown upfront.')+(R.rooms||h48empty('No rooms listed here yet','Tell owners what you need; they reply with a price.','Ask for a room','data-a="p15open" data-v="rooms"'))
+    +h48sec('Also for your new place','')+h48grid(D,[['clean','Cleaning','q:Cleaning',''],['keys','Insurance','q:Insurance',''],['aisle','For home','v:c12sell',''],['airport','Airport ride','q:Airport','']]);
+  if(tab==='jobs')return head('JOBS · '+city.toUpperCase(),'Work that fits,','pay shown on every job.')+(R.jobs||h48empty('No jobs posted here yet','Businesses post jobs with the pay written on them.','Open jobs','data-a="p15open" data-v="jobs"'))
+    +h48sec('Get ready for work','')+h48grid(D,[['tax','Tax return','q:Tax',''],['passports','Translation','q:Translation',''],['carcity','Driving','q:Driving',''],['office','All jobs','v:jobs','jobs']]);
+  if(tab==='cars')return head('USED CARS · '+city.toUpperCase(),'A good car,','no guesswork.')+(R.cars||h48empty('No cars for sale here yet','People moving away list their car with price and km.','Sell my car','data-a="p15open" data-v="c12sell"'))
+    +h48sec('Before you buy','Local businesses, price shown')+h48grid(D,[['keys','Insurance','q:Insurance',''],['carcity','Driving','q:Driving',''],['carlux','Car dealers','q:Used cars',''],['car','Sell a car','v:c12sell','']]);
+  if(tab==='papers')return head('PAPERS · '+city.toUpperCase(),'Paperwork,','done right first time.')
+    +h48sec('Pick what you need','Compare prices from local experts')+h48grid(D,[['visa','Visa help','q:Immigration',''],['tax','Tax return','q:Tax',''],['passports','Translation','q:Translation',''],['keys','Insurance','q:Insurance','']])
+    +`<div class="h48-pad">${h48plan()}</div>`;
+  return head('EVENTS · '+city.toUpperCase(),'New city,','new friends.')+(R.events||h48empty('No events here yet this week','Hosts in your city add events every week.','See all events','data-a="tab" data-k="ev15"'))
+    +h48sec('More ways to meet','')+h48grid(D,[['cafe','City Quest','v:quest',''],['dinner','Weekend Club','v:club',''],['arrivals','All events','k:ev15','']])}
+function h48(){const tab=h48tab(),D=h48data(),dk=h48dk(),T=H48TABS.find(x=>x[0]===tab),fr=from47();
+  const words=(typeof A7HINT!=='undefined'&&A7HINT.length?A7HINT:['a room','used cars','tax help']);
+  let lt='';try{const z=TZ47[(D.c||'').toLowerCase()];if(z)lt=new Date().toLocaleTimeString('en',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:z})}catch(e){}
+  const hd=`<div class="h48-hd" style="--hd:${dk?T[3]:T[2]}"><div class="h48-top"><img src="img/na-mark.png" alt=""><b>NeuAmigo</b>
+      <button class="h48-city" data-a="tab" data-k="me"><b>${esc(D.c||'Set your city')}</b><small>${fr?'from '+esc(fr.split(',')[0]):(lt?lt+' now':'Tap to change')}</small></button>
+      <button class="h48-th" data-a="a46theme">${dk?'Light':'Dark'}</button></div>
+    <button class="h48-sr" data-a="p15open" data-v="search">Search <b class="a7-type">${esc(words[0])}</b></button>
+    <div class="h48-tabs">${H48TABS.map(x=>`<button class="${x[0]===tab?'on':''}" data-a="h48tab" data-k="${x[0]}">${x[1]}</button>`).join('')}</div></div>`;
+  return c9wrap(`<div class="h48${dk?' dk':''}">${hd}<div class="h48-in">${h48body(tab,D)}</div></div>`)}
+(function(){
+  Object.assign(A,{h48tab(el){try{localStorage.setItem('na.h48tab',el.dataset.k)}catch(e){}
+    if(!document.querySelector('.h48')){try{S.tab='home'}catch(e){}}render();try{window.scrollTo({top:0,behavior:'smooth'})}catch(e){}}});
+  Object.assign(P15V,{home48:h48});
+  const _ar=afterRenderEvents;afterRenderEvents=function(){const r=_ar.apply(this,arguments);try{const h=document.querySelector('.h48-hd'),d=document.documentElement;
+    d.classList.toggle('h48on',!!h);if(h){d.classList.add('h47on');d.classList.toggle('a46dk',!!document.querySelector('.h48.dk'));
+      const col=getComputedStyle(h).getPropertyValue('--hd').trim();const m=document.querySelector('meta[name=theme-color]');if(m&&col)m.setAttribute('content',col)}}catch(e){}return r};
+  if(H48_LIVE){const _h=c12home;c12home=function(){try{return h48()}catch(e){console.warn('[h48]',e);return _h.apply(this,arguments)}}}
+})();
+
+/* ===== part49: SERVICES + REQUEST FLOW in the Home v7 look (his ok 16 Nov 2026 18:40: build the whole app in this style).
+   Same bold colour header, photo tiles, cards, light + dark as part48. Keeps part46 questions (ok'd 16 Nov 17:16). ===== */
+const P49={'Cleaning':'clean','Tax':'tax','Insurance':'keys','Immigration':'visa','Translation':'passports','Used cars':'car','Driving':'carcity','Airport':'airport'};
+const ph49=k=>P49[k]?P48(P49[k]):((SVP46[k]||[])[0]||P48('living'));
+const SH49={Immigration:'Visa help',Driving:'Driving',Childcare:'Childcare','Small jobs':'Repairs',Phone:'Phone plan',Airport:'Airport ride',Tax:'Tax return'};
+const lb49=k=>SH49[k]||(SV46[k]||{}).t||k;
+const T49=[['all','All','#1652C8','#0F2F7A',['Used cars','Immigration','Tax','Cleaning','Insurance','Driving','Airport','Translation','Small jobs','Phone','Childcare']],
+  ['home','Home','#0E6B5E','#0B3F38',['Cleaning','Small jobs','Phone','Childcare']],
+  ['papers','Papers','#5B2A86','#36194F',['Immigration','Tax','Insurance','Translation']],
+  ['car','Car','#1F2633','#161B25',['Used cars','Driving','Airport','Insurance']],
+  ['family','Family','#B23A2A','#5E1F17',['Childcare','Translation','Airport','Phone']]];
+function hd49(col,back,title,sub,extra){const dk=h48dk();
+  return `<div class="h48-hd h49-hd" style="--hd:${col}"><div class="h48-top"><button class="h49-bk" data-a="${back}" aria-label="Back">‹</button>
+    <span class="h49-tt"><b>${title}</b><small>${sub}</small></span><button class="h48-th" data-a="a46theme">${dk?'Light':'Dark'}</button></div>${extra||''}</div>`}
+function sv49list(){const city=c9city()||'your city',tk=T49.some(x=>x[0]===P15.a49t)?P15.a49t:'all',T=T49.find(x=>x[0]===tk),dk=h48dk();
+  const ks=T[4].filter(k=>SV46[k]);
+  const tabs=`<div class="h48-tabs">${T49.map(x=>`<button class="${x[0]===tk?'on':''}" data-a="a49tab" data-k="${x[0]}">${x[1]}</button>`).join('')}</div>`;
+  const grid=`<div class="h48-gd">${ks.map(k=>`<button class="h48-tl" data-a="z8q" data-c="${esc(k)}"><span class="h48-tp"><img ${a4src(ph49(k))} alt="" loading="lazy"></span><b>${esc(lb49(k))}</b><small>See prices</small></button>`).join('')}</div>`;
+  const rows=`<div class="h49-ls">${ks.slice(0,6).map(k=>`<button class="h49-r" data-a="z8q" data-c="${esc(k)}"><img ${a4src(ph49(k))} alt="" loading="lazy"><span><b>${esc((SV46[k]||{}).t||k)}</b><small>${esc((SVP46[k]||[])[1]||'')}</small></span><u>Ask</u></button>`).join('')}</div>`;
+  const how=`<div class="h49-how"><span><b>1</b>Tap a few answers, no typing</span><span><b>2</b>Up to 5 local businesses reply with a price</span><span><b>3</b>You pick one and pay them directly</span></div>`;
+  return c9wrap(`<div class="h48 h49${dk?' dk':''}">${hd49(dk?T[3]:T[2],'p15back','Local help',esc(city),tabs)}<div class="h48-in">
+    <div class="h48-pad"><div class="h48-hi">SERVICES · ${esc(city.toUpperCase())}</div><h1>Local help,<br><em>prices compared.</em></h1></div>
+    ${h48sec('Pick what you need','Tap a picture to get prices')}${grid}${h48sec('How it works','')}${how}${h48sec('Popular in '+esc(city),'')}${rows}
+    <p class="h49-nt">NeuAmigo does not check businesses. Ask for their licence or insurance when it matters.</p></div></div>`)}
+function quote49(){const q=P15.q&&P15.q.k==='service'?P15.q:(P15.q={k:'service'}),SV=SV46[q.cat];
+  if(!SV)return sv49list();
+  const steps=SV.q,st=Math.max(0,Math.min((P15.qs||1)-1,steps.length)),dk=h48dk(),city=c9city()||'your city',done=st>=steps.length;
+  const T=T49.find(x=>x[4].includes(q.cat)&&x[0]!=='all')||T49[0];
+  const bars=`<div class="h49-qb">${steps.map((_,i)=>`<i class="${i<st||done?'d':i===st?'c':''}"></i>`).join('')}</div>`;
+  const hd=hd49(dk?T[3]:T[2],st?'x6qprev':'p15back',esc(lb49(q.cat)),done?'Ready to send':'Step '+(st+1)+' of '+steps.length,bars);
+  const pic=`<div class="h48-pad"><img class="h49-qp" ${a4src(ph49(q.cat))} alt=""></div>`;
+  if(done){const sum=askSum15('service',q);
+    return c9wrap(`<div class="h48 h49${dk?' dk':''}">${hd}<div class="h48-in">
+      <div class="h48-pad"><div class="h48-hi">${esc(lb49(q.cat).toUpperCase())} · ${esc(city.toUpperCase())}</div><h1>Here is<br><em>your request.</em></h1></div>
+      <div class="h48-pad"><div class="h49-sum"><b>${esc(sum)}</b><small>Goes to at most 5 businesses in ${esc(city)}, then closes. No charge to ask.</small></div>
+      <p class="h49-nt" style="padding:14px 2px 0">NeuAmigo does not check businesses. Ask for their licence or insurance when it matters, and pay the one you pick directly.</p>
+      <button class="h49-cta" data-a="p15askPost" data-k="service"${P15.busy==='ask'?' disabled':''}>${P15.busy==='ask'?'Sending…':'Send to 5 businesses'}</button></div></div></div>`)}
+  const [k,qq,o]=steps[st];
+  return c9wrap(`<div class="h48 h49${dk?' dk':''}">${hd}<div class="h48-in">${st===0?pic:''}
+    <div class="h48-pad"><div class="h48-hi">${esc(lb49(q.cat).toUpperCase())} · STEP ${st+1} OF ${steps.length}</div><h1 class="h49-q">${esc(qq)}</h1></div>
+    <div class="h49-ans">${o.map(([v,l,d],i)=>`<button class="${q[k]===v?'on':''}" data-a="a46ans" data-k="${k}" data-val="${esc(v)}" style="--i:${i}"><span><b>${esc(l)}</b>${d?`<small>${esc(d)}</small>`:''}</span><i></i></button>`).join('')}</div>
+    <p class="h49-nt">Tap one. No typing. Your request goes to at most 5 businesses in ${esc(city)}.</p></div></div>`)}
+(function(){
+  Object.assign(A,{a49tab(el){P15.a49t=el.dataset.k;render();try{window.scrollTo({top:0,behavior:'smooth'})}catch(e){}}});
+  Object.assign(P15V,{services:sv49list,c12svc:sv49list});
+  const _af=askForm15;askForm15=function(k){if(k==='service'){try{return quote49()}catch(e){console.warn('[q49]',e)}}return _af(k)};
 })();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
