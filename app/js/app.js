@@ -6626,7 +6626,7 @@ function bz35boost(){const B=[['sparkles','Feature a job','Top of the jobs list 
     if(!bz)return;const nav=document.querySelector('.navwrap .nav');if(!nav)return;
     const v=String(P15.v||''),cur=v==='bzlist'?'l':v==='bzreq'?'r':v==='bzboost'?'b':!v&&S.tab==='me'?'me':!v?'d':'';
     const b=(k,l,p,a)=>`<button ${a} class="${cur===k?'on':''}"><img src="${f3(p)}" alt=""><span>${l}</span></button>`;
-    nav.innerHTML=b('d','Dashboard','world_map','data-a="tab" data-k="matches"')+b('l','Listings','clipboard','data-a="p15open" data-v="bzlist"')+b('r','Requests','handshake','data-a="p15open" data-v="bzreq"')+b('b','Boost','sparkles','data-a="p15open" data-v="bzboost"')+b('me','Me','luggage','data-a="tab" data-k="me"');
+    nav.innerHTML=b('d','Desk','world_map','data-a="tab" data-k="matches"')+b('l','Listings','clipboard','data-a="p15open" data-v="bzlist"')+b('r','Requests','handshake','data-a="p15open" data-v="bzreq"')+b('b','Boost','sparkles','data-a="p15open" data-v="bzboost"')+b('me','Me','luggage','data-a="tab" data-k="me"');
     nav.classList.add('c10biz','bznav');nav.style.setProperty('background','#121827','important');nav.style.setProperty('border','1px solid #222A3C','important');nav.style.setProperty('display','flex','important');nav.style.setProperty('grid-template-columns','none','important')}catch(e){console.warn('[bz35]',e)}};
 })();
 
@@ -6644,12 +6644,12 @@ function a6open(){try{if(!NA36()||sessionStorage.getItem('na.open'))return;sessi
   if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   const city=((S.me||{}).city)||'';const el=document.createElement('div');el.className='a6o';el.style.cssText='background:radial-gradient(120% 80% at 50% 0%,#14306B 0%,#081128 60%,#050913 100%)!important;color:#fff';el.setAttribute('aria-hidden','true');
   let st='';for(let i=0;i<34;i++)st+=`<i style="left:${(i*97)%100}%;top:${(i*53)%100}%;opacity:${.2+(i%5)/10}"></i>`;
-  el.innerHTML=`<div class="a6o-sky">${st}</div><div class="a6o-lg">${NA_CASE('c9lg')}<b>NeuAmigo</b></div>
+  el.innerHTML=`<div class="a6o-sky">${st}</div><div class="a6o-brand"><span class="a6o-ic"><img src="img/icon-192.png" alt=""></span><b>NeuAmigo</b><small>Your move, made easy</small></div>
    <div class="a6o-box"><svg class="a6o-r" width="390" height="360" viewBox="0 0 390 360"><path d="M 60 320 C 130 140, 240 90, 330 70" fill="none" stroke="#9DB8F0" stroke-width="2.5" stroke-linecap="round"/></svg>
    <img class="a6o-pl" src="${f3('airplane')}" alt=""><img class="a6o-pin" src="${f3('round_pushpin')}" alt=""></div>
    <div class="a6o-w"><small>${city?'Welcome to '+esc(city):'Welcome'}</small><h1>Your new city,<br>made easy.</h1></div>`;
   el.addEventListener('click',()=>el.classList.add('out'));document.body.appendChild(el);
-  setTimeout(()=>el.classList.add('out'),1800);setTimeout(()=>{try{el.remove()}catch(e){}},2400)}catch(e){}}
+  setTimeout(()=>el.classList.add('out'),2600);setTimeout(()=>{try{el.remove()}catch(e){}},3200)}catch(e){}}
 /* ---------- 2) Me ---------- */
 function a6row(p,t,s,a,r){return `<button class="a6-row" ${a}><img src="${f3(p)}" alt=""><span><b>${esc(t)}</b>${s?`<small>${s}</small>`:''}</span><i>${r||'›'}</i></button>`}
 function a6me(){const me=S.me||{},d=P15.d||{},biz=typeof c10biz==='function'&&c10biz();const path=(typeof c10get==='function'?c10get('nm.path',''):'')||'';
@@ -6719,6 +6719,8 @@ function a7job(j){return `<div class="a7-pc"><button class="a7-pp" data-a="p15op
    <b class="a7-pr">${esc(a4money(j.pay,j.currency))}<small> /hour</small></b><span class="a7-nm">${esc(j.title)}</span><small class="a7-ln">${esc(j.area||'')}${j.hours?' · '+j.hours+' h/week':''}</small></div>`}
 function a7item(s){const p=kw8((s.cat||'')+' '+s.title,'sofa');return `<div class="a7-pc"><button class="a7-pp" data-a="p15open" data-v="c12sell">${c9i(p==='-'?'sofa':p)}</button><button class="a7-add" data-a="p15open" data-v="c12sell">View</button>
    <b class="a7-pr">${esc(a4money(s.price,s.currency))}</b><span class="a7-nm">${esc(s.title)}</span><small class="a7-ln">${esc(s.area||'')}${s.cond?' · '+esc(s.cond):''}</small></div>`}
+function a7ev(e){const d=new Date(e.startsAt);let w='',dd='',m='',tm='';try{w=d.toLocaleDateString('en',{weekday:'short'});dd=d.getDate();m=d.toLocaleDateString('en',{month:'short'});tm=d.toLocaleTimeString('en',{hour:'numeric',minute:'2-digit'})}catch(x){}
+  return `<div class="a7-ev"><button class="a7-pp" data-a="p15open" data-v="evd:${e.id}">${c9i(c9evp(e))}</button><span class="a7-evd"><span class="a7-dt"><small>${esc(m)}</small><b>${dd}</b><small>${esc(w)}</small></span><span class="a7-evt"><b>${esc(e.title)}</b><small>${esc(tm)}${e.venue?' · '+esc(e.venue):''}</small></span></span><span class="a7-evf"><strong>${e.price?esc(a4money(e.price,e.currency)):'No ticket'}</strong><button data-a="p15open" data-v="evd:${e.id}">Book</button></span></div>`}
 function a7rail(title,sub,cards,more,moreA){if(!cards.length)return '';return `<div class="a7-sec"><div><h2>${title}</h2>${sub?`<p>${sub}</p>`:''}</div></div><div class="a7-rail">${cards.join('')}</div>${more?`<button class="a7-more" data-a="${moreA}">${more} ›</button>`:''}`}
 function a7empty(p,t,s,btn,a){return `<div class="a7-empty"><img src="${f3(p)}" alt=""><b>${t}</b><small>${s}</small>${btn?`<button data-a="${a}">${btn}</button>`:''}</div>`}
 function a7ban(k,small,big,sub,btn,a,pics){return `<button class="a7-ban" data-p="${k}" data-a="${a}"><span class="a7-bt"><small>${small}</small><h3>${big}</h3><p>${sub}</p><u>${btn}</u></span><span class="a7-bp">${pics.map((p,i)=>`<img class="b${i}" src="${f3(p)}" alt="">`).join('')}</span></button>`}
@@ -6750,7 +6752,7 @@ function a7home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{};
   const rr=a7rail('Homes for you',`Rooms in ${esc(city)}`,rooms.slice(0,8).map(a7room),rooms.length>2?'See all homes':'','p15open" data-v="rooms');
   const jr=a7rail('Jobs near you','Pay shown on every job',jobs.slice(0,8).map(a7job),jobs.length>2?'See all jobs':'','p15open" data-v="jobs');
   const sr=a7rail('Things for your new home','From people who are moving out',sales.slice(0,8).map(a7item),sales.length>2?'See all items':'','p15open" data-v="c12sell');
-  const tx=up.length?`<div class="a7-sec"><div><h2>Coming up</h2><p>Book a seat, meet people</p></div></div>${up.slice(0,3).map(a4ticket).join('')}<button class="a7-more" data-a="tab" data-k="ev15">See all events ›</button>`:'';
+  const tx=up.length?`<div class="a7-sec"><div><h2>Coming up</h2><p>Book a seat, meet people</p></div></div><div class="a7-rail a7-evr">${up.slice(0,8).map(a7ev).join('')}</div><button class="a7-more" data-a="tab" data-k="ev15">See all events ›</button>`:'';
   let steps='';if(bar){const done=c10done(),L=c10all();steps=`<div class="a7-sec"><div><h2>Your 30-day plan</h2><p>${bar.d} of ${bar.n} steps done</p></div></div><span class="a7-trk"><i style="width:${bar.pct}%"></i></span><div class="a7-list">${L.slice(0,6).map(s=>{const ok=done.includes(s[0]);return `<button class="a7-row${ok?' ok':''}" data-a="p15open" data-v="plan30"><span class="a7-ck"></span><span><b>${esc(s[2])}</b><small>${esc(s[3])}</small></span><i>${ok?'Done':'›'}</i></button>`}).join('')}</div><button class="a7-more" data-a="p15open" data-v="plan30">See the whole plan ›</button>`}
   const svc=`<div class="a7-sec"><div><h2>Services</h2><p>Tell us once. Up to 5 businesses send their price.</p></div></div><div class="a7-sv">${[['delivery_truck','Movers','z8q" data-c="Movers'],['sparkles','Cleaning','z8q" data-c="Cleaning'],['receipt','Tax filing','z8q" data-c="Tax'],['toolbox','Repairs','z8q" data-c="Small jobs'],['shield','Insurance','z8q" data-c="Insurance'],['light_bulb','Ask an expert','p15open" data-v="experts']].map(([p,tt,a])=>`<div class="a7-svc"><span><img src="${f3(p)}" alt="" loading="lazy"></span><b>${tt}</b><button data-a="${a}">${tt==='Ask an expert'?'See experts':'Get prices'}</button></div>`).join('')}</div>`;
   const plan=(plus&&!hasPlus)?`<button class="a7-plus" data-a="p15open" data-v="plans"><img src="${f3('key')}" alt=""><span><small>NeuAmigo Plus</small><b>Call landlords and employers directly</b><i>${p15price('plus_m')?esc(p15price('plus_m'))+' a month · ':''}alerts first</i></span><u>See plans</u></button>`:'';
@@ -6772,7 +6774,7 @@ function a7motion(){const rm=window.matchMedia&&matchMedia('(prefers-reduced-mot
     if(!del){ch++;el.textContent=word.slice(0,ch);if(ch>=word.length){del=true;hold=20}}
     else{ch--;el.textContent=word.slice(0,Math.max(ch,0))||' ';if(ch<=0){del=false;w=(w+1)%A7HINT.length;hold=3}}},85)}
   a7reveal(rm)}
-function a7reveal(rm){const L=document.querySelectorAll('.a7 .a7-pn.on .a7-ti,.a7 .a7-pn.on .a7-pc,.a7 .a7-pn.on .a7-svc,.a7 .a7-pn.on .a7-row,.a7 .a7-pn.on .a7-empty');
+function a7reveal(rm){const L=document.querySelectorAll('.a7 .a7-pn.on .a7-ev,.a7 .a7-pn.on .a7-ti,.a7 .a7-pn.on .a7-pc,.a7 .a7-pn.on .a7-svc,.a7 .a7-pn.on .a7-row,.a7 .a7-pn.on .a7-empty');
   if(rm||!('IntersectionObserver' in window)){L.forEach(e=>e.classList.add('in'));return}
   if(a7io)a7io.disconnect();a7io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){const el=x.target;const i=[...el.parentNode.children].indexOf(el)%8;el.style.transitionDelay=(i*45)+'ms';el.classList.add('in');a7io.unobserve(el)}}),{rootMargin:'0px 0px -6% 0px'});
   L.forEach(e=>{if(!e.classList.contains('in'))a7io.observe(e)})}

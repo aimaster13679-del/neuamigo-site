@@ -3581,3 +3581,22 @@ html:not(.gl-lt) .a6 .a6-plan{background:#1B2440!important}
 .a6o-pin{position:absolute;left:310px;top:22px;width:44px;height:44px;opacity:0;transform:translateY(-14px) scale(.6);animation:a6pin .45s 1.25s cubic-bezier(.3,1.6,.5,1) forwards}
 @keyframes a6pin{to{opacity:1;transform:none}}
 .a6o h1,.a6o small,.a6o b{-webkit-text-fill-color:currentColor;color:#fff}.a6o-w small{color:#9DB8F0!important}
+.a7-evr .a7-ev{flex:0 0 74%;scroll-snap-align:start;background:var(--c9pn);border-radius:20px;box-shadow:inset 0 0 0 1px var(--c9hl);padding:10px;display:flex;flex-direction:column;gap:10px}
+.a7-ev .a7-pp{border-radius:14px!important}
+.a7-evd{display:flex;gap:12px;align-items:center}
+.a7-dt{flex:none;width:52px;border-radius:12px;background:color-mix(in srgb,var(--a7d) 12%,var(--c9pn2));color:var(--a7d);text-align:center;padding:6px 0}
+.a7-dt small{display:block;font:800 10.5px 'Plus Jakarta Sans',system-ui;text-transform:uppercase;letter-spacing:.04em}.a7-dt b{display:block;font:800 22px/1.05 'Plus Jakarta Sans',system-ui}
+.a7-evt{min-width:0}.a7-evt b{display:block;font:800 15px/1.25 'Plus Jakarta Sans',system-ui;color:var(--c9tx);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.a7-evt small{display:block;color:var(--c9t2);font:600 12px 'Plus Jakarta Sans',system-ui;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.a7-evf{display:flex;align-items:center;justify-content:space-between;border-top:1px dashed var(--c9hl);padding-top:10px}.a7-evf strong{font:800 17px 'Plus Jakarta Sans',system-ui;color:var(--c9tx)}
+.a7 .a7-evf button{background:var(--a7d)!important;color:#fff!important;border:0!important;font:800 13px 'Plus Jakarta Sans',system-ui!important;padding:9px 18px!important;border-radius:10px!important}
+html.a7on:not(.gl-lt) .a7 .a7-evf button{color:#0B1226!important}
+.a7-ev{opacity:0;transform:translateY(14px);transition:opacity .45s ease,transform .5s cubic-bezier(.2,.9,.3,1.1)}
+.a6o-brand{position:absolute;left:0;right:0;top:34%;display:flex;flex-direction:column;align-items:center;gap:10px;animation:a6br 2.6s cubic-bezier(.3,1.2,.4,1) forwards}
+.a6o-ic{width:96px;height:96px;border-radius:26px;overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,.18),0 18px 50px rgba(61,123,255,.55);animation:a6glow 1.4s ease-in-out infinite alternate}
+.a6o-ic img{width:100%;height:100%;display:block}
+.a6o-brand b{font:800 34px 'Plus Jakarta Sans',system-ui;color:#fff;-webkit-text-fill-color:#fff}.a6o-brand small{font:700 14px 'Plus Jakarta Sans',system-ui;color:#9DB8F0;-webkit-text-fill-color:#9DB8F0}
+@keyframes a6br{0%{opacity:0;transform:scale(.7)}18%{opacity:1;transform:scale(1)}48%{opacity:1;transform:none;top:34%}62%{top:7%;transform:scale(.62)}100%{top:7%;transform:scale(.62);opacity:1}}
+@keyframes a6glow{to{box-shadow:0 0 0 1px rgba(255,255,255,.3),0 18px 70px rgba(61,123,255,.85)}}
+.a6o-box .a6o-r path{animation-delay:1.3s}.a6o-box .a6o-pl{animation-delay:1.3s;offset-distance:0%}.a6o-pin{animation-delay:2.35s}.a6o-w{animation-delay:1.7s}
+.a6o-box .a6o-pl{opacity:0;animation:a6fly 1.25s 1.3s cubic-bezier(.4,0,.2,1) forwards,a6in .2s 1.3s forwards}
+.a7 .a7-rail{padding:0 16px 6px!important;margin:0 -16px!important;scroll-padding-left:16px}.a7 .a7-pn{padding:0 16px!important}
