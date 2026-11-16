@@ -3381,3 +3381,4 @@ html.a4bz .navwrap .nav.x6nav.c9nav.bznav,html.a4bz .navwrap .nav.bznav{backgrou
 html.a4bz .navwrap .nav.x6nav.c9nav.bznav>button{flex:1 1 0!important;min-width:0!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:2px!important;color:#98A0B3!important;background:transparent!important}
 html.a4bz .navwrap .nav.bznav>button img{width:25px;height:25px}html.a4bz .nav.bznav>button span{font-size:11px!important}
 html.a4bz .navwrap .nav.x6nav.c9nav.bznav>button.on,html.a4bz .nav.bznav>button.on{color:#fff!important;background:#13264F!important}
+html.a4bz .navwrap{background:#080B14!important}html.a4bz .navwrap:before,html.a4bz .navwrap:after{background:#080B14!important}
