@@ -6792,6 +6792,87 @@ Object.assign(A,{a7tab(el){const r=document.querySelector('.a7');if(!r)return;co
   const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{const on=!!document.querySelector('.a7');document.documentElement.classList.toggle('a7on',on);if(on){a7sync();a7motion()}else delete document.documentElement.dataset.a7}catch(e){}};
 })();
 
+/* ===== part38: "Journey" home, a new way of thinking (his ask 16 Nov 2026 09:16, 'puri soch badlo').
+   The app is laid out like the move itself: Before you fly -> First week -> First month -> Life here.
+   Every stop shows exactly what people need at that moment, shop-style (picture, price, one button).
+   The journey track at the top follows you while you scroll (the stop in view lights up).
+   NOT live yet: mock for his ok (turn on with localStorage nm.na38=1). Real numbers only. */
+const NA38_LIVE = false;
+function NA38(){try{return NA38_LIVE||localStorage.getItem('nm.na38')==='1'}catch(e){return NA38_LIVE}}
+const A8ST=[['fly','Before you fly','airplane'],['week','First week','key'],['month','First month','briefcase'],['life','Life here','party_popper']];
+function a8stage(path,bar){if(path==='moving')return 'fly';if(path==='local')return 'life';return bar&&bar.d>=4?'month':'week'}
+function a8pick(img,pic,t,line,btn,a){return `<button class="a8-pk" data-a="${a}"><span class="a8-ph"><img ${a4src(img)} alt="" decoding="async" loading="lazy"></span><span class="a8-pb"><span class="a8-pt"><img src="${f3(pic)}" alt=""><b>${esc(t)}</b></span><span class="a8-pf"><small>${line}</small><u>${btn}</u></span></span></button>`}
+function a8head(k,t,pic,sub){return `<div class="a8-sh"><img src="${f3(pic)}" alt=""><span><small>${sub}</small><h2>${t}</h2></span></div>`}
+function a8home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{};
+  const path=(typeof c10get==='function')?c10get('nm.path','local'):'local';
+  const rooms=zdata8('rooms15','rooms',{maxrent:0}),jobs=zdata8('jobs15','jobs',{}),ev=zdata8('events15','ev',{k:'',cty:c}),sales=zdata8('sales15','sale',{});
+  const up=ev.filter(e=>new Date(e.startsAt)>Date.now()-3*36e5).sort((a,b)=>new Date(a.startsAt)-new Date(b.startsAt));
+  const minRent=rooms.length?rooms.reduce((m,r)=>(!m||r.rent<m.rent)?r:m,null):null;
+  const bar=(typeof c10bar==='function')?c10bar():null,done=bar?c10done():[],steps=bar?c10all():[];
+  const now=a8stage(path,bar),ini=esc(((me.name||'?').trim()[0]||'?').toUpperCase());
+  const order=path==='local'?['life','month','week','fly']:['fly','week','month','life'];
+  const title=path==='moving'?`Your move to <em>${esc(city)}</em>`:path==='arrived'?`Your first days in <em>${esc(city)}</em>`:`Life in <em>${esc(city)}</em>`;
+  let st='';for(let i=0;i<26;i++)st+=`<i style="left:${(i*97)%100}%;top:${(i*41)%100}%;animation-delay:${(i%7)*.3}s"></i>`;
+  const track=`<div class="a8-trk" role="tablist">${order.map(k=>{const S8=A8ST.find(x=>x[0]===k);return `<button data-a="a8go" data-k="${k}" class="${k===now?'on':''}"><img src="${f3(S8[2])}" alt=""><span>${S8[1]}</span></button>`}).join('')}</div>`;
+  const head=`<div class="a8-hd"><div class="a8-sky">${st}</div><svg class="a8-route" viewBox="0 0 390 120" preserveAspectRatio="none"><path d="M -10 110 C 120 20, 260 10, 400 60" fill="none" stroke="rgba(157,184,240,.45)" stroke-width="2" stroke-dasharray="6 7"/></svg>
+   <div class="a8-bar"><span class="a8-lg"><img src="img/icon-192.png" alt=""><b>NeuAmigo</b></span><button class="a8-sq" data-a="p15open" data-v="plans" aria-label="Plans"><img src="${f3('key')}" alt=""></button><button class="a8-sq" data-a="tab" data-k="me" aria-label="Me">${ini}</button></div>
+   <h1>${title}</h1><p>${bar&&path!=='local'?`<strong>${bar.d} of ${bar.n}</strong> steps done. Everything you need, stop by stop.`:'Everything you need, stop by stop.'}</p>
+   <button class="a8-search" data-a="p15open" data-v="search"><span class="n32-mg"></span><span>Search <em class="a7-type">${A7HINT[0]}</em></span></button></div><div class="a8-tw">${track}</div>`;
+  const picks={
+    fly:[a8pick(a4p('apartment'),'house_with_garden','A home before you land',rooms.length?`${rooms.length} ${rooms.length===1?'room':'rooms'}${minRent?' from <strong>'+esc(a4money(minRent.rent,minRent.currency))+'</strong>':''}`:'Rooms and flats to rent','See homes','p15open" data-v="rooms'),
+         a8pick(a4p('papers'),'clipboard','Papers, step by step',bar?`<strong>${bar.d} of ${bar.n}</strong> done`:'Your 30-day plan','Open plan','p15open" data-v="plan30'),
+         a8pick('img/p17/boxes2.webp','delivery_truck','Movers',`Tell us once, <strong>up to 5 prices</strong>`,'Get prices','z8q" data-c="Movers')],
+    week:[a8pick(a4p('apartment'),'house_with_garden','A place to live',rooms.length?`${rooms.length} ${rooms.length===1?'room':'rooms'}${minRent?' from <strong>'+esc(a4money(minRent.rent,minRent.currency))+'</strong>':''}`:'Rooms and flats to rent','See homes','p15open" data-v="rooms'),
+          a8pick(a4p('papers'),'identification_card','Bank, ID, tax number',bar?`<strong>${bar.d} of ${bar.n}</strong> done`:'One step at a time','Open plan','p15open" data-v="plan30'),
+          a8pick('img/p17/clean.webp','sparkles','Cleaning',`Tell us once, <strong>up to 5 prices</strong>`,'Get prices','z8q" data-c="Cleaning')],
+    month:[a8pick(a4p('work'),'briefcase','Work',jobs.length?`<strong>${jobs.length} ${jobs.length===1?'job':'jobs'}</strong>, pay shown`:'Jobs with pay shown','See jobs','p15open" data-v="jobs'),
+           a8pick('img/p17/resume.webp','identification_card','Work profile','Apply to any job in <strong>one tap</strong>','Make it','p15open" data-v="workprof'),
+           a8pick('img/p17/calc.webp','receipt','Tax filing',`Tell us once, <strong>up to 5 prices</strong>`,'Get prices','z8q" data-c="Tax')],
+    life:[a8pick('img/p17/football.webp','soccer_ball','Weekends',up.length?`<strong>${up.length} ${up.length===1?'event':'events'}</strong> coming up`:'Events near you','See events','tab" data-k="ev15'),
+          a8pick('img/p17/feast.webp','hot_beverage','Taste of home','Food nights and meetups','See events','tab" data-k="ev15'),
+          a8pick('img/p17/saletags.webp','couch_and_lamp','Buy and sell',sales.length?`<strong>${sales.length} ${sales.length===1?'item':'items'}</strong> near you`:'Things for your home','See items','p15open" data-v="c12sell')]};
+  const grid=L=>`<div class="a7-grid">${L.map(x=>a7tile(...x)).join('')}</div>`;
+  const stepRows=L=>L.length?`<div class="a7-list">${L.map(s=>{const ok=done.includes(s[0]);return `<button class="a7-row${ok?' ok':''}" data-a="p15open" data-v="plan30"><span class="a7-ck"></span><span><b>${esc(s[2])}</b><small>${esc(s[3])}</small></span><i>${ok?'Done':'›'}</i></button>`}).join('')}</div>`:'';
+  const third=Math.ceil(steps.length/3);
+  const body={
+    fly:a8head('fly','Before you fly','airplane','Stop 1')+`<div class="a8-rail">${picks.fly.join('')}</div>`
+      +grid([['house_with_garden','Homes','p15open" data-v="rooms'],['clipboard','30-day plan','p15open" data-v="plan30'],['delivery_truck','Movers','z8q" data-c="Movers'],['light_bulb','Ask an expert','p15open" data-v="experts']])
+      +(path!=='local'?stepRows(steps.slice(0,Math.min(3,third))):'')
+      +a7rail('Homes for you',`Rooms in ${esc(city)}`,rooms.slice(0,8).map(a7room),rooms.length>2?'See all homes':'','p15open" data-v="rooms'),
+    week:a8head('week','First week','key','Stop 2')+`<div class="a8-rail">${picks.week.join('')}</div>`
+      +grid([['identification_card','Bank and ID','p15open" data-v="plan30'],['sparkles','Cleaning','z8q" data-c="Cleaning'],['toolbox','Repairs','z8q" data-c="Small jobs'],['shield','Insurance','z8q" data-c="Insurance']])
+      +(path!=='local'?stepRows(steps.slice(third,third*2).slice(0,3)):'')
+      +a7rail('Things for your new home','From people who are moving out',sales.slice(0,8).map(a7item),sales.length>2?'See all items':'','p15open" data-v="c12sell'),
+    month:a8head('month','First month','briefcase','Stop 3')+`<div class="a8-rail">${picks.month.join('')}</div>`
+      +grid([['briefcase','Jobs','p15open" data-v="jobs'],['identification_card','Work profile','p15open" data-v="workprof'],['receipt','Tax filing','z8q" data-c="Tax'],['light_bulb','Ask an expert','p15open" data-v="experts']])
+      +a7rail('Jobs near you','Pay shown on every job',jobs.slice(0,8).map(a7job),jobs.length>2?'See all jobs':'','p15open" data-v="jobs'),
+    life:a8head('life','Life here','party_popper','Stop 4')+`<div class="a8-rail">${picks.life.join('')}</div>`
+      +(up.length?`<div class="a7-sec"><div><h2>Coming up</h2><p>Book a seat, meet people</p></div></div><div class="a7-rail a7-evr">${up.slice(0,8).map(a7ev).join('')}</div><button class="a7-more" data-a="tab" data-k="ev15">See all events ›</button>`:a7empty('party_popper','Events show up here','Football, food nights and meetups in your city.','See events','tab" data-k="ev15'))
+      +`<button class="a7-plus" data-a="p15open" data-v="club"><img src="${f3('party_popper')}" alt=""><span><small>Weekend Club</small><b>No booking fee, book 48 hours early</b><i>${p15price('wc_month_a')?esc(p15price('wc_month_a'))+' a month':'See the price'}</i></span><u>See</u></button>`};
+  const secs=order.map(k=>`<section class="a8-s a8-${k}" data-s="${k}">${body[k]}</section>`).join('');
+  const plus=(typeof PLANS==='function'&&PLANS()),hasPlus=!!(P15.d||{}).plus;
+  const pl=(plus&&!hasPlus)?`<button class="a7-plus" data-a="p15open" data-v="plans"><img src="${f3('key')}" alt=""><span><small>NeuAmigo Plus</small><b>Call landlords and employers directly</b><i>${p15price('plus_m')?esc(p15price('plus_m'))+' a month · ':''}alerts first</i></span><u>See plans</u></button>`:'';
+  const trust=`<div class="a8-tr">${[['receipt','Prices shown first','No surprise fees'],['shield','Report anything','We remove what breaks the rules'],['handshake','Real people','Members and local businesses']].map(([p,t,s])=>`<div><img src="${f3(p)}" alt=""><b>${t}</b><small>${s}</small></div>`).join('')}</div>`;
+  const biz=`<button class="a7-biz" data-a="p15open" data-v="plans" data-t="biz"><img src="${f3('megaphone')}" alt=""><span><small>For businesses</small><b>Be the first name new arrivals see</b><i>Homes, jobs, services or events in ${esc(city)}</i></span><u>Prices</u></button>`;
+  const foot=`<div class="a7-ft"><h2>Your new city,<br>made easy.</h2><small>NeuAmigo · for people who move</small></div>`;
+  return c9wrap(`<div class="a7 a8" data-t="all">${head}${secs}<div class="a8-end">${pl}${trust}${biz}</div>${foot}</div>`)}
+let a8io=null;
+function a8watch(){if(a8io)a8io.disconnect();if(!('IntersectionObserver' in window))return;
+  a8io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){const k=x.target.dataset.s;document.querySelectorAll('.a8-trk button').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
+    const on=document.querySelector('.a8-trk button.on'),tr=document.querySelector('.a8-trk');try{if(on&&tr)tr.scrollTo({left:on.offsetLeft-tr.clientWidth/2+on.offsetWidth/2,behavior:'smooth'})}catch(e){}}}),{rootMargin:'-45% 0px -50% 0px'});
+  document.querySelectorAll('.a8-s').forEach(s=>a8io.observe(s));
+  const L=document.querySelectorAll('.a8 .a7-ti,.a8 .a7-pc,.a8 .a7-row,.a8 .a7-ev,.a8 .a8-pk,.a8 .a7-empty');const rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(rm||!('IntersectionObserver' in window)){L.forEach(e=>e.classList.add('in'));return}
+  const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){const el=x.target;el.style.transitionDelay=(([...el.parentNode.children].indexOf(el)%6)*50)+'ms';el.classList.add('in');io.unobserve(el)}}),{rootMargin:'0px 0px -6% 0px'});
+  L.forEach(e=>io.observe(e))}
+Object.assign(A,{a8go(el){const s=document.querySelector(`.a8-s[data-s="${el.dataset.k}"]`);if(!s)return;const m=document.getElementById('main'),off=(document.querySelector('.a8-tw')||{offsetHeight:56}).offsetHeight+8;
+  if(m&&m.scrollHeight>m.clientHeight)m.scrollTo({top:m.scrollTop+s.getBoundingClientRect().top-m.getBoundingClientRect().top-off,behavior:'smooth'});else window.scrollTo({top:s.getBoundingClientRect().top+window.scrollY-off,behavior:'smooth'})}});
+(function(){
+  if(!NA38())return;
+  const _h=c12home;c12home=function(){try{return a8home()}catch(e){console.warn('[a8]',e);return _h.apply(this,arguments)}};
+  const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{const on=!!document.querySelector('.a8');document.documentElement.classList.toggle('a8on',on);if(on){a7motion();a8watch()}}catch(e){}};
+})();
+
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
 })();
