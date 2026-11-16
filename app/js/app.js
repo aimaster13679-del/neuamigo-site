@@ -6630,6 +6630,166 @@ function bz35boost(){const B=[['sparkles','Feature a job','Top of the jobs list 
     nav.classList.add('c10biz','bznav');nav.style.setProperty('background','#121827','important');nav.style.setProperty('border','1px solid #222A3C','important');nav.style.setProperty('display','flex','important');nav.style.setProperty('grid-template-columns','none','important')}catch(e){console.warn('[bz35]',e)}};
 })();
 
+/* ===== part36: Arrive phase 4 (his video 16 Nov 2026 08:31, rated 3-4: empty business desk, old Me, plain opening) =====
+   1) Grand opening once per app start: night sky, dashed route drawing to your city, plane flying along it,
+      "Welcome to <city>". 1.8 s, tap to skip, still screen for 'reduce motion'. The app loads underneath.
+   2) Me page (customer): profile card, plan band, 3D-picture rows (no people photos), memberships with price,
+      Business desk switch, settings. Business side Me shows only business things.
+   3) Business desk: full dashboard (getting-started steps, what you offer, plan, how customers see you, boost,
+      tips) + Listings / Requests rows with 3D pictures and real empty states. No empty black space. */
+const NA36_LIVE = true;
+function NA36(){try{return NA36_LIVE||localStorage.getItem('nm.na36')==='1'}catch(e){return NA36_LIVE}}
+/* ---------- 1) grand opening ---------- */
+function a6open(){try{if(!NA36()||sessionStorage.getItem('na.open'))return;sessionStorage.setItem('na.open','1');
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const city=((S.me||{}).city)||'';const el=document.createElement('div');el.className='a6o';el.style.cssText='background:radial-gradient(120% 80% at 50% 0%,#14306B 0%,#081128 60%,#050913 100%)!important;color:#fff';el.setAttribute('aria-hidden','true');
+  let st='';for(let i=0;i<34;i++)st+=`<i style="left:${(i*97)%100}%;top:${(i*53)%100}%;opacity:${.2+(i%5)/10}"></i>`;
+  el.innerHTML=`<div class="a6o-sky">${st}</div><div class="a6o-lg">${NA_CASE('c9lg')}<b>NeuAmigo</b></div>
+   <div class="a6o-box"><svg class="a6o-r" width="390" height="360" viewBox="0 0 390 360"><path d="M 60 320 C 130 140, 240 90, 330 70" fill="none" stroke="#9DB8F0" stroke-width="2.5" stroke-linecap="round"/></svg>
+   <img class="a6o-pl" src="${f3('airplane')}" alt=""><img class="a6o-pin" src="${f3('round_pushpin')}" alt=""></div>
+   <div class="a6o-w"><small>${city?'Welcome to '+esc(city):'Welcome'}</small><h1>Your new city,<br>made easy.</h1></div>`;
+  el.addEventListener('click',()=>el.classList.add('out'));document.body.appendChild(el);
+  setTimeout(()=>el.classList.add('out'),1800);setTimeout(()=>{try{el.remove()}catch(e){}},2400)}catch(e){}}
+/* ---------- 2) Me ---------- */
+function a6row(p,t,s,a,r){return `<button class="a6-row" ${a}><img src="${f3(p)}" alt=""><span><b>${esc(t)}</b>${s?`<small>${s}</small>`:''}</span><i>${r||'›'}</i></button>`}
+function a6me(){const me=S.me||{},d=P15.d||{},biz=typeof c10biz==='function'&&c10biz();const path=(typeof c10get==='function'?c10get('nm.path',''):'')||'';
+  const lang=esc((LANGS_ALL.find(x=>x[0]===RM_I18N.lang)||LANGS_ALL[0])[1]);const ini=esc(((me.name||'?').trim()[0]||'?').toUpperCase());
+  const who=`<div class="a6-who"><span class="a6-av">${ini}</span><span><b>${esc(me.name||'')}</b><small>${esc([me.city,me.country].filter(Boolean).join(', '))}</small></span></div>`;
+  const plans=typeof PLANS==='function'&&PLANS();
+  const settings=`<div class="a6-h">Settings and help</div><div class="a6-list">${a6row('world_map','Language',lang,'data-a="lang"')}${a6row('handshake','Help and contact','Questions, complaints, Grievance Officer','data-a="helpOpen"')}</div>
+   <div class="a6-list a6-legal"><button data-a="legal" data-k="terms">Terms of Service</button><button data-a="legal" data-k="privacy">Privacy Policy</button><button data-a="deleteAsk" class="red">Delete my account</button></div>
+   <button class="a6-out" data-a="logout">Log out</button><p class="a6-v">NeuAmigo ${esc(CFG.version)} · ${esc(API.email())}</p>`;
+  const admin=me.isAdmin?`<div class="a6-h">Admin</div><div class="a6-list">${a6row('clipboard','NeuAmigo admin','Every day: members, posts, payments','data-a="p15open" data-v="nadmin"')}${a6row('sparkles','Ads to check','Approve or remove new Ad Spot ads','data-a="p15open" data-v="adcheck"')}</div>`:'';
+  if(biz){const bz=(d.biz||[]).filter(b=>b.kind!=='advertiser');
+    return c9wrap(`<div class="bz">${bz35top('Me','Business desk')}<div class="a6-dk">${who}
+     <div class="a6-h">My business</div><div class="a6-list">${a6row('briefcase','What I offer',esc(c10roles().length+' picked'),'data-a="c10roleedit"')}${a6row('clipboard','My listings','Homes, jobs, events, services, items','data-a="p15open" data-v="bzlist"')}${a6row('handshake','Requests','People who asked you','data-a="p15open" data-v="bzreq"')}${a6row('sparkles','Boost','Be the first name people see','data-a="p15open" data-v="bzboost"')}</div>
+     <div class="a6-h">My plans</div><div class="a6-list">${bz.length?bz.map(b=>a6row('key',b.name||'Plan',planOn15(b)?'Active until '+esc(until15(b.planUntil)):'Plan not active','data-a="p15open" data-v="plans"')).join(''):a6row('key','No business plan yet','Every plan shows its price first','data-a="p15open" data-v="plans" data-t="biz"')}</div>
+     <button class="a4-switch a6-back" data-a="c10bizoff"><img src="${f3('world_map')}" alt=""><span><b>Back to NeuAmigo</b><small>Find homes, jobs and events</small></span><u>Switch</u></button>
+     ${admin}${settings}</div></div>`)}
+  const pr=k=>p15price(k)||'';
+  return c9wrap(`<div class="a6"><div class="a6-top"><h1>Me</h1></div>${who}
+   ${plans?`<button class="a6-plan" data-a="p15open" data-v="plans"><img src="${f3('key')}" alt=""><span><small>Your plan</small><b>${d.plus?'NeuAmigo Plus':'No plan yet'}</b><i>${d.plus?'Active until '+esc(until15(d.plusUntil)):'Plus from '+esc(pr('plus_m'))+' a month'}</i></span><u>${d.plus?'Manage':'See plans'}</u></button>`:''}
+   <div class="a6-h">Your things</div><div class="a6-list">${a6row('ticket','My tickets','Events you booked','data-a="p15open" data-v="tickets"')}${a6row('clipboard','My requests','Prices you asked for','data-a="p15open" data-v="myasks"')}${a6row('briefcase','My work profile','Apply to jobs in one tap','data-a="p15open" data-v="workprof"')}${path!=='local'?a6row('calendar','My 30-day plan','Steps for your move','data-a="p15open" data-v="plan30"'):''}${a6row('compass','Change what I need','Moving, just arrived or local','data-a="c9redo"')}</div>
+   <div class="a6-h">Membership</div><div class="a6-list">${a6row('party_popper','Weekend Club',d.club?'Member until '+esc(until15(d.clubUntil)):'No booking fee, book 48 hours early'+(pr('wc_month_a')?' · '+esc(pr('wc_month_a'))+' a month':''),'data-a="p15open" data-v="club"',d.club?'Member':'›')}${a6row('key','NeuAmigo Plus',d.plus?'Active until '+esc(until15(d.plusUntil)):'Contacts, chat, alerts first'+(pr('plus_m')?' · '+esc(pr('plus_m'))+' a month':''),'data-a="p15open" data-v="plus"',d.plus?'Active':'›')}</div>
+   <div class="a6-h">For businesses</div><button class="a4-switch" data-a="c10bizon"><img src="${f3('briefcase')}" alt=""><span><b>Business desk</b><small>Sell a service, post a home, a job or an event</small></span><u>Switch</u></button>
+   ${admin}${settings}</div>`)}
+/* ---------- 3) business desk ---------- */
+function a6bzhome(){const r=c10roles();if(!r.length)return bz35pick();const d=P15.d||{},plans=(d.biz||[]).filter(b=>b.kind!=='advertiser');const name=((S.me||{}).name||'').split(' ')[0];
+  const active=plans.some(b=>planOn15(b));
+  const steps=[['briefcase','Pick what you offer',true,'data-a="c10roleedit"'],['key','Choose your plan',active,'data-a="p15open" data-v="plans" data-t="biz"'],['clipboard','Post your first listing',false,'data-a="p15open" data-v="bzlist"'],['handshake','Answer requests within a day',false,'data-a="p15open" data-v="bzreq"']];
+  const done=steps.filter(s=>s[2]).length;
+  const tiles=r.map(k=>{const R=C10R.find(x=>x[0]===k),A=C10A[k];return `<div class="bz-card"><img class="bz-p3" src="${f3(BZPIC[k]||'briefcase')}" alt=""><b>${esc(R[2])}</b><small>${esc(R[3])}</small>${bz35pr(k)}<div class="bz-two"><button data-a="p15open" data-v="${A[0][1]}">${esc(A[0][0])}</button><button class="g" data-a="p15open" data-v="${A[1][1]}">${esc(A[1][0])}</button></div></div>`}).join('');
+  return c9wrap(`<div class="bz">${bz35top('Good to see you'+(name?', '+esc(name):'')+'.','Dashboard')}
+   <div class="a6-start"><div class="a6-sh"><b>Get your first customers</b><span>${done} of ${steps.length}</span></div><span class="a6-tr"><i style="width:${Math.round(done/steps.length*100)}%"></i></span>
+    ${steps.map(([p,t,ok,a])=>`<button class="a6-st${ok?' ok':''}" ${a}><span class="a6-bx"></span><img src="${f3(p)}" alt=""><b>${esc(t)}</b><i>${ok?'Done':'›'}</i></button>`).join('')}</div>
+   <div class="bz-sec">What you offer</div><div class="bz-grid">${tiles}${r.length%2?`<button class="bz-card a6-add" data-a="c10roleedit"><img class="bz-p3" src="${f3('sparkles')}" alt=""><b>Offer more</b><small>Homes, jobs, events, services or items</small><em>Add</em></button>`:''}</div>
+   <div class="bz-sec">How customers see you</div>
+   <div class="a6-prev"><small>In the customer app</small><div class="a6-pc"><div class="a6-pp"><img src="${f3(BZPIC[r[0]]||'briefcase')}" alt=""></div><span class="a6-tg">Featured</span><b>Your listing at the top</b><p>With your price, photos and a clear label</p></div></div>
+   <button class="bz-boostcta" data-a="p15open" data-v="bzboost"><img src="${f3('sparkles')}" alt=""><span><b>Be the first name people see</b><small>Boost a listing or take a city spot</small></span><u>Boost</u></button>
+   <div class="bz-sec">Grow faster</div>
+   <div class="a6-tips">${[['light_bulb','Show the full price','Listings with a clear price get asked more'],['calendar','Answer the same day','People choose who replies first'],['receipt','Add 3 or more photos','Whole, bright photos build trust']].map(([p,t,s])=>`<div class="a6-tip"><img src="${f3(p)}" alt=""><b>${t}</b><small>${s}</small></div>`).join('')}</div>
+   <button class="bz-ghost" data-a="c10roleedit">Change what I offer</button></div>`)}
+function a6bzrows(title,sub,L,emptyT){const r=c10roles();
+  return c9wrap(`<div class="bz">${bz35top(title,sub)}${L.length?`<div class="a6-dk"><div class="a6-list">${L.map(([p,t,s,v])=>a6row(p,t,s,v.startsWith('data-')?v:`data-a="p15open" data-v="${v}"`)).join('')}</div></div>`:`<div class="a6-empty"><img src="${f3('handshake')}" alt=""><b>${emptyT}</b><small>Pick what you offer and your requests show here.</small><button class="bz-main" data-a="c10roleedit">Choose what I offer</button></div>`}
+   <div class="a6-dk"><div class="a6-h">Good to know</div><div class="a6-tips">${[['handshake','People see your reply time','Answer within a day to win more customers'],['shield','Report anything wrong','We remove what breaks the rules']].map(([p,t,s])=>`<div class="a6-tip"><img src="${f3(p)}" alt=""><b>${t}</b><small>${s}</small></div>`).join('')}</div></div></div>`)}
+(function(){
+  if(!NA36())return;
+  c10bzhome=a6bzhome;
+  c10bzreq=function(){const r=c10roles();return a6bzrows('Requests','Business desk',[['home','house_with_garden','People looking for a home','Room Wanted requests in your city','inbox:agent'],['work','briefcase','Job applicants','See who applied to your jobs','jobs'],['events','party_popper','Bookings','Who booked your events','hostboard'],['service','delivery_truck','Customer requests','Quote requests you can answer with a price','svcleads'],['sell','couch_and_lamp','Buyers','People who want your items','mysale']].filter(x=>r.includes(x[0])).map(x=>x.slice(1)),'No requests yet')};
+  c10bzlist=function(){const r=c10roles();return a6bzrows('My listings','Business desk',[['home','house_with_garden','My homes','Post or mark homes as taken','rooms'],['work','briefcase','My jobs','Post jobs, close filled ones','jobs'],['events','party_popper','My events','Create, edit, check in guests','hostboard'],['service','delivery_truck','My services','Your plan and prices','svcplan'],['sell','couch_and_lamp','My sale items','Add, edit, mark sold','mysale']].filter(x=>r.includes(x[0])).map(x=>x.slice(1)),'Nothing posted yet')};
+  c11me=a6me;
+  Object.assign(P15V,{bzlist:c10bzlist,bzreq:c10bzreq,bzhome:c10bzhome});
+  const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{if(S.me&&S.screen!=='boot')a6open()}catch(e){}};
+})();
+
+/* ===== part37: "Bazaar" home (his Blinkit reference 16 Nov 2026 08:34, "10 me 11"): learn the pattern, never the brand.
+   Header band changes colour per tab, typing search, tab row with 3D pictures, a big living banner per tab,
+   dense 4-per-row picture grid, product-style cards (whole photo, bold price, one View button),
+   empty states with a big picture and one next step. Real numbers only. Tabs switch instantly (no reload). */
+const NA37_LIVE = true;
+function NA37(){try{return NA37_LIVE||localStorage.getItem('nm.na37')==='1'}catch(e){return NA37_LIVE}}
+const A7HINT=['a room','a job','movers','tax help','a sofa','friends','football','cleaning'];
+const A7TABS=[['all','All','world_map'],['homes','Homes','house_with_garden'],['work','Work','briefcase'],['papers','Papers','clipboard'],['help','Services','toolbox'],['fun','Fun','party_popper']];
+function a7cnt(n,one,many){return `<strong>${n}</strong> ${n===1?one:many}`}
+function a7tile(p,t,a){return `<button class="a7-ti" data-a="${a}"><span><img src="${f3(p)}" alt="" loading="lazy"></span><b>${esc(t)}</b></button>`}
+function a7room(r){const ph=r.photos&&r.photos[0]&&PC15()?phUrl15(r.photos[0]):'';
+  return `<div class="a7-pc"><button class="a7-pp" data-a="p15open" data-v="rooms">${ph?`<img src="${esc(ph)}" alt="" loading="lazy" decoding="async">`:c9i('room')}${r.top?'<em>Featured</em>':''}</button><button class="a7-add" data-a="p15open" data-v="rooms">View</button>
+   <b class="a7-pr">${esc(a4money(r.rent,r.currency))}<small> /month</small></b><span class="a7-nm">${esc(r.title)}</span><small class="a7-ln">${esc(r.area||'')}</small>${(r.tags||[]).length?`<span class="a7-chip">${esc(r.tags[0])}</span>`:''}</div>`}
+function a7job(j){return `<div class="a7-pc"><button class="a7-pp" data-a="p15open" data-v="job:${j.id}">${c9i(c9jobp(j))}</button><button class="a7-add" data-a="p15open" data-v="job:${j.id}">View</button>
+   <b class="a7-pr">${esc(a4money(j.pay,j.currency))}<small> /hour</small></b><span class="a7-nm">${esc(j.title)}</span><small class="a7-ln">${esc(j.area||'')}${j.hours?' · '+j.hours+' h/week':''}</small></div>`}
+function a7item(s){const p=kw8((s.cat||'')+' '+s.title,'sofa');return `<div class="a7-pc"><button class="a7-pp" data-a="p15open" data-v="c12sell">${c9i(p==='-'?'sofa':p)}</button><button class="a7-add" data-a="p15open" data-v="c12sell">View</button>
+   <b class="a7-pr">${esc(a4money(s.price,s.currency))}</b><span class="a7-nm">${esc(s.title)}</span><small class="a7-ln">${esc(s.area||'')}${s.cond?' · '+esc(s.cond):''}</small></div>`}
+function a7rail(title,sub,cards,more,moreA){if(!cards.length)return '';return `<div class="a7-sec"><div><h2>${title}</h2>${sub?`<p>${sub}</p>`:''}</div></div><div class="a7-rail">${cards.join('')}</div>${more?`<button class="a7-more" data-a="${moreA}">${more} ›</button>`:''}`}
+function a7empty(p,t,s,btn,a){return `<div class="a7-empty"><img src="${f3(p)}" alt=""><b>${t}</b><small>${s}</small>${btn?`<button data-a="${a}">${btn}</button>`:''}</div>`}
+function a7ban(k,small,big,sub,btn,a,pics){return `<button class="a7-ban" data-p="${k}" data-a="${a}"><span class="a7-bt"><small>${small}</small><h3>${big}</h3><p>${sub}</p><u>${btn}</u></span><span class="a7-bp">${pics.map((p,i)=>`<img class="b${i}" src="${f3(p)}" alt="">`).join('')}</span></button>`}
+function a7home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{};
+  const path=(typeof c10get==='function')?c10get('nm.path','local'):'local';
+  const rooms=zdata8('rooms15','rooms',{maxrent:0}),jobs=zdata8('jobs15','jobs',{}),ev=zdata8('events15','ev',{k:'',cty:c}),sales=zdata8('sales15','sale',{});
+  const up=ev.filter(e=>new Date(e.startsAt)>Date.now()-3*36e5).sort((a,b)=>new Date(a.startsAt)-new Date(b.startsAt));
+  const minRent=rooms.length?rooms.reduce((m,r)=>(!m||r.rent<m.rent)?r:m,null):null;
+  const bar=(typeof c10bar==='function')?c10bar():null;
+  const plus=(typeof PLANS==='function'&&PLANS()),hasPlus=!!(P15.d||{}).plus;
+  let t='all';try{t=sessionStorage.getItem('na.a7t')||'all'}catch(e){}
+  const ini=esc(((me.name||'?').trim()[0]||'?').toUpperCase());
+  const tag=path==='moving'?'Moving to':path==='arrived'?'New in':'NeuAmigo in';
+  const head=`<div class="a7-hd"><div class="a7-top"><span class="a7-where"><small>${tag}</small><b>${esc(city)}</b><i>Everything for your move, in one app</i></span>
+    ${plus?`<button class="a7-sq a7-pl" data-a="p15open" data-v="plans" aria-label="Plans"><img src="${f3('key')}" alt=""></button>`:''}<button class="a7-sq" data-a="tab" data-k="me" aria-label="Me">${ini}</button></div>
+   <button class="a7-search" data-a="p15open" data-v="search"><span class="n32-mg"></span><span>Search <em class="a7-type">${A7HINT[0]}</em></span></button>
+   <div class="a7-tabs" role="tablist">${A7TABS.map(([k,l,p])=>`<button role="tab" data-a="a7tab" data-k="${k}" class="${k===t?'on':''}"><img src="${f3(p)}" alt=""><span>${l}</span></button>`).join('')}</div></div>`;
+  const bans=[
+    a7ban('all',`Welcome to ${esc(city)}`,'Settle in<br>without stress.',bar&&path!=='local'?`${bar.d} of ${bar.n} steps done`:'Home, work, papers, friends','Start here','p15open" data-v="'+(path!=='local'?'plan30':'rooms'),['luggage','airplane','house_with_garden']),
+    a7ban('homes','Homes in '+esc(city),'Find your<br>new home.',rooms.length?`${rooms.length} ${rooms.length===1?'room':'rooms'}${minRent?' from '+esc(a4money(minRent.rent,minRent.currency)):''}`:'Rooms and flats to rent','See homes','p15open" data-v="rooms',['house_with_garden','key','bed']),
+    a7ban('work','Work in '+esc(city),'Jobs with<br>the pay shown.',jobs.length?`${jobs.length} ${jobs.length===1?'job':'jobs'} open now`:'Apply in one tap','See jobs','p15open" data-v="jobs',['briefcase','dollar_banknote','handshake']),
+    a7ban('papers','Your papers','One step today.<br>That is enough.',bar?`${bar.d} of ${bar.n} steps done`:'A clear step-by-step plan','Open my plan','p15open" data-v="plan30',['identification_card','page_facing_up','check_mark_button']),
+    a7ban('help','Services','Get 5 prices.<br>Pick the best.','Movers, cleaning, tax, repairs','Ask for prices','p15open" data-v="c12svc',['delivery_truck','toolbox','receipt']),
+    a7ban('fun','Fun in '+esc(city),'Weekends<br>with new friends.',up.length?`${up.length} ${up.length===1?'event':'events'} coming up`:'Events and meetups near you','See events','tab" data-k="ev15',['party_popper','soccer_ball','confetti_ball'])].join('');
+  const grid=`<div class="a7-sec"><div><h2>What do you need?</h2></div></div><div class="a7-grid">${[
+    ['house_with_garden','Rooms','p15open" data-v="rooms'],['briefcase','Jobs','p15open" data-v="jobs'],['clipboard','30-day plan','p15open" data-v="plan30'],['delivery_truck','Movers','z8q" data-c="Movers'],
+    ['sparkles','Cleaning','z8q" data-c="Cleaning'],['receipt','Tax filing','z8q" data-c="Tax'],['toolbox','Repairs','z8q" data-c="Small jobs'],['shield','Insurance','z8q" data-c="Insurance'],
+    ['party_popper','Events','tab" data-k="ev15'],['hot_beverage','Meet people','tab" data-k="ev15'],['couch_and_lamp','Buy and sell','p15open" data-v="c12sell'],['light_bulb','Ask an expert','p15open" data-v="experts']].map(x=>a7tile(...x)).join('')}</div>`;
+  const rr=a7rail('Homes for you',`Rooms in ${esc(city)}`,rooms.slice(0,8).map(a7room),rooms.length>2?'See all homes':'','p15open" data-v="rooms');
+  const jr=a7rail('Jobs near you','Pay shown on every job',jobs.slice(0,8).map(a7job),jobs.length>2?'See all jobs':'','p15open" data-v="jobs');
+  const sr=a7rail('Things for your new home','From people who are moving out',sales.slice(0,8).map(a7item),sales.length>2?'See all items':'','p15open" data-v="c12sell');
+  const tx=up.length?`<div class="a7-sec"><div><h2>Coming up</h2><p>Book a seat, meet people</p></div></div>${up.slice(0,3).map(a4ticket).join('')}<button class="a7-more" data-a="tab" data-k="ev15">See all events ›</button>`:'';
+  let steps='';if(bar){const done=c10done(),L=c10all();steps=`<div class="a7-sec"><div><h2>Your 30-day plan</h2><p>${bar.d} of ${bar.n} steps done</p></div></div><span class="a7-trk"><i style="width:${bar.pct}%"></i></span><div class="a7-list">${L.slice(0,6).map(s=>{const ok=done.includes(s[0]);return `<button class="a7-row${ok?' ok':''}" data-a="p15open" data-v="plan30"><span class="a7-ck"></span><span><b>${esc(s[2])}</b><small>${esc(s[3])}</small></span><i>${ok?'Done':'›'}</i></button>`}).join('')}</div><button class="a7-more" data-a="p15open" data-v="plan30">See the whole plan ›</button>`}
+  const svc=`<div class="a7-sec"><div><h2>Services</h2><p>Tell us once. Up to 5 businesses send their price.</p></div></div><div class="a7-sv">${[['delivery_truck','Movers','z8q" data-c="Movers'],['sparkles','Cleaning','z8q" data-c="Cleaning'],['receipt','Tax filing','z8q" data-c="Tax'],['toolbox','Repairs','z8q" data-c="Small jobs'],['shield','Insurance','z8q" data-c="Insurance'],['light_bulb','Ask an expert','p15open" data-v="experts']].map(([p,tt,a])=>`<div class="a7-svc"><span><img src="${f3(p)}" alt="" loading="lazy"></span><b>${tt}</b><button data-a="${a}">${tt==='Ask an expert'?'See experts':'Get prices'}</button></div>`).join('')}</div>`;
+  const plan=(plus&&!hasPlus)?`<button class="a7-plus" data-a="p15open" data-v="plans"><img src="${f3('key')}" alt=""><span><small>NeuAmigo Plus</small><b>Call landlords and employers directly</b><i>${p15price('plus_m')?esc(p15price('plus_m'))+' a month · ':''}alerts first</i></span><u>See plans</u></button>`:'';
+  const biz=`<button class="a7-biz" data-a="p15open" data-v="plans" data-t="biz"><img src="${f3('megaphone')}" alt=""><span><small>For businesses</small><b>Be the first name new arrivals see</b><i>Homes, jobs, services or events in ${esc(city)}</i></span><u>Prices</u></button>`;
+  const P={
+    all:grid+rr+jr+plan+tx+sr+biz,
+    homes:(rooms.length?`<div class="a7-sec"><div><h2>Homes in ${esc(city)}</h2><p>${rooms.length} ${rooms.length===1?'room':'rooms'} to rent</p></div></div><div class="a7-g2">${rooms.slice(0,6).map(a7room).join('')}</div><button class="a7-more" data-a="p15open" data-v="rooms">See all homes ›</button>`:a7empty('house_with_garden','New homes show up here','Tell us your budget and get the first message when a room fits.','Find a home','p15open" data-v="rooms'))+sr,
+    work:(jobs.length?`<div class="a7-sec"><div><h2>Jobs in ${esc(city)}</h2><p>Pay shown on every job</p></div></div><div class="a7-g2">${jobs.slice(0,6).map(a7job).join('')}</div><button class="a7-more" data-a="p15open" data-v="jobs">See all jobs ›</button>`:a7empty('briefcase','New jobs show up here','Make your work profile once and apply in one tap.','Make my work profile','p15open" data-v="workprof'))+`<button class="a7-plus" data-a="p15open" data-v="workprof"><img src="${f3('identification_card')}" alt=""><span><small>Work profile</small><b>Apply to any job in one tap</b><i>Your skills, hours and languages</i></span><u>Open</u></button>`,
+    papers:steps||a7empty('clipboard','Your step-by-step plan','Bank, phone, ID, tax number: one step at a time.','Open my plan','p15open" data-v="plan30'),
+    help:svc,
+    fun:(tx||a7empty('party_popper','Events show up here','Football, food nights and meetups in your city.','See events','tab" data-k="ev15'))+`<button class="a7-plus" data-a="p15open" data-v="club"><img src="${f3('party_popper')}" alt=""><span><small>Weekend Club</small><b>No booking fee, book 48 hours early</b><i>${p15price('wc_month_a')?esc(p15price('wc_month_a'))+' a month':'See the price'}</i></span><u>See</u></button>`};
+  const pans=A7TABS.map(([k])=>`<div class="a7-pn" data-p="${k}">${P[k]}</div>`).join('');
+  const foot=`<div class="a7-ft"><h2>Your new city,<br>made easy.</h2><small>NeuAmigo · for people who move</small></div>`;
+  return c9wrap(`<div class="a7" data-t="${t}">${head}<div class="a7-bans">${bans}</div>${pans}${foot}</div>`)}
+let a7ti=null,a7io=null;
+function a7motion(){const rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!a7ti&&!rm){let w=0,ch=A7HINT[0].length,del=true,hold=20;a7ti=setInterval(()=>{const el=document.querySelector('.a7-type');if(!el)return;
+    const word=A7HINT[w];if(hold>0){hold--;return}
+    if(!del){ch++;el.textContent=word.slice(0,ch);if(ch>=word.length){del=true;hold=20}}
+    else{ch--;el.textContent=word.slice(0,Math.max(ch,0))||' ';if(ch<=0){del=false;w=(w+1)%A7HINT.length;hold=3}}},85)}
+  a7reveal(rm)}
+function a7reveal(rm){const L=document.querySelectorAll('.a7 .a7-pn.on .a7-ti,.a7 .a7-pn.on .a7-pc,.a7 .a7-pn.on .a7-svc,.a7 .a7-pn.on .a7-row,.a7 .a7-pn.on .a7-empty');
+  if(rm||!('IntersectionObserver' in window)){L.forEach(e=>e.classList.add('in'));return}
+  if(a7io)a7io.disconnect();a7io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){const el=x.target;const i=[...el.parentNode.children].indexOf(el)%8;el.style.transitionDelay=(i*45)+'ms';el.classList.add('in');a7io.unobserve(el)}}),{rootMargin:'0px 0px -6% 0px'});
+  L.forEach(e=>{if(!e.classList.contains('in'))a7io.observe(e)})}
+function a7sync(){const r=document.querySelector('.a7');if(!r)return;const t=r.dataset.t;
+  r.querySelectorAll('.a7-pn,.a7-ban').forEach(e=>e.classList.toggle('on',e.dataset.p===t));
+  r.querySelectorAll('.a7-tabs button').forEach(b=>b.classList.toggle('on',b.dataset.k===t));
+  document.documentElement.dataset.a7=t}
+Object.assign(A,{a7tab(el){const r=document.querySelector('.a7');if(!r)return;const k=el.dataset.k;r.dataset.t=k;try{sessionStorage.setItem('na.a7t',k)}catch(e){}
+  a7sync();try{el.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'})}catch(e){}
+  const hd=r.querySelector('.a7-bans');if(hd&&hd.getBoundingClientRect().top<0)window.scrollTo({top:Math.max(0,window.scrollY+hd.getBoundingClientRect().top-140),behavior:'smooth'});
+  a7reveal(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)}});
+(function(){
+  if(!NA37())return;
+  const _h=c12home;c12home=function(){try{return a7home()}catch(e){console.warn('[a7]',e);return _h.apply(this,arguments)}};
+  const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{const on=!!document.querySelector('.a7');document.documentElement.classList.toggle('a7on',on);if(on){a7sync();a7motion()}else delete document.documentElement.dataset.a7}catch(e){}};
+})();
+
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
 })();
