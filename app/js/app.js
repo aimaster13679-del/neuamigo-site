@@ -7058,7 +7058,7 @@ const A43EMPTY=[[/No tickets yet/i,'ticket','No tickets yet','Book a seat at a m
   [/No (jobs|applicants)/i,'briefcase','Nothing here yet','New jobs come every week.','See jobs','data-a="p15open" data-v="jobs"'],
   [/No (homes|rooms)/i,'house_with_garden','Nothing here yet','New homes are posted every day.','See homes','data-a="p15open" data-v="rooms"']];
 function a43fix(){const m=document.querySelector('.main-inner.p15');const R=document.documentElement;
-  if(!m||m.querySelector('.a7')){R.classList.remove('a43on');return}
+  if(!m||m.querySelector('.a7')||(typeof c10biz==='function'&&c10biz())){R.classList.remove('a43on');return}
   R.classList.add('a43on');R.dataset.a43=a43tone();
   m.querySelectorAll('.p15-pill svg,.p15-pill .ic').forEach(s=>s.remove());
   m.querySelectorAll('.p15-note').forEach(n=>{if(n.dataset.a43)return;const t=n.textContent.trim();const E=A43EMPTY.find(x=>x[0].test(t));if(!E||t.length>90)return;n.dataset.a43='1';

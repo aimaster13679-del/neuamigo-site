@@ -3811,3 +3811,16 @@ html:not(.gl-lt) .a43-empty{box-shadow:0 0 0 1px #222A3C}
 .a43-empty button{margin-top:14px;background:var(--t)!important;color:#fff!important;border:0!important;font:800 14px 'Plus Jakarta Sans',system-ui!important;padding:12px 20px!important;border-radius:12px!important}
 html:not(.gl-lt) .a43-empty button{color:#0B1226!important}
 html.a43on .main-inner.p15 .p15-g:empty{display:none!important}
+/* ===== Business desk inner pages: one dark premium look (16 Nov 2026) ===== */
+html.a4bz .main-inner.p15{color:#F2F3F7}
+html.a4bz .main-inner.p15 .p15-top h1,html.a4bz .main-inner.p15 h1,html.a4bz .main-inner.p15 h2,html.a4bz .main-inner.p15 h3{color:#F2F3F7!important;-webkit-text-fill-color:#F2F3F7}
+html.a4bz .main-inner.p15 .p15-top .p15-tb:not(.ghost){background:#121827!important;color:#F2F3F7!important;border:1px solid #222A3C!important}
+html.a4bz .main-inner.p15 .p15-g,html.a4bz .main-inner.p15 .p15-pan,html.a4bz .main-inner.p15 .p15-note{background:#121827!important;color:#F2F3F7!important;border:1px solid #222A3C!important;box-shadow:none!important;border-radius:18px!important}
+html.a4bz .main-inner.p15 .p15-g *:not(button):not(.p15-pill):not(em):not(i){color:inherit}
+html.a4bz .main-inner.p15 small,html.a4bz .main-inner.p15 .sub,html.a4bz .main-inner.p15 p{color:#98A0B3}
+html.a4bz .main-inner.p15 b,html.a4bz .main-inner.p15 strong{color:#F2F3F7}
+html.a4bz .main-inner.p15 .p15-g.on,html.a4bz .main-inner.p15 .p15-g.sel{border-color:#3D7BFF!important;box-shadow:0 0 0 1px #3D7BFF!important}
+html.a4bz .main-inner.p15 .chip,html.a4bz .main-inner.p15 .p15-chip,html.a4bz .main-inner.p15 .chips button{background:#1A2235!important;color:#F2F3F7!important;border:1px solid #2A3348!important}
+html.a4bz .main-inner.p15 .chip.on,html.a4bz .main-inner.p15 .p15-chip.on,html.a4bz .main-inner.p15 .chips button.on{background:#3D7BFF!important;border-color:#3D7BFF!important;color:#fff!important}
+html.a4bz .main-inner.p15 .btn.primary,html.a4bz .main-inner.p15 .p15-btn{background:#3D7BFF!important;border-color:#3D7BFF!important;color:#fff!important;border-radius:14px!important;font-weight:800!important}
+html.a4bz .main-inner.p15 input,html.a4bz .main-inner.p15 textarea,html.a4bz .main-inner.p15 select{background:#1A2235!important;color:#F2F3F7!important;border:1px solid #2A3348!important}
