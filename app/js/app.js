@@ -7010,6 +7010,35 @@ function a41jobs(){const c=P15.f.jc||'',key='j'+c,l=(P15.jb||{})[key];
   const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{document.querySelectorAll('.a41 .a41-tabs button').forEach(b=>b.classList.toggle('on',b.dataset.on==='1'));const on=document.querySelector('.a41 .a41-tabs button.on');if(on){const tr=on.parentNode;tr.scrollLeft=Math.max(0,on.offsetLeft-16)}}catch(e){}};
 })();
 
+/* ===== part42: My 30-day plan and Services (5 prices) in the Bazaar look, so the whole app feels the same.
+   Same data and actions as before (C10S steps, c10tick, c10go, z8q quote requests, experts).
+   Sample first: NA42_LIVE=false, preview with localStorage nm.na42=1. */
+const NA42_LIVE = false;
+function NA42(){try{return NA42_LIVE||localStorage.getItem('nm.na42')==='1'}catch(e){return NA42_LIVE}}
+const A42STP=['airplane','key','briefcase','party_popper'];
+function a42plan(){const done=c10done(),b=c10bar(),path=c10get('nm.path','moving');
+  const nx=c10all().find(s=>!done.includes(s[0]));
+  const head=`<div class="a7-hd"><div class="a7-top"><button class="a7-sq a40-bk" data-a="p15back" aria-label="Back">‹</button><span class="a7-where"><small>Step by step</small><b>My 30-day plan</b><i>${path==='arrived'?'Welcome. Start with week 1.':'Start before you fly, then follow the weeks.'}</i></span></div>
+   <div class="a42-sum"><div><b>${b.d} of ${b.n}</b><small>steps done</small></div><span class="a42-tr"><i style="width:${Math.max(3,b.pct)}%"></i></span></div></div>`;
+  const next=nx?`<button class="a7-plus a42-next" ${c10go(nx[4])}><img src="${f3('sparkles')}" alt=""><span><small>Your next step</small><b>${esc(nx[2])}</b><i>${esc(nx[3])}</i></span><u>Do it</u></button>`:`<div class="a7-empty in"><img src="${f3('check_mark_button')}" alt=""><b>All steps done</b><small>Well done. You can open any step again below.</small></div>`;
+  const stages=C10S.map(([h,steps],si)=>{const dn=steps.filter(s=>done.includes(s[0])).length;
+    return `<div class="a42-st"><div class="a42-sh"><span class="a42-pic"><img src="${f3(A42STP[si]||'calendar')}" alt=""></span><span><small>${dn} of ${steps.length} done${path==='arrived'&&si===0?' · if you still need it':''}</small><h2>${esc(h)}</h2></span></div>
+     <div class="a7-list">${steps.map(([k,p,t,s,v])=>{const ok=done.includes(k);return `<div class="a42-row${ok?' ok':''}"><button class="a42-ck" data-a="c10tick" data-k="${k}" aria-label="${ok?'Mark as not done':'Mark as done'}"></button><button class="a42-tx" ${c10go(v)}><b>${esc(t)}</b><small>${esc(s)}</small></button><button class="a42-go" ${c10go(v)}>${ok?'Open':'Do it'}</button></div>`}).join('')}</div></div>`}).join('');
+  return c9wrap(`<div class="a7 a42" data-t="papers">${head}<div class="a7-pn on" data-p="papers">${next}${stages}<p class="a42-note">Government steps (tax number, health card) are free: ask an expert where to find them.</p></div></div>`)}
+function a42svc(){const city=c9city()||'your city';
+  const S=[['delivery_truck','Movers','Movers'],['sparkles','Cleaning','Cleaning'],['receipt','Tax filing','Tax'],['toolbox','Repairs','Small jobs'],['shield','Insurance','Insurance']];
+  const head=`<div class="a7-hd"><div class="a7-top"><button class="a7-sq a40-bk" data-a="p15back" aria-label="Back">‹</button><span class="a7-where"><small>Services in ${esc(city)}</small><b>Get 5 prices</b><i>Tell us once. Up to 5 businesses send their price.</i></span></div></div>`;
+  const grid=`<div class="a42-sv">${S.map(([p,t,c])=>`<button class="a42-svc" data-a="z8q" data-c="${c}"><span class="a40-pic"><img src="${f3(p)}" alt="" loading="lazy"></span><b>${t}</b><small>Up to 5 prices</small><u>Get prices</u></button>`).join('')}<button class="a42-svc" data-a="p15open" data-v="experts"><span class="a40-pic"><img src="${f3('light_bulb')}" alt="" loading="lazy"></span><b>Ask an expert</b><small>Visa, tax, insurance</small><u>See experts</u></button></div>`;
+  const how=`<div class="a7-sec"><div><h2>How it works</h2><p>Asking costs you nothing</p></div></div><div class="a42-how">${[['clipboard','Tell us what you need','A few taps, no long forms'],['handshake','Get up to 5 prices','Businesses answer within 24 hours'],['check_mark_button','Pick the best one','You choose and pay them directly']].map(([p,t,s],i)=>`<div><span class="a42-n">${i+1}</span><img src="${f3(p)}" alt=""><span><b>${t}</b><small>${s}</small></span></div>`).join('')}</div>`;
+  const mine=`<button class="a7-plus" data-a="p15open" data-v="myasks"><img src="${f3('receipt')}" alt=""><span><small>Already asked?</small><b>My requests and prices</b><i>See every answer in one place</i></span><u>Open</u></button>`;
+  const biz=`<button class="a7-biz" data-a="p15open" data-v="plans" data-t="biz"><img src="${f3('megaphone')}" alt=""><span><small>For businesses</small><b>Get customers who are asking now</b><i>Movers, cleaners, tax and repairs in ${esc(city)}</i></span><u>Prices</u></button>`;
+  return c9wrap(`<div class="a7 a42" data-t="help">${head}<div class="a7-pn on" data-p="help">${grid}${how}${mine}${biz}</div></div>`)}
+(function(){
+  if(!NA42())return;
+  const _p=P15V.plan30;P15V.plan30=function(){try{return a42plan()}catch(e){console.warn('[a42]',e);return _p.apply(this,arguments)}};
+  const _s=P15V.c12svc;P15V.c12svc=function(){try{return a42svc()}catch(e){console.warn('[a42]',e);return _s.apply(this,arguments)}};
+})();
+
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
 })();
