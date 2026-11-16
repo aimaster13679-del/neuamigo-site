@@ -7043,7 +7043,7 @@ function a42svc(){const city=c9city()||'your city';
    coloured top band per section, premium cards and buttons, no line icons in labels, a whole photo on the job page,
    and real empty states (picture + one next step) instead of a plain sentence.
    Sample first: NA43_LIVE=false, preview with localStorage nm.na43=1. Booking and apply flows stay exactly the same. */
-const NA43_LIVE = false;
+const NA43_LIVE = true;
 function NA43(){try{return NA43_LIVE||localStorage.getItem('nm.na43')==='1'}catch(e){return NA43_LIVE}}
 function a43tone(){const v=String(P15.v||'');
   if(/^evd|^tickets|^club|^hostboard|^newev|^ev-/.test(v))return 'fun';
