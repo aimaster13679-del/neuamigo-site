@@ -1,2 +1,3 @@
 Pexels (free licence): party = photo 5725978, work = photo 28461041, sofa = photo 9368696. Cropped to 3:2.
 tax = Pexels photo 6929011.
+City Quest (Pexels free licence): skyday = 23490930, lakeview = 18325968 (David Gari), downtown = 27365472 (David Kwewum), harbour = 1868676 (ennvisionn). Cropped to 3:2.
