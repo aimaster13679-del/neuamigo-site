@@ -6966,6 +6966,50 @@ function a40plans(){const d=P15.d||{},tab=P15.pltab==='biz'?'biz':'you',yr=!!P15
   const _p=P15V.plans;P15V.plans=function(){try{return a40plans()}catch(e){console.warn('[a40]',e);return _p.apply(this,arguments)}};
 })();
 
+/* ===== part41: Homes (Find a home) and Jobs (Find work) in the Bazaar look, so every page feels like Home.
+   Same data and actions as before (rooms15 / jobs15, c9ty, p15f, plus, workprof, postroom, postjob).
+   Sample first: NA41_LIVE=false, preview with localStorage nm.na41=1. Real numbers only. */
+const NA41_LIVE = false;
+function NA41(){try{return NA41_LIVE||localStorage.getItem('nm.na41')==='1'}catch(e){return NA41_LIVE}}
+function a41head(t,small,sub,tabs,cur,act){return `<div class="a7-hd"><div class="a7-top"><button class="a7-sq a40-bk" data-a="p15back" aria-label="Back">‹</button><span class="a7-where"><small>${small}</small><b>${t}</b><i>${sub}</i></span></div>
+   <button class="a7-search" data-a="p15open" data-v="search"><span class="n32-mg"></span><span>Search <em class="a7-type">${A7HINT[0]}</em></span></button>
+   <div class="a7-tabs a41-tabs" role="tablist">${tabs.map(([k,l,p])=>`<button role="tab" data-a="${act}" ${act==='c9ty'?`data-k="${k}"`:`data-k="max" data-v41="${k}"`} class="${k===cur?'on':''}" data-on="${k===cur?1:0}"><img src="${f3(p)}" alt=""><span>${l}</span></button>`).join('')}</div></div>`}
+function a41load(t){return c9wrap(`<div class="a7 a41" data-t="${t}"><div class="a7-hd"><div class="a7-top"><button class="a7-sq a40-bk" data-a="p15back" aria-label="Back">‹</button><span class="a7-where"><small>Loading</small><b>${t==='homes'?'Find a home':'Find work'}</b><i>&nbsp;</i></span></div></div><div class="a7-pn on" data-p="${t}" style="padding:40px 16px">${spinner('Loading')}</div></div>`)}
+function a41rooms(){const l=P15.rooms;if(l===undefined){API.rpc('rooms15',{maxrent:Number(P15.f.max||0)*100}).then(r=>{P15.rooms=r;render()}).catch(()=>{P15.rooms=[];render()});return a41load('homes')}
+  const city=c9city()||'your city',TY={private:['Private room','bed'],shared:['Shared room','couch_and_lamp'],whole:['Whole place','house_with_garden']},ty=P15.c9ty||'',mx=P15.f.max||'0';
+  const L=(l||[]).filter(r=>(!ty||r.type===ty)&&(mx==='0'||r.rent<=Number(mx)*100));
+  const tabs=[['','All homes','key']].concat(Object.entries(TY).map(([k,[t,p]])=>[k,t,p]));
+  const chips=`<div class="a41-chips">${[['0','Any rent'],['700','Under 700'],['900','Under 900'],['1200','Under 1,200'],['1800','Under 1,800']].map(([v,t])=>`<button class="${mx===v?'on':''}" data-a="p15f" data-k="max" data-val="${v}">${esc(t)}</button>`).join('')}</div>`;
+  const card=r=>{const T=TY[r.type]||['',''],ph=r.photos&&r.photos[0]&&PC15()?phUrl15(r.photos[0]):'';let from='';try{from=new Date(r.from).toLocaleDateString(RM_I18N.locale,{day:'numeric',month:'short'})}catch(e){}
+    return `<div class="a41-card"><span class="a41-ph">${ph?`<img src="${esc(ph)}" alt="" loading="lazy" decoding="async">`:c9i('room')}${r.sponsored?'<em>Sponsored</em>':r.top?'<em>Featured</em>':''}${r.photos&&r.photos.length>1&&PC15()?`<i>${r.photos.length} photos</i>`:''}</span>
+     <div class="a41-bd"><div class="a41-pr"><b>${esc(a4money(r.rent,r.currency))}</b><small>/month</small></div><span class="a41-nm">${esc(r.title)}</span>
+     <small class="a41-ln">${esc(r.area||'')}${T[0]?' · '+T[0]:''}${from?' · from '+esc(from):''}</small>${(r.tags||[]).length?`<span class="a41-tags">${r.tags.slice(0,3).map(t=>`<span>${esc(t)}</span>`).join('')}</span>`:''}
+     ${r.locked?`<button class="a41-btn" data-a="p15open" data-v="plus">See contact and address</button><small class="a41-note">Opens with NeuAmigo Plus</small>`:`<div class="a41-ct"><b>${esc(r.address||r.area||'')}</b><small>${esc(r.contact||'')}</small></div>${r.mine?`<button class="a41-btn g" data-a="p15taken" data-id="${r.id}">Mark as taken</button>`:''}`}</div></div>`};
+  const list=L.length?`<div class="a7-sec"><div><h2>Homes in ${esc(city)}</h2><p>${L.length} ${L.length===1?'home':'homes'} · rent shown on every listing</p></div></div><div class="a41-list">${L.map(card).join('')}</div>`
+    :a7empty('house_with_garden','No homes at this rent yet','New homes are posted every day. Or tell owners what you need and they message you.','Ask owners','p15open" data-v="ask:room').replace('a7-empty','a7-empty in');
+  const two=`<div class="a9-two"><button class="a9-dr" data-a="p15open" data-v="ask:room"><span class="a9-ph"><img ${a4src('img/p17/bedside.webp')} alt="" loading="lazy"></span><b>Ask owners</b><small>Post what you need, they message you</small></button><button class="a9-dr" data-a="p15open" data-v="postroom"><span class="a9-ph"><img ${a4src('img/p17/rentsign.webp')} alt="" loading="lazy"></span><b>List your home</b><small>Find a tenant</small></button></div>`;
+  return c9wrap(`<div class="a7 a41" data-t="homes">${a41head('Find a home',`Homes in ${esc(city)}`,'Rent shown on every listing',tabs,ty,'c9ty')}<div class="a7-pn on" data-p="homes">${chips}${list}${two}</div></div>`)}
+const A41JP={'Elder care':'handshake','Home help':'house_with_garden','Garden':'sparkles','Shop helper':'shopping_bags','Factory':'toolbox','Kitchen':'hot_beverage','Driving':'delivery_truck','Cleaning':'sparkles'};
+function a41jobs(){const c=P15.f.jc||'',key='j'+c,l=(P15.jb||{})[key];
+  if(l===undefined){API.rpc('jobs15',{c}).then(r=>{P15.jb=Object.assign(P15.jb||{},{[key]:r||[]});render()}).catch(()=>{P15.jb=Object.assign(P15.jb||{},{[key]:[]});render()});return a41load('work')}
+  const wp=P15.wp;if(wp===undefined){P15.wp=null;API.rpc('workprof15',{}).then(r=>{P15.wp=r||{};render()}).catch(()=>{P15.wp={}})}
+  const done=wp&&wp.skills?[wp.skills.length,wp.langs&&wp.langs.length,wp.avail&&wp.avail.length,wp.area,wp.permit].filter(Boolean).length*20:0,city=c9city()||'your city';
+  const tabs=`<div class="a7-tabs a41-tabs" role="tablist">${[['','All jobs','briefcase']].concat(JOBCAT15.map(x=>[x,x,A41JP[x]||'briefcase'])).map(([v,t,p])=>`<button role="tab" data-a="p15f" data-k="jc" data-val="${esc(v)}" class="${c===v?'on':''}" data-on="${c===v?1:0}"><img src="${f3(p)}" alt=""><span>${esc(t)}</span></button>`).join('')}</div>`;
+  const head=`<div class="a7-hd"><div class="a7-top"><button class="a7-sq a40-bk" data-a="p15back" aria-label="Back">‹</button><span class="a7-where"><small>Jobs in ${esc(city)}</small><b>Find work</b><i>Pay and hours on every job · job seekers never pay</i></span></div>
+   <button class="a7-search" data-a="p15open" data-v="search"><span class="n32-mg"></span><span>Search <em class="a7-type">${A7HINT[0]}</em></span></button>${tabs}</div>`;
+  const prof=`<button class="a7-plus a41-wp" data-a="p15open" data-v="workprof"><img src="${f3('identification_card')}" alt=""><span><small>My work profile${done?` · ${done}% done`:''}</small><b>${done>=100?'Ready: apply to any job in one tap':'Finish it once, then apply in one tap'}</b>${done&&done<100?`<span class="a41-bar"><i style="width:${done}%"></i></span>`:''}</span><u>${done>=100?'Open':'Finish'}</u></button>`;
+  const card=j=>`<button class="a41-job" data-a="p15open" data-v="job:${j.id}"><span class="a41-jph">${c9i(c9jobp(j))}</span><span class="a41-jb"><span class="a41-pr"><b>${esc(a4money(j.pay,j.currency))}</b><small>/hour</small></span><b class="a41-nm">${esc(j.title)}</b><small class="a41-ln">${esc(j.employer||'')}${j.area?' · '+esc(j.area):''}${j.hours?' · '+j.hours+' h/week':''}</small>${j.sponsored?'<em class="a41-b">Sponsored</em>':''}${j.mine?`<em class="a41-b g">Your job · ${j.apps} applied</em>`:j.applied?'<em class="a41-b g">Applied</em>':''}</span><u>View</u></button>`;
+  const list=l.length?`<div class="a7-sec"><div><h2>${c?esc(c)+' jobs':'Open jobs'}</h2><p>${l.length} ${l.length===1?'job':'jobs'} in ${esc(city)}</p></div></div><div class="a41-jl">${l.map(card).join('')}</div>`
+    :a7empty('briefcase','No jobs here yet','Employers add new ones every week. Finish your work profile so you can apply in one tap.','My work profile','p15open" data-v="workprof').replace('a7-empty','a7-empty in');
+  const two=`<div class="a9-two"><button class="a9-dr" data-a="p15open" data-v="postjob"><span class="a9-ph"><img ${a4src('img/p17/hiring.webp')} alt="" loading="lazy"></span><b>Post a job</b><small>Family ${esc(p15price('job_family')||'')} · business ${esc(p15price('job_biz')||'')}</small></button><button class="a9-dr" data-a="p15open" data-v="safejobs"><span class="a9-ph"><img ${a4src('img/p17/resume.webp')} alt="" loading="lazy"></span><b>Safe jobs</b><small>Our promise to job seekers</small></button></div>`;
+  return c9wrap(`<div class="a7 a41" data-t="work">${head}<div class="a7-pn on" data-p="work">${prof}${list}${two}</div></div>`)}
+(function(){
+  if(!NA41())return;
+  const _r=P15V.rooms;P15V.rooms=function(){try{return a41rooms()}catch(e){console.warn('[a41]',e);return _r.apply(this,arguments)}};
+  const _j=P15V.jobs;P15V.jobs=function(){try{return a41jobs()}catch(e){console.warn('[a41]',e);return _j.apply(this,arguments)}};
+  const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{document.querySelectorAll('.a41 .a41-tabs button').forEach(b=>b.classList.toggle('on',b.dataset.on==='1'));const on=document.querySelector('.a41 .a41-tabs button.on');if(on){const tr=on.parentNode;tr.scrollLeft=Math.max(0,on.offsetLeft-16)}}catch(e){}};
+})();
+
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
 })();
