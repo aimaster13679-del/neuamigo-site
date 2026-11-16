@@ -6877,7 +6877,7 @@ Object.assign(A,{a8go(el){const s=document.querySelector(`.a8-s[data-s="${el.dat
    10:09 'kaam bina ruke pura karo'). Same pattern as Home: colour band header, typing search, picture tab row
    that filters instantly (no reload), living banner, product-style cards with one button, real empty states.
    Sample first: NA39_LIVE=false, preview with localStorage nm.na39=1. Real numbers only. */
-const NA39_LIVE = false;
+const NA39_LIVE = true;
 function NA39(){try{return NA39_LIVE||localStorage.getItem('nm.na39')==='1'}catch(e){return NA39_LIVE}}
 function a9head(t,small,sub,city,tabs,cur){return `<div class="a7-hd"><div class="a7-top"><span class="a7-where"><small>${small}</small><b>${t}</b><i>${sub}</i></span>
    <button class="a7-sq" data-a="tab" data-k="me" aria-label="Me">${esc((((S.me||{}).name||'?').trim()[0]||'?').toUpperCase())}</button></div>
