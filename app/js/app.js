@@ -6748,7 +6748,7 @@ function a7home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{};
   const grid=`<div class="a7-sec"><div><h2>What do you need?</h2></div></div><div class="a7-grid">${[
     ['house_with_garden','Rooms','p15open" data-v="rooms'],['briefcase','Jobs','p15open" data-v="jobs'],['clipboard','30-day plan','p15open" data-v="plan30'],['delivery_truck','Movers','z8q" data-c="Movers'],
     ['sparkles','Cleaning','z8q" data-c="Cleaning'],['receipt','Tax filing','z8q" data-c="Tax'],['toolbox','Repairs','z8q" data-c="Small jobs'],['shield','Insurance','z8q" data-c="Insurance'],
-    ['party_popper','Events','tab" data-k="ev15'],['hot_beverage','Meet people','tab" data-k="ev15'],['couch_and_lamp','Buy and sell','p15open" data-v="c12sell'],['light_bulb','Ask an expert','p15open" data-v="experts']].map(x=>a7tile(...x)).join('')}</div>`;
+    ['party_popper','Events','tab" data-k="ev15'],['hot_beverage','Taste of home','p15open" data-v="food'],['couch_and_lamp','Buy and sell','p15open" data-v="c12sell'],['light_bulb','Ask an expert','p15open" data-v="experts']].map(x=>a7tile(...x)).join('')}</div>`;
   const rr=a7rail('Homes for you',`Rooms in ${esc(city)}`,rooms.slice(0,8).map(a7room),rooms.length>2?'See all homes':'','p15open" data-v="rooms');
   const jr=a7rail('Jobs near you','Pay shown on every job',jobs.slice(0,8).map(a7job),jobs.length>2?'See all jobs':'','p15open" data-v="jobs');
   const sr=a7rail('Things for your new home','From people who are moving out',sales.slice(0,8).map(a7item),sales.length>2?'See all items':'','p15open" data-v="c12sell');
@@ -6829,7 +6829,7 @@ function a8home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{};
            a8pick('img/p17/resume.webp','identification_card','Work profile','Apply to any job in <strong>one tap</strong>','Make it','p15open" data-v="workprof'),
            a8pick('img/p17/calc.webp','receipt','Tax filing',`Tell us once, <strong>up to 5 prices</strong>`,'Get prices','z8q" data-c="Tax')],
     life:[a8pick('img/p19/party.webp','party_popper','Weekends',up.length?`<strong>${up.length} ${up.length===1?'event':'events'}</strong> coming up`:'Events near you','See events','tab" data-k="ev15'),
-          a8pick('img/p17/feast.webp','hot_beverage','Taste of home','Food nights and meetups','See events','tab" data-k="ev15'),
+          a8pick('img/p18/tacos.webp','hot_beverage','Taste of home','Food from your country, cooked nearby','See dishes','p15open" data-v="food'),
           a8pick('img/p19/sofa.webp','couch_and_lamp','Buy and sell',sales.length?`<strong>${sales.length} ${sales.length===1?'item':'items'}</strong> near you`:'Things for your home','See items','p15open" data-v="c12sell')]};
   const grid=L=>`<div class="a7-grid">${L.map(x=>a7tile(...x)).join('')}</div>`;
   const stepRows=L=>L.length?`<div class="a7-list">${L.map(s=>{const ok=done.includes(s[0]);return `<button class="a7-row${ok?' ok':''}" data-a="p15open" data-v="plan30"><span class="a7-ck"></span><span><b>${esc(s[2])}</b><small>${esc(s[3])}</small></span><i>${ok?'Done':'›'}</i></button>`}).join('')}</div>`:'';
@@ -6912,7 +6912,7 @@ function a9sell(){const sl=P15.sl;if(sl===undefined||sl===null){if(sl===undefine
 function a9apply(){const r=document.querySelector('.a9');if(!r)return;const k=r.dataset.a9||'all';let n=0;
   r.querySelectorAll('.a9-it').forEach(el=>{const c=(el.dataset.c||'').split(' ');const show=k==='all'||c.includes(k);el.style.display=show?'':'none';if(show)n++});
   r.querySelectorAll('.a9-tabs button').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
-  const ct=r.querySelector('.a9-count');if(ct){const isEv=r.dataset.t==='fun';ct.textContent=`${n} ${isEv?(n===1?'event':'events'):(n===1?'item':'items')}`}
+  const ct=r.querySelector('.a9-count');if(ct){const w=r.classList.contains('a44')?['dish','dishes']:r.dataset.t==='fun'?['event','events']:['item','items'];ct.textContent=`${n} ${n===1?w[0]:w[1]}`}
   const none=r.querySelector('.a9-none');if(none)none.style.display=n?'none':''}
 Object.assign(A,{a9f(el){const r=document.querySelector('.a9');if(!r)return;r.dataset.a9=el.dataset.k;try{sessionStorage.setItem(r.dataset.t==='fun'?'na.a9e':'na.a9s',el.dataset.k)}catch(e){}
   a9apply();try{const tr=el.parentNode;tr.scrollTo({left:el.offsetLeft-tr.clientWidth/2+el.offsetWidth/2,behavior:'smooth'})}catch(e){}
@@ -7068,6 +7068,84 @@ function a43fix(){const m=document.querySelector('.main-inner.p15');const R=docu
 (function(){
   if(!NA43())return;
   const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{a43fix()}catch(e){console.warn('[a43]',e)}};
+})();
+
+/* ===== part44: Taste of home (his ok 16 Nov 2026 11:56 'ok dono'). Home cooks list dishes from their country;
+   buyers order in the app and pay the cook directly at pick-up (we take no cut). Cooks pay the Home Cook plan.
+   Food permit: shared by the cook, never checked by NeuAmigo. Data: foods15, food_post15, food_order15, food_orders15. */
+const A44REG=[['all','All','hot_beverage'],['Latin America','Latin America','world_map'],['East Asia','East Asia','world_map'],['South Asia','South Asia','world_map'],['Middle East','Middle East','world_map'],['Africa','Africa','world_map'],['Europe','Europe','world_map'],['Other','Other','world_map']];
+const A44PH=['img/p18/tacos.webp','img/p17/feast.webp','img/p17/kitchen2.webp'];
+function a44load(){if(P15.food===undefined){P15.food=null;API.rpc('foods15',{}).then(r=>{P15.food=r||[];render()}).catch(()=>{P15.food=[];render()})}return P15.food}
+function a44ph(f,i){const p=(f.photos||[])[0];return p&&PC15()?`<img src="${esc(phUrl15(p))}" alt="" loading="lazy">`:`<img src="${A44PH[i%A44PH.length]}" alt="" loading="lazy">`}
+function a44list(){const L=a44load(),city=c9city()||'your city';
+  const head=`<div class="a7-hd"><div class="a7-top"><button class="a7-sq a40-bk" data-a="p15back" aria-label="Back">‹</button><span class="a7-where"><small>Home cooks in ${esc(city)}</small><b>Taste of home</b><i>Food from your own country, cooked nearby</i></span></div>
+   <div class="a7-tabs a9-tabs" role="tablist">${A44REG.filter(([k])=>k==='all'||(L||[]).some(f=>f.region===k)).map(([k,l,p])=>`<button role="tab" data-a="a9f" data-k="${k}" class="${k==='all'?'on':''}"><img src="${f3(p)}" alt=""><span>${l}</span></button>`).join('')}</div></div>`;
+  if(L===null)return c9wrap(`<div class="a7 a9 a44" data-t="papers" data-a9="all">${head}<div class="a7-pn on" data-p="papers" style="padding:40px 16px">${spinner('Loading')}</div></div>`);
+  const ban=`<button class="a7-ban on" data-p="papers" data-a="p15open" data-v="foodorders"><span class="a7-bt"><small>Missing home?</small><h3>Dinner like<br>back home.</h3><p>Order from a home cook near you. Pay the cook at pick-up.</p><u>My orders</u></span><span class="a7-bp"><img class="b0" src="${f3('hot_beverage')}" alt=""><img class="b1" src="${f3('world_map')}" alt=""><img class="b2" src="${f3('sparkles')}" alt=""></span></button>`;
+  const card=(f,i)=>`<div class="a41-card a9-it" data-c="${esc(f.region||'Other')}"><button class="a41-ph a44-ph" data-a="p15open" data-v="food:${f.id}">${a44ph(f,i)}${f.mine?'<em>Your dish</em>':''}</button>
+    <div class="a41-bd"><div class="a41-pr"><b>${esc(a4money(f.price,f.currency))}</b><small>/plate</small></div><span class="a41-nm">${esc(f.title)}</span>
+    <small class="a41-ln">${esc(f.cuisine)}${f.area?' · '+esc(f.area):''}${f.pickup?' · '+esc(f.pickup):''}</small>
+    <span class="a41-tags">${f.permit?'<span>Food permit shared by the cook</span>':''}${f.orderBy?`<span>Order by ${esc(f.orderBy)}</span>`:''}</span>
+    <button class="a41-btn" data-a="p15open" data-v="food:${f.id}">${f.mine?`See dish · ${f.orders||0} orders`:'Order'}</button></div></div>`;
+  const list=L.length?`<div class="a7-sec"><div><h2>Cooking near you</h2><p class="a9-count">${L.length} ${L.length===1?'dish':'dishes'}</p></div></div><div class="a41-list a9-list">${L.map(card).join('')}</div>${a7empty('hot_beverage','Nothing in this group yet','Try another group.','','').replace('a7-empty','a7-empty a9-none in')}`
+    :a7empty('hot_beverage','No home cooks here yet','Cooks from many countries add dishes every week. Do you cook food from home? Start selling it here.','Sell your food','p15open" data-v="foodpost').replace('a7-empty','a7-empty in');
+  const cook=`<button class="a7-biz" data-a="p15open" data-v="foodpost"><img src="${f3('megaphone')}" alt=""><span><small>Do you cook?</small><b>Sell food from your country</b><i>Home Cook plan${p15price('cook_plan')?' · '+esc(p15price('cook_plan'))+' a month':''} · no cut from your food money</i></span><u>Start</u></button>`;
+  return c9wrap(`<div class="a7 a9 a41 a44" data-t="papers" data-a9="all">${head}<div class="a7-bans">${ban}</div><div class="a7-pn on" data-p="papers">${list}${cook}</div></div>`)}
+function a44dish(id){const L=a44load()||[],f=L.find(x=>String(x.id)===String(id));
+  if(!f)return c9wrap(c9back('Taste of home')+`<div class="c9-in">${a7empty('hot_beverage','This dish is not available','The cook may have removed it.','See other dishes','p15open" data-v="food')}</div>`);
+  const q=Math.max(1,Math.min(20,Number(P15.fq||1)));
+  return c9wrap(`<div class="a7 a41 a44" data-t="papers"><div class="a7-hd"><div class="a7-top"><button class="a7-sq a40-bk" data-a="p15back" aria-label="Back">‹</button><span class="a7-where"><small>Taste of home</small><b>${esc(f.title)}</b><i>${esc(f.cuisine)} · home cook ${esc(f.cook||'')}</i></span></div></div>
+   <div class="a7-pn on" data-p="papers"><div class="a41-card" style="margin-top:14px"><span class="a41-ph">${a44ph(f,0)}</span><div class="a41-bd">
+    <div class="a41-pr"><b>${esc(a4money(f.price,f.currency))}</b><small>/plate</small></div>
+    <small class="a41-ln">${f.area?'Pick up in '+esc(f.area):''}${f.pickup?' · '+esc(f.pickup):''}${f.orderBy?' · order by '+esc(f.orderBy):''}</small>
+    ${f.allergens?`<span class="a41-tags"><span>Contains: ${esc(f.allergens)}</span></span>`:''}
+    ${f.mine?`<button class="a41-btn" data-a="p15open" data-v="foodorders">Orders for this dish · ${f.orders||0}</button><button class="a41-btn g" data-a="a44rm" data-id="${f.id}">Remove dish</button>`
+     :`<div class="a44-qty"><span>Plates</span><button data-a="a44q" data-d="-1" aria-label="Less">−</button><b>${q}</b><button data-a="a44q" data-d="1" aria-label="More">+</button></div>
+      <button class="a41-btn" data-a="a44order" data-id="${f.id}">Order ${q} ${q===1?'plate':'plates'} · ${esc(a4money(f.price*q,f.currency))}</button>`}
+    <p class="a44-note">You pay the cook directly at pick-up. ${f.permit?'The cook shared the food permit their city asks for; NeuAmigo does not check it.':'The cook has not shared a food permit.'} Report anything wrong to support.</p></div></div></div></div>`)}
+function a44orders(){const L=P15.fo;if(L===undefined){P15.fo=null;API.rpc('food_orders15',{}).then(r=>{P15.fo=r||[];render()}).catch(()=>{P15.fo=[];render()})}
+  const head=`<div class="a7-hd"><div class="a7-top"><button class="a7-sq a40-bk" data-a="p15back" aria-label="Back">‹</button><span class="a7-where"><small>Taste of home</small><b>Orders</b><i>Pay the cook directly at pick-up</i></span></div></div>`;
+  if(!L)return c9wrap(`<div class="a7 a41 a44" data-t="papers">${head}<div class="a7-pn on" data-p="papers" style="padding:40px 16px">${spinner('Loading')}</div></div>`);
+  const st={new:'New',ready:'Ready to pick up',done:'Done',cancelled:'Cancelled'};
+  const row=o=>`<div class="a44-ord"><span><b>${esc(o.dish)} · ${o.qty} ${o.qty===1?'plate':'plates'}</b><small>${o.mine?'For '+esc(o.who):'Cook: '+esc(o.who)}${o.pickup?' · '+esc(o.pickup):''} · ${esc(a4money(o.price*o.qty,o.currency))}</small><i class="s-${o.status}">${st[o.status]||o.status}</i></span>
+    ${o.status==='new'||o.status==='ready'?`<span class="a44-ob">${o.mine?(o.status==='new'?`<button data-a="a44st" data-id="${o.id}" data-s="ready">Ready</button>`:`<button data-a="a44st" data-id="${o.id}" data-s="done">Picked up</button>`):''}<button class="g" data-a="a44st" data-id="${o.id}" data-s="cancelled">Cancel</button></span>`:''}</div>`;
+  return c9wrap(`<div class="a7 a41 a44" data-t="papers">${head}<div class="a7-pn on" data-p="papers">${L.length?`<div class="a44-ol">${L.map(row).join('')}</div>`:a7empty('hot_beverage','No orders yet','Order a dish from a home cook near you.','See dishes','p15open" data-v="food').replace('a7-empty','a7-empty in')}</div></div>`)}
+const A44CU=['Mexican','Colombian','Brazilian','Filipino','Chinese','Korean','Vietnamese','Japanese','Lebanese','Turkish','Persian','Nigerian','Ethiopian','Kenyan','Polish','Italian','Ukrainian','Caribbean','Other'];
+const A44CR={Mexican:'Latin America',Colombian:'Latin America',Brazilian:'Latin America',Caribbean:'Latin America',Filipino:'East Asia',Chinese:'East Asia',Korean:'East Asia',Vietnamese:'East Asia',Japanese:'East Asia',Lebanese:'Middle East',Turkish:'Middle East',Persian:'Middle East',Nigerian:'Africa',Ethiopian:'Africa',Kenyan:'Africa',Polish:'Europe',Italian:'Europe',Ukrainian:'Europe'};
+function a44cuisines(){const c=(((S.me||{}).country)||'').toLowerCase();const L=A44CU.slice();if(c==='india'||c==='in'){L.splice(L.length-1,0,'Indian');A44CR.Indian='South Asia'}return L}
+function a44post(){const f=P15.ff||(P15.ff={cu:'',permit:false});const cur=(typeof cur15==='function')?cur15():'USD';
+  const chips=a44cuisines().map(c=>`<button class="${f.cu===c?'on':''}" data-a="a44cu" data-k="${esc(c)}">${esc(c)}</button>`).join('');
+  return c9wrap(`<div class="a7 a41 a44" data-t="papers"><div class="a7-hd"><div class="a7-top"><button class="a7-sq a40-bk" data-a="p15back" aria-label="Back">‹</button><span class="a7-where"><small>Home Cook plan${p15price('cook_plan')?' · '+esc(p15price('cook_plan'))+' a month':''}</small><b>Add a dish</b><i>Up to 5 dishes a week · no cut from your food money</i></span></div></div>
+   <div class="a7-pn on" data-p="papers"><div class="a44-form">
+    <label>Dish name<input id="a44t" maxlength="80" placeholder="e.g. Tacos al pastor, 3 pieces" value="${esc(f.t||'')}"></label>
+    <label>Cuisine</label><div class="a41-chips a44-cu">${chips}</div>
+    <label>Price per plate (${esc(cur)})<input id="a44p" inputmode="decimal" placeholder="12" value="${esc(f.p||'')}"></label>
+    <label>Pick-up area<input id="a44a" maxlength="60" placeholder="e.g. Annex" value="${esc(f.a||'')}"></label>
+    <label>Pick-up days and times<input id="a44k" maxlength="120" placeholder="e.g. Fri 6-8 pm, Sat 12-2 pm" value="${esc(f.k||'')}"></label>
+    <label>Order by<input id="a44o" maxlength="60" placeholder="e.g. Thursday" value="${esc(f.o||'')}"></label>
+    <label>Contains (allergens)<input id="a44l" maxlength="120" placeholder="e.g. wheat, nuts, milk" value="${esc(f.l||'')}"></label>
+    <button class="a44-permit${f.permit?' on':''}" data-a="a44permit"><span class="a42-ck"></span><span><b>I have the food permit my city asks for</b><small>Shown as "shared by the cook". NeuAmigo does not check it. Selling food without a permit may break your local law.</small></span></button>
+    <button class="a41-btn" data-a="a44save">Post dish</button>
+    <p class="a44-note">Buyers pay you directly at pick-up. The Home Cook plan starts with your first dish.</p></div></div></div>`)}
+function a44keep(){const f=P15.ff||(P15.ff={});const g=id=>{const e=document.getElementById(id);return e?e.value:''};f.t=g('a44t');f.p=g('a44p');f.a=g('a44a');f.k=g('a44k');f.o=g('a44o');f.l=g('a44l')}
+Object.assign(A,{
+  a44q(el){P15.fq=Math.max(1,Math.min(20,Number(P15.fq||1)+Number(el.dataset.d)));render()},
+  async a44order(el){try{await API.rpc('food_order15',{fid:el.dataset.id,n:Number(P15.fq||1),nt:''});P15.fq=1;P15.fo=undefined;toast('Order sent. Pay the cook at pick-up.','info');A.p15open({dataset:{v:'foodorders'}})}catch(e){toast('Could not order. Try again.','info')}},
+  async a44st(el){try{await API.rpc('food_order_set15',{oid:el.dataset.id,st:el.dataset.s});P15.fo=undefined;render()}catch(e){toast('Could not change it. Try again.','info')}},
+  async a44rm(el){try{await API.rpc('food_remove15',{fid:el.dataset.id});P15.food=undefined;A.p15back()}catch(e){toast('Could not remove it.','info')}},
+  a44cu(el){a44keep();P15.ff.cu=el.dataset.k;render()},
+  a44permit(){a44keep();P15.ff.permit=!P15.ff.permit;render()},
+  async a44save(){a44keep();const f=P15.ff,pc=Math.round(parseFloat(String(f.p||'').replace(',','.'))*100);
+    if(!f.t||f.t.trim().length<3){toast('Add the dish name.','info');return}if(!f.cu){toast('Pick the cuisine.','info');return}if(!(pc>=100)){toast('Add the price per plate.','info');return}
+    try{await API.rpc('food_post15',{t:f.t,cu:f.cu,rg:A44CR[f.cu]||'Other',pc,cur:(typeof cur15==='function')?cur15():'USD',ar:f.a||'',pk:f.k||'',ob:f.o||'',al:f.l||'',permit:!!f.permit,p:[]});
+      P15.ff=null;P15.food=undefined;toast('Your dish is live.','info');A.p15open({dataset:{v:'food'}})}
+    catch(e){const m=String(e&&e.message||e);toast(m.includes('limit')?'You can post 5 dishes a week.':'Could not post. Check the details.','info')}}
+});
+(function(){
+  Object.assign(P15V,{food:a44list,foodorders:a44orders,foodpost:a44post});
+  const _o=A.p15open;A.p15open=function(el){const v=String((el&&el.dataset&&el.dataset.v)||'');if(v.startsWith('food:')){P15.fq=1;P15V[v]=()=>a44dish(v.slice(5))}if(v==='foodorders')P15.fo=undefined;if(v==='food')P15.food=undefined;return _o.apply(this,arguments)};
+  /* business desk: new role "Home food" */
+  try{if(!C10R.some(r=>r[0]==='food')){C10R.push(['food','kitchen2','Home food','Home cooks: dishes from your country']);C10A.food=[['Add a dish','foodpost'],['Orders','foodorders']];BZPIC.food='hot_beverage';BZPR.food='cook_plan'}}catch(e){}
 })();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
