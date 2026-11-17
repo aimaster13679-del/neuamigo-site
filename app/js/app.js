@@ -6771,9 +6771,9 @@ function a7home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{};
 let a7ti=null,a7io=null;
 function a7motion(){const rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(!a7ti&&!rm){let w=0,ch=A7HINT[0].length,del=true,hold=20;a7ti=setInterval(()=>{const el=document.querySelector('.a7-type');if(!el)return;
-    const word=A7HINT[w];if(hold>0){hold--;return}
+    const L=el.dataset.w?el.dataset.w.split('|'):A7HINT,word=L[w%L.length];if(hold>0){hold--;return}
     if(!del){ch++;el.textContent=word.slice(0,ch);if(ch>=word.length){del=true;hold=20}}
-    else{ch--;el.textContent=word.slice(0,Math.max(ch,0))||' ';if(ch<=0){del=false;w=(w+1)%A7HINT.length;hold=3}}},85)}
+    else{ch--;el.textContent=word.slice(0,Math.max(ch,0))||' ';if(ch<=0){del=false;w=(w+1)%60;hold=3}}},85)}
   a7reveal(rm)}
 function a7reveal(rm){const L=document.querySelectorAll('.a7 .a7-pn.on .a7-ev,.a7 .a7-pn.on .a7-ti,.a7 .a7-pn.on .a7-pc,.a7 .a7-pn.on .a7-svc,.a7 .a7-pn.on .a7-row,.a7 .a7-pn.on .a7-empty');
   if(rm||!('IntersectionObserver' in window)){L.forEach(e=>e.classList.add('in'));return}
@@ -6974,7 +6974,7 @@ function a40plans(){const d=P15.d||{},tab=P15.pltab==='biz'?'biz':'you',yr=!!P15
 const NA41_LIVE = true;
 function NA41(){try{return NA41_LIVE||localStorage.getItem('nm.na41')==='1'}catch(e){return NA41_LIVE}}
 function a41head(t,small,sub,tabs,cur,act){return `<div class="a7-hd"><div class="a7-top"><button class="a7-sq a40-bk" data-a="p15back" aria-label="Back">‹</button><span class="a7-where"><small>${small}</small><b>${t}</b><i>${sub}</i></span></div>
-   <button class="a7-search" data-a="p15open" data-v="search"><span class="n32-mg"></span><span>Search <em class="a7-type">${A7HINT[0]}</em></span></button>
+   <button class="a7-search" data-a="p15open" data-v="search"><span class="n32-mg"></span><span>Search <em class="a7-type" data-w="a room|a studio|a shared room|a flat near transit">a room</em></span></button>
    <div class="a7-tabs a41-tabs" role="tablist">${tabs.map(([k,l,p])=>`<button role="tab" data-a="${act}" ${act==='c9ty'?`data-k="${k}"`:`data-k="max" data-v41="${k}"`} class="${k===cur?'on':''}" data-on="${k===cur?1:0}"><img src="${f3(p)}" alt=""><span>${l}</span></button>`).join('')}</div></div>`}
 function a41load(t){return c9wrap(`<div class="a7 a41" data-t="${t}"><div class="a7-hd"><div class="a7-top"><button class="a7-sq a40-bk" data-a="p15back" aria-label="Back">‹</button><span class="a7-where"><small>Loading</small><b>${t==='homes'?'Find a home':'Find work'}</b><i>&nbsp;</i></span></div></div><div class="a7-pn on" data-p="${t}" style="padding:40px 16px">${spinner('Loading')}</div></div>`)}
 function a41rooms(){const l=P15.rooms;if(l===undefined){API.rpc('rooms15',{maxrent:Number(P15.f.max||0)*100}).then(r=>{P15.rooms=r;render()}).catch(()=>{P15.rooms=[];render()});return a41load('homes')}
@@ -6998,7 +6998,7 @@ function a41jobs(){const c=P15.f.jc||'',key='j'+c,l=(P15.jb||{})[key];
   const done=wp&&wp.skills?[wp.skills.length,wp.langs&&wp.langs.length,wp.avail&&wp.avail.length,wp.area,wp.permit].filter(Boolean).length*20:0,city=c9city()||'your city';
   const tabs=`<div class="a7-tabs a41-tabs" role="tablist">${[['','All jobs','briefcase']].concat(JOBCAT15.map(x=>[x,x,A41JP[x]||'briefcase'])).map(([v,t,p])=>`<button role="tab" data-a="p15f" data-k="jc" data-val="${esc(v)}" class="${c===v?'on':''}" data-on="${c===v?1:0}"><img src="${f3(p)}" alt=""><span>${esc(t)}</span></button>`).join('')}</div>`;
   const head=`<div class="a7-hd"><div class="a7-top"><button class="a7-sq a40-bk" data-a="p15back" aria-label="Back">‹</button><span class="a7-where"><small>Jobs in ${esc(city)}</small><b>Find work</b><i>Pay and hours on every job · job seekers never pay</i></span></div>
-   <button class="a7-search" data-a="p15open" data-v="search"><span class="n32-mg"></span><span>Search <em class="a7-type">${A7HINT[0]}</em></span></button>${tabs}</div>`;
+   <button class="a7-search" data-a="p15open" data-v="search"><span class="n32-mg"></span><span>Search <em class="a7-type" data-w="a job|weekend shifts|part-time work|a café job">a job</em></span></button>${tabs}</div>`;
   const prof=`<button class="a7-plus a41-wp" data-a="p15open" data-v="workprof"><img src="${f3('identification_card')}" alt=""><span><small>My work profile${done?` · ${done}% done`:''}</small><b>${done>=100?'Ready: apply to any job in one tap':'Finish it once, then apply in one tap'}</b>${done&&done<100?`<span class="a41-bar"><i style="width:${done}%"></i></span>`:''}</span><u>${done>=100?'Open':'Finish'}</u></button>`;
   const card=j=>`<button class="a41-job" data-a="p15open" data-v="job:${j.id}"><span class="a41-jph">${c9i(c9jobp(j))}</span><span class="a41-jb"><span class="a41-pr"><b>${esc(a4money(j.pay,j.currency))}</b><small>/hour</small></span><b class="a41-nm">${esc(j.title)}</b><small class="a41-ln">${esc(j.employer||'')}${j.area?' · '+esc(j.area):''}${j.hours?' · '+j.hours+' h/week':''}</small>${j.sponsored?'<em class="a41-b">Sponsored</em>':''}${j.mine?`<em class="a41-b g">Your job · ${j.apps} applied</em>`:j.applied?'<em class="a41-b g">Applied</em>':''}</span><u>View</u></button>`;
   const list=l.length?`<div class="a7-sec"><div><h2>${c?esc(c)+' jobs':'Open jobs'}</h2><p>${l.length} ${l.length===1?'job':'jobs'} in ${esc(city)}</p></div></div><div class="a41-jl">${l.map(card).join('')}</div>`
