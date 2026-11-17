@@ -7701,9 +7701,9 @@ function h53rooms(){const l=P15.rooms;if(l===undefined){API.rpc('rooms15',{maxre
   const L=(l||[]).filter(r=>!ty||r.type===ty);
   const seg=`<div class="h53-seg">${[['','All'],['private','Rooms'],['shared','Shared'],['whole','Whole place']].map(([v,t])=>`<button class="${ty===v?'on':''}" data-a="p15f" data-k="h53ty" data-val="${v}">${t}</button>`).join('')}<button data-a="z8q" data-c="Short stay">Short stay</button></div>`;
   const card=(r,i)=>{const ph=r.photos&&r.photos[0]&&PC15()?phUrl15(r.photos[0]):'';let from='';try{from=new Date(r.from).toLocaleDateString(RM_I18N.locale,{day:'numeric',month:'short'})}catch(e){}
-    return `<div class="h53-card" style="animation-delay:${(i*.06).toFixed(2)}s"><div class="h53-ph">${ph?`<img src="${esc(ph)}" alt="" loading="lazy">`:`<img ${a4src('img/p20/room.webp')} alt="" loading="lazy"><span class="h53-cnt">Example photo · owner adds theirs</span>`}${r.sponsored?'<span class="h53-tag">Sponsored</span>':r.top?'<span class="h53-tag">Featured</span>':''}${r.photos&&r.photos.length>1&&PC15()?`<span class="h53-cnt">${r.photos.length} photos</span>`:''}</div>
+    return `<div class="h53-card" style="animation-delay:${(i*.06).toFixed(2)}s"><button class="h53-ph" data-a="p15open" data-v="room53:${r.id}">${ph?`<img src="${esc(ph)}" alt="" loading="lazy">`:`<img ${a4src('img/p20/room.webp')} alt="" loading="lazy"><span class="h53-cnt">Example photo · owner adds theirs</span>`}${r.sponsored?'<span class="h53-tag">Sponsored</span>':r.top?'<span class="h53-tag">Featured</span>':''}${r.photos&&r.photos.length>1&&PC15()?`<span class="h53-cnt">${r.photos.length} photos</span>`:''}</button>
      <div class="h53-bd"><b class="h53-t">${esc(r.title)}</b><small>${esc(r.area||'')}${TY[r.type]?' · '+TY[r.type]:''}${from?' · from '+esc(from):''}</small>${(r.tags||[]).length?`<div class="h53-chips">${r.tags.slice(0,3).map(t=>`<span>${esc(t)}</span>`).join('')}</div>`:''}
-     <div class="h53-row"><span class="h53-pr">${esc(a4money(r.rent,r.currency))}<small> /month</small></span>${r.locked?`<button class="h53-go" data-a="p15open" data-v="plus">See contact</button>`:r.mine?`<button class="h53-go g" data-a="p15taken" data-id="${r.id}">Mark as taken</button>`:''}</div>
+     <div class="h53-row"><span class="h53-pr">${esc(a4money(r.rent,r.currency))}<small> /month</small></span>${r.locked?`<button class="h53-go" data-a="p15open" data-v="plus">See contact</button>`:r.mine?`<button class="h53-go g" data-a="p15taken" data-id="${r.id}">Mark as taken</button>`:`<button class="h53-go" data-a="p15open" data-v="room53:${r.id}">View</button>`}</div>
      ${r.locked?`<small class="h53-nt">Contact and address open with NeuAmigo Plus</small>`:`<div class="h53-ct"><b>${esc(r.address||r.area||'')}</b><small>${esc(r.contact||'')}</small></div>`}</div></div>`};
   const list=L.length?`<p class="h53-lead">${L.length} ${L.length===1?'home':'homes'} in ${esc(city)} · rent shown on every listing</p><div class="h53-list">${L.map(card).join('')}</div>`
     :`<div class="h53-empty"><b>No homes listed here yet</b><small>Tell owners what you need and they message you.</small><button class="h53-go" data-a="p15open" data-v="ask:room">Ask owners</button></div>`;
@@ -7754,6 +7754,27 @@ function h53sell(){const sl=P15.sl;if(sl===undefined||sl===null){if(sl===undefin
   if(!H53_LIVE)return;
   const _f=P15V.food;P15V.food=function(){try{return h53food()}catch(e){console.warn('[h53]',e);return _f.apply(this,arguments)}};
   const _s=P15V.c12sell;P15V.c12sell=function(){try{return h53sell()}catch(e){console.warn('[h53]',e);return _s.apply(this,arguments)}};
+})();
+/* step 3: Room page + Event page */
+const EVP53={meetup:'img/p20/dinner.webp',watch:'img/p19/party.webp',festival:'img/p17/feast.webp',trip:'img/p19/harbour.webp',league:'img/p17/football.webp'};
+function h53room(id){const r=(P15.rooms||[]).find(x=>String(x.id)===String(id));const dk=(typeof a46th==='function'&&a46th()==='dark');
+  if(!r)return c9wrap(h53top('Home')+`<div class="h53-in"><div class="h53-empty"><b>This home is not listed any more</b><small>The owner may have marked it as taken.</small><button class="h53-go" data-a="p15open" data-v="rooms">See other homes</button></div></div></div>`);
+  const TY={private:'Private room',shared:'Shared room',whole:'Whole place'},ph=r.photos&&r.photos[0]&&PC15()?phUrl15(r.photos[0]):'';let from='';try{from=new Date(r.from).toLocaleDateString(RM_I18N.locale,{day:'numeric',month:'short'})}catch(e){}
+  return c9wrap(`<div class="h53 h53d${dk?' dk':''}"><div class="h53-hero">${ph?`<img src="${esc(ph)}" alt="">`:`<img ${a4src('img/p20/room.webp')} alt=""><span class="h53-cnt">Example photo · owner adds theirs</span>`}</div>
+   <div class="h53-top h53-ov"><button class="h53-bk" data-a="p15back" aria-label="Back">Back</button></div>
+   <div class="h53-in h53-up"><div class="h53-card h53-pad"><small class="h53-k">${esc((TY[r.type]||'Home').toUpperCase())}${r.sponsored?' · SPONSORED':''}</small><h1 class="h53-h1">${esc(r.title)}</h1><small class="h53-sub">${esc(r.area||'')}${from?' · from '+esc(from):''}</small>
+     <div class="h53-kv two"><div><small>Rent</small><b>${esc(a4money(r.rent,r.currency))}</b></div><div><small>Free from</small><b>${esc(from||'Now')}</b></div></div>
+     ${(r.tags||[]).length?`<div class="h53-chips">${r.tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div>`:''}</div>
+   <div class="h53-card h53-pad"><b class="h53-t">Contact and address</b>${r.locked?`<small class="h53-sub">They open with NeuAmigo Plus. Then you message the owner directly.</small>`:`<div class="h53-ct" style="border:0;margin-top:6px;padding-top:0"><b>${esc(r.address||r.area||'')}</b><small>${esc(r.contact||'')}</small></div>`}</div>
+   <p class="h53-ex">The owner's own price. NeuAmigo does not check listings: see the place and the papers before you pay anything.</p></div>
+   <div class="h53-bar"><span><small>Owner's price</small><b>${esc(a4money(r.rent,r.currency))} / month</b></span>${r.locked?`<button class="h53-go l" data-a="p15open" data-v="plus">See contact</button>`:r.mine?`<button class="h53-go l g" data-a="p15taken" data-id="${r.id}">Mark as taken</button>`:''}</div></div>`)}
+(function(){
+  if(!H53_LIVE)return;
+  const _o=A.p15open;A.p15open=function(el){const v=String((el&&el.dataset&&el.dataset.v)||'');if(v.indexOf('room53:')===0){P15V[v]=()=>h53room(v.slice(7))}return _o.apply(this,arguments)};
+  const _ed=evDetail15;evDetail15=function(id){const e=evFind(id),h=_ed(id);try{if(!e||e.kind==='league'||h.indexOf('<div class="p15-kv">')<0)return h;
+      const dk=(typeof a46th==='function'&&a46th()==='dark'),inner=h.slice(h.indexOf('<div class="p15-kv">'),h.lastIndexOf('</div></div>'));
+      return p15wrap(`<div class="h53 h53d h53e${dk?' dk':''}"><div class="h53-hero"><img ${a4src(/football|soccer|cricket|basketball|volleyball|run/i.test(e.title||'')?'img/p17/football.webp':(EVP53[e.kind]||'img/p20/dinner.webp'))} alt=""></div><div class="h53-top h53-ov"><button class="h53-bk" data-a="p15back" aria-label="Back">Back</button></div>
+        <div class="h53-in h53-up"><div class="h53-card h53-pad"><small class="h53-k">${esc(String(e.kind||'event').toUpperCase())} · ${esc((e.city||'').toUpperCase())}</small><h1 class="h53-h1">${esc(e.title)}</h1><small class="h53-sub">Hosted by ${esc(e.host||'a member')}</small></div>${inner}</div></div>`)}catch(x){return h}};
 })();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */

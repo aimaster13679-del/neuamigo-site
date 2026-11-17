@@ -4281,3 +4281,27 @@ html.h50on:not(.a46dk) body,html.h50on:not(.a46dk) #app,html.h50on:not(.a46dk) m
 .h53-gc .h53-t{font-size:13.5px}.h53-1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .h53-gc .h53-row{margin-top:auto;padding-top:8px}
 .h53 button.h53-ph{display:block;width:100%;padding:0;border:0}
+.h53d{padding-bottom:150px}
+.h53-hero{height:300px;overflow:hidden;position:relative;background:#E9E6E1}.h53-hero img{width:100%;height:100%;object-fit:cover;display:block}
+.h53-ov{position:absolute;left:0;right:0;top:0;z-index:3}
+.h53-up{margin-top:-48px;position:relative;z-index:2;display:flex;flex-direction:column;gap:10px}
+.h53-pad{padding:16px}
+.h53-k{display:block;font-size:10.5px;font-weight:800;letter-spacing:.09em;color:#1B3463}.h53.dk .h53-k{color:#9DB4F0}
+.h53-h1{font-family:Fraunces,serif;font-size:25px;font-weight:500;line-height:1.15;margin:5px 0 4px;letter-spacing:0}
+.h53-sub{display:block;font-size:12.5px;color:#5A6680;font-weight:600}.h53.dk .h53-sub{color:#A5ADBD}
+.h53-kv,.h53e .p15-kv{display:grid!important;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.h53-kv>div,.h53e .p15-kv>div{background:#F2F4F8;border-radius:12px;padding:9px 10px;min-width:0}
+.h53.dk .h53-kv>div,.h53e.dk .p15-kv>div{background:rgba(255,255,255,.07)}
+.h53-kv small,.h53e .p15-kv small{display:block;font-size:10.5px;color:#5A6680;font-weight:700}
+.h53-kv b,.h53e .p15-kv b{display:block;font-size:14px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.h53-bar{position:fixed;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom) + 84px);z-index:20;border-radius:20px;background:rgba(255,255,255,.96);border:1px solid rgba(20,40,80,.08);box-shadow:0 10px 24px -12px rgba(20,40,80,.4);padding:10px 10px 10px 16px;display:flex;align-items:center;gap:10px}
+.h53.dk .h53-bar{background:rgba(24,26,32,.96);border-color:rgba(255,255,255,.12)}
+.h53-bar span{flex:1;min-width:0}.h53-bar small{display:block;font-size:11.5px;color:#5A6680;font-weight:600}.h53-bar b{display:block;font-size:18px;font-weight:800;white-space:nowrap}
+.h53-go.l{height:46px!important;padding:0 18px!important;font-size:14px!important;border-radius:14px!important}
+.h53e .p15-kv{background:rgba(255,255,255,.92);border:1px solid rgba(20,40,80,.07);border-radius:18px;padding:12px;margin-top:0}
+.h53e.dk .p15-kv{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1)}
+.h53e .p15-g{border-radius:18px!important}
+.h53d{position:relative}
+.h53-hero .h53-cnt{bottom:auto;top:calc(env(safe-area-inset-top) + 18px)}
+.h53-kv.two{grid-template-columns:1fr 1fr}
+.h53e .p15-kv b{white-space:normal;overflow:visible;line-height:1.25}
