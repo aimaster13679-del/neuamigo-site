@@ -3876,7 +3876,7 @@ function home15(){
   </div>`)}
 function settle15(){
   const t=[['bed2','mint','Find a Room','Rooms and roommates, by area and budget','rooms'],['plane2','lem','Travel Buddy for Parents','A helper on the same flight','buddy'],
-    ['brief','fern','Job Referral','Ask people inside the company','referral'],['shield2','mint','Trusted Experts','Agents, consultants, movers, cleaners','experts'],['tag2','lem','Moving-Out Sale','Buy and sell when people move','sale'],['brief','mint','Jobs','Pay and hours on every job','jobs'],['tag2','fern','Get up to 5 prices','Movers, cleaning, tax, insurance and more','ask:service']];
+    ['brief','fern','Job Referral','Ask people inside the company','referral'],['shield2','mint','Trusted Experts','Agents, consultants, movers, cleaners','experts'],['tag2','lem','Moving-Out Sale','Buy and sell when people move','sale'],['brief','mint','Jobs','Pay and hours on every job','jobs'],['tag2','fern','Ask 6 businesses','Movers, cleaning, tax, insurance and more','ask:service']];
   return p15wrap(p15top('Settle In')+`<p class="p15-sub">Everything for your first months in a new country.</p><div class="p15-bento">${t.map((x,i)=>p15tile(x[0],x[1],x[2],x[3],'p15open" data-v="'+x[4],'').replace('p15-t"','p15-t'+(i===0?' span2':'')+'"')).join('')}</div>`)}
 function events15(){
   const t=[['heart','mint','Friend Meetups','Dinner tables, walks, games','meetups'],['tv2','lem','Watch Parties','Big matches on a big screen','watch'],['party','fern','Festivals','Diwali, Eid, Lunar New Year, Christmas','festival'],
@@ -4243,7 +4243,7 @@ function sale15v(){const l=P15.sl;if(l===undefined){API.rpc('sales15',{}).then(r
 function expPlan15(){const f=P15.f;f.ek2=f.ek2||'expert';const b=((P15.d&&P15.d.biz)||[]).find(x=>x.kind===f.ek2),me=S.me||{};
   return p15wrap(p15top('Expert or Agent',true)+chips15('ek2',[['expert','I am an expert'],['agent','I am a rental agent']],f.ek2)+
   `<div class="p15-g p15-form"><label>Business name</label><input id="p15-xn" maxlength="60" value="${esc(f.xn||(b&&b.name)||'')}">
-   ${f.ek2==='expert'?`<label>What you do</label>${chips15('xc',[['Used cars','Used cars'],['Immigration','Visa help'],['Tax','Tax'],['Insurance','Insurance'],['Cleaning','Cleaning'],['Small jobs','Repairs'],['Driving','Driving'],['Translation','Translation'],['Childcare','Childcare'],['Airport','Airport ride'],['Phone','Phone plan']],f.xc||'Immigration')}`:''}
+   ${f.ek2==='expert'?`<label>What you do</label>${chips15('xc',[['Used cars','Used cars'],['Immigration','Visa help'],['Tax','Tax'],['Insurance','Insurance'],['Cleaning','Cleaning'],['Small jobs','Repairs'],['Driving','Driving'],['Translation','Translation'],['Childcare','Childcare'],['Airport','Airport ride'],['Phone','Phone plan'],['Short stay','Short stays'],['Catering','Home food'],['College','College'],['Home sale','Home sales'],['Used phones','Used phones']],f.xc||'Immigration')}`:''}
    <label>Licence number (optional · shows as shared by you, not checked by NeuAmigo)</label><input id="p15-xl" maxlength="40" value="${esc(f.xl||'')}">
    <label>One line about you</label><input id="p15-xa" maxlength="160" value="${esc(f.xa||'')}">
    ${f.ek2==='expert'?`<label>Your services and prices (${esc(cur15())})</label>${[0,1,2].map(i=>`<div class="p15-svc"><input id="p15-s${i}t" maxlength="80" placeholder="Service ${i+1}" value="${esc(f['s'+i+'t']||'')}"><input id="p15-s${i}p" inputmode="numeric" maxlength="6" placeholder="Price" value="${esc(f['s'+i+'p']||'')}"></div>`).join('')}`:''}
@@ -4256,7 +4256,7 @@ function expPlan15(){const f=P15.f;f.ek2=f.ek2||'expert';const b=((P15.d&&P15.d.
    ${prepay15(f.ek2==='expert'?(f.xp==='pro'?'expert_pro':f.xp==='elite'?'expert_elite':'expert_plan'):f.ap==='pro'?'agent_pro':'agent_plan')}
    ${p15launch([f.ek2==='expert'?'expert_plan':'agent_plan'],f.ek2==='expert'?'experts':'agents')}
    <button class="p15-btn" data-a="p15expBuy"${P15.busy==='exp'?' disabled':''}>${P15.busy==='exp'?'Starting…':trial15()&&!(b&&planOn15(b))?'Start 14 days free · no card':`Start ${f.ek2==='expert'?(f.xp==='pro'?'Expert Pro':f.xp==='elite'?'Expert Elite':'Expert Plan'):f.ap==='pro'?'Agent Pro':'Agent Plan'} · ${p15price(f.ek2==='expert'?(f.xp==='pro'?'expert_pro':f.xp==='elite'?'expert_elite':'expert_plan'):f.ap==='pro'?'agent_pro':'agent_plan')} a month`}</button>
-   ${b&&planOn15(b)?`<button class="p15-g p15-row" data-a="p15open" data-v="leads"><span class="p15-b mint">${ic('chat')}</span><span class="tx"><b>People who asked you</b><small>Only members who tapped Connect me</small></span>${ic('chev2')}</button>${f.ek2==='expert'?`<button class="p15-g p15-row" data-a="p15open" data-v="inbox:expert"><span class="p15-b lem">${ic('tag2')}</span><span class="tx"><b>New requests · send your price</b><small>Paid from your request wallet · max 5 businesses each</small></span>${ic('chev2')}</button><button class="p15-btn ghost" data-a="p15xTop" data-id="${b.id}">Top Spot for 30 days · ${p15price('expert_top')}</button>`:`<button class="p15-g p15-row" data-a="p15open" data-v="inbox:agent"><span class="p15-b lem">${ic('bed2')}</span><span class="tx"><b>Room Wanted near you</b><small>${p15price('room_lead')} per request · max 5 agents each</small></span>${ic('chev2')}</button>`}`:''}`)}
+   ${b&&planOn15(b)?`<button class="p15-g p15-row" data-a="p15open" data-v="leads"><span class="p15-b mint">${ic('chat')}</span><span class="tx"><b>People who asked you</b><small>Only members who tapped Connect me</small></span>${ic('chev2')}</button>${f.ek2==='expert'?`<button class="p15-g p15-row" data-a="p15open" data-v="inbox:expert"><span class="p15-b lem">${ic('tag2')}</span><span class="tx"><b>New requests · send your price</b><small>Paid from your request wallet · goes to 6 at once, 10 minutes each</small></span>${ic('chev2')}</button><button class="p15-btn ghost" data-a="p15xTop" data-id="${b.id}">Top Spot for 30 days · ${p15price('expert_top')}</button>`:`<button class="p15-g p15-row" data-a="p15open" data-v="inbox:agent"><span class="p15-b lem">${ic('bed2')}</span><span class="tx"><b>Room Wanted near you</b><small>${p15price('room_lead')} per request · goes to 6 at once, 10 minutes each</small></span>${ic('chev2')}</button>`}`:''}`)}
 function leads15v(){const b=((P15.d&&P15.d.biz)||[]).find(x=>x.kind===(P15.f.ek2||'expert'));const l=P15.ld;
   if(!b)return p15wrap(p15top('People who asked',true));if(l===undefined){API.rpc('leads15',{bid:b.id}).then(r=>{P15.ld=r;render()}).catch(()=>{P15.ld=[];render()});return p15wrap(p15top('People who asked',true)+spinner('Loading'))}
   return p15wrap(p15top('People who asked',true)+(l.length?`<div class="p15-g">${l.map(x=>`<div class="p15-li"><span class="p15-b mint">${ic('user')}</span><span class="tx"><b>${esc(x.name)}</b><small>${esc(x.email||'')}${x.note?' · '+esc(x.note):''}</small></span></div>`).join('')}</div>`:`<div class="p15-g p15-note">${ic('chat')} Nobody yet. Members see your page in Trusted Experts.</div>`))}
@@ -4326,7 +4326,7 @@ function svc15v(){const cat=P15.f.sc||'',key='services'+cat,l=(P15.ex||{})[key];
      ${b.locked&&!(b.services&&b.services.length)?`<button class="p15-unlock" data-a="p15open" data-v="host">${ic('lock2')} Prices and booking open for hosts and Plus members</button>`:
       `${(b.services||[]).map(s=>`<div class="p15-li"><span class="tx"><b>${esc(s.title)}</b>${s.detail?`<small>${esc(s.detail)}</small>`:''}</span><b>${money(s.price,s.currency)}</b></div>`).join('')}<button class="p15-btn" data-a="p15svcAsk" data-id="${b.id}">${ic('chat')} Request booking</button><p class="p15-ex">Your name and email go to this business only after you tap Request booking. You agree the price with them directly.</p>`}</div>`).join(''):
    `<div class="p15-g p15-note">${ic('store2')} No event services in your city yet. They join every week.</div>`)+
-   `<button class="p15-g p15-row" data-a="p15open" data-v="ask:quote"><span class="p15-b lem">${ic('party')}</span><span class="tx"><b>Get 5 quotes</b><small>Tell us your party once, up to 5 businesses reply</small></span>${ic('chev2')}</button>
+   `<button class="p15-g p15-row" data-a="p15open" data-v="ask:quote"><span class="p15-b lem">${ic('party')}</span><span class="tx"><b>Ask 6 at once</b><small>Tell us your party once, 6 businesses get it</small></span>${ic('chev2')}</button>
    <button class="p15-g p15-row" data-a="p15open" data-v="svcplan"><span class="p15-b fern">${ic('store2')}</span><span class="tx"><b>Do you run an event business?</b><small>Services plan from ${p15price('services_plan')} a month</small></span>${ic('chev2')}</button>`)}
 function svcPlan15(){const f=P15.f,b=bizOf15('services'),me=S.me||{};
   return p15wrap(p15top('Event Services Plan',true)+`<div class="p15-g p15-hero ph">${ph15('Event Services')}<small>Hosts in your city see your prices and send you booking requests.</small></div>
@@ -4342,7 +4342,7 @@ function svcPlan15(){const f=P15.f,b=bizOf15('services'),me=S.me||{};
   <div class="p15-g p15-note">${ic('tick2')}<span>Customers pay you directly, 100% yours. Shown to every Weekend Club organizer in your city.</span></div>
   <button class="p15-btn" data-a="p15svcBuy"${P15.busy==='svc'?' disabled':''}>${P15.busy==='svc'?'Starting…':`${planOn15(b)?'Save and add time':'Start'} · ${p15price(planKey15('services_plan'))}`}</button>
   ${planOn15(b)?`<div class="p15-g p15-note">${ic('tick2')} Your plan is active until ${esc(until15(b.planUntil))}.</div>
-   <button class="p15-g p15-row" data-a="p15open" data-v="inbox:services"><span class="p15-b lem">${ic('party')}</span><span class="tx"><b>Quote requests near you</b><small>${p15price('quote_lead')} per request · max 5 businesses each</small></span>${ic('chev2')}</button>
+   <button class="p15-g p15-row" data-a="p15open" data-v="inbox:services"><span class="p15-b lem">${ic('party')}</span><span class="tx"><b>Quote requests near you</b><small>${p15price('quote_lead')} per request · goes to 6 at once, 10 minutes each</small></span>${ic('chev2')}</button>
    ${['venue_plan','services_pro'].includes(b.plan)?`<button class="p15-g p15-row" data-a="p15open" data-v="venuecal"><span class="p15-b mint">${ic('cal')}</span><span class="tx"><b>Free dates calendar</b><small>Tap a date to block it</small></span>${ic('chev2')}</button>`:''}
    <button class="p15-g p15-row" data-a="p15open" data-v="svcleads"><span class="p15-b mint">${ic('chat')}</span><span class="tx"><b>Booking requests</b><small>Hosts who tapped Request booking</small></span>${ic('chev2')}</button>
    <button class="p15-btn ghost" data-a="p15xTop" data-id="${b.id}">Top Spot for 30 days · ${p15price('services_top')}</button>`:''}
@@ -4821,13 +4821,13 @@ function pts15card(){const d=P15.d||{};if(!d.club)return '';const p=P15.pt;
 })();
 
 /* ---------- Week 2: one REQUEST flow for three plans (his "haan shuru karo" 11 Nov 2026 20:23; mocks na-plan5, na-plan7, na-plan8) ----------
-   A member posts once (taps, no typing): Room Wanted (Plan 5), Join as a player (Plan 7), Get 5 quotes (Plan 8).
+   A member posts once (taps, no typing): Room Wanted (Plan 5), Join as a player (Plan 7), Ask 6 at once (Plan 8).
    It reaches up to 5 businesses with a plan, Pro first, then the next 5 every 20 minutes; a business pays per request to see the contact;
    a wrong or fake request = one request credit back. Nobody else sees the request. NeuAmigo checks no one (platform only). */
 const ASK15={
   room:{t:'Room Wanted',biz:'agent',ic:'bed2',sub:'Agents and landlords with a plan send you homes that fit.',who:'agents'},
   player:{t:'Join as a player',biz:'league',ic:'ball2',sub:'League organizers put you in a team. Your name stays hidden until you accept.',who:'organizers'},
-  quote:{t:'Get 5 quotes',biz:'services',ic:'party',sub:'Tell us your party once. Up to 5 businesses reply with their price.',who:'businesses'}};
+  quote:{t:'Ask 6 at once',biz:'services',ic:'party',sub:'Tell us your party once. 6 businesses get it at once.',who:'businesses'}};
 let askSum15=(k,d)=>{d=d||{};const c=cur15();
   if(k==='room')return [d.type,d.beds?d.beds+' bed':'',d.budget?'up to '+money(Number(d.budget)*100,d.cur||c):'',d.move?'move in '+d.move:'',(d.tags||[]).join(', ')].filter(Boolean).join(' · ');
   if(k==='player')return [d.sport,d.level,(d.when||[]).join(', '),d.area].filter(Boolean).join(' · ');
@@ -4858,13 +4858,13 @@ function askForm15(k){const a=ASK15[k];if(!a)return soon15('');let f=P15.q;if(!f
      <label>Date</label>${chips15q('date',wkDays15(),f.date)}
      <label>Budget</label>${chips15q('budget',Object.keys(B),f.budget,B)}`}
   return p15wrap(p15top(a.t,true)+`<p class="p15-sub">${esc(a.sub)}</p><div class="p15-g p15-form">${body}</div>
-   <div class="p15-g p15-note">${ic('shield2')}<span>Nobody else sees your request. It goes to up to 5 ${a.who} in ${esc((S.me||{}).city||'your city')}, then closes. NeuAmigo does not check anyone: meet in public places and share documents only when you choose.</span></div>
-   <button class="p15-btn" data-a="p15askPost" data-k="${k}"${P15.busy==='ask'?' disabled':''}>${P15.busy==='ask'?'Sending…':k==='quote'?'Send to 5 businesses':k==='room'?'Send my Room Wanted':'Find me a team'}</button>
+   <div class="p15-g p15-note">${ic('shield2')}<span>Nobody else sees your request. It goes to 6 ${a.who} in ${esc((S.me||{}).city||'your city')} at once. Each has 10 minutes to take it, then the next one gets it. NeuAmigo does not check anyone: meet in public places and share documents only when you choose.</span></div>
+   <button class="p15-btn" data-a="p15askPost" data-k="${k}"${P15.busy==='ask'?' disabled':''}>${P15.busy==='ask'?'Sending…':k==='quote'?'Send to 6 businesses':k==='room'?'Send my Room Wanted':'Find me a team'}</button>
    <button class="p15-g p15-row" data-a="p15open" data-v="myasks"><span class="p15-b mint">${ic('cal')}</span><span class="tx"><b>My requests</b><small>See who answered</small></span>${ic('chev2')}</button>`)}
 function myAsks15(){const l=P15.ma;if(l===undefined){API.rpc('my_asks15',{}).then(r=>{P15.ma=r||[];render()}).catch(()=>{P15.ma=[];render()});return p15wrap(p15top('My requests',true)+spinner('Loading'))}
   const ST={open:['Open',''],full:['5 answered · closed','y'],closed:['Closed','y']};
   return p15wrap(p15top('My requests',true)+(l.length?l.map(a=>`<div class="p15-g p15-pad"><div class="p15-rh"><span class="tx"><b>${esc(ASK15[a.kind].t)}</b><small>${esc(askSum15(a.kind,a.data))}</small></span><span class="p15-pill${(ST[a.status]||[])[1]?' y':''}">${esc((ST[a.status]||[a.status])[0])}</span></div>
-    <small class="p15-dim">Reached ${a.reached} ${ASK15[a.kind].who} · ${a.connected.length} of 5 connected</small>
+    <small class="p15-dim">Reached ${a.reached} ${ASK15[a.kind].who} · ${a.connected.length} of 6 connected</small>
     ${a.connected.length?`<div class="p15-list">${a.connected.map(b=>`<div class="p15-li"><span class="p15-b mint">${ic('store2')}</span><span class="tx"><b>${esc(b.name)}</b><small>${b.rating?Number(b.rating).toFixed(1)+' ★ · ':''}will contact you${PC15()?' here or':''} by email</small></span>${b.owner?chatBtn15('ask',a.id,b.owner,'Chat'):''}</div>`).join('')}</div>`:''}
     ${a.status==='open'?`<button class="p15-btn ghost" data-a="p15askClose" data-id="${a.id}">Close this request</button>`:''}</div>`).join(''):
     `<div class="p15-g p15-note">${ic('cal')} No requests yet.</div>`)+
@@ -4872,17 +4872,17 @@ function myAsks15(){const l=P15.ma;if(l===undefined){API.rpc('my_asks15',{}).the
 /* business inbox: requests near you (Pro sees them first); connect = pay per request */
 const ASKBIZ15={agent:'room',league:'player',services:'quote'};
 function inbox15(kind){const b=bizOf15(kind),k=ASKBIZ15[kind],a=ASK15[k];if(!a)return soon15('');const l=(P15.ib||{})[kind];
-  if(!b)return p15wrap(p15top(a.t,true)+`<div class="p15-g p15-empty"><b>Start a plan first</b><small>Requests go only to businesses with an active plan.</small></div>`);
-  if(l===undefined){API.rpc('asks_for15',{bid:b.id}).then(r=>{P15.ib=Object.assign(P15.ib||{},{[kind]:r||{asks:[]}});render()}).catch(()=>{P15.ib=Object.assign(P15.ib||{},{[kind]:{asks:[]}});render()});return p15wrap(p15top(a.t,true)+spinner('Loading'))}
-  if(!l.plan)return p15wrap(p15top(a.t,true)+`<div class="p15-g p15-empty"><b>Your plan has ended</b><small>Renew it to see new requests.</small></div>`);
-  const pk=k==='room'?'room_lead':k==='player'?'player_lead':'quote_lead',now=Date.now(),lat=P15.d&&P15.d.later&&P15.d.later[pk];
+  if(!b)return p15wrap(p15top('Requests near you',true)+`<div class="p15-g p15-empty"><b>Start a plan first</b><small>Requests go only to businesses with an active plan.</small></div>`);
+  if(l===undefined){API.rpc('asks_for15',{bid:b.id}).then(r=>{P15.ib=Object.assign(P15.ib||{},{[kind]:r||{asks:[]}});render()}).catch(()=>{P15.ib=Object.assign(P15.ib||{},{[kind]:{asks:[]}});render()});return p15wrap(p15top('Requests near you',true)+spinner('Loading'))}
+  if(!l.plan)return p15wrap(p15top('Requests near you',true)+`<div class="p15-g p15-empty"><b>Your plan has ended</b><small>Renew it to see new requests.</small></div>`);
+  const pk=l.price||(k==='room'?'room_lead':k==='player'?'player_lead':'quote_lead'),now=Date.now(),lat=P15.d&&P15.d.later&&P15.d.later[pk];
   const left=t=>{const m=Math.max(0,Math.round((new Date(t)-now)/6e4));return m>=60?Math.floor(m/60)+' h '+(m%60)+' min':m+' min'};
-  return p15wrap(p15top(a.t,true)+`<p class="p15-sub">New requests in ${esc(b.city||(S.me||{}).city||'')}. Each one reaches at most 5 ${a.who}, then closes. ${p15price(pk)} per request${lat?` (later ${money(lat,P15.d.cur)})`:''}.</p>`+
-   ((l.asks||[]).length?l.asks.map(x=>`<div class="p15-g p15-pad p15-ask${x.open||x.mine?'':' wait'}"><div class="p15-rh"><span class="tx"><b>${esc(askSum15(x.kind,x.data))}</b><small>${esc(new Date(x.createdAt).toLocaleString(RM_I18N.locale,{weekday:'short',hour:'numeric',minute:'2-digit'}))}</small></span>${!x.mine&&typeof askhCd==='function'?askhCd(new Date(new Date(x.createdAt).getTime()+864e5).toISOString()):''}${x.mine?`<span class="p15-pill">${ic('tick2')} Connected</span>`:x.open?`<span class="p15-pill">${x.paid} of 5</span>`:`<span class="p15-pill y">${ic('clock')} opens in ${left(x.openAt)}</span>`}</div>
+  return p15wrap(p15top('Requests near you',true)+`<p class="p15-sub">New requests in ${esc(b.city||(S.me||{}).city||'')}. Each request goes to 6 ${a.who} at once. You have 10 minutes to take it, then it moves to the next one. Pay only when you take it: ${p15price(pk)} per request${lat?` (later ${money(lat,P15.d.cur)})`:''}.</p>`+
+   ((l.asks||[]).length?l.asks.map(x=>`<div class="p15-g p15-pad p15-ask${x.open||x.mine?'':' wait'}"><div class="p15-rh"><span class="tx"><b>${esc(askSum15(x.kind,x.data))}</b><small>${esc(new Date(x.createdAt).toLocaleString(RM_I18N.locale,{weekday:'short',hour:'numeric',minute:'2-digit'}))}</small></span>${''}${x.mine?`<span class="p15-pill">${ic('tick2')} Connected</span>`:x.open?`<span class="p15-pill p15-cd" data-end="${esc(x.endsAt||'')}">${left(x.endsAt||x.openAt)} left</span>`:`<span class="p15-pill y">${ic('clock')} opens in ${left(x.openAt)}</span>`}</div>
      ${x.mine?`<div class="p15-contact">${ic('user')} ${esc((x.contact&&x.contact.name)||'')}<br>${ic('chat')} ${esc((x.contact&&x.contact.email)||'')}</div>
        ${chatBtn15('ask',x.id,'','Chat in app')}${x.reported?`<small class="p15-dim">Reported · one request credit added</small>`:`<button class="p15-chip" data-a="p15askRep" data-id="${x.id}" data-k="${kind}">Wrong or fake? Report it, get a credit</button>`}`:
-      x.open?`<div class="p15-bar"><i style="width:${x.paid*20}%"></i></div>${x.nextWave&&new Date(x.nextWave)-now<864e5?`<small class="p15-dim">Next 5 ${a.who} see it in ${left(x.nextWave)}</small>`:''}<button class="p15-btn" data-a="p15askBuy" data-id="${x.id}" data-k="${kind}"${P15.busy===x.id?' disabled':''}>${P15.busy===x.id?'Connecting…':`Connect · ${p15price(pk)}`}</button>`:
-      `<small class="p15-dim">${/pro$/.test(b.plan||'')?'':'Pro plans see new requests first. '}You can connect when it opens for you.</small>`}</div>`).join(''):
+      x.open?`<div class="p15-bar"><i style="width:${Math.round(x.paid*100/6)}%"></i></div><small class="p15-dim">${x.paid} of 6 took it so far</small><button class="p15-btn" data-a="p15askBuy" data-id="${x.id}" data-k="${kind}"${P15.busy===x.id?' disabled':''}>${P15.busy===x.id?'Connecting…':`Connect · ${p15price(pk)}`}</button>`:
+      `<small class="p15-dim">${/pro$/.test(b.plan||'')?'':'Pro plans see new requests first. '}It opens for you at 8 am your time.</small>`}</div>`).join(''):
     `<div class="p15-g p15-note">${ic('cal')} No requests right now. New ones show here as soon as they reach you.</div>`)+
    `<p class="p15-ex">You get the member's name and email after you connect. You agree everything with them directly; NeuAmigo is only the meeting place.</p>`)}
 /* Venue Partner calendar: tap a date to block it (booked) or open it again */
@@ -4912,13 +4912,13 @@ Object.assign(P15V,{myasks:myAsks15,venuecal:venueCal15});
       if(k==='quote'&&!(q.need||[]).length){toast('Please pick what you need.','info');return}
       if(k==='player'&&!(q.when||[]).length){toast('Please pick when you can play.','info');return}
       q.cur=cur15();P15.busy='ask';render();
-      try{await API.rpc('ask_post15',{k,d:q});P15.q=null;P15.ma=undefined;P15.v='myasks';toast((window.__askhSent&&window.__askhSent(k,q))||`Sent. It reaches up to 5 ${ASK15[k].who} now.`,'tick2')}
+      try{await API.rpc('ask_post15',{k,d:q});P15.q=null;P15.ma=undefined;P15.v='myasks';toast((window.__askhSent&&window.__askhSent(k,q))||`Sent to 6 ${ASK15[k].who} near you. Each has 10 minutes to reply.`,'tick2')}
       catch(e){const m=em15(e);toast(m.includes('three')?'You already have 3 open requests of this kind.':m.includes('city')?'Please add your city first.':'Could not send. Please try again.','info')}
       P15.busy='';render()},
     async p15askClose(el){try{await API.rpc('ask_close15',{aid:el.dataset.id});P15.ma=undefined;toast('Closed. No new businesses will see it.','tick2')}catch(e){toast('Could not close. Please try again.','info')}render()},
     async p15askBuy(el){if(P15.busy)return;const kind=el.dataset.k,b=bizOf15(kind);if(!b)return;P15.busy=el.dataset.id;render();
       try{await API.rpc('ask_buy15',{aid:el.dataset.id,bid:b.id});P15.ib[kind]=undefined;toast('Connected. Their name and email are open now.','tick2')}
-      catch(e){const m=em15(e);P15.ib[kind]=undefined;toast(m.includes('request closed')?'5 businesses already connected. This request is closed.':m.includes('not open for you')?'This request opens for you a little later.':m.includes('not open')?'Payments open soon.':'Could not connect. Please try again.','info')}
+      catch(e){const m=em15(e);P15.ib[kind]=undefined;toast(m.includes('request closed')?'6 businesses already took it. This request is closed.':m.includes('time over')?'Your 10 minutes ended. It went to the next business.':m.includes('not open for you')?'This request opens for you a little later.':m.includes('not open')?'Payments open soon.':'Could not connect. Please try again.','info')}
       P15.busy='';render()},
     async p15askRep(el){if(!confirm15('Report this request as wrong or fake? You get one request credit back.'))return;const kind=el.dataset.k,b=bizOf15(kind);
       try{await API.rpc('ask_report15',{aid:el.dataset.id,bid:b.id,why:'wrong or fake'});P15.ib[kind]=undefined;toast('Thank you. One request credit is added.','tick2')}catch(e){toast(em15(e).includes('48')?'Reports are possible within 48 hours.':'Could not report. Please try again.','info')}render()},
@@ -4935,12 +4935,12 @@ Object.assign(P15V,{myasks:myAsks15,venuecal:venueCal15});
 })();
 
 /* ---------- Week 3 (his "haan shuru karo" 11 Nov 2026 20:23; mocks na-plan9, na-jobs, na-plan10, na-plan11) ----------
-   Plan 9 request wallet ("Get up to 5 prices"), Plan 12 Jobs (job seekers never charged, pay + hours on every job),
+   Plan 9 request wallet ("Ask 6 businesses"), Plan 12 Jobs (job seekers never charged, pay + hours on every job),
    Plan 10 Moving-Out Seller (buyer pays the seller at pick-up), Plan 11 Ad Spot by the week (checked first, always "Sponsored").
    Platform only: NeuAmigo checks no one; documents show as shared by the member. */
 const SVCCAT15=[['Movers','truck'],['Cleaning','home2'],['Tax','chart'],['Insurance','shield2'],['Small jobs','key'],['Immigration','plane2']];
 const LEADK15={Immigration:'lead_imm',Tax:'lead_tax',Insurance:'lead_tax',Movers:'lead_move',Cleaning:'lead_move','Small jobs':'lead_small'};
-ASK15.service={t:'Get up to 5 prices',biz:'expert',ic:'tag2',sub:'Movers, cleaning, tax, insurance, small jobs, immigration. Up to 5 businesses send their price.',who:'businesses'};
+ASK15.service={t:'Ask 6 businesses',biz:'expert',ic:'tag2',sub:'Movers, cleaning, tax, insurance, small jobs, immigration. 6 businesses get it at once.',who:'businesses'};
 ASKBIZ15.expert='service';
 const _askSum0=askSum15;askSum15=(k,d)=>k==='service'?[d&&d.cat,d&&d.what,d&&d.when,d&&d.dist].filter(Boolean).join(' · '):_askSum0(k,d);
 const _askForm0=askForm15;askForm15=function(k){if(k!=='service')return _askForm0(k);const a=ASK15.service;let f=P15.q;if(!f||f.k!==k)f=P15.q={k};f.cat=f.cat||'Movers';
@@ -4951,8 +4951,8 @@ const _askForm0=askForm15;askForm15=function(k){if(k!=='service')return _askForm
    <label>${f.cat==='Movers'||f.cat==='Cleaning'?'How big?':'What exactly?'}</label>${chips15q('what',W,f.what)}
    <label>When?</label>${chips15q('when',['This week',...wkDays15().slice(0,2),'Flexible'],f.when)}
    ${f.cat==='Movers'?`<label>Distance</label>${chips15q('dist',['Same city','Other city'],f.dist||'Same city')}`:''}</div>
-   <div class="p15-g p15-note">${ic('shield2')}<span>Only the businesses who take your request see it, at most 5. You pick one and pay them directly. NeuAmigo does not check any business: ask for their licence or insurance when it matters.</span></div>
-   <button class="p15-btn" data-a="p15askPost" data-k="service"${P15.busy==='ask'?' disabled':''}>${P15.busy==='ask'?'Sending…':'Get up to 5 prices'}</button>
+   <div class="p15-g p15-note">${ic('shield2')}<span>Only the businesses who take your request see it, at most 6. You pick one and pay them directly. NeuAmigo does not check any business: ask for their licence or insurance when it matters.</span></div>
+   <button class="p15-btn" data-a="p15askPost" data-k="service"${P15.busy==='ask'?' disabled':''}>${P15.busy==='ask'?'Sending…':'Ask 6 businesses'}</button>
    <button class="p15-g p15-row" data-a="p15open" data-v="myasks"><span class="p15-b mint">${ic('cal')}</span><span class="tx"><b>My requests and prices</b><small>Prices show here as they come</small></span>${ic('chev2')}</button>`)};
 /* the member's prices: shown inside My requests, cheapest first */
 function priceRows15(a){return (a.connected||[]).filter(b=>b.price).map(b=>`<div class="p15-li"><span class="p15-b mint">${ic('store2')}</span><span class="tx"><b>${esc(b.name)}</b><small>${b.rating?Number(b.rating).toFixed(1)+' ★ · ':''}${esc((b.included||[]).join(' · '))}</small></span><b>${money(b.price,b.currency)}</b></div>`).join('')}
@@ -5060,7 +5060,7 @@ function sale15v2(){const l=P15.sl;if(l===undefined){API.rpc('sales15',{}).then(
     `<div class="p15-g p15-note">${ic('tag2')} Nothing for sale in your city right now.</div>`)+
    `<div class="p15-g p15-note">${ic('shield2')}<span>Meet at the home, in daylight. Pay the seller at pick-up. NeuAmigo never holds this money and does not check sellers.</span></div>
    <button class="p15-g p15-row" data-a="p15open" data-v="mysale"><span class="p15-b fern">${ic('home2')}</span><span class="tx"><b>Leaving soon? Sell your home in a day</b><small>One item ${p15price('sale_one')} · Whole Home ${p15price('sale_home')}</small></span>${ic('chev2')}</button>
-   <button class="p15-g p15-row" data-a="p15open" data-v="ask:service"><span class="p15-b mint">${ic('truck')}</span><span class="tx"><b>Need movers?</b><small>Get up to 5 prices</small></span>${ic('chev2')}</button>`)}
+   <button class="p15-g p15-row" data-a="p15open" data-v="ask:service"><span class="p15-b mint">${ic('truck')}</span><span class="tx"><b>Need movers?</b><small>Ask 6 businesses</small></span>${ic('chev2')}</button>`)}
 function mySale15(){const m=P15.ms;if(m===undefined){API.rpc('my_sale15',{}).then(r=>{P15.ms=r||{};render()}).catch(()=>{P15.ms={};render()});return p15wrap(p15top('Sell before you leave',true)+spinner('Loading'))}
   const p=m.plan,on=p&&new Date(p.until)>new Date(),f=P15.f,cur=(P15.d&&P15.d.cur)||cur15();
   if(!on){f.sp2=f.sp2||'sale_home';f.lv=f.lv||days15()[13][0];f.ta=f.ta||'900';
@@ -5230,7 +5230,7 @@ const PREM15_LIVE = false;
 const PAL15 = 'A'; /* colour set he picks: A Emerald Night, B Ocean & Coral, C Cobalt & Lime */
 function PREM15(){try{return PREM15_LIVE||localStorage.getItem('nm.p15prem')==='1'}catch(e){return PREM15_LIVE}}
 /* clear names: old -> new (tile titles and page titles) */
-const NAME15={'Find a Room':'Find a Home','Jobs':'Find a Job','Get up to 5 prices':'Get 5 Quotes','Trusted Experts':'Find an Expert','Moving-Out Sale':'Buy & Sell Used',
+const NAME15={'Find a Room':'Find a Home','Jobs':'Find a Job','Ask 6 businesses':'Ask 6 businesses','Trusted Experts':'Find an Expert','Moving-Out Sale':'Buy & Sell Used',
   'Travel Buddy for Parents':'Flight Helper for Parents','Job Referral':'Get a Job Referral','Friend Meetups':'Meet New Friends','Watch Parties':'Watch Matches Together',
   'Festivals':'Festivals & Culture Nights','Sports Leagues':'Play in a League','Post a Room':'List your home','Pick your seats':'Choose your seats'};
 /* what each service category means, in plain words (the saved value stays the same) */
@@ -5255,7 +5255,7 @@ let BK15=0;
 
 /* ---------- premium hubs (mock until ok) ---------- */
 const hubHead15=(t,s)=>`<div class="p15-hub"><span class="p15-logo"><img src="img/icon-192.png" alt=""></span><span class="tx"><b>${esc(t)}</b><small>${esc(s)}</small></span><button class="p15-theme" data-a="p15theme" aria-label="${document.documentElement.classList.contains('gl-lt')?'Dark theme':'Light theme'}">${ic(document.documentElement.classList.contains('gl-lt')?'moon':'sun')}</button></div>`;
-const PH15X={'Find a Job':'office','Get 5 Quotes':'boxes'};
+const PH15X={'Find a Job':'office','Ask 6 businesses':'boxes'};
 const tileP15=(o)=>{const p=PH15[o.t]||PH15X[NAME15[o.t]||o.t]||PH15X[o.t];const n=NAME15[o.t]||o.t;
   return `<button class="p15-g p15-pt${o.big?' big':''}${o.row?' row':''}" data-a="${o.a}"${o.v?` data-v="${o.v}"`:''}${o.k?` data-k="${o.k}"`:''} style="--i:${o.i||0}">
    ${p?`<span class="p15-pph"><img src="img/p15/${p}.webp" alt="" loading="lazy" decoding="async"></span>`:''}
@@ -5263,7 +5263,7 @@ const tileP15=(o)=>{const p=PH15[o.t]||PH15X[NAME15[o.t]||o.t]||PH15X[o.t];const
 function settle15p(){const me=S.me||{};
   const T=[{t:'Find a Room',d:'Rooms, flats and roommates by area and budget',ic:'bed2',tone:'mint',a:'p15open',v:'rooms',big:1},
     {t:'Jobs',d:'Pay and hours on every job · get referred too',ic:'brief',tone:'lem',a:'p15open',v:'jobs',row:1},
-    {t:'Get up to 5 prices',d:'Moving, cleaning, tax, insurance, repairs',ic:'tag2',tone:'fern',a:'p15open',v:'ask:service'},
+    {t:'Ask 6 businesses',d:'Moving, cleaning, tax, insurance, repairs',ic:'tag2',tone:'fern',a:'p15open',v:'ask:service'},
     {t:'Trusted Experts',d:'Visa, tax and insurance advisers',ic:'shield2',tone:'mint',a:'p15open',v:'experts'},
     {t:'Moving-Out Sale',d:'Furniture and more from people moving out',ic:'tag2',tone:'lem',a:'p15open',v:'sale'},
     {t:'Travel Buddy for Parents',d:'Someone on the same flight helps them',ic:'plane2',tone:'fern',a:'p15open',v:'buddy'}];
@@ -5313,7 +5313,7 @@ function home15p(){const me=S.me||{};
 
 /* ---------- v4: every form becomes bento steps, options become icon tiles, names fixed everywhere, alive motion (mock until ok) ---------- */
 const NAMEX15=[['Find a Room','Find a Home'],['Post a Room Wanted','Ask agents for a home'],['List your home','List your home'],['Travel Buddy for Parents','Flight Helper for Parents'],['Travel Buddy','Flight Helper'],
-  ['Trusted Experts','Find an Expert'],['Moving-Out Sale','Buy & Sell Used'],['Get up to 5 prices','Get 5 Quotes'],['Friend Meetups','Meet New Friends'],['Watch Parties','Watch Matches Together'],
+  ['Trusted Experts','Find an Expert'],['Moving-Out Sale','Buy & Sell Used'],['Ask 6 businesses','Ask 6 businesses'],['Friend Meetups','Meet New Friends'],['Watch Parties','Watch Matches Together'],
   ['Sports Leagues','Play in a League'],['Event Services','Party & Event Services'],['Host Plans','Host Events'],['League Organizer','Run a League'],['League Organiser','Run a League'],['Ad Spot','Advertise'],
   ['Job Referral','Get a Job Referral'],['Join as a player','Find me a team'],['Room Wanted near you','People looking for a home'],['Quote requests near you','People asking for party quotes']];
 const OPTIC15={'Moving house (truck + helpers)':'truck','Home cleaning':'sparkle','Tax filing help':'chart','Insurance advice':'shield2','Repairs & small fixes':'key','Visa & immigration help':'plane2',
@@ -5380,7 +5380,7 @@ const greet15=()=>{const h=new Date().getHours();return h<5?'Good night':h<12?'G
 /* smart search index: words -> place in the app */
 const SRCH15=[['Find a Home','Rooms, flats, roommates','home','rooms','room flat apartment house rent roommate home studio'],['Ask agents for a home','Room Wanted: agents send you homes','home','ask:room','room wanted agent landlord rent'],
   ['Find a Job','Pay and hours on every job','job','jobs','job work hiring part time full time career shift'],['Get a Job Referral','Ask someone inside the company','job','referral','referral refer company job'],
-  ['Get 5 Quotes','Moving, cleaning, tax, insurance, repairs','quote','ask:service','movers moving truck cleaning tax insurance repair fix plumber painter quote price'],
+  ['Ask 6 businesses','Moving, cleaning, tax, insurance, repairs','quote','ask:service','movers moving truck cleaning tax insurance repair fix plumber painter quote price'],
   ['Find an Expert','Visa, tax and insurance advisers','expert','experts','visa immigration lawyer tax accountant insurance expert consultant'],
   ['Buy & Sell Used','From people moving out','sell','sale','sell buy used furniture sofa bed second hand'],['Flight Helper for Parents','Someone on the same flight helps them','parents','buddy','parents flight airport travel mother father helper'],
   ['Weekend Club','Big weekend events, members first','club','club','weekend club party games events'],['Meet New Friends','Dinners, walks, games','friends','meetups','friends meet dinner walk games social'],
@@ -5389,7 +5389,7 @@ const SRCH15=[['Find a Home','Rooms, flats, roommates','home','rooms','room flat
   ['Chats','People you are connected to','chat','chats','chat message talk'],['My tickets','Your seats and QR codes','events','tickets','ticket qr seat booking']];
 /* first 30 days plan: the member's own ticks, saved on this phone */
 const PLAN15=[['home','Find a home','Rooms and flats near you','rooms','home'],['sim','Phone plan and bank account','Ask an adviser what to bring','experts','expert'],['job','Find a job','Pay and hours on every job','jobs','job'],
-  ['move','Help moving in','Get 5 quotes from movers','ask:service','quote'],['friends','Meet people near you','Meetups and the Weekend Club','meetups','friends'],['parents','Plan your parents\' visit','A helper on their flight','buddy','parents']];
+  ['move','Help moving in','Ask 6 movers at once','ask:service','quote'],['friends','Meet people near you','Meetups and the Weekend Club','meetups','friends'],['parents','Plan your parents\' visit','A helper on their flight','buddy','parents']];
 const planDone15=()=>{try{return JSON.parse(localStorage.getItem('nm.p15plan')||'[]')}catch(e){return []}};
 function plan15card(){const d=planDone15(),n=d.length,t=PLAN15.length,pc=Math.round(n/t*100),R=26,C=2*Math.PI*R,next=PLAN15.filter(x=>!d.includes(x[0])).slice(0,3);
   return `<div class="p15-g v5-plan"><div class="v5-ph"><svg class="v5-ring" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="${R}" class="bg"/><circle cx="32" cy="32" r="${R}" class="fg" style="stroke-dasharray:${C.toFixed(1)};stroke-dashoffset:${(C*(1-n/t)).toFixed(1)}"/></svg><b class="v5-pc">${pc}%</b>
@@ -5413,12 +5413,12 @@ function home15v5(){return p15wrap(head15v5()+search15bar()+
   quick15([['home','Home','rooms'],['job','Job','jobs'],['quote','Quotes','ask:service'],['expert','Expert','experts'],['sell','Sell','sale'],['parents','Parents','buddy'],['events','Events','ev15','tab'],['club','Club','club']])+
   plan15card()+
   `<div class="v5-bento">${bigCard15('room','home','Find a Home','Rooms, flats and roommates','rooms',[['Room Wanted','ask:room'],['List your home','postroom']])}
-   ${midCard15('office','job','Find a Job','Pay + hours shown','jobs')}${midCard15('boxes','quote','Get 5 Quotes','Movers, cleaning, tax','ask:service')}</div>`+
+   ${midCard15('office','job','Find a Job','Pay + hours shown','jobs')}${midCard15('boxes','quote','Ask 6 businesses','Movers, cleaning, tax','ask:service')}</div>`+
   weekend15()+
   ((typeof RL==='function'&&RL()&&RLX.webgl())?`<div class="p15-earth"><div class="rl-slot" data-rl="p15"></div><span class="p15-earth-h">${ic('globe')} Spin it · tap a flag</span><span class="p15-earth-t">One app for people living abroad, in every country</span></div>`:''))}
 function settle15v5(){return p15wrap(head15v5()+`<h1 class="v5-h">Settle In</h1>`+search15bar()+plan15card()+
   `<div class="v5-bento">${bigCard15('room','home','Find a Home','Rooms, flats and roommates by area and budget','rooms',[['Room Wanted','ask:room'],['List your home','postroom']])}
-   ${midCard15('office','job','Find a Job','Pay + hours · referrals','jobs')}${midCard15('boxes','quote','Get 5 Quotes','Movers, cleaning, tax','ask:service')}
+   ${midCard15('office','job','Find a Job','Pay + hours · referrals','jobs')}${midCard15('boxes','quote','Ask 6 businesses','Movers, cleaning, tax','ask:service')}
    ${midCard15('docs','expert','Find an Expert','Visa, tax, insurance','experts')}${midCard15('sofa','sell','Buy & Sell Used','From people moving out','sale')}
    ${bigCard15('plane','parents','Flight Helper for Parents','Someone on the same flight helps them at every step','buddy')}</div>`+
   (typeof PC15==='function'&&PC15()?`<button class="p15-g p15-row" data-a="p15open" data-v="chats">${ci15('chat','s')}<span class="tx"><b>Chats</b><small>Businesses, employers and sellers</small></span>${ic('chev2')}</button>`:'')+
@@ -5434,7 +5434,7 @@ function events15v5(){const d=P15.d||{};return p15wrap(head15v5()+`<h1 class="v5
 function search15v(){const q=(P15.sq||'').trim().toLowerCase(),r=q?SRCH15.filter(x=>(x[0]+' '+x[1]+' '+x[4]).toLowerCase().split(/\s+/).some(w=>w.startsWith(q))||(x[0]+' '+x[4]).toLowerCase().includes(q)):SRCH15.slice(0,8);
   return p15wrap(p15top('Search',true)+`<div class="v5-sbox">${ic('search')}<input id="v5-q" type="search" placeholder="Homes, jobs, movers, visa help…" value="${esc(P15.sq||'')}" autocomplete="off" enterkeyhint="search" aria-label="Search"></div>
    ${q?'':`<div class="v5-sec"><b>Popular</b></div>`}<div class="p15-g">${r.length?r.map(x=>`<button class="p15-li v5-res" data-a="p15open" data-v="${x[3]}">${ci15(x[2],'s')}<span class="tx"><b>${esc(x[0])}</b><small>${esc(x[1])}</small></span>${ic('chev2')}</button>`).join(''):`<div class="p15-li"><span class="tx"><b>Nothing found</b><small>Try "room", "job", "movers" or "visa"</small></span></div>`}</div>`)}
-function create15v(){const T=[['home','List your home','postroom'],['home','Room Wanted','ask:room'],['job','Post a job','postjob'],['sell','Sell an item','mysale'],['quote','Get 5 quotes','ask:service'],['events','Host an event','host'],['league','Find me a team','ask:player'],['quote','Party quotes','ask:quote']];
+function create15v(){const T=[['home','List your home','postroom'],['home','Room Wanted','ask:room'],['job','Post a job','postjob'],['sell','Sell an item','mysale'],['quote','Ask 6 at once','ask:service'],['events','Host an event','host'],['league','Find me a team','ask:player'],['quote','Party quotes','ask:quote']];
   return p15wrap(p15top('Post or ask',true)+`<p class="p15-sub">One tap to start. You can change everything later.</p><div class="v5-create">${T.map(([k,l,v],i)=>`<button class="p15-g" data-a="p15open" data-v="${v}" style="--i:${i}">${ci15(k)}<b>${esc(l)}</b></button>`).join('')}</div>`)}
 Object.assign(P15V,{search:search15v,create:create15v});
 (function(){
@@ -5463,7 +5463,7 @@ function T6(){try{return localStorage.getItem('nm.p15v6t')||'A'}catch(e){return 
 function V6(){try{return V6_LIVE||localStorage.getItem('nm.p15v6')==='1'}catch(e){return V6_LIVE}}
 const P1617=window.P1617||{p16:['room','house','office','boxes','tools','store','docs','catering','table','league','stadium'],p17:['passport','clean','clean2','hiring','jobsnews','resume','kitchen','coffee','mic','garage','saletags','rentsign','boxes2','boxes3','calc','expert','insure','bedside','kitchen2']};
 const img6=(p,alt)=>`<span class="x6-ph"><img src="img/${P1617.p17.includes(p)?'p17':P1617.p16.includes(p)?'p16':'p15'}/${p}.webp" alt="${esc(alt||'')}" loading="lazy" decoding="async"></span>`;
-const F6={home:['room','Find a Home','Rooms, flats and roommates','rooms'],job:['office','Find a Job','Pay and hours on every job','jobs'],quote:['boxes','Get 5 Quotes','Moving, cleaning, tax, repairs','ask:service'],
+const F6={home:['room','Find a Home','Rooms, flats and roommates','rooms'],job:['office','Find a Job','Pay and hours on every job','jobs'],quote:['boxes','Ask 6 businesses','Moving, cleaning, tax, repairs','ask:service'],
   expert:['docs','Find an Expert','Visa, tax and insurance advisers','experts'],sell:['sofa','Buy & Sell Used','From people moving out','sale'],parents:['plane','Flight Helper','Someone on your parents\' flight','buddy'],
   events:['hall','Events','Meetups, matches, festivals','ev15'],club:['table','Weekend Club','Members book first','club'],friends:['table','Meet New Friends','Dinners, walks and games','meetups'],
   watch:['stadium','Watch Matches','Big screen, big crowd','watch'],fest:['lantern','Festivals & Culture','Nights from every country','festival'],trip:['trip','Day Trips','Bus trips with a host','trip'],league:['league','Play in a League','Join a team or find players','league']};
@@ -5490,14 +5490,14 @@ const CB6={home:['#2B59FF','#fff'],job:['#FF6B2C','#fff'],quote:['#B8F23A','#101
   friends:['#FF5FA2','#fff'],watch:['#2B59FF','#fff'],fest:['#FF6B2C','#fff'],trip:['#12B886','#fff'],league:['#B8F23A','#10140A']};
 function bento6(keys){return `<div class="x6-bento">${keys.map((k,i)=>{const c=CB6[k]||['#15130F','#fff'];return `<button class="x6-bt${i===0?' big':''}" ${go6(k)} style="--bg:${c[0]};--fg:${c[1]};--i:${i}">${img6(F6[k][0])}<b>${esc(F6[k][1])}</b><small>${esc(F6[k][2])}</small></button>`}).join('')}</div>`}
 function home6(){const me=S.me||{};return p15wrap(top6()+`<h1 class="x6-h1">${esc(hi6())}${me.name?', '+esc(me.name.split(' ')[0]):''}.<br><span>What do you need today?</span></h1>`+search6()+
-  (T6()==='C'?bento6(['home','job','quote','expert','sell','parents','events','club']):today6([['home','SETTLE IN','A home that fits','Rooms, flats and roommates by budget'],['quote','HELP IN ONE TAP','5 quotes, zero calls','Movers, cleaning, tax, repairs'],['job','WORK','Jobs with pay shown upfront','Hours and pay on every job'],['events','THIS WEEKEND','Your weekend, sorted','Meetups, matches, festivals'],['parents','FAMILY','Parents flying alone?','Someone on the same flight helps']])+
+  (T6()==='C'?bento6(['home','job','quote','expert','sell','parents','events','club']):today6([['home','SETTLE IN','A home that fits','Rooms, flats and roommates by budget'],['quote','HELP IN ONE TAP','6 at once, zero calls','Movers, cleaning, tax, repairs'],['job','WORK','Jobs with pay shown upfront','Hours and pay on every job'],['events','THIS WEEKEND','Your weekend, sorted','Meetups, matches, festivals'],['parents','FAMILY','Parents flying alone?','Someone on the same flight helps']])+
   `<div class="x6-sec"><b>Quick picks</b></div>`+picks6(['home','job','quote','expert','sell','parents','events','club']))+plan6()+week6())}
 function settle6(){return p15wrap(top6()+`<h1 class="x6-h1">Settle In<br><span>Your first months, sorted.</span></h1>`+search6()+(T6()==='C'?bento6(['home','job','quote','expert','sell','parents']):list6(['home','job','quote','expert','sell','parents']))+plan6()+
   `<div class="x6-sec"><b>Your things</b></div><div class="x6-list">${(typeof PC15==='function'&&PC15()?[['Chats','People you are connected to','chats','office']]:[]).concat([['My requests','Quotes, Room Wanted, teams','myasks','boxes'],['My tickets','Seats and QR codes','tickets','hall']]).map(([t,s,v,p],i)=>`<button class="x6-row" data-a="p15open" data-v="${v}"><span class="x6-n">${String(i+7).padStart(2,'0')}</span><span class="x6-rt"><b>${t}</b><small>${s}</small></span>${img6(p)}</button>`).join('')}</div>`)}
 function events6(){const d=P15.d||{};return p15wrap(top6()+`<h1 class="x6-h1">Events<br><span>Meet people every week.</span></h1>`+
   `<button class="x6-club" data-a="p15open" data-v="club">${img6('hall')}<span class="x6-cb"><small>WEEKEND CLUB</small><b>${d.club?'You are a member':'Big weekend nights, members first'}</b><span>${d.club?'Book before everyone, pick your seat':'No booking fee · book 48 hours early'}</span><em>${d.club?'Open':'Join'}</em></span></button>`+
   week6()+(T6()==='C'?bento6(['friends','watch','fest','trip','league']):list6(['friends','watch','fest','trip','league']))+`<button class="x6-wide" data-a="p15open" data-v="ask:player">No team yet? <b>Find me a team →</b></button>`)}
-/* one question per screen for "Get 5 Quotes" */
+/* one question per screen for "Ask 6 businesses" */
 const Q6=[{k:'cat',q:'What do you need?',o:[['Movers','Moving house','boxes'],['Cleaning','Home cleaning','clean'],['Tax','Tax filing','docs'],['Insurance','Insurance','insure'],['Small jobs','Repairs & fixes','tools'],['Immigration','Visa help','passport']]},
   {k:'what',q:'How big is the job?',o:[['Room','A room'],['1-bed','1 bedroom'],['2-bed','2 bedrooms'],['House','A house']]},
   {k:'when',q:'When?',o:[['This week','This week'],['next','Next weekend'],['Flexible','I\'m flexible']]},
@@ -5505,9 +5505,9 @@ const Q6=[{k:'cat',q:'What do you need?',o:[['Movers','Moving house','boxes'],['
 function quote6(){const q=P15.q&&P15.q.k==='service'?P15.q:(P15.q={k:'service'}),st=Math.min(P15.qs||0,4),steps=Q6.filter(s=>s.k!=='dist'||q.cat==='Movers');
   if(st>=steps.length){const sum=askSum15('service',Object.assign({},q,{cat:q.cat}));
     return p15wrap(`<div class="x6-qtop"><button class="x6-back" data-a="x6qprev">← Back</button><span>Ready</span></div><h1 class="x6-h1 q">Here's your request</h1>
-     <div class="x6-sum">${img6((Q6[0].o.find(o=>o[0]===q.cat)||[0,0,'boxes'])[2])}<div><small>GET 5 QUOTES</small><b>${esc(sum)}</b><span>Goes to at most 5 businesses in ${esc((S.me||{}).city||'your city')}, then closes. No charge to ask.</span></div></div>
+     <div class="x6-sum">${img6((Q6[0].o.find(o=>o[0]===q.cat)||[0,0,'boxes'])[2])}<div><small>ASK 6 BUSINESSES</small><b>${esc(sum)}</b><span>Goes to 6 businesses at once in ${esc((S.me||{}).city||'your city')}, then closes. No charge to ask.</span></div></div>
      <p class="x6-note">NeuAmigo does not check businesses. Ask for their licence or insurance when it matters, and pay the one you pick directly.</p>
-     <button class="x6-cta" data-a="p15askPost" data-k="service"${P15.busy==='ask'?' disabled':''}>${P15.busy==='ask'?'Sending…':'Send to 5 businesses'}</button>`)}
+     <button class="x6-cta" data-a="p15askPost" data-k="service"${P15.busy==='ask'?' disabled':''}>${P15.busy==='ask'?'Sending…':'Send to 6 businesses'}</button>`)}
   const s=steps[st];
   return p15wrap(`<div class="x6-qtop"><button class="x6-back" data-a="${st?'x6qprev':'p15back'}">← Back</button><span>Step ${st+1} of ${steps.length}</span></div><div class="x6-bar"><i style="width:${Math.round(st/steps.length*100)}%"></i></div>
    <h1 class="x6-h1 q">${esc(s.q)}</h1><div class="x6-ans${s.o[0][2]?' ph':''}">${s.o.map(([v,l,p],i)=>`<button class="${q[s.k]===v?'on':''}" data-a="x6ans" data-k="${s.k}" data-val="${esc(v)}" style="--i:${i}">${p?img6(p):''}<b>${esc(l)}</b>${q[s.k]===v?'<em>✓</em>':''}</button>`).join('')}</div>`)}
@@ -5535,7 +5535,7 @@ Object.assign(P15V,{});
    Same flag as v6 (not live until his ok). */
 const ST7={home:[['room','house','keys'],'Find a Home',['Rooms, flats and roommates','Rent shown on every listing','Message the owner inside the app'],'rooms'],
   job:[['office','store','catering'],'Find a Job',['Pay and hours on every job','Apply with one profile','Families and shops post jobs'],'jobs'],
-  quote:[['boxes','tools','docs'],'Get 5 Quotes',['Tell us once what you need','Up to 5 businesses reply','You pick one and pay them directly'],'ask:service'],
+  quote:[['boxes','tools','docs'],'Ask 6 businesses',['Tell us once what you need','6 businesses get it at once','You pick one and pay them directly'],'ask:service'],
   expert:[['docs','office','keys'],'Find an Expert',['Visa, tax and insurance advisers','Fees shown on their page','Ask before you pay'],'experts'],
   sell:[['sofa','table','boxes'],'Buy & Sell Used',['Things from people moving out','Price on every item','Pick up near you'],'sale'],
   parents:[['plane','trip','city'],'Flight Helper',['Parents flying alone?','Someone on the same flight helps','You agree on everything in chat'],'buddy'],
@@ -5588,7 +5588,7 @@ function post7(){if(!V6())return;const vk=S.tab+'|'+(P15.v||''),same=vk===VK7;VK
   const _h=home6;home6=function(){const me=S.me||{},C=T6()==='C';
     return p15wrap(top6()+head7()+search6()+stories7(Object.keys(ST7))+
       (C?bento6(['home','job','quote','expert','sell','parents','events','club']).replace(/<span class="x6-ph"><img src="img\/p15\/(\w+)\.webp"[^>]*><\/span>/,(m,p)=>multi7(ST7.home[0])):
-       today6([['home','SETTLE IN','A home that fits','Rooms, flats and roommates by budget'],['quote','HELP IN ONE TAP','5 quotes, zero calls','Movers, cleaning, tax, repairs'],['job','WORK','Jobs with pay shown upfront','Hours and pay on every job'],['events','THIS WEEKEND','Your weekend, sorted','Meetups, matches, festivals'],['parents','FAMILY','Parents flying alone?','Someone on the same flight helps']])
+       today6([['home','SETTLE IN','A home that fits','Rooms, flats and roommates by budget'],['quote','HELP IN ONE TAP','6 at once, zero calls','Movers, cleaning, tax, repairs'],['job','WORK','Jobs with pay shown upfront','Hours and pay on every job'],['events','THIS WEEKEND','Your weekend, sorted','Meetups, matches, festivals'],['parents','FAMILY','Parents flying alone?','Someone on the same flight helps']])
         .replace(/<span class="x6-ph"><img src="img\/p15\/(\w+)\.webp"[^>]*><\/span>/g,(m,p)=>{const k=Object.keys(ST7).find(x=>ST7[x][0][0]===p);return k?multi7(ST7[k][0]):m}))+
       journey7()+week6())};
   plan6=journey7;
@@ -5615,23 +5615,23 @@ const ph8=(p)=>`<span class="z8-ph"><img src="img/${P17.includes(p)?"p17":P16.in
 const zt8=()=>P15.z8||'all';
 function zgo8(v){return v==='ev15'?'data-a="tab" data-k="ev15"':`data-a="p15open" data-v="${v}"`}
 /* tiles: [label, photo, view, quote-category] */
-const ZG8={all:[['Rent a Home','house','rooms','Rooms & flats'],['Find Work','office','jobs','Jobs near you'],['Compare Prices','calc','ask:service','5 businesses quote you'],['Ask an Expert','expert','experts','Visa, tax, insurance'],['Buy Used Items','saletags','sale','From people moving out'],['Travel Buddy','plane','buddy','Help on a family flight'],['Events','hall','ev15','Things to do this week'],['Weekend Club','table','club','Members-only nights']],
-  homes:[['Rent a Room','room','rooms','See rooms & flats'],['List Your Room','rentsign','postroom','Find a tenant'],['Ask for a Room','bedside','ask:room','Owners message you'],['Used Furniture','sofa','sale','Cheap, near you'],['Hire Movers','boxes2','q:Movers','Get 5 prices'],['Home Cleaning','clean2','q:Cleaning','Get 5 prices']],
+const ZG8={all:[['Rent a Home','house','rooms','Rooms & flats'],['Find Work','office','jobs','Jobs near you'],['Compare Prices','calc','ask:service','6 get it at once'],['Ask an Expert','expert','experts','Visa, tax, insurance'],['Buy Used Items','saletags','sale','From people moving out'],['Travel Buddy','plane','buddy','Help on a family flight'],['Events','hall','ev15','Things to do this week'],['Weekend Club','table','club','Members-only nights']],
+  homes:[['Rent a Room','room','rooms','See rooms & flats'],['List Your Room','rentsign','postroom','Find a tenant'],['Ask for a Room','bedside','ask:room','Owners message you'],['Used Furniture','sofa','sale','Cheap, near you'],['Hire Movers','boxes2','q:Movers','Ask 6 at once'],['Home Cleaning','clean2','q:Cleaning','Ask 6 at once']],
   jobs:[['Find Work','office','jobs','Pay shown on every job'],['Hire Someone','hiring','postjob','Post a job'],['Work Profile','resume','workprof','Apply in one tap'],['Shop Jobs','store','jobs','Stores & markets'],['Kitchen Jobs','kitchen','jobs','Cafés & restaurants'],['Job Safety Tips','jobsnews','safejobs','Spot fake offers']],
-  help:[['Hire Movers','boxes','q:Movers','Get 5 prices'],['Home Cleaning','clean','q:Cleaning','Get 5 prices'],['Tax Help','docs','q:Tax','File your taxes'],['Insurance Help','insure','q:Insurance','Home, car, health'],['Repairs','tools','q:Small jobs','Fix things at home'],['Visa Help','passport','q:Immigration','Papers & permits'],['Ask an Expert','expert','experts','Fees shown upfront'],['Travel Buddy','plane','buddy','Help on a family flight']],
+  help:[['Hire Movers','boxes','q:Movers','Ask 6 at once'],['Home Cleaning','clean','q:Cleaning','Ask 6 at once'],['Tax Help','docs','q:Tax','File your taxes'],['Insurance Help','insure','q:Insurance','Home, car, health'],['Repairs','tools','q:Small jobs','Fix things at home'],['Visa Help','passport','q:Immigration','Papers & permits'],['Ask an Expert','expert','experts','Fees shown upfront'],['Travel Buddy','plane','buddy','Help on a family flight']],
   events:[['Meet People','coffee','meetups','Coffee meetups'],['Watch Matches','stadium','watch','Big screen nights'],['Festivals','lantern','festival','Food & culture'],['Day Trips','trip','trip','Weekend outings'],['Join a League','league','league','Play sports'],['Host an Event','mic','host','Sell tickets']],
   sale:[['Browse Items','saletags','sale','Price on every item'],['Sell Your Stuff','garage','mysale','Post in 1 minute'],['Furniture','sofa','sale','Sofas, beds, tables'],['Kitchen Items','kitchen2','sale','Pots, plates, more'],['Home Items','bedside','sale','Lamps, decor'],['Moving-Out Sales','boxes3','sale','Whole homes for sale']]};
-const ZB8={all:[['club','WEEKEND CLUB','Members book first','Pick your seat on the map','Open','table'],['ask:service','GET 5 QUOTES','Movers, cleaning, tax','Up to 5 businesses reply','Ask now','boxes']],
+const ZB8={all:[['club','WEEKEND CLUB','Members book first','Pick your seat on the map','Open','table'],['ask:service','ASK 6 BUSINESSES','Movers, cleaning, tax','6 businesses get it at once','Ask now','boxes']],
   homes:[['rooms','HOMES','Rent shown on every listing','Rooms, flats and roommates','See homes','room']],
   jobs:[['jobs','JOBS','Pay and hours on every job','Families and shops hire here','See jobs','office']],
-  help:[['ask:service','ONE REQUEST','Tell us once, get 5 quotes','You pick one and pay them directly','Ask now','boxes']],
+  help:[['ask:service','ONE REQUEST','Tell us once, 6 businesses get it','You pick one and pay them directly','Ask now','boxes']],
   events:[['club','WEEKEND CLUB','Members book first','Pick your seat on the map','Open','hall']],
   sale:[['sale','BUY & SELL','From people moving out','Price on every item','See items','sofa']]};
 
 /* v9: cut-out objects (no background) on pastel tiles, Zepto-like */
 const CUT8={'Find a Home':'house','Rooms & flats':'house','Post a Room':'house','Insurance':'house','Home cleaning':'house','Cleaning':'house',
   'Find a Job':'laptop','Post a Job':'laptop','Work profile':'laptop','Shop work':'laptop','Kitchen work':'laptop','Safe jobs tips':'docs',
-  'Get 5 Quotes':'boxes','Moving house':'boxes','Moving help':'boxes','Sell yours':'boxes','Kitchen':'boxes','Moving out':'boxes',
+  'Ask 6 businesses':'boxes','Moving house':'boxes','Moving help':'boxes','Sell yours':'boxes','Kitchen':'boxes','Moving out':'boxes',
   'Experts':'calc','Tax filing':'calc','Buy & Sell':'chair','Furniture':'chair','Room Wanted':'chair','All items':'chair','Home items':'chair',
   'Flight Helper':'suitcase','Visa help':'suitcase','Repairs':'tools','Events':'lantern','Festivals':'lantern','Weekend Club':'lantern','Host an event':'lantern','Meet friends':'lantern',
   'Play a league':'ball','Watch matches':'balls','Day trips':'van'};
@@ -5780,7 +5780,7 @@ function c9home(){const c=c9city(),need=c9need()||['home','work','people','help'
    people:(up.length>=3?c9row('Popular this week','data-a="tab" data-k="ev15"',`<div class="c9-rail t10">${up.slice().sort((x,y)=>((y.seats||0)-(y.left||0))-((x.seats||0)-(x.left||0))).slice(0,10).map((e,i)=>`<button class="c9-t10" data-a="p15open" data-v="evd:${e.id}"><i>${i+1}</i>${c9i(c9evp(e))}</button>`).join('')}</div>`):'')+
      c9row('This week','data-a="tab" data-k="ev15"',c9rail(up.slice(h?1:0,9).map(e=>`<button class="c9-card" data-a="p15open" data-v="evd:${e.id}">${c9i(c9evp(e))}<span class="c9-pr">${e.price?esc(money(e.price,e.currency)):'No ticket'}</span><b>${esc(e.title)}</b><small>${esc(evWhen(e))}</small></button>`))),
    work:c9row('Jobs near you','data-a="p15open" data-v="jobs"',c9rail(jobs.slice(0,8).map(j=>`<button class="c9-card" data-a="p15open" data-v="job:${j.id}">${c9i(c9jobp(j))}<span class="c9-pr">${esc(money(j.pay,j.currency))}<small> /hour</small></span><b>${esc(j.title)}</b><small>${esc(j.area||'')}${j.hours?' · '+j.hours+' h/week':''}</small></button>`))),
-   help:c9row('Get 5 prices in one go','data-a="tab" data-k="settle"',c9rail([['boxes','Movers'],['clean2','Cleaning'],['docs','Tax filing'],['tools','Repairs'],['insure','Insurance'],['passport','Visa help']].map(([p,t])=>`<button class="c9-card s" data-a="z8q" data-c="${t==='Repairs'?'Small jobs':t==='Tax filing'?'Tax':t==='Visa help'?'Immigration':t}">${c9i(p)}<b>${esc(t)}</b></button>`)))};
+   help:c9row('Ask 6 businesses at once','data-a="tab" data-k="settle"',c9rail([['boxes','Movers'],['clean2','Cleaning'],['docs','Tax filing'],['tools','Repairs'],['insure','Insurance'],['passport','Visa help']].map(([p,t])=>`<button class="c9-card s" data-a="z8q" data-c="${t==='Repairs'?'Small jobs':t==='Tax filing'?'Tax':t==='Visa help'?'Immigration':t}">${c9i(p)}<b>${esc(t)}</b></button>`)))};
   const order=need.concat(['home','work','people','help'].filter(k=>!need.includes(k)));
   const more=c9row('More for your move','',c9rail([['expert','Ask an expert','experts'],['saletags','Buy used items','sale'],['plane','Travel buddy','buddy'],['table','Weekend Club','club']].map(([p,t,v])=>`<button class="c9-card s" data-a="p15open" data-v="${v}">${c9i(p)}<b>${esc(t)}</b></button>`)));
   return c9wrap(c9top()+(typeof c10pre==='function'?c10pre():'')+hero+picked+order.map(k=>R[k]).join('')+more)}
@@ -5889,7 +5889,7 @@ const c10set=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 const C10P=[['moving','I am moving soon','Plan your move before you fly','plane'],['arrived','I just arrived','Your first 30 days, step by step','keys'],['local','I live here already','Homes, jobs, events and help near you','city']];
 const C10S=[['Before you fly',[['ahead','keys','Find a home before you land','Owners and agents send you homes','ask:room'],['papers','passport','Ask an expert about visa and papers','Licensed experts, price shown first','experts'],['buddy','plane','Find a travel buddy for the flight','Help for you or your parents','buddy'],['wp','resume','Make your work profile','Then apply to jobs in one tap','workprof']]],
  ['Week 1 · after you land',[['home','room','Choose your home','Rent shown on every listing','rooms'],['car','garage','Find a used car','Dealers send cars that fit your budget','q:Used cars'],['bank','expert','Phone plan and bank account','Ask an expert what to bring','experts']]],
- ['Weeks 2 and 3',[['jobs','hiring','Apply for jobs','Pay and hours on every job','jobs'],['furn','sofa','Get used furniture','From people moving out','sale'],['clean','clean2','Book home cleaning','Get 5 prices','q:Cleaning']]],
+ ['Weeks 2 and 3',[['jobs','hiring','Apply for jobs','Pay and hours on every job','jobs'],['furn','sofa','Get used furniture','From people moving out','sale'],['clean','clean2','Book home cleaning','Ask 6 at once','q:Cleaning']]],
  ['Week 4',[['event','hall','Go to your first event','Meet people near you','ev15'],['club','table','Join the Weekend Club','Members book first','club']]]];
 const c10all=()=>C10S.flatMap(x=>x[1]);
 const c10go=v=>v.startsWith('q:')?`data-a="z8q" data-c="${esc(v.slice(2))}"`:v==='ev15'?'data-a="tab" data-k="ev15"':`data-a="p15open" data-v="${v}"`;
@@ -6042,14 +6042,14 @@ function c12home(){const c=c9city();
   return c9wrap(c9top()+`<div class="c9-in"><h1 class="c9-h1 sm c12-q">What do you need today?</h1>${c12cats()}</div>`+(typeof c10pre==='function'?c10pre():'')+t10+newRow+rows)}
 const c12item=s=>`<button class="c9-card" data-a="p15open" data-v="c12sell">${c9i(kw8((s.cat||'')+' '+s.title,'sofa')==='-'?'sofa':kw8((s.cat||'')+' '+s.title,'sofa'))}<span class="c9-pr">${esc(money(s.price,s.currency))}</span><b>${esc(s.title)}</b><small>${esc(s.area||'')}${s.cond?' · '+esc(s.cond):''}</small></button>`;
 const C12MOVE=[['plan','My 30-day plan','From before the flight to week 4','p15open" data-v="plan30'],['passport','Visa and papers','Ask a trusted expert','p15open" data-v="experts'],
-  ['plane','Travel buddy','Someone on the same flight','p15open" data-v="buddy'],['office','Job referral','Ask people inside a company','p15open" data-v="referral'],['boxes2','Movers','Get 5 prices in one go','z8q" data-c="Movers']];
+  ['plane','Travel buddy','Someone on the same flight','p15open" data-v="buddy'],['office','Job referral','Ask people inside a company','p15open" data-v="referral'],['boxes2','Movers','Ask 6 businesses at once','z8q" data-c="Movers']];
 const c12tile=([p,t,s,a])=>`<button class="c9-card s" data-a="${a}">${c9i(p)}<b>${esc(t)}</b><small>${esc(s)}</small></button>`;
 const c12grid=L=>`<div class="c9-g2 c12-g">${L.map(([p,t,s,a])=>`<button class="c9-pk" data-a="${a}">${c9i(p)}<b>${esc(t)}</b><small>${esc(s)}</small></button>`).join('')}</div>`;
 function c12move(){return c9wrap(c9back('')+`<div class="c9-in"><span class="c9-tag">Category</span><h1 class="c9-h1">Moving Abroad</h1><p class="c9-lede">Everything before you fly and in your first weeks.</p></div>`+(typeof c10pre==='function'?c10pre():'')+`<div class="c9-in">${c12grid(C12MOVE)}</div>`)}
-const C12SVC=[['boxes2','Movers','Get 5 prices','z8q" data-c="Movers'],['clean2','Cleaning','Get 5 prices','z8q" data-c="Cleaning'],['docs','Tax filing','Get 5 prices','z8q" data-c="Tax'],
-  ['tools','Repairs','Get 5 prices','z8q" data-c="Small jobs'],['insure','Insurance','Get 5 prices','z8q" data-c="Insurance'],['expert','Ask an expert','Visa, tax, insurance','p15open" data-v="experts']];
+const C12SVC=[['boxes2','Movers','Ask 6 at once','z8q" data-c="Movers'],['clean2','Cleaning','Ask 6 at once','z8q" data-c="Cleaning'],['docs','Tax filing','Ask 6 at once','z8q" data-c="Tax'],
+  ['tools','Repairs','Ask 6 at once','z8q" data-c="Small jobs'],['insure','Insurance','Ask 6 at once','z8q" data-c="Insurance'],['expert','Ask an expert','Visa, tax, insurance','p15open" data-v="experts']];
 const c12seg=cur=>`<div class="c9-in"><span class="c9-tag">Settle In</span><div class="c12-seg">${[['homes','Homes','rooms'],['jobs','Jobs','jobs'],['svc','Services','c12svc']].map(([k,t,v])=>`<button class="${cur===k?'on':''}" data-a="p15open" data-v="${v}">${t}</button>`).join('')}</div></div>`;
-function c12svc(){return c9wrap(c9top()+c12seg('svc')+`<div class="c9-in"><p class="c9-lede">Tell us once. Up to 5 businesses near you send their price.</p>${c12grid(C12SVC)}</div>`)}
+function c12svc(){return c9wrap(c9top()+c12seg('svc')+`<div class="c9-in"><p class="c9-lede">Tell us once. 6 businesses near you get it at once.</p>${c12grid(C12SVC)}</div>`)}
 function c12sell(){const sl=P15.sl;if(sl===undefined||sl===null){if(sl===undefined){P15.sl=null;API.rpc('sales15',{}).then(r=>{P15.sl=r||[];render()}).catch(()=>{P15.sl=[];render()})}}
   const l=(sl||[]).filter(s=>s.status==='open'||s.mine||s.bought);
   return c9wrap(c9top()+`<div class="c9-in"><span class="c9-tag">Category</span><h1 class="c9-h1">Buy & Sell</h1><p class="c9-lede">Things from people moving in and out. Price on every item.</p>
@@ -6230,8 +6230,8 @@ function nadList29(d){
   const n=x=>Number(x||0).toLocaleString('en'),when=t=>{try{return new Date(t).toLocaleString('en',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}catch(e){return ''}};
   let rs=L.rows;if(L.f==='plus')rs=rs.filter(r=>r.plus);if(L.f==='club')rs=rs.filter(r=>r.club);
   const q=(L.q||'').toLowerCase().trim();
-  const KIND={room:'Looking for a room',player:'Looking for a team',quote:'Event quotes',service:'Get 5 prices'};
-  const ST={open:['Waiting','w','No business has answered yet.'],full:['Answered','g','5 businesses answered. The member chooses one.'],closed:['Closed','','The member closed it (found help or no longer needs it).'],removed:['Removed','','Removed after reports.'],ended:['Ended','','Nobody answered in 24 hours. It ended by itself and the member was told they can send it again.']};
+  const KIND={room:'Looking for a room',player:'Looking for a team',quote:'Event quotes',service:'Ask 6 at once'};
+  const ST={open:['Waiting','w','No business has answered yet.'],full:['Answered','g','6 businesses answered. The member chooses one.'],closed:['Closed','','The member closed it (found help or no longer needs it).'],removed:['Removed','','Removed after reports.'],ended:['Ended','','Nobody answered in 24 hours. It ended by itself and the member was told they can send it again.']};
   const cap=x=>x?String(x).charAt(0).toUpperCase()+String(x).slice(1):'';
   const tag=(t,c)=>`<em class="nad2-tg ${c||''}">${esc(t)}</em>`;
   const row=r=>{let t='',s='',x='',more=[];
@@ -6247,7 +6247,7 @@ function nadList29(d){
     return `<details class="nad2-li" data-s="${esc(key)}"${hid?' hidden':''}><summary><span class="nad2-av">${esc(String(t||'?').trim().charAt(0).toUpperCase())}</span><span class="nad2-lt"><b>${esc(t)}</b><small>${esc(s)}</small></span><span class="nad2-lx">${x}</span></summary><div class="nad2-mo">${more.map(m=>`<div><small>${esc(m[0])}</small><b>${esc(m[1])}</b></div>`).join('')}</div>${more.why?`<p class="nad2-why">${esc(more.why)}</p>`:''}</details>`};
   return c9wrap(head+`<div class="c9-in nad2">
    <div class="nad2-lh"><b>${n(rs.length)}</b><small>${esc(RN[L.r]||'')}${rs.length>=300?' · newest 300':''}</small></div>
-   ${L.k==='asks'?`<div class="nad2-how"><b>How requests work</b><ol><li>A member asks for help, e.g. movers or a room.</li><li>NeuAmigo sends it by itself to up to 5 businesses in that city that have a plan.</li><li>A business pays to answer. The member sees the answers and picks one.</li><li>Businesses have 24 hours to answer; the member sees a countdown. If nobody answers, it ends by itself and the member is told.</li></ol><p>You don't approve anything. <b>Waiting</b> means no business has answered yet.</p>${(d.live&&Object.values(d.live.biz||{}).reduce((a,b)=>a+Number(b||0),0))?'':'<p class="nad2-warn">Right now no business has joined, so requests can\'t be answered. Getting businesses to join is the next step.</p>'}<button class="c9-btn" data-a="p15open" data-v="biz">See the business plans</button></div>`:''}
+   ${L.k==='asks'?`<div class="nad2-how"><b>How requests work</b><ol><li>A member asks for help, e.g. movers or a room.</li><li>NeuAmigo sends it by itself to 6 businesses in that city that have a plan. Each has 10 minutes; whoever does not take it is replaced by the next one.</li><li>A business pays to answer. The member sees the answers and picks one.</li><li>Businesses have 24 hours to answer; the member sees a countdown. If nobody answers, it ends by itself and the member is told.</li></ol><p>You don't approve anything. <b>Waiting</b> means no business has answered yet.</p>${(d.live&&Object.values(d.live.biz||{}).reduce((a,b)=>a+Number(b||0),0))?'':'<p class="nad2-warn">Right now no business has joined, so requests can\'t be answered. Getting businesses to join is the next step.</p>'}<button class="c9-btn" data-a="p15open" data-v="biz">See the business plans</button></div>`:''}
    <label class="nad2-q"><input type="search" placeholder="Search name, city, country" value="${esc(L.q||'')}" oninput="window.__nadq&&window.__nadq(this.value)" aria-label="Search"></label>
    <div class="nad2-ls">${rs.length?rs.map(row).join(''):'<div class="c9-pan c9-empty"><b>Nothing here yet</b><small>When it happens it shows up here.</small></div>'}</div>
    <p class="nad2-none"${q&&!rs.some(r=>1)?'':' hidden'}>No match</p>
@@ -6316,7 +6316,7 @@ function askhCity(k,cat){const key=k+'|'+(cat||'');P15.acn=P15.acn||{};const v=P
   return P15.acn[key]}
 function askhNote(k,cat){const r=askhCity(k,cat),who=(ASK15[k]||{}).who||'businesses',city=esc((S.me||{}).city||'your city');
   if(!r)return `<div class="askh-n"><b>Checking ${city}…</b></div>`;if(r.err)return '';
-    if(r.n>0)return `<div class="askh-n ok"><b>${r.n} ${r.n===1?who.replace(/s$/,''):who} in ${city} can answer now</b><span>Businesses have 24 hours to answer. Answers show in My requests.</span></div>`;
+    if(r.n>0)return `<div class="askh-n ok"><b>${r.n} ${r.n===1?who.replace(/s$/,''):who} in ${city} can answer now</b><span>6 get it at once. Each has 10 minutes, then the next one gets it. Answers show in My requests.</span></div>`;
   return `<div class="askh-n w"><b>No ${esc(who)} in ${city} on NeuAmigo yet</b><span>You can still send it. Businesses have 24 hours to answer. If nobody answers in that time, we tell you here and nothing is charged.</span></div>`}
 /* what the member sees on each request */
 function askhLeft(t){const ms=new Date(t).getTime()-Date.now();if(!(ms>0))return 'ending now';const m=Math.floor(ms/6e4),h=Math.floor(m/60);return h?h+'h '+String(m%60).padStart(2,'0')+'m':m+' min'}
@@ -6324,7 +6324,7 @@ function askhCd(t){return `<span class="askh-t">Time left to answer <em class="a
 function askhLine(a){const who=(ASK15[a.kind]||{}).who||'businesses',city=esc(a.city||(S.me||{}).city||'your city'),cd=askhCd(a.closesAt),n=(a.connected||[]).length;
   if(a.status==='ended')return `<div class="askh-l e"><b>Nobody answered in 24 hours</b><span>Sorry, no ${esc(who)} in ${city} answered this time. Nothing was charged. You can send it again any time.</span><button class="p15-btn sm" data-a="p15open" data-v="ask:${esc(a.kind)}">Send again</button></div>`;
   if(a.status==='closed')return `<div class="askh-l"><b>You closed this request</b></div>`;
-  if(a.status==='full')return `<div class="askh-l ok"><b>5 answered. Pick the one you like.</b></div>`;
+  if(a.status==='full')return `<div class="askh-l ok"><b>6 answered. Pick the one you like.</b></div>`;
   if(n)return `<div class="askh-l ok"><b>${n} answered</b><span>They contact you by email.</span>${cd}</div>`;
   if(a.reached>0)return `<div class="askh-l"><b>Sent to ${a.reached} ${esc(a.reached===1?who.replace(/s$/,''):who)}</b><span>Waiting for an answer.</span>${cd}</div>`;
   if(a.inCity>0)return `<div class="askh-l"><b>Going out to ${a.inCity} ${esc(who)} in ${city}</b>${cd}</div>`;
@@ -6332,7 +6332,7 @@ function askhLine(a){const who=(ASK15[a.kind]||{}).who||'businesses',city=esc(a.
 (function(){
   /* countdown ticks every 20 s without redrawing the screen */
   setInterval(()=>{try{document.querySelectorAll('.askh-cd').forEach(e=>{const t=askhLeft(e.dataset.end);if(e.textContent!==t)e.textContent=t})}catch(e){}},20000);
-  window.__askhSent=(k,q)=>{if(!ASKH())return null;const r=(P15.acn||{})[k+'|'+((q&&q.cat)||'')];return r&&r.n>0?'Sent to '+r.n+' in your city':'Sent. It goes to the first one that joins.'};
+  window.__askhSent=(k,q)=>{if(!ASKH())return null;const r=(P15.acn||{})[k+'|'+((q&&q.cat)||'')];return r&&r.n>0?'Sent to '+Math.min(6,r.n)+' near you. Each has 10 minutes to reply.':'Sent. It goes to the first one that joins.'};
   const _af=askForm15;askForm15=function(k){let h=_af(k);if(!ASKH())return h;const cat=k==='service'&&P15.q?P15.q.cat:'';
     const note=askhNote(k,cat);return h.replace(/(<button class="(p15-btn|x6-cta)" data-a="p15askPost")/,note+'$1')};
   const _ma=P15V.myasks;P15V.myasks=function(){let h=_ma();if(!ASKH()||!Array.isArray(P15.ma))return h;
@@ -6405,7 +6405,7 @@ function pl31me(){const d=P15.d||{};const on=[d.plus?'NeuAmigo Plus':'',d.club?'
 /* ===== part32: design v3 "rich home" (his ok 15 Nov 2026 21:02, mock handoff/mocks/na-air-v1/mock3.html) =====
    BuyHatke-style richness + Airbnb-style calm: sapphire hero with floating 3D pictures, big + small picture tiles,
    a dark "Move-in week" band and a light "Weekend picks" band (chips + card rails), "Popular in <city>" photo grid,
-   "Ask once. Get 5 prices." banner, an honest trust row, a big grey sign-off, a floating bottom bar with 3D pictures
+   "Ask once. Ask 6 at once." banner, an honest trust row, a big grey sign-off, a floating bottom bar with 3D pictures
    and a one-time "Every price is open" sheet. Real data only: a rail with no data is hidden. 3D pictures: Fluent Emoji
    3D (MIT), img/f3d. Turn off with NA32_LIVE=false. */
 const NA32_LIVE = true;
@@ -6425,7 +6425,7 @@ function n32home(){const c=c9city(),city=c||'your city';
     <h1>Your new<br>city, sorted.</h1><p>Rooms, jobs, events and help. Every price open.</p></div>
     <button class="n32-search" data-a="p15open" data-v="search"><span class="n32-mg"></span><span><b>Search <em>rooms</em> in ${esc(city)}</b><small>Try: movers, tax help, football</small></span></button>`;
   const grid=`<div class="n32-grid">${n32tile('house_with_garden','Rooms',city+' · prices shown','p15open" data-v="rooms','',1)+n32tile('briefcase','Jobs','Pay shown','p15open" data-v="jobs')
-    +n32tile('delivery_truck','Movers','Ask once','z8q" data-c="Movers','5 prices')+n32tile('receipt','Tax help','Ask once','z8q" data-c="Tax','5 prices')+n32tile('toolbox','Small jobs','Fix, clean','z8q" data-c="Small jobs','5 prices')}</div>`;
+    +n32tile('delivery_truck','Movers','Ask once','z8q" data-c="Movers','6 at once')+n32tile('receipt','Tax help','Ask once','z8q" data-c="Tax','6 at once')+n32tile('toolbox','Small jobs','Fix, clean','z8q" data-c="Small jobs','6 at once')}</div>`;
   const wk=up.slice(0,8);
   const week=wk.length?`<div class="n32-h"><h2>This weekend</h2><button data-a="tab" data-k="ev15">See all ›</button></div><div class="n32-rail">${wk.map(n32ev).join('')}</div>`:'';
   const rr=rooms.slice(0,8);
@@ -6436,7 +6436,7 @@ function n32home(){const c=c9city(),city=c||'your city';
   const wkp=picks.length?`<div class="n32-band lt">${n32p('party_popper',300,6,58,10)}${n32p('confetti_ball',252,32,42,-8)}${n32p('ticket',318,66,46,-14)}<h3>Weekend picks</h3><p>Meet people near you</p>
     ${n32chips([['All','tab" data-k="ev15'],['Sports','tab" data-k="ev15'],['Food','tab" data-k="ev15'],['Music','tab" data-k="ev15']])}<div class="n32-rail">${picks.map(n32ev).join('')}</div></div>`:'';
   const pop=`<div class="n32-h"><h2>Popular in ${esc(city)}</h2></div><div class="n32-pop">${[['room','Rooms','p15open" data-v="rooms'],['hiring','Jobs','p15open" data-v="jobs'],['football','Sports','tab" data-k="ev15'],['feast','Food nights','tab" data-k="ev15'],['sofa','Furniture','p15open" data-v="c12sell'],['clean','Cleaning','z8q" data-c="Cleaning']].map(([p,t,a])=>`<button data-a="${a}">${c9i(p)}<b>${t}</b></button>`).join('')}</div>`;
-  const ban=`<button class="n32-ban" data-a="p15open" data-v="c12svc">${n32p('delivery_truck',214,22,118,-6)}${n32p('receipt',296,84,54,12)}<b>Ask once.<br>Get 5 prices.</b><small>Movers, tax help, cleaning. Answers in 24 h.</small><u>Ask for prices</u></button>`;
+  const ban=`<button class="n32-ban" data-a="p15open" data-v="c12svc">${n32p('delivery_truck',214,22,118,-6)}${n32p('receipt',296,84,54,12)}<b>Ask once.<br>Ask 6 at once.</b><small>Movers, tax help, cleaning. Answers in 24 h.</small><u>Ask for prices</u></button>`;
   const trust=`<div class="n32-trust"><div><img src="${f3('dollar_banknote')}" alt=""><b>Open prices</b>see before you ask</div><div><img src="${f3('handshake')}" alt=""><b>Pay directly</b>to the business</div><div><img src="${f3('shield')}" alt=""><b>Report</b>anything in 1 tap</div></div>`;
   const sig=`<div class="n32-sig">Settle in.<br>Feel at home.<small>NeuAmigo · made for people who move</small></div>`;
   let seen=1;try{seen=localStorage.getItem('na32.sheet')==='1'}catch(e){}
@@ -6469,7 +6469,7 @@ const N33T=[
  {k:'rooms',t:'Rooms',p:'house_with_garden',bg:'#0B3F91',h:'Find your<br>room.',s:'Rooms in {c}, rent shown upfront.',pr:[['house_with_garden',244,50,96,-6],['key',326,128,50,18],['bed',262,146,58,4]]},
  {k:'jobs',t:'Jobs',p:'briefcase',bg:'#12305F',h:'Work that<br>pays fair.',s:'Pay shown on every job.',pr:[['briefcase',248,56,88,-8],['dollar_banknote',326,120,56,14],['calendar',262,150,50,-6]]},
  {k:'events',t:'Events',p:'party_popper',bg:'#0A1F4A',h:'Your weekend,<br>planned.',s:'Sports, food nights and music near you.',pr:[['party_popper',250,48,86,8],['soccer_ball',322,128,52,0],['ticket',258,150,56,-14]]},
- {k:'help',t:'Movers & help',p:'delivery_truck',bg:'#155EAF',h:'Ask once.<br>Get 5 prices.',s:'Movers, tax help, cleaning, small jobs.',pr:[['delivery_truck',236,58,104,-6],['receipt',324,128,50,12],['toolbox',258,152,52,-4]]},
+ {k:'help',t:'Movers & help',p:'delivery_truck',bg:'#155EAF',h:'Ask once.<br>Ask 6 at once.',s:'Movers, tax help, cleaning, small jobs.',pr:[['delivery_truck',236,58,104,-6],['receipt',324,128,50,12],['toolbox',258,152,52,-4]]},
  {k:'sell',t:'Buy & Sell',p:'shopping_bags',bg:'#0B1226',h:'Buy and sell<br>near you.',s:'Furniture and more from people moving.',pr:[['couch_and_lamp',240,54,96,-4],['shopping_bags',322,126,56,8],['package',262,150,50,-10]]}];
 const N33HINT=['rooms','jobs','movers','football','tax help','a sofa','cleaning'];
 const N33SNOW=['toronto','montreal','calgary','vancouver','ottawa','edmonton','winnipeg','new york','chicago','boston','london','berlin','paris','amsterdam','dublin','stockholm','oslo','warsaw','moscow','seoul','tokyo','beijing'];
@@ -6491,7 +6491,7 @@ function n33tabBody(c){const city=c||'your city';
   if(n33tab==='rooms'){const r=zdata8('rooms15','rooms',{maxrent:0});return `<div class="n32-h"><h2>Rooms in ${esc(city)}</h2><button data-a="p15open" data-v="rooms">See all ›</button></div>`+(r.length?`<div class="n32-rail">${r.slice(0,10).map(n32room).join('')}</div>`:n33empty('house_with_garden','No rooms posted yet','Be the first to know when one is posted in '+esc(city)+'.','p15open" data-v="rooms','Look for a room'))}
   if(n33tab==='jobs'){const j=zdata8('jobs15','jobs',{});return `<div class="n32-h"><h2>Jobs in ${esc(city)}</h2><button data-a="p15open" data-v="jobs">See all ›</button></div>`+(j.length?`<div class="n32-rail">${j.slice(0,10).map(n33job).join('')}</div>`:n33empty('briefcase','No jobs posted yet','Pay is always shown when jobs are posted here.','p15open" data-v="jobs','Open jobs'))}
   if(n33tab==='events'){const e=zdata8('events15','ev',{k:'',cty:c}).filter(x=>new Date(x.startsAt)>Date.now()-3*36e5);return `<div class="n32-h"><h2>Coming up</h2><button data-a="tab" data-k="ev15">See all ›</button></div>`+(e.length?`<div class="n32-rail">${e.slice(0,10).map(n32ev).join('')}</div>`:n33empty('party_popper','No events yet','New events in '+esc(city)+' show here first.','tab" data-k="ev15','Open events'))}
-  if(n33tab==='help'){return `<div class="n32-grid">${n32tile('automobile','Used cars','Ask once','z8q" data-c="Used cars','5 prices',1)+n32tile('receipt','Tax help','Ask once','z8q" data-c="Tax','5 prices')+n32tile('toolbox','Small jobs','Fix, build','z8q" data-c="Small jobs','5 prices')+n32tile('sparkles','Cleaning','Ask once','z8q" data-c="Cleaning','5 prices')+n32tile('shield','Insurance','Ask once','z8q" data-c="Insurance','5 prices')}</div>`}
+  if(n33tab==='help'){return `<div class="n32-grid">${n32tile('automobile','Used cars','Ask once','z8q" data-c="Used cars','6 at once',1)+n32tile('receipt','Tax help','Ask once','z8q" data-c="Tax','6 at once')+n32tile('toolbox','Small jobs','Fix, build','z8q" data-c="Small jobs','6 at once')+n32tile('sparkles','Cleaning','Ask once','z8q" data-c="Cleaning','6 at once')+n32tile('shield','Insurance','Ask once','z8q" data-c="Insurance','6 at once')}</div>`}
   if(n33tab==='sell'){const s=zdata8('sales15','sale',{});return `<div class="n32-h"><h2>For sale in ${esc(city)}</h2><button data-a="p15open" data-v="c12sell">See all ›</button></div>`+(s.length?`<div class="n32-rail">${s.slice(0,10).map(n33sale).join('')}</div>`:n33empty('couch_and_lamp','Nothing for sale yet','People moving out sell furniture and more here.','p15open" data-v="c12sell','Open Buy & Sell'))}
   return ''}
 /* ---- motion helpers (one set of timers for the whole app) ---- */
@@ -6558,7 +6558,7 @@ function a4home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{},name=(m
     a4door(a4p('apartment'),'house_with_garden','A home',rooms.length?`<strong>${rooms.length} ${rooms.length===1?'room':'rooms'}</strong>${minRent?` from <strong>${esc(a4money(minRent.rent,minRent.currency))}</strong>`:''}`:'Homes to rent in '+esc(city),'p15open" data-v="rooms'),
     a4door(a4p('work'),'briefcase','Work',jobs.length?`<strong>${jobs.length} ${jobs.length===1?'job':'jobs'}</strong>, pay shown`:'Jobs with pay shown','p15open" data-v="jobs'),
     a4door(a4p('papers'),'clipboard','Papers',bar?`<strong>${bar.d} of ${bar.n}</strong> done`:'Your step-by-step plan','p15open" data-v="plan30',bar?`<span class="a4-bar"><i style="width:${bar.pct}%"></i></span>`:''),
-    a4door('img/p17/clean.webp','delivery_truck','Help','Movers, tax, cleaning · <strong>5 prices</strong>','p15open" data-v="c12svc'),
+    a4door('img/p17/clean.webp','delivery_truck','Help','Movers, tax, cleaning · <strong>ask 6 at once</strong>','p15open" data-v="c12svc'),
     a4door('img/p17/feast.webp','handshake','Friends',wk.length?`<strong>${wk.length} ${wk.length===1?'meetup':'meetups'}</strong> this week`:'Meet people near you','tab" data-k="ev15'),
     a4door('img/p17/football.webp','party_popper','Fun',up.length?`<strong>${up.length} ${up.length===1?'event':'events'}</strong> coming up`:'Events near you','tab" data-k="ev15')].join('');
   const doorsSec=`<div class="a4-sec"><h2>What do you need today?</h2></div><div class="a4-doors">${doors}</div>`;
@@ -6743,7 +6743,7 @@ function a7home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{};
     a7ban('homes','Homes in '+esc(city),'Find your<br>new home.',rooms.length?`${rooms.length} ${rooms.length===1?'room':'rooms'}${minRent?' from '+esc(a4money(minRent.rent,minRent.currency)):''}`:'Rooms and flats to rent','See homes','p15open" data-v="rooms',['house_with_garden','key','bed']),
     a7ban('work','Work in '+esc(city),'Jobs with<br>the pay shown.',jobs.length?`${jobs.length} ${jobs.length===1?'job':'jobs'} open now`:'Apply in one tap','See jobs','p15open" data-v="jobs',['briefcase','dollar_banknote','handshake']),
     a7ban('papers','Your papers','One step today.<br>That is enough.',bar?`${bar.d} of ${bar.n} steps done`:'A clear step-by-step plan','Open my plan','p15open" data-v="plan30',['identification_card','page_facing_up','check_mark_button']),
-    a7ban('help','Services','Get 5 prices.<br>Pick the best.','Used cars, visa, tax, cleaning','Ask for prices','p15open" data-v="c12svc',['delivery_truck','toolbox','receipt']),
+    a7ban('help','Services','Ask 6 at once.<br>Pick the best.','Used cars, visa, tax, cleaning','Ask for prices','p15open" data-v="c12svc',['delivery_truck','toolbox','receipt']),
     a7ban('fun','Fun in '+esc(city),'Weekends<br>with new friends.',up.length?`${up.length} ${up.length===1?'event':'events'} coming up`:'Events and meetups near you','See events','tab" data-k="ev15',['party_popper','soccer_ball','confetti_ball'])].join('');
   const grid=`<div class="a7-sec"><div><h2>What do you need?</h2></div></div><div class="a7-grid">${[
     ['house_with_garden','Rooms','p15open" data-v="rooms'],['briefcase','Jobs','p15open" data-v="jobs'],['clipboard','30-day plan','p15open" data-v="plan30'],['books','Childcare','z8q" data-c="Childcare'],
@@ -6755,7 +6755,7 @@ function a7home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{};
   const sr=a7rail('Things for your new home','From people who are moving out',sales.slice(0,8).map(a7item),sales.length>2?'See all items':'','p15open" data-v="c12sell');
   const tx=up.length?`<div class="a7-sec"><div><h2>Coming up</h2><p>Book a seat, meet people</p></div></div><div class="a7-rail a7-evr">${up.slice(0,8).map(a7ev).join('')}</div><button class="a7-more" data-a="tab" data-k="ev15">See all events ›</button>`:'';
   let steps='';if(bar){const done=c10done(),L=c10all();steps=`<div class="a7-sec"><div><h2>Your 30-day plan</h2><p>${bar.d} of ${bar.n} steps done</p></div></div><span class="a7-trk"><i style="width:${bar.pct}%"></i></span><div class="a7-list">${L.slice(0,6).map(s=>{const ok=done.includes(s[0]);return `<button class="a7-row${ok?' ok':''}" data-a="p15open" data-v="plan30"><span class="a7-ck"></span><span><b>${esc(s[2])}</b><small>${esc(s[3])}</small></span><i>${ok?'Done':'›'}</i></button>`}).join('')}</div><button class="a7-more" data-a="p15open" data-v="plan30">See the whole plan ›</button>`}
-  const svc=`<div class="a7-sec"><div><h2>Services</h2><p>Tell us once. Up to 5 businesses send their price.</p></div></div><div class="a7-sv">${[['automobile','Used cars','z8q" data-c="Used cars'],['mobile_phone','Phone and internet','z8q" data-c="Phone'],['globe_with_meridians','Translation','z8q" data-c="Translation'],['books','Childcare and tutors','z8q" data-c="Childcare'],['light_bulb','Ask an expert','p15open" data-v="experts'],['world_map','All services','p15open" data-v="services']].map(([p,tt,a])=>`<div class="a7-svc"><span><img src="${f3(p)}" alt="" loading="lazy"></span><b>${tt}</b><button data-a="${a}">${tt==='Ask an expert'?'See experts':tt==='All services'?'See all':'Get prices'}</button></div>`).join('')}</div>`;
+  const svc=`<div class="a7-sec"><div><h2>Services</h2><p>Tell us once. 6 businesses get it at once.</p></div></div><div class="a7-sv">${[['automobile','Used cars','z8q" data-c="Used cars'],['mobile_phone','Phone and internet','z8q" data-c="Phone'],['globe_with_meridians','Translation','z8q" data-c="Translation'],['books','Childcare and tutors','z8q" data-c="Childcare'],['light_bulb','Ask an expert','p15open" data-v="experts'],['world_map','All services','p15open" data-v="services']].map(([p,tt,a])=>`<div class="a7-svc"><span><img src="${f3(p)}" alt="" loading="lazy"></span><b>${tt}</b><button data-a="${a}">${tt==='Ask an expert'?'See experts':tt==='All services'?'See all':'Get prices'}</button></div>`).join('')}</div>`;
   const plan=(plus&&!hasPlus)?`<button class="a7-plus" data-a="p15open" data-v="plans"><img src="${f3('key')}" alt=""><span><small>NeuAmigo Plus</small><b>Call landlords and employers directly</b><i>${p15price('plus_m')?esc(p15price('plus_m'))+' a month · ':''}alerts first</i></span><u>See plans</u></button>`:'';
   const biz=`<button class="a7-biz" data-a="p15open" data-v="plans" data-t="biz"><img src="${f3('megaphone')}" alt=""><span><small>For businesses</small><b>Be the first name new arrivals see</b><i>Homes, jobs, services or events in ${esc(city)}</i></span><u>Prices</u></button>`;
   const P={
@@ -6825,10 +6825,10 @@ function a8home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{};
          a8pick('img/p19/usedcar.webp','automobile','Used cars',`Dealers send cars <strong>for your budget</strong>`,'Get prices','z8q" data-c="Used cars')],
     week:[a8pick(a4p('apartment'),'house_with_garden','A place to live',rooms.length?`${rooms.length} ${rooms.length===1?'room':'rooms'}${minRent?' from <strong>'+esc(a4money(minRent.rent,minRent.currency))+'</strong>':''}`:'Rooms and flats to rent','See homes','p15open" data-v="rooms'),
           a8pick(a4p('papers'),'identification_card','Bank, ID, tax number',bar?`<strong>${bar.d} of ${bar.n}</strong> done`:'One step at a time','Open plan','p15open" data-v="plan30'),
-          a8pick('img/p17/clean.webp','sparkles','Cleaning',`Tell us once, <strong>up to 5 prices</strong>`,'Get prices','z8q" data-c="Cleaning')],
+          a8pick('img/p17/clean.webp','sparkles','Cleaning',`Tell us once, <strong>6 businesses at once</strong>`,'Get prices','z8q" data-c="Cleaning')],
     month:[a8pick('img/p19/work.webp','briefcase','Work',jobs.length?`<strong>${jobs.length} ${jobs.length===1?'job':'jobs'}</strong>, pay shown`:'Jobs with pay shown','See jobs','p15open" data-v="jobs'),
            a8pick('img/p17/resume.webp','identification_card','Work profile','Apply to any job in <strong>one tap</strong>','Make it','p15open" data-v="workprof'),
-           a8pick('img/p17/calc.webp','receipt','Tax filing',`Tell us once, <strong>up to 5 prices</strong>`,'Get prices','z8q" data-c="Tax')],
+           a8pick('img/p17/calc.webp','receipt','Tax filing',`Tell us once, <strong>6 businesses at once</strong>`,'Get prices','z8q" data-c="Tax')],
     life:[a8pick('img/p19/party.webp','party_popper','Weekends',up.length?`<strong>${up.length} ${up.length===1?'event':'events'}</strong> coming up`:'Events near you','See events','tab" data-k="ev15'),
           a8pick('img/p18/tacos.webp','hot_beverage','Taste of home','Food from your country, cooked nearby','See dishes','p15open" data-v="food'),
           a8pick('img/p18/toronto.webp','compass','City Quest','Walk your new city, <strong>earn a badge</strong>','Play free','p15open" data-v="quest'),
@@ -7029,9 +7029,9 @@ function a42plan(){const done=c10done(),b=c10bar(),path=c10get('nm.path','moving
   return c9wrap(`<div class="a7 a42" data-t="papers">${head}<div class="a7-pn on" data-p="papers">${next}${stages}<p class="a42-note">Government steps (tax number, health card) are free: ask an expert where to find them.</p></div></div>`)}
 function a42svc(){const city=c9city()||'your city';
   const S=[['automobile','Used cars','Used cars'],['sparkles','Cleaning','Cleaning'],['receipt','Tax filing','Tax'],['toolbox','Repairs','Small jobs'],['shield','Insurance','Insurance']];
-  const head=`<div class="a7-hd"><div class="a7-top"><button class="a7-sq a40-bk" data-a="p15back" aria-label="Back">‹</button><span class="a7-where"><small>Services in ${esc(city)}</small><b>Get 5 prices</b><i>Tell us once. Up to 5 businesses send their price.</i></span></div></div>`;
-  const grid=`<div class="a42-sv">${S.map(([p,t,c])=>`<button class="a42-svc" data-a="z8q" data-c="${c}"><span class="a40-pic"><img src="${f3(p)}" alt="" loading="lazy"></span><b>${t}</b><small>Up to 5 prices</small><u>Get prices</u></button>`).join('')}<button class="a42-svc" data-a="p15open" data-v="experts"><span class="a40-pic"><img src="${f3('light_bulb')}" alt="" loading="lazy"></span><b>Ask an expert</b><small>Visa, tax, insurance</small><u>See experts</u></button></div>`;
-  const how=`<div class="a7-sec"><div><h2>How it works</h2><p>Asking costs you nothing</p></div></div><div class="a42-how">${[['clipboard','Tell us what you need','A few taps, no long forms'],['handshake','Get up to 5 prices','Businesses answer within 24 hours'],['check_mark_button','Pick the best one','You choose and pay them directly']].map(([p,t,s],i)=>`<div><span class="a42-n">${i+1}</span><img src="${f3(p)}" alt=""><span><b>${t}</b><small>${s}</small></span></div>`).join('')}</div>`;
+  const head=`<div class="a7-hd"><div class="a7-top"><button class="a7-sq a40-bk" data-a="p15back" aria-label="Back">‹</button><span class="a7-where"><small>Services in ${esc(city)}</small><b>Ask 6 at once</b><i>Tell us once. 6 businesses get it at once.</i></span></div></div>`;
+  const grid=`<div class="a42-sv">${S.map(([p,t,c])=>`<button class="a42-svc" data-a="z8q" data-c="${c}"><span class="a40-pic"><img src="${f3(p)}" alt="" loading="lazy"></span><b>${t}</b><small>6 at once</small><u>Get prices</u></button>`).join('')}<button class="a42-svc" data-a="p15open" data-v="experts"><span class="a40-pic"><img src="${f3('light_bulb')}" alt="" loading="lazy"></span><b>Ask an expert</b><small>Visa, tax, insurance</small><u>See experts</u></button></div>`;
+  const how=`<div class="a7-sec"><div><h2>How it works</h2><p>Asking costs you nothing</p></div></div><div class="a42-how">${[['clipboard','Tell us what you need','A few taps, no long forms'],['handshake','Ask 6 businesses','Businesses answer within 24 hours'],['check_mark_button','Pick the best one','You choose and pay them directly']].map(([p,t,s],i)=>`<div><span class="a42-n">${i+1}</span><img src="${f3(p)}" alt=""><span><b>${t}</b><small>${s}</small></span></div>`).join('')}</div>`;
   const mine=`<button class="a7-plus" data-a="p15open" data-v="myasks"><img src="${f3('receipt')}" alt=""><span><small>Already asked?</small><b>My requests and prices</b><i>See every answer in one place</i></span><u>Open</u></button>`;
   const biz=`<button class="a7-biz" data-a="p15open" data-v="plans" data-t="biz"><img src="${f3('megaphone')}" alt=""><span><small>For businesses</small><b>Get customers who are asking now</b><i>Car dealers, cleaners, tax and repairs in ${esc(city)}</i></span><u>Prices</u></button>`;
   return c9wrap(`<div class="a7 a42" data-t="help">${head}<div class="a7-pn on" data-p="help">${grid}${how}${mine}${biz}</div></div>`)}
@@ -7055,7 +7055,7 @@ function a43tone(){const v=String(P15.v||'');
   if(/^sale|^mysale|^c12sell/.test(v))return 'papers';
   return 'all'}
 const A43EMPTY=[[/No tickets yet/i,'ticket','No tickets yet','Book a seat at a meetup, a match or a food night.','See events','data-a="tab" data-k="ev15"'],
-  [/No requests yet/i,'receipt','No requests yet','Ask once and up to 5 businesses send you their price.','Get prices','data-a="p15open" data-v="c12svc"'],
+  [/No requests yet/i,'receipt','No requests yet','Ask once and 6 businesses get it at once.','Get prices','data-a="p15open" data-v="c12svc"'],
   [/No (items|sale)/i,'couch_and_lamp','Nothing here yet','Sell what you do not need, in one minute.','Sell an item','data-a="p15open" data-v="mysale"'],
   [/No (jobs|applicants)/i,'briefcase','Nothing here yet','New jobs come every week.','See jobs','data-a="p15open" data-v="jobs"'],
   [/No (homes|rooms)/i,'house_with_garden','Nothing here yet','New homes are posted every day.','See homes','data-a="p15open" data-v="rooms"']];
@@ -7210,7 +7210,7 @@ Object.assign(A,{
 
 /* ===== part46: every service asks ITS OWN questions + new categories (his ask 16 Nov 2026 17:02:
    'sabhi me ek hi tarike ki options ... tax me bedroom kaha se aaya ... secondhand car aur jo bhi videsh me jaruri').
-   Questions are taps only. Requests still go to max 5 businesses of THAT category (ask_post15 / ask_fill15). */
+   Questions are taps only. Requests go to 6 businesses of THAT category at once, 10 minutes each (ask_post15 / ask_fill15). */
 const SV46={
   Cleaning:{t:'Cleaning',p:'sparkles',g:'Home',q:[
     ['what','What kind of cleaning?',[['Regular','Regular clean','Dust, floors, kitchen, bathroom'],['Deep','Deep clean','Inside cupboards, oven, behind things'],['Move-out','Move-out clean','To get your deposit back'],['After party','After a party','Back to normal in hours']]],
@@ -7274,7 +7274,7 @@ function sv46list(){const city=(S.me||{}).city||'your city',tk=P15.a46t||'home',
     <button class="a46-sr" data-a="a46all"><span>Search <b>"visa help"</b></span><u>Ask nearby</u></button>`;
   const bt=(c,big)=>`<button class="a46-bt${big?' big':''}" data-a="z8q" data-c="${esc(c)}"><img ${a4src(SVP46[c][0])} alt="" loading="lazy"><span class="a46-bs"></span><span class="a46-bl"><b>${esc(SV46[c].t)}</b>${big?`<small>${esc(SVP46[c][1])}</small>`:''}</span>${big?'<em>Popular</em>':''}</button>`;
   const bento=`<div class="a46-sec"><h2>Popular <em>now</em></h2><span>${esc(city)}</span></div><div class="a46-bento">${bt('Used cars',1)}${bt('Immigration')}${bt('Tax')}${bt('Driving')}${bt('Cleaning')}</div>`;
-  const ask=`<button class="a46-ask" data-a="a46all"><span><small>ASK BUSINESSES NEARBY</small><b>Can't find it?<br>Ask 5 at once.</b></span><span class="a46-af"><i>Tell us once, get 5 prices</i><u>Ask ›</u></span></button>`;
+  const ask=`<button class="a46-ask" data-a="a46all"><span><small>ASK BUSINESSES NEARBY</small><b>Can't find it?<br>Ask 6 at once.</b></span><span class="a46-af"><i>Tell us once, 6 businesses get it</i><u>Ask ›</u></span></button>`;
   const rails=SVG46.map(([g,L])=>`<div class="a46-sec"><h2>${g}</h2><span>${L.length} services</span></div><div class="a46-rl">${L.map(c=>`<button class="a46-rc" data-a="z8q" data-c="${esc(c)}"><span class="a46-rcp"><img ${a4src(SVP46[c][0])} alt="" loading="lazy"></span><b>${esc(SV46[c].t)}</b><small>${esc(SVP46[c][1])}</small><span class="a46-rcb"><i>Free to ask</i><u>+</u></span></button>`).join('')}</div>`).join('');
   return c9wrap(`<div class="a46v4${dk?' dk':''}">${hero}${tabs}<div class="a46-in">${bento}${ask}<div id="a46all"></div>${rails}
    <p class="a46-nt">NeuAmigo does not check businesses. Ask for their licence or insurance when it matters, and pay the one you pick directly.</p></div></div>`)}
@@ -7287,13 +7287,13 @@ function quote46(){const q=P15.q&&P15.q.k==='service'?P15.q:(P15.q={k:'service'}
     <h1 class="a46-qt">${title}</h1></div>`;
   if(done){const sum=askSum15('service',q);
     return p15wrap(`<div class="a46v4 a46qv${dk?' dk':''}">${head('Here is <em>your request</em>')}<div class="a46-in">
-     <div class="a46-sumc"><small>${esc(SV.t.toUpperCase())}</small><b>${esc(sum)}</b><span>Goes to at most 5 businesses in ${esc(city)}, then closes. No charge to ask.</span></div>
+     <div class="a46-sumc"><small>${esc(SV.t.toUpperCase())}</small><b>${esc(sum)}</b><span>Goes to 6 businesses in ${esc(city)} at once. Each has 10 minutes to reply, then the next one gets it. No charge to ask.</span></div>
      <p class="a46-nt">NeuAmigo does not check businesses. Ask for their licence or insurance when it matters, and pay the one you pick directly.</p>
-     <button class="a46-cta" data-a="p15askPost" data-k="service"${P15.busy==='ask'?' disabled':''}>${P15.busy==='ask'?'Sending…':'Send to 5 businesses'}</button></div></div>`)}
+     <button class="a46-cta" data-a="p15askPost" data-k="service"${P15.busy==='ask'?' disabled':''}>${P15.busy==='ask'?'Sending…':'Send to 6 businesses'}</button></div></div>`)}
   const [k,qq,o]=steps[st],words=qq.split(' '),t2=words.length>2?esc(words.slice(0,-2).join(' '))+' <em>'+esc(words.slice(-2).join(' '))+'</em>':'<em>'+esc(qq)+'</em>';
   return p15wrap(`<div class="a46v4 a46qv${dk?' dk':''}">${head(t2)}<div class="a46-in">
    <div class="a46-ans">${o.map(([v,l,d],i)=>`<button class="${q[k]===v?'on':''}" data-a="a46ans" data-k="${k}" data-val="${esc(v)}" style="--i:${i}"><span><b>${esc(l)}</b>${d?`<small>${esc(d)}</small>`:''}</span><i></i></button>`).join('')}</div>
-   <p class="a46-nt">Tap one. No typing. Your request goes to at most 5 businesses in ${esc(city)}.</p></div></div>`)}
+   <p class="a46-nt">Tap one. No typing. Your request goes to 6 businesses in ${esc(city)} at once.</p></div></div>`)}
 (function(){
   Object.assign(P15V,{services:sv46list,c12svc:sv46list});
   const _ar=afterRenderEvents;afterRenderEvents=function(){const r=_ar.apply(this,arguments);try{document.documentElement.classList.toggle('a46dk',!!document.querySelector('.a46v4.dk'))}catch(e){}return r};
@@ -7309,7 +7309,7 @@ function quote46(){const q=P15.q&&P15.q.k==='service'?P15.q:(P15.q={k:'service'}
   });
   const _z=A.z8q;A.z8q=function(el){const cat=el.dataset.c;if(!SV46[cat])return _z(el);A.p15open({dataset:{v:'ask:service'}});P15.q={k:'service',cat};P15.qs=1;setTimeout(render,60)};
   try{if(typeof CATL15==='object')Object.keys(SV46).forEach(c=>{if(!CATL15[c])CATL15[c]=SV46[c].t})}catch(e){}
-  try{if(typeof LEADK15==='object')Object.assign(LEADK15,{'Used cars':'lead_car',Driving:'lead_mid',Airport:'lead_lite',Phone:'lead_lite',Translation:'lead_mid',Childcare:'lead_mid'})}catch(e){}
+  try{if(typeof LEADK15==='object')Object.assign(LEADK15,{'Used cars':'lead_car',Driving:'lead_mid',Airport:'lead_air',Phone:'lead_sim',Translation:'lead_mid',Childcare:'lead_mid'})}catch(e){}
 })();
 
 /* ===== part47: NEW HOME, journey first (his ask 16 Nov 2026 17:53: 'pura naye se banao ... jo video bheja us tarah ...
@@ -7492,7 +7492,7 @@ function sv49list(){const city=c9city()||'your city',tk=T49.some(x=>x[0]===P15.a
   const tabs=`<div class="h48-tabs">${T49.map(x=>`<button class="${x[0]===tk?'on':''}" data-a="a49tab" data-k="${x[0]}">${x[1]}</button>`).join('')}</div>`;
   const grid=`<div class="h48-gd">${ks.map(k=>`<button class="h48-tl" data-a="z8q" data-c="${esc(k)}"><span class="h48-tp"><img ${a4src(ph49(k))} alt="" loading="lazy"></span><b>${esc(lb49(k))}</b><small>See prices</small></button>`).join('')}</div>`;
   const rows=`<div class="h49-ls">${ks.slice(0,6).map(k=>`<button class="h49-r" data-a="z8q" data-c="${esc(k)}"><img ${a4src(ph49(k))} alt="" loading="lazy"><span><b>${esc((SV46[k]||{}).t||k)}</b><small>${esc((SVP46[k]||[])[1]||'')}</small></span><u>Ask</u></button>`).join('')}</div>`;
-  const how=`<div class="h49-how"><span><b>1</b>Tap a few answers, no typing</span><span><b>2</b>Up to 5 local businesses reply with a price</span><span><b>3</b>You pick one and pay them directly</span></div>`;
+  const how=`<div class="h49-how"><span><b>1</b>Tap a few answers, no typing</span><span><b>2</b>6 local businesses get it at once</span><span><b>3</b>You pick one and pay them directly</span></div>`;
   return c9wrap(`<div class="h48 h49${dk?' dk':''}">${hd49(dk?T[3]:T[2],'p15back','Local help',esc(city),tabs)}<div class="h48-in">
     <div class="h48-pad"><div class="h48-hi">SERVICES · ${esc(city.toUpperCase())}</div><h1>Local help,<br><em>prices compared.</em></h1></div>
     ${h48sec('Pick what you need','Tap a picture to get prices')}${grid}${h48sec('How it works','')}${how}${h48sec('Popular in '+esc(city),'')}${rows}
@@ -7507,14 +7507,14 @@ function quote49(){const q=P15.q&&P15.q.k==='service'?P15.q:(P15.q={k:'service'}
   if(done){const sum=askSum15('service',q);
     return c9wrap(`<div class="h48 h49${dk?' dk':''}">${hd}<div class="h48-in">
       <div class="h48-pad"><div class="h48-hi">${esc(lb49(q.cat).toUpperCase())} · ${esc(city.toUpperCase())}</div><h1>Here is<br><em>your request.</em></h1></div>
-      <div class="h48-pad"><div class="h49-sum"><b>${esc(sum)}</b><small>Goes to at most 5 businesses in ${esc(city)}, then closes. No charge to ask.</small></div>
+      <div class="h48-pad"><div class="h49-sum"><b>${esc(sum)}</b><small>Goes to 6 businesses in ${esc(city)} at once. Each has 10 minutes, then the next one gets it. No charge to ask.</small></div>
       <p class="h49-nt" style="padding:14px 2px 0">NeuAmigo does not check businesses. Ask for their licence or insurance when it matters, and pay the one you pick directly.</p>
-      <button class="h49-cta" data-a="p15askPost" data-k="service"${P15.busy==='ask'?' disabled':''}>${P15.busy==='ask'?'Sending…':'Send to 5 businesses'}</button></div></div></div>`)}
+      <button class="h49-cta" data-a="p15askPost" data-k="service"${P15.busy==='ask'?' disabled':''}>${P15.busy==='ask'?'Sending…':'Send to 6 businesses'}</button></div></div></div>`)}
   const [k,qq,o]=steps[st];
   return c9wrap(`<div class="h48 h49${dk?' dk':''}">${hd}<div class="h48-in">${st===0?pic:''}
     <div class="h48-pad"><div class="h48-hi">${esc(lb49(q.cat).toUpperCase())} · STEP ${st+1} OF ${steps.length}</div><h1 class="h49-q">${esc(qq)}</h1></div>
     <div class="h49-ans">${o.map(([v,l,d],i)=>`<button class="${q[k]===v?'on':''}" data-a="a46ans" data-k="${k}" data-val="${esc(v)}" style="--i:${i}"><span><b>${esc(l)}</b>${d?`<small>${esc(d)}</small>`:''}</span><i></i></button>`).join('')}</div>
-    <p class="h49-nt">Tap one. No typing. Your request goes to at most 5 businesses in ${esc(city)}.</p></div></div>`)}
+    <p class="h49-nt">Tap one. No typing. Your request goes to 6 businesses in ${esc(city)} at once.</p></div></div>`)}
 (function(){
   Object.assign(A,{a49tab(el){P15.a49t=el.dataset.k;render();try{window.scrollTo({top:0,behavior:'smooth'})}catch(e){}}});
   Object.assign(P15V,{services:sv49list,c12svc:sv49list});
@@ -7531,8 +7531,8 @@ const P50S=img=>{const m=img.match(/^img\/(p2[01])\/([a-z0-9]+)\.webp$/);return 
 const H50ST=[
   ['DAY 1 · ARRIVE',[['arr',P50('arrival')+'|50% 88%','Airport pickup','q:Airport','Fixed fares'],['sim',P50('phone'),'SIM and phone','q:Phone','Compare plans'],['stay',P50('bedroom'),'Short stays','v:rooms','PG, guesthouse']]],
   ['WEEK 1 · SETTLE',[['food','img/p17/feast.webp','Taste of home','v:food','Home cooks'],['legal',P50('passport'),'Paperwork and legal','v:legal50','Lawyers, visa'],['rent',P50('studio2'),'Homes for rent','v:rooms','@rooms']]],
-  ['MONTH 1 · WORK AND STUDY',[['jobs','img/p20/office.webp','Jobs for you','v:jobs','@jobs'],['col','img/p18/work.webp','Colleges and courses','v:soon50:col','Joining soon'],['ev',P50('dinner'),'Events','k:ev15','@events']]],
-  ['ONCE SETTLED · GROW',[['car',P50('suv'),'Used cars','v:c12sell','@cars'],['mob',P50('laptop'),'Used phones','v:c12sell','Buy or sell'],['buy','img/p15/house.webp','Buy or sell a home','v:soon50:buy','Joining soon'],
+  ['MONTH 1 · WORK AND STUDY',[['jobs','img/p20/office.webp','Jobs for you','v:jobs','@jobs'],['col','img/p18/work.webp','Colleges and courses','q:College','Ask for fees'],['ev',P50('dinner'),'Events','k:ev15','@events']]],
+  ['ONCE SETTLED · GROW',[['car',P50('suv'),'Used cars','v:c12sell','@cars'],['mob',P50('laptop'),'Used phones','v:c12sell','Buy or sell'],['buy','img/p15/house.webp','Buy or sell a home','q:Home sale','Ask agents'],
     ['shop','img/p15/store.webp','Shops near you','v:soon50:shop','By Neutant'],['nm','img/p15/rings.webp','Find a life partner','x:https://neumarry.com','By NeuMarry']]]];
 const SOON50={col:['img/p18/work.webp','Colleges and courses','Colleges and course centres in your city are joining NeuAmigo. When the first ones list, you will see what they teach, how long it takes and the full fee here.'],
   buy:['img/p15/house.webp','Buy or sell a home','Owners and agents are joining. When homes for sale are listed in your city, you will see the price, size and area of each one here.'],
@@ -7581,6 +7581,47 @@ function soon50(k){const s=SOON50[k]||SOON50.col,dk=h48dk();
     d.classList.toggle('h50on',!!h);if(h){d.classList.add('h47on');d.classList.toggle('a46dk',!!document.querySelector('.h50.dk'));
       const m=document.querySelector('meta[name=theme-color]');if(m)m.setAttribute('content',document.querySelector('.h50.dk')?'#0B0C10':'#F6F4F0')}}catch(e){}return r};
   if(H50_LIVE){const _h=c12home;c12home=function(){try{return h50()}catch(e){console.warn('[h50]',e);return _h.apply(this,arguments)}}}
+})();
+
+/* ===== part51 · Ask 6 x 10 minutes (his ok 17 Nov 2026 16:41) =====
+   New request categories with their own tap-only questions, the right per-request price keys,
+   and a live minutes:seconds countdown for businesses ("4:32 left"). Server: na-migration 20261117010000. */
+(function(){
+  if(typeof SV46!=='object')return;
+  Object.assign(SV46,{
+    'Short stay':{t:'Short stay',p:'bed',g:'Stay',q:[
+      ['what','What kind of place?',[['Private room','Private room'],['Shared room','Shared room or PG'],['Guesthouse','Guesthouse or motel'],['Hotel','Hotel']]],
+      ['nights','How long?',[['2-4','2-4 nights'],['1 week','About a week'],['2-4 weeks','2-4 weeks']]],
+      ['when','From when?',[['This week','This week'],['This month','This month'],['Later','Later']]]]},
+    'Catering':{t:'Food from home',p:'dinner',g:'Food',q:[
+      ['what','What do you need?',[['Tiffin','Daily meals (tiffin)','Lunch or dinner every day'],['Party','Food for a party','Birthday, festival, get-together'],['Once','One meal','Try a home cook once']]],
+      ['who','For how many people?',[['1','Just me'],['2-4','2-4 people'],['5-20','5-20 people'],['20+','More than 20']]],
+      ['when','From when?',[['This week','This week'],['This month','This month'],['Flexible',"I'm flexible"]]]]},
+    'College':{t:'Colleges and courses',p:'books',g:'Study',q:[
+      ['what','What do you want to study?',[['Diploma','Diploma or degree'],['Short course','Short course or certificate'],['Language','Language course'],['Trade','Trade or skills course']]],
+      ['how','How do you want to study?',[['Full time','Full time'],['Part time','Part time'],['Online','Online']]],
+      ['when','Start when?',[['Next intake','Next intake'],['In 6 months','In about 6 months'],['Planning','Just planning']]]]},
+    'Home sale':{t:'Buy or sell a home',p:'house',g:'Home',q:[
+      ['what','What do you want to do?',[['Buy','Buy a home'],['Sell','Sell my home'],['Both','Sell and buy']]],
+      ['type','What kind of home?',[['Condo','Condo or apartment'],['Town','Townhouse'],['House','House']]],
+      ['when','When?',[['3 months','In 3 months'],['This year','This year'],['Planning','Just planning']]]]},
+    'Used phones':{t:'Used phones',p:'phone',g:'Buy or sell',q:[
+      ['what','What do you want to do?',[['Buy','Buy a used phone'],['Sell','Sell my phone'],['Repair','Fix my phone']]],
+      ['kind','Which phone?',[['iPhone','iPhone'],['Samsung','Samsung'],['Other','Another brand']]],
+      ['budget','Your budget?',[['Low','Lowest price'],['Middle','Middle price'],['High','Newer model']]]]}
+  });
+  if(typeof SVP46==='object')Object.assign(SVP46,{
+    'Short stay':['img/p21/bedroom.webp','Rooms and stays for your first days'],
+    'Catering':['img/p17/feast.webp','Home cooks and caterers of your roots'],
+    'College':['img/p18/work.webp','Fees, length and what they teach'],
+    'Home sale':['img/p15/house.webp','Agents who know your area'],
+    'Used phones':['img/p21/phone.webp','Shops that buy, sell and fix phones']});
+  try{if(Array.isArray(SVG46))SVG46.push(['Stay <em>and study</em>',['Short stay','College','Catering']],['Buy <em>or sell</em>',['Home sale','Used phones']])}catch(e){}
+  try{Object.keys(SV46).forEach(c=>{if(typeof CATL15==='object'&&!CATL15[c])CATL15[c]=SV46[c].t})}catch(e){}
+  try{if(typeof LEADK15==='object')Object.assign(LEADK15,{Airport:'lead_air',Phone:'lead_sim','Short stay':'lead_stay',Catering:'lead_cater',College:'lead_college','Home sale':'lead_homesale','Used phones':'lead_phone','Used cars':'lead_car'})}catch(e){}
+  /* business countdown: m:ss left, ticks every second without redrawing the screen */
+  const fmt=end=>{const s=Math.max(0,Math.round((new Date(end)-Date.now())/1e3));return s>=3600?Math.floor(s/3600)+' h left':Math.floor(s/60)+':'+String(s%60).padStart(2,'0')+' left'};
+  setInterval(()=>{try{document.querySelectorAll('.p15-cd[data-end]').forEach(e=>{if(!e.dataset.end)return;const t=new Date(e.dataset.end)<=Date.now()?'Time over':fmt(e.dataset.end);if(e.textContent!==t)e.textContent=t;e.classList.toggle('y',t==='Time over')})}catch(e){}},1000);
 })();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
