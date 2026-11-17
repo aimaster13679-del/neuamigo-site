@@ -7688,6 +7688,44 @@ function p52page(id){const P=PL52[id];if(!P)return soon15('');const pr=p15price(
 (function(){const _ar=afterRenderEvents;afterRenderEvents=function(){const r=_ar.apply(this,arguments);try{if(document.querySelector('.h52.dk'))document.documentElement.classList.add('a46dk')}catch(e){}return r}})();
 function p52biz(cat){try{return ((P15.d&&P15.d.biz)||[]).find(b=>b.kind==='expert'&&b.category===cat)||null}catch(e){return null}}
 
+/* ===== part53 · Inner pages in the Glass Journey look (his "Ok he" on mock handoff/mocks/na-v10/inner.html, 17 Nov 2026).
+   Homes for rent + Jobs for you. Same data and actions as part41 (rooms15, jobs15, plus, p15taken, ask:room, postroom, job:<id>, workprof, postjob).
+   Real data only; whole photos in 3:2 frames; no icons. ===== */
+const H53_LIVE=true;
+const JP53={'Elder care':'img/p19/kids.webp','Home help':'img/p20/clean.webp','Garden':'img/p19/lakeview.webp','Shop helper':'img/p20/aisle.webp','Factory':'img/p20/warehouse.webp','Kitchen':'img/p17/kitchen.webp','Driving':'img/p19/driving.webp','Cleaning':'img/p17/clean2.webp'};
+function h53jobPh(j){const t=String(j.title||'').toLowerCase();if(/barista|caf|coffee/.test(t))return 'img/p20/barista.webp';if(/warehouse|mov|factory|pack/.test(t))return 'img/p20/warehouse.webp';if(/account|office|admin|assistant/.test(t))return 'img/p20/office.webp';return JP53[j.category]||'img/p20/work.webp'}
+function h53top(t,act){const dk=(typeof a46th==='function'&&a46th()==='dark');return `<div class="h53${dk?' dk':''}"><div class="h53-top"><button class="h53-bk" data-a="p15back" aria-label="Back">Back</button><b>${esc(t)}</b>${act||''}</div>`}
+function h53seg(L,cur,a,k){return `<div class="h53-seg">${L.map(([v,t])=>`<button class="${cur===v?'on':''}" data-a="${a}" data-k="${k}"${a==='z8q'?` data-c="${esc(v)}"`:` data-val="${esc(v)}"`}>${esc(t)}</button>`).join('')}</div>`}
+function h53rooms(){const l=P15.rooms;if(l===undefined){API.rpc('rooms15',{maxrent:Number(P15.f.max||0)*100}).then(r=>{P15.rooms=r;render()}).catch(()=>{P15.rooms=[];render()});return c9wrap(h53top('Homes for rent')+`<div class="h53-in">${spinner('Loading')}</div></div>`)}
+  const TY={private:'Private room',shared:'Shared room',whole:'Whole place'},ty=P15.f.h53ty||'',city=c9city()||'your city';
+  const L=(l||[]).filter(r=>!ty||r.type===ty);
+  const seg=`<div class="h53-seg">${[['','All'],['private','Rooms'],['shared','Shared'],['whole','Whole place']].map(([v,t])=>`<button class="${ty===v?'on':''}" data-a="p15f" data-k="h53ty" data-val="${v}">${t}</button>`).join('')}<button data-a="z8q" data-c="Short stay">Short stay</button></div>`;
+  const card=(r,i)=>{const ph=r.photos&&r.photos[0]&&PC15()?phUrl15(r.photos[0]):'';let from='';try{from=new Date(r.from).toLocaleDateString(RM_I18N.locale,{day:'numeric',month:'short'})}catch(e){}
+    return `<div class="h53-card" style="animation-delay:${(i*.06).toFixed(2)}s"><div class="h53-ph">${ph?`<img src="${esc(ph)}" alt="" loading="lazy">`:`<img ${a4src('img/p20/room.webp')} alt="" loading="lazy"><span class="h53-cnt">Example photo · owner adds theirs</span>`}${r.sponsored?'<span class="h53-tag">Sponsored</span>':r.top?'<span class="h53-tag">Featured</span>':''}${r.photos&&r.photos.length>1&&PC15()?`<span class="h53-cnt">${r.photos.length} photos</span>`:''}</div>
+     <div class="h53-bd"><b class="h53-t">${esc(r.title)}</b><small>${esc(r.area||'')}${TY[r.type]?' · '+TY[r.type]:''}${from?' · from '+esc(from):''}</small>${(r.tags||[]).length?`<div class="h53-chips">${r.tags.slice(0,3).map(t=>`<span>${esc(t)}</span>`).join('')}</div>`:''}
+     <div class="h53-row"><span class="h53-pr">${esc(a4money(r.rent,r.currency))}<small> /month</small></span>${r.locked?`<button class="h53-go" data-a="p15open" data-v="plus">See contact</button>`:r.mine?`<button class="h53-go g" data-a="p15taken" data-id="${r.id}">Mark as taken</button>`:''}</div>
+     ${r.locked?`<small class="h53-nt">Contact and address open with NeuAmigo Plus</small>`:`<div class="h53-ct"><b>${esc(r.address||r.area||'')}</b><small>${esc(r.contact||'')}</small></div>`}</div></div>`};
+  const list=L.length?`<p class="h53-lead">${L.length} ${L.length===1?'home':'homes'} in ${esc(city)} · rent shown on every listing</p><div class="h53-list">${L.map(card).join('')}</div>`
+    :`<div class="h53-empty"><b>No homes listed here yet</b><small>Tell owners what you need and they message you.</small><button class="h53-go" data-a="p15open" data-v="ask:room">Ask owners</button></div>`;
+  const two=`<div class="h53-two"><button data-a="p15open" data-v="ask:room"><span class="h53-ph2"><img ${a4src('img/p17/bedside.webp')} alt="" loading="lazy"></span><b>Ask owners</b><small>Post what you need</small></button><button data-a="p15open" data-v="postroom"><span class="h53-ph2"><img ${a4src('img/p17/rentsign.webp')} alt="" loading="lazy"></span><b>List your home</b><small>Find a tenant</small></button></div>`;
+  return c9wrap(h53top('Homes for rent',`<button class="h53-ch" data-a="p15open" data-v="postroom">Post</button>`)+seg+`<div class="h53-in">${list}${two}<p class="h53-ex">Prices come from the owners and agents who list. NeuAmigo does not check listings: see the place before you pay anything.</p></div></div>`)}
+function h53jobs(){const c=P15.f.jc||'',key='j'+c,l=(P15.jb||{})[key];
+  if(l===undefined){API.rpc('jobs15',{c}).then(r=>{P15.jb=Object.assign(P15.jb||{},{[key]:r||[]});render()}).catch(()=>{P15.jb=Object.assign(P15.jb||{},{[key]:[]});render()});return c9wrap(h53top('Jobs for you')+`<div class="h53-in">${spinner('Loading')}</div></div>`)}
+  const wp=P15.wp;if(wp===undefined){P15.wp=null;API.rpc('workprof15',{}).then(r=>{P15.wp=r||{};render()}).catch(()=>{P15.wp={}})}
+  const done=wp&&wp.skills?[wp.skills.length,wp.langs&&wp.langs.length,wp.avail&&wp.avail.length,wp.area,wp.permit].filter(Boolean).length*20:0,city=c9city()||'your city';
+  const seg=`<div class="h53-seg">${[['','All']].concat(JOBCAT15.map(x=>[x,x])).map(([v,t])=>`<button class="${c===v?'on':''}" data-a="p15f" data-k="jc" data-val="${esc(v)}">${esc(t)}</button>`).join('')}</div>`;
+  const prof=`<button class="h53-wp" data-a="p15open" data-v="workprof"><span><small>My work profile${done?' · '+done+'% done':''}</small><b>${done>=100?'Ready: apply in one tap':'Finish it once, then apply in one tap'}</b></span><u>${done>=100?'Open':'Finish'}</u></button>`;
+  const card=(j,i)=>`<button class="h53-job" style="animation-delay:${(i*.06).toFixed(2)}s" data-a="p15open" data-v="job:${j.id}"><span class="h53-jph"><img ${a4src(h53jobPh(j))} alt="" loading="lazy"></span><span class="h53-jb"><b class="h53-t">${esc(j.title)}</b><small>${esc(j.employer||'')}${j.area?' · '+esc(j.area):''}</small><span class="h53-chips">${j.hours?`<span>${j.hours} h a week</span>`:''}${j.sponsored?'<span>Sponsored</span>':''}${j.mine?`<span>Your job · ${j.apps} applied</span>`:j.applied?'<span>Applied</span>':''}</span><span class="h53-row"><span class="h53-pr s">${esc(a4money(j.pay,j.currency))}<small> /hour</small></span><span class="h53-go s">View</span></span></span></button>`;
+  const list=l.length?`<p class="h53-lead">${l.length} ${l.length===1?'job':'jobs'} in ${esc(city)} · pay and hours on every job</p><div class="h53-list">${l.map(card).join('')}</div>`
+    :`<div class="h53-empty"><b>No jobs here yet</b><small>Finish your work profile so you can apply in one tap when they come.</small><button class="h53-go" data-a="p15open" data-v="workprof">My work profile</button></div>`;
+  return c9wrap(h53top('Jobs for you',`<button class="h53-ch" data-a="p15open" data-v="postjob">Post a job</button>`)+seg+`<div class="h53-in">${prof}${list}<p class="h53-ex">Job seekers never pay. Report any job that asks you for money.</p></div></div>`)}
+(function(){
+  if(!H53_LIVE)return;
+  const _r=P15V.rooms;P15V.rooms=function(){try{return h53rooms()}catch(e){console.warn('[h53]',e);return _r.apply(this,arguments)}};
+  const _j=P15V.jobs;P15V.jobs=function(){try{return h53jobs()}catch(e){console.warn('[h53]',e);return _j.apply(this,arguments)}};
+  const _ar=afterRenderEvents;afterRenderEvents=function(){const r=_ar.apply(this,arguments);try{if(document.querySelector('.h53.dk'))document.documentElement.classList.add('a46dk')}catch(e){}return r};
+})();
+
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
 })();
