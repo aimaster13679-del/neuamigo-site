@@ -7626,6 +7626,44 @@ function soon50(k){const s=SOON50[k]||SOON50.col,dk=h48dk();
 /* ticket fee tier, same rule as the server (bftier15): under US$15 = 1, up to US$40 = 2, above = 3 */
 function bft51(cents,cur){const fx=(P15.d&&P15.d.fx)||{},u=(cents||0)/100/(fx[String(cur||'USD').toUpperCase()]||1);return u<15?1:u<=40?2:3}
 
+/* ===== part52 · New business plans (his "Ok for all" 17 Nov 2026 17:08): Restaurant, College, Home sale agent, Short stay listing.
+   MOCK until he says ok: only with localStorage na.p52 = '1'. Prices from price15 (na-migration 20261117010000). ===== */
+const P52_LIVE=false;
+function P52(){try{return P52_LIVE||localStorage.getItem('na.p52')==='1'}catch(e){return P52_LIVE}}
+const PL52={
+  resto:{k:'resto_plan',lead:'lead_cater',ph:'img/p20/dinner.webp',t:'Restaurant plan',who:'Restaurants and cloud kitchens of every country',
+    get:[['Your restaurant in Taste of home','People from your roots find you by city and cuisine'],['Menu with prices','Up to 30 dishes, each with its own photo and price'],['Catering requests','Parties and daily meals: take the ones you want']],
+    use:'per catering request you take'},
+  college:{k:'college_plan',lead:'lead_college',ph:'img/p18/work.webp',t:'College plan',who:'Colleges, schools and course centres',
+    get:[['Your courses, clearly listed','What you teach, how long it takes, the full fee'],['Student requests','People who just arrived ask what fits them'],['Intake dates','Show your next start dates on every course']],
+    use:'per student request you take'},
+  sale:{k:'saleagent_plan',lead:'lead_homesale',ph:'img/p15/house.webp',t:'Home sale agent plan',who:'Real estate agents and brokers',
+    get:[['Homes for sale','List homes with price, size and area'],['Buyer and seller requests','People ready to buy or sell ask once'],['Your agent page','Your areas, your homes, how to reach you']],
+    use:'per buyer or seller request you take'},
+  stay:{k:'stay_plan',lead:'lead_stay',ph:'img/p21/bedroom.webp',t:'Short stay listing',who:'PGs, guesthouses, motels and hosts',
+    get:[['Rooms by the night','Price per night, what is included, house rules'],['Guest requests','New arrivals ask with their dates'],['Up to 10 rooms','One plan for your whole place']],
+    use:'per guest request you take'}};
+function p52page(id){const P=PL52[id];if(!P)return soon15('');const pr=p15price(P.k),lp=p15price(P.lead),dk=(typeof a46th==='function'&&a46th()==='dark');
+  return c9wrap(`<div class="h52${dk?' dk':''}"><div class="h52-bar"><button class="h52-bk" data-a="p15back" aria-label="Back">‹</button><b>${esc(P.t)}</b></div>
+   <div class="h52-ph"><img ${typeof P50S==='function'?P50S(P.ph):`src="${P.ph}"`} alt=""></div>
+   <div class="h52-in"><small class="h52-k">FOR BUSINESSES</small><h1>${esc(P.t)}</h1><p class="h52-who">${esc(P.who)}</p>
+   <div class="h52-pr"><div><b>${esc(pr||'')}</b><span>a month</span></div><div><b>${esc(lp||'')}</b><span>${esc(P.use)}</span></div></div>
+   <div class="h52-get">${P.get.map(([a,b],i)=>`<div><i>${i+1}</i><span><b>${esc(a)}</b><small>${esc(b)}</small></span></div>`).join('')}</div>
+   <div class="h52-how"><b>How requests work</b><span>A request goes to 6 businesses at once. You have 10 minutes to take it. You pay only for the ones you take. A wrong or fake request gives you a credit back.</span></div>
+   <p class="h52-nt">Pay once, nothing renews by itself. Documents you add are shared by you and not checked by NeuAmigo.</p>
+   <button class="h52-cta" data-a="h52buy" data-k="${id}">Start ${esc(P.t)} · ${esc(pr||'')}</button></div></div>`)}
+(function(){
+  Object.assign(P15V,{'p52:resto':()=>p52page('resto'),'p52:college':()=>p52page('college'),'p52:sale':()=>p52page('sale'),'p52:stay':()=>p52page('stay')});
+  const _o=A.p15open;A.p15open=function(el){const v=el&&el.dataset&&el.dataset.v;if(v&&v.indexOf('p52:')===0){P15.back52=P15.v;P15.v=v;render();try{document.getElementById('main').scrollTop=0}catch(e){}return}return _o.apply(this,arguments)};
+  const _b=A.p15back;A.p15back=function(el){if(String(P15.v||'').indexOf('p52:')===0){P15.v='plans';render();return}return _b.apply(this,arguments)};
+  A.h52buy=function(){toast('This plan opens after the owner says ok.','info')};
+  const _pl=P15V.plans;P15V.plans=function(){let h=_pl.apply(this,arguments);if(!P52())return h;
+    const rows=[['resto','Restaurants','Taste of home: your menu with prices, catering requests'],['college','Colleges and courses','Your courses with fees, student requests'],['sale','Homes to sell','Agents: homes for sale, buyer and seller requests'],['stay','Short stays','PGs, guesthouses, motels: rooms by the night']]
+      .map(([id,t,s])=>{const P=PL52[id],pr=p15price(P.k);return `<button class="a40-bz" data-a="p15open" data-v="p52:${id}"><span class="a40-pic h52-pic"><img src="${P.ph}" alt="" loading="lazy"></span><span class="a40-bt"><b>${esc(t)}</b><small>${esc(s)}</small>${pr?`<span class="a40-bp">from <strong>${esc(pr)}</strong></span>`:''}</span><u>See plan</u></button>`}).join('');
+    return h.replace('<div class="a40-biz">','<div class="a40-biz">'+rows)};
+})();
+(function(){const _ar=afterRenderEvents;afterRenderEvents=function(){const r=_ar.apply(this,arguments);try{if(document.querySelector('.h52.dk'))document.documentElement.classList.add('a46dk')}catch(e){}return r}})();
+
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
 })();
