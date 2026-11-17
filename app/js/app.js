@@ -7625,6 +7625,20 @@ function soon50(k){const s=SOON50[k]||SOON50.col,dk=h48dk();
 })();
 /* ticket fee tier, same rule as the server (bftier15): under US$15 = 1, up to US$40 = 2, above = 3 */
 function bft51(cents,cur){const fx=(P15.d&&P15.d.fx)||{},u=(cents||0)/100/(fx[String(cur||'USD').toUpperCase()]||1);return u<15?1:u<=40?2:3}
+/* Home tiles for our other apps (his ask 17 Nov 2026 17:08 + Neutant link 17:49): app logo on the photo corner;
+   tap = Play Store inside the Android app, website on iPhone and web. NeuMarry Play app is not public yet -> website until it is.
+   MOCK first: only with localStorage na.p53 = '1'. */
+const P53_LIVE=false;
+function P53(){try{return P53_LIVE||localStorage.getItem('na.p53')==='1'}catch(e){return P53_LIVE}}
+const APP53={neutant:{logo:'img/brand/neutant.png',play:'https://play.google.com/store/apps/details?id=com.neutant.app',web:'https://neutant.com'},
+  neumarry:{logo:'img/brand/neumarry.png',play:'',web:'https://neumarry.com'}};
+(function(){
+  if(typeof h50tile!=='function')return;
+  const _t=h50tile;h50tile=function(t,D,i){let h=_t(t,D,i);if(!P53())return h;const k=t[0]==='shop'?'neutant':t[0]==='nm'?'neumarry':'';if(!k)return h;
+    h=h.replace(/<button class="h50-t"([^>]*?) data-a="[^"]*"(?: data-[a-z]+="[^"]*")*/,(m,st)=>`<button class="h50-t"${st} data-a="h53app" data-k="${k}"`);
+    return h.replace('<span class="h50-ph">',`<span class="h50-ph"><i class="h53-lg"><img src="${APP53[k].logo}" alt=""></i>`)};
+  A.h53app=function(el){const a=APP53[el.dataset.k];if(!a)return;const u=(isNative&&a.play)?a.play:a.web;try{window.open(u,'_blank','noopener')}catch(e){location.href=u}};
+})();
 
 /* ===== part52 · New business plans (his "Ok for all" 17 Nov 2026 17:08): Restaurant, College, Home sale agent, Short stay listing.
    LIVE after his 'baki sab ok' 17 Nov 2026 17:49. Prices from price15 (na-migration 20261117010000). ===== */
