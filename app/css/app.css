@@ -4130,3 +4130,47 @@ html.h48on.a46dk body,html.h48on.a46dk #app,html.h48on.a46dk main,html.h48on.a46
 .h49-sum b{font-size:17px;font-weight:800;line-height:1.35;color:var(--ink)}.h49-sum small{font-size:13px;color:var(--sub);font-weight:600}
 .h48 .h49-cta{width:100%;height:52px;margin-top:18px;border-radius:16px;background:var(--br)!important;color:#fff;font-size:16px;font-weight:800;text-align:center;display:flex;align-items:center;justify-content:center}
 .h48 .h49-cta:disabled{opacity:.6}
+/* ===== part50: Glass Journey home (his pick 17 Nov 2026, design 1) ===== */
+.h50{margin:-16px -16px -24px;padding:6px 16px 40px;min-height:100vh;color:#13213A;background:linear-gradient(180deg,#F6F4F0 0%,#EEF0F4 55%,#DFE5EF 100%);--b:#1B3463;--m:#5A6680;--cd:rgba(255,255,255,.9);--ln:rgba(20,40,80,.07)}
+.h50.dk{color:#F2F4F8;background:linear-gradient(180deg,#0B0C10 0%,#10131B 60%,#141A28 100%);--b:#9DB4FF;--m:rgba(242,244,248,.62);--cd:rgba(255,255,255,.06);--ln:rgba(255,255,255,.1)}
+html.h50on body,html.h50on #app,html.h50on main,html.h50on .p15,html.h50on .c9{background:#F6F4F0!important}
+html.h50on.a46dk body,html.h50on.a46dk #app,html.h50on.a46dk main,html.h50on.a46dk .p15,html.h50on.a46dk .c9{background:#0B0C10!important}
+.h50-top{display:flex;align-items:center;gap:9px;padding-top:4px}
+.h50-top img{width:30px;height:30px;border-radius:8px}
+.h50-br{font-family:'Fraunces',Georgia,serif;font-size:21px;font-weight:500;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.h50-ch{margin-left:auto;height:32px;padding:0 11px;border-radius:10px;font-size:12px;font-weight:700;font-family:inherit;color:inherit!important;background:var(--cd)!important;border:1px solid var(--ln)!important;display:inline-flex;align-items:center;white-space:nowrap;max-width:46%;overflow:hidden;text-overflow:ellipsis}
+.h50-ch+.h50-ch{margin-left:6px}
+.h50-h1{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:28px;line-height:1.08;letter-spacing:0;margin:16px 0 0}
+.h50-h1 i{color:var(--b)}
+.h50-sr{width:100%;margin-top:14px;height:50px;border-radius:15px;background:#fff;border:1px solid var(--ln);display:flex;align-items:center;justify-content:space-between;padding:0 6px 0 14px;font-size:14px;font-weight:600;font-family:inherit;color:#5A6680;box-shadow:0 6px 16px -12px rgba(20,40,80,.3);overflow:hidden}
+.h50-sr span{display:flex;gap:5px;white-space:nowrap;overflow:hidden}.h50-sr b{color:#13213A}
+.h50-sr u{text-decoration:none;height:38px;padding:0 14px;border-radius:11px;background:#1B3463;color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center}
+.h50.dk .h50-sr{background:rgba(255,255,255,.08);color:rgba(242,244,248,.6)}.h50.dk .h50-sr b{color:#fff}.h50.dk .h50-sr u{background:#fff;color:#0B0C10}
+.h50-st{display:flex;justify-content:space-between;align-items:baseline;margin:20px 2px 9px}
+.h50-st b{font-size:11px;font-weight:800;letter-spacing:.09em;color:var(--b)}.h50-st span{font-size:11.5px;font-weight:700;color:var(--m)}
+.h50-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.h50-t{display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:5px 5px 9px;border-radius:18px;background:var(--cd);border:1px solid var(--ln);box-shadow:0 1px 2px rgba(20,40,80,.05),0 8px 18px -12px rgba(20,40,80,.22);color:inherit;font-family:inherit;animation:h50r .6s cubic-bezier(.2,.8,.2,1) both;transition:transform .15s}
+.h50-t:active{transform:scale(.97)}
+@keyframes h50r{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.h50-t{animation:none}}
+.h50-ph{display:block;width:100%;aspect-ratio:1/1;border-radius:12px;overflow:hidden;background:#E9E6E1}
+.h50-ph img{width:100%;height:100%;object-fit:cover;display:block}
+.h50-t b{display:block;font-size:12.5px;font-weight:800;line-height:1.2;margin:7px 4px 0;min-height:30px;overflow-wrap:break-word}
+.h50-pr{display:inline-block;margin:5px 4px 0;font-size:10.5px;font-weight:800;color:#fff;background:#1B3463;padding:3px 7px;border-radius:7px;max-width:calc(100% - 8px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.h50.dk .h50-pr{background:#fff;color:#0B0C10}
+.h50-sb{display:block;margin:5px 4px 0;font-size:11px;font-weight:700;color:var(--m);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100% - 8px)}
+.h50-ask{width:100%;margin-top:20px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 14px 14px 16px;border-radius:18px;background:var(--cd);border:1px solid var(--ln);color:inherit;font-family:inherit;text-align:left}
+.h50-ask b{display:block;font-size:14.5px}.h50-ask small{font-size:12px;color:var(--m);font-weight:600}
+.h50-ask u{text-decoration:none;height:36px;padding:0 15px;border-radius:11px;background:#1B3463;color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center}
+.h50.dk .h50-ask u{background:#fff;color:#0B0C10}.h50.dk .h50-btn{background:#fff!important;color:#0B0C10!important}
+.h50-note{font-size:11px;font-weight:600;color:var(--m);margin:12px 2px 0;line-height:1.45}
+.h50-lead{font-size:13px;font-weight:600;color:var(--m);margin:12px 2px 0;line-height:1.45}
+.h50-hero{margin-top:12px;border-radius:18px;overflow:hidden;aspect-ratio:3/2;background:#E9E6E1}.h50-hero img{width:100%;height:100%;object-fit:cover;display:block}
+.h50-list{margin-top:12px;border-radius:18px;background:var(--cd);border:1px solid var(--ln);overflow:hidden}
+.h50-row{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px;border:0;background:none;color:inherit;font-family:inherit;text-align:left}
+.h50-row+.h50-row{border-top:1px solid var(--ln)}.h50-row b{display:block;font-size:15px}.h50-row small{font-size:12px;color:var(--m);font-weight:600}
+.h50-row u{text-decoration:none;height:32px;padding:0 13px;border-radius:10px;background:#1B3463;color:#fff;font-weight:800;font-size:12.5px;display:flex;align-items:center;flex:none}
+.h50.dk .h50-row u{background:#fff;color:#0B0C10}
+.h50-card{margin-top:12px;border-radius:18px;background:var(--cd);border:1px solid var(--ln);padding:16px}
+.h50-card b{font-size:16px}.h50-card p{font-size:13px;line-height:1.5;color:var(--m);font-weight:600;margin:6px 0 14px}
+.h50-btn{width:100%;height:48px;border-radius:14px;border:0;background:#1B3463!important;color:#fff!important;font-size:14.5px;font-weight:800;font-family:inherit}
