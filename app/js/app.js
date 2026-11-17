@@ -7628,7 +7628,7 @@ function bft51(cents,cur){const fx=(P15.d&&P15.d.fx)||{},u=(cents||0)/100/(fx[St
 /* Home tiles for our other apps (his ask 17 Nov 2026 17:08 + Neutant link 17:49): app logo on the photo corner;
    tap = Play Store inside the Android app, website on iPhone and web. NeuMarry Play app is not public yet -> website until it is.
    MOCK first: only with localStorage na.p53 = '1'. */
-const P53_LIVE=false;
+const P53_LIVE=true;
 function P53(){try{return P53_LIVE||localStorage.getItem('na.p53')==='1'}catch(e){return P53_LIVE}}
 const APP53={neutant:{logo:'img/brand/neutant.png',play:'https://play.google.com/store/apps/details?id=com.neutant.app',web:'https://neutant.com'},
   neumarry:{logo:'img/brand/neumarry.png',play:'',web:'https://neumarry.com'}};
