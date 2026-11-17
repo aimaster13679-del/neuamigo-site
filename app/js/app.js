@@ -7725,6 +7725,36 @@ function h53jobs(){const c=P15.f.jc||'',key='j'+c,l=(P15.jb||{})[key];
   const _j=P15V.jobs;P15V.jobs=function(){try{return h53jobs()}catch(e){console.warn('[h53]',e);return _j.apply(this,arguments)}};
   const _ar=afterRenderEvents;afterRenderEvents=function(){const r=_ar.apply(this,arguments);try{if(document.querySelector('.h53.dk'))document.documentElement.classList.add('a46dk')}catch(e){}return r};
 })();
+/* step 2: Taste of home + Used cars and phones (same data/actions as part44 / part39) */
+const SP53={cars:'img/p20/carcity.webp',tech:'img/p21/laptop.webp',furniture:'img/p19/sofa.webp',kitchen:'img/p17/kitchen2.webp',other:'img/p17/boxes3.webp'};
+function h53food(){const L=a44load(),city=c9city()||'your city',fr=P15.f.h53fr||'all';
+  const head=h53top('Taste of home',`<button class="h53-ch" data-a="p15open" data-v="foodpost">Sell food</button>`);
+  if(L===null)return c9wrap(head+`<div class="h53-in">${spinner('Loading')}</div></div>`);
+  const regs=A44REG.filter(([k])=>k==='all'||L.some(f=>f.region===k));
+  const seg=regs.length>1?`<div class="h53-seg">${regs.map(([k,l])=>`<button class="${fr===k?'on':''}" data-a="p15f" data-k="h53fr" data-val="${k}">${esc(l)}</button>`).join('')}</div>`:'';
+  const S=L.filter(f=>fr==='all'||f.region===fr);
+  const card=(f,i)=>{const p=(f.photos||[])[0],real=p&&PC15();return `<div class="h53-card" style="animation-delay:${(i*.05).toFixed(2)}s"><button class="h53-ph" data-a="p15open" data-v="food:${f.id}">${real?`<img src="${esc(phUrl15(p))}" alt="" loading="lazy">`:`<img src="${A44PH[i%A44PH.length]}" alt="" loading="lazy"><span class="h53-cnt">Example photo</span>`}${f.mine?'<span class="h53-tag">Your dish</span>':''}</button>
+    <div class="h53-bd"><b class="h53-t">${esc(f.title)}</b><small>${esc(f.cuisine||'')}${f.area?' · '+esc(f.area):''}${f.pickup?' · '+esc(f.pickup):''}</small>${f.permit||f.orderBy?`<div class="h53-chips">${f.permit?'<span>Food permit shared by the cook</span>':''}${f.orderBy?`<span>Order by ${esc(f.orderBy)}</span>`:''}</div>`:''}
+    <div class="h53-row"><span class="h53-pr">${esc(a4money(f.price,f.currency))}<small> /plate</small></span><button class="h53-go" data-a="p15open" data-v="food:${f.id}">${f.mine?`${f.orders||0} orders`:'Order'}</button></div></div></div>`};
+  const list=S.length?`<p class="h53-lead">${S.length} ${S.length===1?'dish':'dishes'} cooked near you in ${esc(city)}</p><div class="h53-list">${S.map(card).join('')}</div>`
+    :`<div class="h53-empty"><b>No home cooks here yet</b><small>Cooks from many countries add dishes every week. Or ask: caterers and home cooks get your request.</small><button class="h53-go" data-a="z8q" data-c="Catering">Ask home cooks</button></div>`;
+  const two=`<div class="h53-two"><button data-a="p15open" data-v="foodorders"><span class="h53-ph2"><img ${a4src('img/p17/feast.webp')} alt="" loading="lazy"></span><b>My orders</b><small>Pay the cook at pick-up</small></button><button data-a="z8q" data-c="Catering"><span class="h53-ph2"><img ${a4src('img/p20/dinner.webp')} alt="" loading="lazy"></span><b>Food for a party</b><small>6 caterers get it at once</small></button></div>`;
+  return c9wrap(head+seg+`<div class="h53-in">${list}${two}<p class="h53-ex">Prices come from the cooks. Food permits are shared by the cook and not checked by NeuAmigo.</p></div></div>`)}
+function h53sell(){const sl=P15.sl;if(sl===undefined||sl===null){if(sl===undefined){P15.sl=null;API.rpc('sales15',{}).then(r=>{P15.sl=r||[];render()}).catch(()=>{P15.sl=[];render()})}return c9wrap(h53top('Cars and phones')+`<div class="h53-in">${spinner('Loading')}</div></div>`)}
+  const city=c9city()||'your city',l=(sl||[]).filter(s=>s.status==='open'||s.mine||s.bought),cur=P15.f.h53sc||'all';
+  const K=[['all','All'],['cars','Cars'],['tech','Phones and tech'],['furniture','Furniture'],['kitchen','Kitchen'],['other','Other']].filter(([k])=>k==='all'||l.some(s=>a9cat(s)===k));
+  const S=l.filter(s=>cur==='all'||a9cat(s)===cur);
+  const card=(s,i)=>{const p=(s.photos||[])[0],real=p&&PC15();return `<button class="h53-card h53-gc" style="animation-delay:${(i*.05).toFixed(2)}s" data-a="p15open" data-v="sale"><span class="h53-ph">${real?`<img src="${esc(phUrl15(p))}" alt="" loading="lazy">`:`<img ${a4src(SP53[a9cat(s)]||SP53.other)} alt="" loading="lazy"><span class="h53-cnt">Example photo</span>`}</span>
+    <span class="h53-bd"><b class="h53-t h53-1">${esc(s.title)}</b><small>${esc(s.area||'')}${s.cond?' · '+esc(s.cond):''}</small><span class="h53-row"><span class="h53-pr s">${esc(a4money(s.price,s.currency))}</span><span class="h53-go s">View</span></span></span></button>`};
+  const list=S.length?`<p class="h53-lead">${S.length} ${S.length===1?'item':'items'} in ${esc(city)} · seller's own price</p><div class="h53-g2">${S.slice(0,40).map(card).join('')}</div>`
+    :`<div class="h53-empty"><b>Nothing for sale here yet</b><small>People moving out post cars, phones and furniture here. Dealers can also answer your request.</small><button class="h53-go" data-a="z8q" data-c="Used cars">Ask car dealers</button></div>`;
+  const two=`<div class="h53-two"><button data-a="z8q" data-c="Used cars"><span class="h53-ph2"><img ${a4src('img/p19/usedcar.webp')} alt="" loading="lazy"></span><b>Ask car dealers</b><small>6 dealers get it at once</small></button><button data-a="z8q" data-c="Used phones"><span class="h53-ph2"><img ${a4src('img/p21/phone.webp')} alt="" loading="lazy"></span><b>Ask phone shops</b><small>Buy, sell or fix</small></button></div>`;
+  return c9wrap(h53top('Cars and phones',`<button class="h53-ch" data-a="p15open" data-v="mysale">Sell</button>`)+`<div class="h53-seg">${K.map(([k,t])=>`<button class="${cur===k?'on':''}" data-a="p15f" data-k="h53sc" data-val="${k}">${t}</button>`).join('')}</div><div class="h53-in">${list}${two}<p class="h53-ex">Meet in a public place and check the item before you pay. NeuAmigo does not check sellers or items.</p></div></div>`)}
+(function(){
+  if(!H53_LIVE)return;
+  const _f=P15V.food;P15V.food=function(){try{return h53food()}catch(e){console.warn('[h53]',e);return _f.apply(this,arguments)}};
+  const _s=P15V.c12sell;P15V.c12sell=function(){try{return h53sell()}catch(e){console.warn('[h53]',e);return _s.apply(this,arguments)}};
+})();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();

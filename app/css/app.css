@@ -4275,3 +4275,9 @@ html.h50on:not(.a46dk) body,html.h50on:not(.a46dk) #app,html.h50on:not(.a46dk) m
 .h53-two b{display:block;font-size:14px;padding:10px 12px 0}.h53-two small{display:block;font-size:12px;color:#5A6680;padding:2px 12px 0}
 .h53-ex{font-size:11px;color:#6B7486;font-weight:600;margin:14px 2px 0}
 .c9:has(> .h53:not(.dk)),.p15:has(.h53:not(.dk)),.scroll:has(.h53:not(.dk)){background:#DFE5EF!important}
+.h53-g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.h53-gc{display:flex;flex-direction:column;text-align:left;padding:0;width:100%}
+.h53-gc .h53-bd{padding:9px 10px 11px;display:flex;flex-direction:column;flex:1}
+.h53-gc .h53-t{font-size:13.5px}.h53-1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.h53-gc .h53-row{margin-top:auto;padding-top:8px}
+.h53 button.h53-ph{display:block;width:100%;padding:0;border:0}
