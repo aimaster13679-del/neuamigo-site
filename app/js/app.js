@@ -7627,20 +7627,20 @@ function soon50(k){const s=SOON50[k]||SOON50.col,dk=h48dk();
 function bft51(cents,cur){const fx=(P15.d&&P15.d.fx)||{},u=(cents||0)/100/(fx[String(cur||'USD').toUpperCase()]||1);return u<15?1:u<=40?2:3}
 
 /* ===== part52 · New business plans (his "Ok for all" 17 Nov 2026 17:08): Restaurant, College, Home sale agent, Short stay listing.
-   MOCK until he says ok: only with localStorage na.p52 = '1'. Prices from price15 (na-migration 20261117010000). ===== */
-const P52_LIVE=false;
+   LIVE after his 'baki sab ok' 17 Nov 2026 17:49. Prices from price15 (na-migration 20261117010000). ===== */
+const P52_LIVE=true;
 function P52(){try{return P52_LIVE||localStorage.getItem('na.p52')==='1'}catch(e){return P52_LIVE}}
 const PL52={
-  resto:{k:'resto_plan',lead:'lead_cater',ph:'img/p20/dinner.webp',t:'Restaurant plan',who:'Restaurants and cloud kitchens of every country',
+  resto:{cat:'Catering',k:'resto_plan',lead:'lead_cater',ph:'img/p20/dinner.webp',t:'Restaurant plan',who:'Restaurants and cloud kitchens of every country',
     get:[['Your restaurant in Taste of home','People from your roots find you by city and cuisine'],['Menu with prices','Up to 30 dishes, each with its own photo and price'],['Catering requests','Parties and daily meals: take the ones you want']],
     use:'per catering request you take'},
-  college:{k:'college_plan',lead:'lead_college',ph:'img/p18/work.webp',t:'College plan',who:'Colleges, schools and course centres',
+  college:{cat:'College',k:'college_plan',lead:'lead_college',ph:'img/p18/work.webp',t:'College plan',who:'Colleges, schools and course centres',
     get:[['Your courses, clearly listed','What you teach, how long it takes, the full fee'],['Student requests','People who just arrived ask what fits them'],['Intake dates','Show your next start dates on every course']],
     use:'per student request you take'},
-  sale:{k:'saleagent_plan',lead:'lead_homesale',ph:'img/p15/house.webp',t:'Home sale agent plan',who:'Real estate agents and brokers',
+  sale:{cat:'Home sale',k:'saleagent_plan',lead:'lead_homesale',ph:'img/p15/house.webp',t:'Home sale agent plan',who:'Real estate agents and brokers',
     get:[['Homes for sale','List homes with price, size and area'],['Buyer and seller requests','People ready to buy or sell ask once'],['Your agent page','Your areas, your homes, how to reach you']],
     use:'per buyer or seller request you take'},
-  stay:{k:'stay_plan',lead:'lead_stay',ph:'img/p21/bedroom.webp',t:'Short stay listing',who:'PGs, guesthouses, motels and hosts',
+  stay:{cat:'Short stay',k:'stay_plan',lead:'lead_stay',ph:'img/p21/bedroom.webp',t:'Short stay listing',who:'PGs, guesthouses, motels and hosts',
     get:[['Rooms by the night','Price per night, what is included, house rules'],['Guest requests','New arrivals ask with their dates'],['Up to 10 rooms','One plan for your whole place']],
     use:'per guest request you take'}};
 function p52page(id){const P=PL52[id];if(!P)return soon15('');const pr=p15price(P.k),lp=p15price(P.lead),dk=(typeof a46th==='function'&&a46th()==='dark');
@@ -7650,19 +7650,29 @@ function p52page(id){const P=PL52[id];if(!P)return soon15('');const pr=p15price(
    <div class="h52-pr"><div><b>${esc(pr||'')}</b><span>a month</span></div><div><b>${esc(lp||'')}</b><span>${esc(P.use)}</span></div></div>
    <div class="h52-get">${P.get.map(([a,b],i)=>`<div><i>${i+1}</i><span><b>${esc(a)}</b><small>${esc(b)}</small></span></div>`).join('')}</div>
    <div class="h52-how"><b>How requests work</b><span>A request goes to 6 businesses at once. You have 10 minutes to take it. You pay only for the ones you take. A wrong or fake request gives you a credit back.</span></div>
+   ${(()=>{const mb=p52biz(P.cat);return mb?`<div class="h52-how"><b>${esc(mb.name)}</b><span>${planOn15(mb)?'Plan active until '+esc(until15(mb.planUntil))+'. You can add more time.':'Your business is saved. Start the plan to get requests.'}</span></div>`:`<label class="h52-lb" for="h52-nm">Business name</label><input id="h52-nm" class="h52-inp" maxlength="60" value="${esc((P15.f||{}).h52nm||'')}" placeholder="As people know it">`})()}
+   ${typeof prepay15==='function'?prepay15(P.k):''}
    <p class="h52-nt">Pay once, nothing renews by itself. Documents you add are shared by you and not checked by NeuAmigo.</p>
-   <button class="h52-cta" data-a="h52buy" data-k="${id}">Start ${esc(P.t)} · ${esc(pr||'')}</button></div></div>`)}
+   <button class="h52-cta" data-a="h52buy" data-k="${id}"${P15.busy==='h52'?' disabled':''}>${P15.busy==='h52'?'Starting…':`${p52biz(P.cat)&&planOn15(p52biz(P.cat))?'Add time':'Start plan'} · ${esc(p15price(typeof planKey15==='function'?planKey15(P.k):P.k)||pr||'')}`}</button></div></div>`)}
 (function(){
   Object.assign(P15V,{'p52:resto':()=>p52page('resto'),'p52:college':()=>p52page('college'),'p52:sale':()=>p52page('sale'),'p52:stay':()=>p52page('stay')});
   const _o=A.p15open;A.p15open=function(el){const v=el&&el.dataset&&el.dataset.v;if(v&&v.indexOf('p52:')===0){P15.back52=P15.v;P15.v=v;render();try{document.getElementById('main').scrollTop=0}catch(e){}return}return _o.apply(this,arguments)};
   const _b=A.p15back;A.p15back=function(el){if(String(P15.v||'').indexOf('p52:')===0){P15.v='plans';render();return}return _b.apply(this,arguments)};
-  A.h52buy=function(){toast('This plan opens after the owner says ok.','info')};
+  A.h52buy=async function(el){if(P15.busy)return;const P=PL52[el.dataset.k];if(!P)return;const me=S.me||{},inp=document.getElementById('h52-nm');
+    let b=p52biz(P.cat);const other=!b&&((P15.d&&P15.d.biz)||[]).find(x=>x.kind==='expert');if(other){toast('Your account already has a business ('+other.name+'). One account can run one business for now.','info');return}const nm=inp?inp.value.trim():'';if(!b&&nm.length<2){toast('Please write your business name.','info');return}
+    P15.f=P15.f||{};P15.f.h52nm=nm;P15.busy='h52';render();
+    try{const id=b?b.id:await API.rpc('biz_upsert15',{k:'expert',nm,cty:me.city||'',ctry:me.country||'',lg:[],ab:'',cat:P.cat,lic:''});
+      await API.rpc('buy_biz_plan15',{bid:id,prod:typeof planKey15==='function'?planKey15(P.k):P.k});if(typeof load15==='function')await load15();
+      toast('Your plan is active. New requests show in Requests near you.','tick2')}
+    catch(e){if(!P15.shownMsg||Date.now()-(P15.shownAt||0)>1500)toast('Could not start the plan. Please try again.','info')}
+    P15.busy='';render()};
   const _pl=P15V.plans;P15V.plans=function(){let h=_pl.apply(this,arguments);if(!P52())return h;
     const rows=[['resto','Restaurants','Taste of home: your menu with prices, catering requests'],['college','Colleges and courses','Your courses with fees, student requests'],['sale','Homes to sell','Agents: homes for sale, buyer and seller requests'],['stay','Short stays','PGs, guesthouses, motels: rooms by the night']]
       .map(([id,t,s])=>{const P=PL52[id],pr=p15price(P.k);return `<button class="a40-bz" data-a="p15open" data-v="p52:${id}"><span class="a40-pic h52-pic"><img src="${P.ph}" alt="" loading="lazy"></span><span class="a40-bt"><b>${esc(t)}</b><small>${esc(s)}</small>${pr?`<span class="a40-bp">from <strong>${esc(pr)}</strong></span>`:''}</span><u>See plan</u></button>`}).join('');
     return h.replace('<div class="a40-biz">','<div class="a40-biz">'+rows)};
 })();
 (function(){const _ar=afterRenderEvents;afterRenderEvents=function(){const r=_ar.apply(this,arguments);try{if(document.querySelector('.h52.dk'))document.documentElement.classList.add('a46dk')}catch(e){}return r}})();
+function p52biz(cat){try{return ((P15.d&&P15.d.biz)||[]).find(b=>b.kind==='expert'&&b.category===cat)||null}catch(e){return null}}
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();

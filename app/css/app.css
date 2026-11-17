@@ -4219,3 +4219,6 @@ html.h50on.a46dk body,html.h50on.a46dk #app,html.h50on.a46dk main,html.h50on.a46
 .h52.dk .h52-bk{background:rgba(255,255,255,.08)!important;border-color:rgba(255,255,255,.16)!important}
 html.a46dk,html.a46dk body{background:#0B0D12!important}
 html.a46dk .c9,html.a46dk .navwrap,html.a46dk .c9-in{background:#0B0D12!important}
+.h52-lb{display:block;font-size:13px;font-weight:700;margin:4px 2px 6px}
+.h52-inp{width:100%;height:48px;border-radius:12px;border:1px solid rgba(11,21,48,.14);background:#fff;padding:0 14px;font-size:16px;margin-bottom:12px;color:#0B1530;box-sizing:border-box}
+.h52.dk .h52-inp{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.16);color:#F2F4F8}
