@@ -7630,12 +7630,14 @@ function bft51(cents,cur){const fx=(P15.d&&P15.d.fx)||{},u=(cents||0)/100/(fx[St
    MOCK first: only with localStorage na.p53 = '1'. */
 const P53_LIVE=true;
 function P53(){try{return P53_LIVE||localStorage.getItem('na.p53')==='1'}catch(e){return P53_LIVE}}
-const APP53={neutant:{logo:'img/brand/neutant.png',play:'https://play.google.com/store/apps/details?id=com.neutant.app',web:'https://neutant.com'},
+const APP53={neutant:{logo:'img/brand/neutant.png',play:'https://neutant.com/app/shop/?src=neuamigo',web:'https://neutant.com/app/shop/?src=neuamigo'},
   neumarry:{logo:'img/brand/neumarry.png',play:'',web:'https://neumarry.com'}};
 (function(){
   if(typeof h50tile!=='function')return;
   const _t=h50tile;h50tile=function(t,D,i){let h=_t(t,D,i);if(!P53())return h;const k=t[0]==='shop'?'neutant':t[0]==='nm'?'neumarry':'';if(!k)return h;
     h=h.replace(/<button class="h50-t"([^>]*?) data-a="[^"]*"(?: data-[a-z]+="[^"]*")*/,(m,st)=>`<button class="h50-t"${st} data-a="h53app" data-k="${k}"`);
+    h=h.replace('<button class="h50-t"','<button class="h50-t h53-wide"');
+    if(k==='neutant')h=h.replace(/<b>[^<]*<\/b>/,'<b>Groceries &amp; services near you · Neutant</b>').replace(/<span class="h50-sb">[^<]*<\/span>/,'<span class="h50-sb">Opens the Neutant app</span>');
     return h.replace('<span class="h50-ph">',`<span class="h50-ph"><i class="h53-lg"><img src="${APP53[k].logo}" alt=""></i>`)};
   A.h53app=function(el){const a=APP53[el.dataset.k];if(!a)return;const u=(isNative&&a.play)?a.play:a.web;try{window.open(u,'_blank','noopener')}catch(e){location.href=u}};
 })();

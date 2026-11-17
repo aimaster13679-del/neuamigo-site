@@ -4305,3 +4305,11 @@ html.h50on:not(.a46dk) body,html.h50on:not(.a46dk) #app,html.h50on:not(.a46dk) m
 .h53-hero .h53-cnt{bottom:auto;top:calc(env(safe-area-inset-top) + 18px)}
 .h53-kv.two{grid-template-columns:1fr 1fr}
 .h53e .p15-kv b{white-space:normal;overflow:visible;line-height:1.25}
+/* our other apps: full-width cards so long titles fit (his ask 17 Nov 2026 19:56) */
+.h50-t.h53-wide{grid-column:1/-1;display:grid!important;grid-template-columns:132px 1fr;grid-template-rows:auto auto;column-gap:12px;align-items:center;align-content:center;padding:6px 12px 6px 6px}
+.h50-t.h53-wide .h50-ph{grid-row:1/3;width:132px;aspect-ratio:3/2}
+.h50-t.h53-wide b{grid-column:2;align-self:end;margin:0;min-height:0;font-size:14.5px;line-height:1.25}
+.h50-t.h53-wide .h50-sb,.h50-t.h53-wide .h50-pr{grid-column:2;align-self:start;margin:4px 0 0}
+.c9:has(> .h50.dk),.p15:has(.h50.dk),.scroll:has(.h50.dk){background:#141A28!important}html.h50on.a46dk body,html.h50on.a46dk #app,html.h50on.a46dk main{background:#141A28!important}
+html.h50on.a46dk .main-inner.p15:has(.h50.dk),html.a46dk .main-inner.p15:has(.h50.dk),html.a46dk .scroll.p15s:has(.h50.dk){background:#141A28!important}
+html.a46dk body:has(.h50.dk) .navwrap{background:#141A28!important}
