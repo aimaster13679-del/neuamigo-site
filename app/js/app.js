@@ -7529,9 +7529,9 @@ const P50=n=>`img/p21/${n}.webp`;
 const P50S=img=>{const m=img.match(/^img\/(p2[01])\/([a-z0-9]+)\.webp$/);return m?`src="img/${m[1]}/t/${m[2]}.webp" srcset="img/${m[1]}/t/${m[2]}.webp 480w, ${img} 900w" sizes="(max-width:500px) 30vw, 200px"`:(typeof a4src==='function'?a4src(img):`src="${img}"`)};
 /* key, photo, title, action, live getter */
 const H50ST=[
-  ['DAY 1 · ARRIVE',[['arr',P50('arrival'),'Airport pickup','q:Airport','Fixed fares'],['sim',P50('phone'),'SIM and phone','q:Phone','Compare plans'],['stay',P50('bedroom'),'Short stays','v:rooms','PG, guesthouse']]],
+  ['DAY 1 · ARRIVE',[['arr',P50('arrival')+'|50% 88%','Airport pickup','q:Airport','Fixed fares'],['sim',P50('phone'),'SIM and phone','q:Phone','Compare plans'],['stay',P50('bedroom'),'Short stays','v:rooms','PG, guesthouse']]],
   ['WEEK 1 · SETTLE',[['food','img/p17/feast.webp','Taste of home','v:food','Home cooks'],['legal',P50('passport'),'Paperwork and legal','v:legal50','Lawyers, visa'],['rent',P50('studio2'),'Homes for rent','v:rooms','@rooms']]],
-  ['MONTH 1 · WORK AND STUDY',[['jobs','img/p17/hiring.webp','Jobs for you','v:jobs','@jobs'],['col','img/p18/work.webp','Colleges and courses','v:soon50:col','Joining soon'],['ev',P50('dinner'),'Events','k:ev15','@events']]],
+  ['MONTH 1 · WORK AND STUDY',[['jobs','img/p20/office.webp','Jobs for you','v:jobs','@jobs'],['col','img/p18/work.webp','Colleges and courses','v:soon50:col','Joining soon'],['ev',P50('dinner'),'Events','k:ev15','@events']]],
   ['ONCE SETTLED · GROW',[['car',P50('suv'),'Used cars','v:c12sell','@cars'],['mob',P50('laptop'),'Used phones','v:c12sell','Buy or sell'],['buy','img/p15/house.webp','Buy or sell a home','v:soon50:buy','Joining soon'],
     ['shop','img/p15/store.webp','Shops near you','v:soon50:shop','By Neutant'],['nm','img/p15/rings.webp','Find a life partner','x:https://neumarry.com','By NeuMarry']]]];
 const SOON50={col:['img/p18/work.webp','Colleges and courses','Colleges and course centres in your city are joining NeuAmigo. When the first ones list, you will see what they teach, how long it takes and the full fee here.'],
@@ -7547,8 +7547,8 @@ function h50sub(s,D){if(s[0]!=='@')return {t:s,p:0};
   if(k==='cars'){const m=h48min(D.cars,'price');return m?{t:'from '+a4money(m.price,m.currency),p:1}:{t:'Buy or sell',p:0}}
   if(k==='events')return D.up.length?{t:D.up.length+' coming up',p:1}:{t:'Meet people',p:0};
   return {t:'',p:0}}
-function h50tile(t,D,i){const [k,ph,ti,a,s]=t,sb=h50sub(s,D);
-  return `<button class="h50-t" style="animation-delay:${(i*.04).toFixed(2)}s" ${h50act(a)}><span class="h50-ph"><img ${P50S(ph)} alt="" loading="lazy"></span><b>${esc(ti)}</b><span class="${sb.p?'h50-pr':'h50-sb'}">${esc(sb.t)}</span></button>`}
+function h50tile(t,D,i){const [k,ph0,ti,a,s]=t,sb=h50sub(s,D),[ph,pos]=ph0.split('|');
+  return `<button class="h50-t" style="animation-delay:${(i*.04).toFixed(2)}s" ${h50act(a)}><span class="h50-ph"><img ${P50S(ph)} alt="" loading="lazy"${pos?` style="object-position:${pos}"`:''}></span><b>${esc(ti)}</b><span class="${sb.p?'h50-pr':'h50-sb'}">${esc(sb.t)}</span></button>`}
 function h50nx(){try{const done=c10done(),L=c10all().filter(s=>!done.includes(s[0]));return L[0]?L[0][2]:''}catch(e){return ''}}
 function h50(){const D=h48data(),dk=h48dk(),fr=from47(),city=D.c||'';
   let i=0;const body=H50ST.map(([h,ts],si)=>`<div class="h50-st"><b>${h}</b>${si===0?'<span>Start here</span>':''}</div><div class="h50-g">${ts.map(t=>h50tile(t,D,i++)).join('')}</div>`).join('');
