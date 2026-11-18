@@ -7779,6 +7779,43 @@ function h53room(id){const r=(P15.rooms||[]).find(x=>String(x.id)===String(id));
         <div class="h53-in h53-up"><div class="h53-card h53-pad"><small class="h53-k">${esc(String(e.kind||'event').toUpperCase())} · ${esc((e.city||'').toUpperCase())}</small><h1 class="h53-h1">${esc(e.title)}</h1><small class="h53-sub">Hosted by ${esc(e.host||'a member')}</small></div>${inner}</div></div>`)}catch(x){return h}};
 })();
 
+/* ===== part54 · Events page in the Glass Journey look + small fixes (18 Nov 2026) =====
+   (a) Events tab rebuilt like Homes for rent (part53): text filters, whole 3:2 photos, date, time, venue, price, one Book button,
+       Weekend Club card with a real photo (no confetti, balls or toy pictures: his NEVER CHILDISH rule).
+       Sample first: H54_LIVE=false, preview with localStorage nm.h54=1. Same data and actions as part39 (events15, a9f, evd:<id>, club, newev).
+   (b) LIVE fixes: one text-only bottom bar on every page (some pages still showed the old picture bar);
+       dish example photos no longer show one specific dish (tacos under "Pierogi"); the confetti photo is out of event pages. */
+const H54_LIVE=false;
+function H54(){try{return H54_LIVE||localStorage.getItem('nm.h54')==='1'}catch(e){return H54_LIVE}}
+const EVP54={meetup:'img/p17/coffee.webp',watch:'img/p17/football.webp',festival:'img/p17/feast.webp',trip:'img/p19/harbour.webp',league:'img/p17/football.webp'};
+function h54ph(e){const t=String(e.title||'');if(/football|soccer|cricket|basketball|volleyball|hockey|run/i.test(t))return 'img/p17/football.webp';if(/niagara|trip|tour|harbour|lake/i.test(t))return 'img/p19/harbour.webp';if(/food|fair|feast|dinner|brunch|lunch/i.test(t))return 'img/p17/feast.webp';return EVP54[e.kind]||'img/p17/coffee.webp'}
+function h54events(){const c=c9city(),city=c||'your city',ev=zdata8('events15','ev',{k:'',cty:c}),now=new Date();
+  const dk=(typeof a46th==='function'&&a46th()==='dark');
+  const wkEnd=(()=>{const t=new Date(now);t.setDate(t.getDate()+((7-t.getDay())%7));t.setHours(23,59);return t})();
+  const l=(ev||[]).filter(e=>new Date(e.startsAt)>now-3*36e5).sort((a,b)=>new Date(a.startsAt)-new Date(b.startsAt));
+  const K=[['all','All'],['wk','This weekend'],['meetup','Meetups'],['league','Sports'],['festival','Culture'],['watch','Watch together'],['trip','Trips']].filter(([k])=>k==='all'||k==='wk'||l.some(e=>e.kind===k));
+  let cur='all';try{cur=sessionStorage.getItem('na.a9e')||'all'}catch(x){}
+  const seg=`<div class="h53-seg a9-tabs">${K.map(([k,t])=>`<button class="${cur===k?'on':''}" data-a="a9f" data-k="${k}">${esc(t)}</button>`).join('')}</div>`;
+  const card=(e,i)=>{const d=new Date(e.startsAt);let day='',tm='';try{day=d.toLocaleDateString(RM_I18N.locale||'en',{weekday:'short',day:'numeric',month:'short'});tm=d.toLocaleTimeString(RM_I18N.locale||'en',{hour:'numeric',minute:'2-digit'})}catch(x){}
+    const left=(typeof e.left==='number')?e.left:null,wk=d<=wkEnd;
+    return `<div class="h53-card a9-it" data-c="${esc(e.kind||'other')}${wk?' wk':''}" style="animation-delay:${(i*.06).toFixed(2)}s"><button class="h53-ph" data-a="p15open" data-v="evd:${e.id}"><img ${a4src(h54ph(e))} alt="" loading="lazy"><span class="h54-dt">${esc(day)}</span></button>
+     <div class="h53-bd"><b class="h53-t">${esc(e.title)}</b><small>${esc(tm)}${e.venue?' · '+esc(e.venue):''}</small>
+     <div class="h53-row"><span class="h53-pr">${e.price?esc(a4money(e.price,e.currency)):'No ticket'}${e.price?'<small> /seat</small>':''}</span><button class="h53-go" data-a="p15open" data-v="evd:${e.id}">Book</button></div>
+     ${left!==null?`<small class="h53-nt">${left} ${left===1?'seat':'seats'} left</small>`:''}</div></div>`};
+  const club=`<div class="h53-card h54-club"><button class="h53-ph" data-a="p15open" data-v="club"><img ${a4src('img/p20/dinner.webp')} alt="" loading="lazy"></button>
+     <div class="h53-bd"><small class="h53-k">WEEKEND CLUB</small><b class="h53-t">Every weekend, new friends</b><small>Members book first and get members-only nights.</small>
+     <div class="h53-row"><span class="h53-pr">${p15price('wc_month_a')?'From '+esc(p15price('wc_month_a'))+'<small> /month</small>':'Membership'}</span><button class="h53-go" data-a="p15open" data-v="club">See the Club</button></div></div></div>`;
+  const list=l.length?`<p class="h53-lead">${l.length} ${l.length===1?'event':'events'} coming up in ${esc(city)} · price on every event</p><div class="h53-list">${l.map(card).join('')}</div>`
+    :`<div class="h53-empty"><b>No events here yet this week</b><small>Hosts in ${esc(city)} add meetups, trips and food nights every week.</small><button class="h53-go" data-a="p15open" data-v="newev">Host an event</button></div>`;
+  const host=`<div class="h53-two"><button data-a="p15open" data-v="newev"><span class="h53-ph2"><img ${a4src('img/p17/seats.webp')} alt="" loading="lazy"></span><b>Host an event</b><small>Sell seats to people new in ${esc(city)}</small></button><button data-a="p15open" data-v="club"><span class="h53-ph2"><img ${a4src('img/p17/ticket.webp')} alt="" loading="lazy"></span><b>My tickets</b><small>Tickets work without internet</small></button></div>`;
+  return c9wrap(`<div class="h53 h54 a9${dk?' dk':''}" data-t="fun" data-a9="${cur}"><div class="h53-top h54-top"><span class="h54-ttl"><small>In ${esc(city)}</small><b>Events</b></span><button class="h53-ch" data-a="p15open" data-v="newev">Host</button></div>${seg}<div class="h53-in">${club}${list}${host}<p class="h53-ex">Hosts set their own prices and run their events. Just for fun: no money games.</p></div></div>`)}
+(function(){
+  try{if(typeof A44PH!=='undefined')A44PH.splice(0,A44PH.length,'img/p17/feast.webp','img/p17/kitchen2.webp')}catch(e){}
+  try{if(typeof EVP53!=='undefined')EVP53.watch='img/p17/football.webp'}catch(e){}
+  const _e=events15;events15=function(){if(H54()){try{const h=h54events();setTimeout(()=>{try{typeof a9apply==='function'&&a9apply()}catch(x){}},0);return h}catch(x){console.warn('[h54]',x)}}return _e.apply(this,arguments)};
+  const _ar=afterRenderEvents;afterRenderEvents=function(){const r=_ar.apply(this,arguments);try{if(typeof H50_LIVE!=='undefined'&&H50_LIVE)document.documentElement.classList.add('h47on')}catch(e){}return r};
+})();
+
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
 })();
