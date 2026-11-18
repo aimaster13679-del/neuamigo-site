@@ -7785,7 +7785,7 @@ function h53room(id){const r=(P15.rooms||[]).find(x=>String(x.id)===String(id));
        Sample first: H54_LIVE=false, preview with localStorage nm.h54=1. Same data and actions as part39 (events15, a9f, evd:<id>, club, newev).
    (b) LIVE fixes: one text-only bottom bar on every page (some pages still showed the old picture bar);
        dish example photos no longer show one specific dish (tacos under "Pierogi"); the confetti photo is out of event pages. */
-const H54_LIVE=false;
+const H54_LIVE=true;
 function H54(){try{return H54_LIVE||localStorage.getItem('nm.h54')==='1'}catch(e){return H54_LIVE}}
 const EVP54={meetup:'img/p17/coffee.webp',watch:'img/p17/football.webp',festival:'img/p17/feast.webp',trip:'img/p19/harbour.webp',league:'img/p17/football.webp'};
 function h54ph(e){const t=String(e.title||'');if(/football|soccer|cricket|basketball|volleyball|hockey|run/i.test(t))return 'img/p17/football.webp';if(/niagara|trip|tour|harbour|lake/i.test(t))return 'img/p19/harbour.webp';if(/food|fair|feast|dinner|brunch|lunch/i.test(t))return 'img/p17/feast.webp';return EVP54[e.kind]||'img/p17/coffee.webp'}
