@@ -7809,11 +7809,23 @@ function h54events(){const c=c9city(),city=c||'your city',ev=zdata8('events15','
     :`<div class="h53-empty"><b>No events here yet this week</b><small>Hosts in ${esc(city)} add meetups, trips and food nights every week.</small><button class="h53-go" data-a="p15open" data-v="newev">Host an event</button></div>`;
   const host=`<div class="h53-two"><button data-a="p15open" data-v="newev"><span class="h53-ph2"><img ${a4src('img/p17/seats.webp')} alt="" loading="lazy"></span><b>Host an event</b><small>Sell seats to people new in ${esc(city)}</small></button><button data-a="p15open" data-v="club"><span class="h53-ph2"><img ${a4src('img/p17/ticket.webp')} alt="" loading="lazy"></span><b>My tickets</b><small>Tickets work without internet</small></button></div>`;
   return c9wrap(`<div class="h53 h54 a9${dk?' dk':''}" data-t="fun" data-a9="${cur}"><div class="h53-top h54-top"><span class="h54-ttl"><small>In ${esc(city)}</small><b>Events</b></span><button class="h53-ch" data-a="p15open" data-v="newev">Host</button></div>${seg}<div class="h53-in">${club}${list}${host}<p class="h53-ex">Hosts set their own prices and run their events. Just for fun: no money games.</p></div></div>`)}
+/* one status-bar space for the whole app, in the colour of the screen's top (his 18 Nov 20:36 screenshot) */
+function h54top(){const d=document.documentElement;d.classList.add('na54');
+  const hd=document.querySelector('.h48-hd,.a7-hd,.z8-head,.a8-hd');let c='';
+  if(hd){const cs=getComputedStyle(hd);c=cs.backgroundColor;if(!c||c==='rgba(0, 0, 0, 0)'||c==='transparent'){const m=(cs.backgroundImage||'').match(/rgba?\([^)]*\)|#[0-9a-fA-F]{3,8}/);c=m?m[0]:''}}
+  if(!c){const pg=document.querySelector('.h50')||document.querySelector('.h53');if(pg){const dk=pg.classList.contains('dk');c=dk?(pg.matches('.h53')?'#141A28':'#0B0C10'):'#F6F4F0'}}
+  if(!c){const sc=document.querySelector('.scroll');if(sc){const b=getComputedStyle(sc).backgroundColor;if(b&&b!=='rgba(0, 0, 0, 0)')c=b}}
+  if(!c)return;d.style.setProperty('background',c,'important');const mt=document.querySelector('meta[name=theme-color]');if(mt)mt.setAttribute('content',c)}
+/* report a failing screen once per session (screen, error, app version) so Claude can fix it without asking him for screenshots */
+const H54ERR={};function h54err(scr,e){try{const m=String((e&&(e.stack||e.message))||e).slice(0,400);if(H54ERR[scr+m])return;H54ERR[scr+m]=1;
+  fetch('bundle.json',{cache:'no-store'}).then(r=>r.json()).catch(()=>({})).then(b=>{try{API.rpc('client_err15',{scr:scr,m:m,v:String(b.v||''),u:navigator.userAgent.slice(0,160)}).catch(()=>{})}catch(x){}})}catch(x){}}
 (function(){
+  if(typeof h50==='function'&&typeof H50_LIVE!=='undefined'&&H50_LIVE){const _h=c12home;c12home=function(){try{return h50()}catch(e){h54err('home',e);return _h.apply(this,arguments)}}}
   try{if(typeof A44PH!=='undefined')A44PH.splice(0,A44PH.length,'img/p17/feast.webp','img/p17/kitchen2.webp')}catch(e){}
   try{if(typeof EVP53!=='undefined')EVP53.watch='img/p17/football.webp'}catch(e){}
   const _e=events15;events15=function(){if(H54()){try{const h=h54events();setTimeout(()=>{try{typeof a9apply==='function'&&a9apply()}catch(x){}},0);return h}catch(x){console.warn('[h54]',x)}}return _e.apply(this,arguments)};
-  const _ar=afterRenderEvents;afterRenderEvents=function(){const r=_ar.apply(this,arguments);try{if(typeof H50_LIVE!=='undefined'&&H50_LIVE)document.documentElement.classList.add('h47on')}catch(e){}return r};
+  const _ar=afterRenderEvents;afterRenderEvents=function(){const r=_ar.apply(this,arguments);try{if(typeof H50_LIVE!=='undefined'&&H50_LIVE)document.documentElement.classList.add('h47on')}catch(e){}
+    try{h54top()}catch(e){}return r};
 })();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */

@@ -4320,3 +4320,16 @@ html.a46dk body:has(.h50.dk) .navwrap{background:#141A28!important}
 .h54-club .h53-t{font-family:Fraunces,serif;font-size:21px;font-weight:500}.h54-club .h53-k{margin-bottom:3px}
 .h54 .h53-seg{overflow-x:auto;scrollbar-width:none}.h54 .h53-seg::-webkit-scrollbar{display:none}.h54 .h53-seg button{flex:0 0 auto;white-space:nowrap}
 .h53 .h53-pr{white-space:nowrap}@media (max-width:380px){.h54 .h53-pr{font-size:19px}.h54 .h53-go{padding-left:12px;padding-right:12px}}
+/* part54 TOP SPACE FIX (his screenshot 18 Nov 20:36: big empty band at the top). The page scrolls inside .scroll, so the phone's
+   status-bar space is added ONCE by html{padding-top:var(--sat)}; inner pages and headers no longer add it a second/third time.
+   The status-bar strip takes the header colour (html background set by part54 after every render). */
+html.na54 .c9{padding-top:6px}
+html.na54 .h48-hd{padding-top:6px}
+html.na54 .h53-top{padding-top:12px}
+html.na54 .h53-hero .h53-cnt{top:18px}
+html.na54 .a7-hd{padding-top:14px}
+html.na54 .h52-bar{padding-top:10px}
+html.na54 .z8-head{padding-top:14px}
+html.na54 .p15-chh{padding-top:8px}
+html.na54 .a8-hd{padding-top:12px}
+html.na54 .h50-top{padding-top:8px}
