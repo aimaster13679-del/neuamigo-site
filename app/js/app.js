@@ -7809,6 +7809,13 @@ function h54events(){const c=c9city(),city=c||'your city',ev=zdata8('events15','
     :`<div class="h53-empty"><b>No events here yet this week</b><small>Hosts in ${esc(city)} add meetups, trips and food nights every week.</small><button class="h53-go" data-a="p15open" data-v="newev">Host an event</button></div>`;
   const host=`<div class="h53-two"><button data-a="p15open" data-v="newev"><span class="h53-ph2"><img ${a4src('img/p17/seats.webp')} alt="" loading="lazy"></span><b>Host an event</b><small>Sell seats to people new in ${esc(city)}</small></button><button data-a="p15open" data-v="club"><span class="h53-ph2"><img ${a4src('img/p17/ticket.webp')} alt="" loading="lazy"></span><b>My tickets</b><small>Tickets work without internet</small></button></div>`;
   return c9wrap(`<div class="h53 h54 a9${dk?' dk':''}" data-t="fun" data-a9="${cur}"><div class="h53-top h54-top"><span class="h54-ttl"><small>In ${esc(city)}</small><b>Events</b></span><button class="h53-ch" data-a="p15open" data-v="newev">Host</button></div>${seg}<div class="h53-in">${club}${list}${host}<p class="h53-ex">Hosts set their own prices and run their events. Just for fun: no money games.</p></div></div>`)}
+/* Phone bar space only when the app really draws under the phone bar (his 21:13 screenshot: an extra band under the
+   status bar). Some Android phones keep their own status bar and still report its height, so it was added twice. */
+function h54edge(){try{const d=document.documentElement,cs=getComputedStyle(d);
+  const v=parseFloat(cs.getPropertyValue('--safe-area-inset-top'))||0,b=parseFloat(cs.getPropertyValue('--safe-area-inset-bottom'))||0;
+  const gap=(screen.height||0)-(window.innerHeight||0);
+  if(v>0&&gap>=(v+b)*0.8){d.style.setProperty('--sat','env(safe-area-inset-top,0px)');d.style.setProperty('--sab','env(safe-area-inset-bottom,0px)');d.classList.add('na54own')}
+  else{d.style.removeProperty('--sat');d.style.removeProperty('--sab');d.classList.remove('na54own')}}catch(e){}}
 /* one status-bar space for the whole app, in the colour of the screen's top (his 18 Nov 20:36 screenshot) */
 function h54top(){const d=document.documentElement;d.classList.add('na54');
   const hd=document.querySelector('.h48-hd,.a7-hd,.z8-head,.a8-hd');let c='';
@@ -7821,11 +7828,12 @@ const H54ERR={};function h54err(scr,e){try{const m=String((e&&(e.stack||e.messag
   fetch('bundle.json',{cache:'no-store'}).then(r=>r.json()).catch(()=>({})).then(b=>{try{API.rpc('client_err15',{scr:scr,m:m,v:String(b.v||''),u:navigator.userAgent.slice(0,160)}).catch(()=>{})}catch(x){}})}catch(x){}}
 (function(){
   if(typeof h50==='function'&&typeof H50_LIVE!=='undefined'&&H50_LIVE){const _h=c12home;c12home=function(){try{return h50()}catch(e){h54err('home',e);return _h.apply(this,arguments)}}}
+  try{h54edge();addEventListener('resize',h54edge)}catch(e){}
   try{if(typeof A44PH!=='undefined')A44PH.splice(0,A44PH.length,'img/p17/feast.webp','img/p17/kitchen2.webp')}catch(e){}
   try{if(typeof EVP53!=='undefined')EVP53.watch='img/p17/football.webp'}catch(e){}
   const _e=events15;events15=function(){if(H54()){try{const h=h54events();setTimeout(()=>{try{typeof a9apply==='function'&&a9apply()}catch(x){}},0);return h}catch(x){console.warn('[h54]',x)}}return _e.apply(this,arguments)};
   const _ar=afterRenderEvents;afterRenderEvents=function(){const r=_ar.apply(this,arguments);try{if(typeof H50_LIVE!=='undefined'&&H50_LIVE)document.documentElement.classList.add('h47on')}catch(e){}
-    try{h54top()}catch(e){}return r};
+    try{h54edge();h54top()}catch(e){}return r};
 })();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
