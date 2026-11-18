@@ -7815,7 +7815,7 @@ function h54top(){const d=document.documentElement;d.classList.add('na54');
   if(hd){const cs=getComputedStyle(hd);c=cs.backgroundColor;if(!c||c==='rgba(0, 0, 0, 0)'||c==='transparent'){const m=(cs.backgroundImage||'').match(/rgba?\([^)]*\)|#[0-9a-fA-F]{3,8}/);c=m?m[0]:''}}
   if(!c){const pg=document.querySelector('.h50')||document.querySelector('.h53');if(pg){const dk=pg.classList.contains('dk');c=dk?(pg.matches('.h53')?'#141A28':'#0B0C10'):'#F6F4F0'}}
   if(!c){const sc=document.querySelector('.scroll');if(sc){const b=getComputedStyle(sc).backgroundColor;if(b&&b!=='rgba(0, 0, 0, 0)')c=b}}
-  if(!c)return;d.style.setProperty('background',c,'important');const mt=document.querySelector('meta[name=theme-color]');if(mt)mt.setAttribute('content',c)}
+  if(!c)return;d.style.setProperty('background',c,'important');try{const bb=document.body;bb.style.removeProperty('background-image');const base=getComputedStyle(bb).backgroundColor;bb.style.setProperty('background-image',`linear-gradient(to bottom, ${c} 0, ${c} var(--sat,0px), ${base} var(--sat,0px))`,'important')}catch(e){}const mt=document.querySelector('meta[name=theme-color]');if(mt)mt.setAttribute('content',c)}
 /* report a failing screen once per session (screen, error, app version) so Claude can fix it without asking him for screenshots */
 const H54ERR={};function h54err(scr,e){try{const m=String((e&&(e.stack||e.message))||e).slice(0,400);if(H54ERR[scr+m])return;H54ERR[scr+m]=1;
   fetch('bundle.json',{cache:'no-store'}).then(r=>r.json()).catch(()=>({})).then(b=>{try{API.rpc('client_err15',{scr:scr,m:m,v:String(b.v||''),u:navigator.userAgent.slice(0,160)}).catch(()=>{})}catch(x){}})}catch(x){}}
