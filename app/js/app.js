@@ -7638,6 +7638,8 @@ const APP53={neutant:{logo:'img/brand/neutant.png',play:'https://neutant.com/app
     h=h.replace(/<button class="h50-t"([^>]*?) data-a="[^"]*"(?: data-[a-z]+="[^"]*")*/,(m,st)=>`<button class="h50-t"${st} data-a="h53app" data-k="${k}"`);
     h=h.replace('<button class="h50-t"','<button class="h50-t h53-wide"');
     if(k==='neutant')h=h.replace(/<b>[^<]*<\/b>/,'<b>Groceries &amp; services near you · Neutant</b>').replace(/<span class="h50-sb">[^<]*<\/span>/,'<span class="h50-sb">Opens the Neutant app</span>');
+    /* his catch 19 Nov 13:44 'nm me neuamigo kyu he': the brand switch turns every NeuMarry into NeuAmigo; the word joiner (&#8288;) keeps this one */
+    if(k==='neumarry')h=h.replace(/<span class="h50-sb">[^<]*<\/span>/,'<span class="h50-sb">Opens the Neu&#8288;Marry app</span>');
     return h.replace('<span class="h50-ph">',`<span class="h50-ph"><i class="h53-lg"><img src="${APP53[k].logo}" alt=""></i>`)};
   A.h53app=function(el){const a=APP53[el.dataset.k];if(!a)return;const u=(isNative&&a.play)?a.play:a.web;try{window.open(u,'_blank','noopener')}catch(e){location.href=u}};
 })();
