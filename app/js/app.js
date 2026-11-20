@@ -7908,7 +7908,10 @@ const N56_LIVE=true; /* his ok 20 Nov 2026 13:44 */
   /* brand safety net: some inner pages re-draw without the brand switch and showed 'NeuMarry Plus' (found 20 Nov sweep) */
   function brand(root){try{if(typeof naOn==='function'&&!naOn())return;const w=document.createTreeWalker(root||document.body,NodeFilter.SHOW_TEXT);let n;
     while((n=w.nextNode())){if(n.nodeValue.indexOf('NeuMarry')>=0)n.nodeValue=n.nodeValue.replace(/NeuMarry/g,'NeuAmigo')}}catch(e){}}
-  const _ar=afterRenderEvents;afterRenderEvents=function(){const r=_ar.apply(this,arguments);sync();pass();brand();
+  /* which live update is this phone on? shown small at the bottom of Me (his 16:39 'kuch badla nahi': lets us see it) */
+  let BV='';try{fetch('bundle.json',{cache:'no-store'}).then(r=>r.json()).then(j=>{BV=String(j.v||'').slice(-4);mark()}).catch(()=>{})}catch(e){}
+  function mark(){try{const v=document.querySelector('.a6-v');if(v&&BV&&v.textContent.indexOf('update '+BV)<0)v.textContent+=' · update '+BV}catch(e){}}
+  const _ar=afterRenderEvents;afterRenderEvents=function(){const r=_ar.apply(this,arguments);sync();pass();brand();mark();
     try{const k=document.querySelector('.a8-sq[data-v=plans]');if(k&&!k.textContent.trim())k.textContent='Plus'}catch(e){}return r};
   try{new MutationObserver(m=>{for(const x of m)for(const n of x.addedNodes)if(n.nodeType===1){pass(n);brand(n)}}).observe(document.documentElement,{childList:true,subtree:true})}catch(e){}
 })();
