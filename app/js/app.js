@@ -7885,7 +7885,7 @@ const H54ERR={};function h54err(scr,e){try{const m=String((e&&(e.stack||e.messag
    1) ONE theme everywhere: the Light/Dark choice of Home also drives the older screens (Settle In, Me, inner pages).
    2) No emoji pictures: every small emoji picture becomes a real photo thumbnail; where a photo would be too small
       to read (tab chips, section heads, card titles) it is removed and the words carry the screen. */
-const N56_LIVE=false; /* mock sent 20 Nov 12:45, live after his ok */
+const N56_LIVE=true; /* his ok 20 Nov 2026 13:44 */
 (function(){
   let on=N56_LIVE;try{if(localStorage.getItem('na.n56')==='1')on=true}catch(e){}
   if(!on)return;
