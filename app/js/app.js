@@ -7893,12 +7893,15 @@ const N56_LIVE=false; /* mock sent 20 Nov 12:45, live after his ok */
     const h=document.documentElement;h.classList.toggle('gl-lt',!dk);h.classList.toggle('n56dk',dk);h.classList.add('n56')}catch(e){}};
   const flip=()=>{try{localStorage.setItem('na.a46th',a46th()==='dark'?'light':'dark')}catch(e){}sync();render()};
   A.a46theme=flip;A.p15theme=flip;sync();
-  const PH={house_with_garden:'p20/living',clipboard:'p18/papers',automobile:'p19/usedcar',light_bulb:'p17/expert',identification_card:'p17/passport',
-    sparkles:'p17/clean',toolbox:'p17/garage',shield:'p17/insure',briefcase:'p19/work',receipt:'p17/calc',ticket:'p17/ticket',calendar:'p17/plan',
-    compass:'p17/compass',party_popper:'p19/party',key:'p20/keys',world_map:'p17/lang',handshake:'p17/help',hot_beverage:'p17/coffee',couch_and_lamp:'p19/sofa',airplane:'p20/airport'};
+  const PH={house_with_garden:'p20/living',clipboard:'p22/requests',automobile:'p19/usedcar',light_bulb:'p22/expert',identification_card:'p22/cards',
+    sparkles:'p22/cleaning',toolbox:'p22/toolbox',shield:'p22/insure',briefcase:'p19/work',receipt:'p17/calc',ticket:'p22/tickets',calendar:'p22/calendar',
+    compass:'p22/compass',party_popper:'p19/party',key:'p22/key',world_map:'p22/globe',handshake:'p22/headset',hot_beverage:'p17/coffee',couch_and_lamp:'p19/sofa',airplane:'p20/airport'};
+  /* the words beside the picture decide first (one emoji was used for several things) */
+  const LB={'My work profile':'p22/resume','Work profile':'p22/resume','Business desk':'p22/counter','Weekend Club':'p22/club','30-day plan':'p22/calendar','My 30-day plan':'p22/calendar',
+    'NeuAmigo Plus':'p22/key','Ask an expert':'p22/expert','Bank and ID':'p22/cards','Back to NeuAmigo':'p22/compass'};
   const DROP='.a8-trk,.a8-sh,.a8-pt,.a8-sq,.a7-sec';
   function pass(root){try{(root||document).querySelectorAll('img[src*="img/f3d/"]').forEach(im=>{
-    const n=(im.getAttribute('src').match(/f3d\/([a-z_0-9]+)\./)||[])[1],p=PH[n];
+    const n=(im.getAttribute('src').match(/f3d\/([a-z_0-9]+)\./)||[])[1];let p=PH[n];try{const b=im.closest('button,div');const t=b&&b.querySelector('b,small');const k=t&&(LB[t.textContent.trim()]||LB[(b.querySelector('small')||{}).textContent]);if(k)p=k}catch(e){}
     if(!p||im.closest(DROP)){im.classList.add('n56x');im.removeAttribute('src');return}
     im.src='img/'+p+'.webp';im.classList.add('n56p')})}catch(e){}}
   const _ar=afterRenderEvents;afterRenderEvents=function(){const r=_ar.apply(this,arguments);sync();pass();
