@@ -7881,6 +7881,31 @@ const H54ERR={};function h54err(scr,e){try{const m=String((e&&(e.stack||e.messag
   try{Capacitor.Plugins.App.addListener('resume',run)}catch(e){}
 })();
 
+/* part56 (his video 20 Nov 2026 12:29, 'kahi dark kahi light or icones ko professional premium rich karo'):
+   1) ONE theme everywhere: the Light/Dark choice of Home also drives the older screens (Settle In, Me, inner pages).
+   2) No emoji pictures: every small emoji picture becomes a real photo thumbnail; where a photo would be too small
+      to read (tab chips, section heads, card titles) it is removed and the words carry the screen. */
+const N56_LIVE=false; /* mock sent 20 Nov 12:45, live after his ok */
+(function(){
+  let on=N56_LIVE;try{if(localStorage.getItem('na.n56')==='1')on=true}catch(e){}
+  if(!on)return;
+  const sync=()=>{try{const dk=a46th()==='dark';localStorage.setItem('nm.glassmode',dk?'dark':'light');
+    const h=document.documentElement;h.classList.toggle('gl-lt',!dk);h.classList.toggle('n56dk',dk);h.classList.add('n56')}catch(e){}};
+  const flip=()=>{try{localStorage.setItem('na.a46th',a46th()==='dark'?'light':'dark')}catch(e){}sync();render()};
+  A.a46theme=flip;A.p15theme=flip;sync();
+  const PH={house_with_garden:'p20/living',clipboard:'p18/papers',automobile:'p19/usedcar',light_bulb:'p17/expert',identification_card:'p17/passport',
+    sparkles:'p17/clean',toolbox:'p17/garage',shield:'p17/insure',briefcase:'p19/work',receipt:'p17/calc',ticket:'p17/ticket',calendar:'p17/plan',
+    compass:'p17/compass',party_popper:'p19/party',key:'p20/keys',world_map:'p17/lang',handshake:'p17/help',hot_beverage:'p17/coffee',couch_and_lamp:'p19/sofa',airplane:'p20/airport'};
+  const DROP='.a8-trk,.a8-sh,.a8-pt,.a8-sq,.a7-sec';
+  function pass(root){try{(root||document).querySelectorAll('img[src*="img/f3d/"]').forEach(im=>{
+    const n=(im.getAttribute('src').match(/f3d\/([a-z_0-9]+)\./)||[])[1],p=PH[n];
+    if(!p||im.closest(DROP)){im.classList.add('n56x');im.removeAttribute('src');return}
+    im.src='img/'+p+'.webp';im.classList.add('n56p')})}catch(e){}}
+  const _ar=afterRenderEvents;afterRenderEvents=function(){const r=_ar.apply(this,arguments);sync();pass();
+    try{const k=document.querySelector('.a8-sq[data-v=plans]');if(k&&!k.textContent.trim())k.textContent='Plus'}catch(e){}return r};
+  try{new MutationObserver(m=>{for(const x of m)for(const n of x.addedNodes)if(n.nodeType===1)pass(n)}).observe(document.documentElement,{childList:true,subtree:true})}catch(e){}
+})();
+
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
 })();

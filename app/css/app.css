@@ -4335,3 +4335,28 @@ html.na54 .a8-hd{padding-top:12px}
 html.na54 .h50-top{padding-top:8px}
 /* 20 Nov 2026 12:16 (his screenshot): no darker/lighter box under the home's last line; the end spacer takes the page colour */
 html.h50on.h50on.h50on .c9:has(> .h50){background:#DFE5EF!important}html.h50on.h50on.h50on .c9:has(> .h50.dk){background:#141A28!important}
+/* ===== part56: one theme everywhere + photo thumbnails instead of emoji (20 Nov 2026) ===== */
+html.n56 img.n56x{display:none!important}
+html.n56 img.n56p{object-fit:cover!important;border-radius:10px!important;padding:0!important;background:none!important;animation:none!important;box-shadow:0 0 0 1px rgba(128,140,170,.18)}
+html.n56 .a6-row img.n56p,html.n56 .a6-plan img.n56p,html.n56 .a4-switch img.n56p,html.n56 .a7-plus img.n56p,html.n56 .a6-st img.n56p{width:54px!important;height:36px!important;flex:none}
+html.n56 .a7-ti span:has(img.n56p){padding:0!important;overflow:hidden;aspect-ratio:3/2;height:auto!important;width:100%!important;border-radius:14px!important}
+html.n56 .a7-ti img.n56p{width:100%!important;height:100%!important;border-radius:0!important;box-shadow:none}
+html.n56 .a8 .a8-sq[data-v=plans]{width:auto!important;padding:0 12px!important;font-size:13px!important}
+html.n56 .a8 .a8-trk button{padding:9px 14px!important}
+html.n56 .a8-pb small{margin-left:0!important}
+/* calm sections: no candy colours behind each stop (rule NEVER CHILDISH) */
+html.n56 .a8-s{background:none!important;border-radius:0!important;margin-top:4px!important;--a7d:#0F52BA!important}
+html.n56dk .a8-s{--a7d:#3D6FE0!important}
+html.n56 .a8-sh small{color:var(--c9t2)!important}
+/* dark: the older screens take the same deep tone as Home */
+html.n56dk.c9on,html.n56dk.a4on,html.n56dk.a4ui,html.n56dk{--c9bg:#0B0C10;--c9pn:#161A24;--c9pn2:#1D2230;--c9tx:#F2F4F8;--c9t2:rgba(242,244,248,.62);--c9hl:rgba(255,255,255,.1);--c9gl:rgba(255,255,255,.08);--z8bg:#0B0C10}
+html.n56dk .a8-hd{background:linear-gradient(180deg,#0B0C10 0%,#10131B 100%)!important}
+html.n56:not(.n56dk) .a8-hd{background:linear-gradient(180deg,#F6F4F0 0%,#F5F6FA 100%)!important;color:#13213A}
+html.n56:not(.n56dk) .a8-hd h1,html.n56:not(.n56dk) .a8-lg b{color:#13213A!important;-webkit-text-fill-color:#13213A!important}
+html.n56:not(.n56dk) .a8-hd h1 em{color:#0F52BA!important;-webkit-text-fill-color:#0F52BA!important}
+html.n56:not(.n56dk) .a8-hd p{color:#5A6680!important;-webkit-text-fill-color:#5A6680!important}html.n56:not(.n56dk) .a8-hd p strong{color:#13213A!important;-webkit-text-fill-color:#13213A!important}
+html.n56:not(.n56dk) .a8 .a8-sq{background:#fff!important;border-color:rgba(20,40,80,.1)!important;color:#13213A!important;-webkit-text-fill-color:#13213A!important}
+html.n56:not(.n56dk) .a8 .a8-search{box-shadow:0 0 0 1px rgba(20,40,80,.1),0 8px 22px rgba(20,40,80,.08)!important}
+html.n56dk .a8 .a8-search{background:rgba(255,255,255,.08)!important;color:rgba(242,244,248,.62)!important;box-shadow:0 0 0 1px rgba(255,255,255,.1)!important}
+html.n56dk .a8 .a8-search .a7-type{color:#fff!important;-webkit-text-fill-color:#fff!important}
+html.n56 .a8-sky,html.n56 .a8-route{display:none!important}
