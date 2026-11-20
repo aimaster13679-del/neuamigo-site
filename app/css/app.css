@@ -4333,3 +4333,5 @@ html.na54 .z8-head{padding-top:14px}
 html.na54 .p15-chh{padding-top:8px}
 html.na54 .a8-hd{padding-top:12px}
 html.na54 .h50-top{padding-top:8px}
+/* 20 Nov 2026 12:16 (his screenshot): no darker/lighter box under the home's last line; the end spacer takes the page colour */
+html.h50on.h50on.h50on .c9:has(> .h50){background:#DFE5EF!important}html.h50on.h50on.h50on .c9:has(> .h50.dk){background:#141A28!important}
