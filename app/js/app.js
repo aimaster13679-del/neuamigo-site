@@ -7838,6 +7838,49 @@ const H54ERR={};function h54err(scr,e){try{const m=String((e&&(e.stack||e.messag
     try{h54edge();h54top()}catch(e){}return r};
 })();
 
+/* part55: Play Age Signals 18+ screen (owner ok 20 Nov 2026 10:38, mock handoff/mocks/age18).
+   Android only. Google Play says "under 18" -> this screen covers the app; no answer -> app works as normal. */
+(function(){
+  const N=window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform()&&Capacitor.Plugins&&Capacitor.Plugins.AgeCheck;
+  if(!N) return;
+  const KEY='na_u18';
+  function lsg(){try{return localStorage.getItem(KEY)==='1'}catch(e){return false}}
+  function lss(v){try{v?localStorage.setItem(KEY,'1'):localStorage.removeItem(KEY)}catch(e){}}
+  function show(){
+    if(document.getElementById('na55')) return;
+    const de=document.documentElement,dark=!de.classList.contains('gl-lt')&&(de.classList.contains('gl-dk')||matchMedia('(prefers-color-scheme: dark)').matches);
+    const bg=dark?'#0B0D12':'#F6F7FA',card=dark?'rgba(255,255,255,.06)':'#FFFFFF',ink=dark?'#FFFFFF':'#111522',mu=dark?'#A9B0C0':'#5A6275',ln=dark?'rgba(255,255,255,.12)':'#E4E7EE',acc=dark?'#6EA0FF':'#0F52BA',onacc=dark?'#061433':'#FFFFFF';
+    const d=document.createElement('div');d.id='na55';d.setAttribute('role','dialog');d.setAttribute('aria-modal','true');
+    d.style.cssText=`position:fixed;inset:0;z-index:2147483000;background:${bg};color:${ink};overflow:auto;font-family:inherit`;
+    d.innerHTML=`<div style="padding:calc(env(safe-area-inset-top,0px) + 18px) 20px calc(env(safe-area-inset-bottom,0px) + 24px);display:flex;flex-direction:column;min-height:100%;box-sizing:border-box;max-width:520px;margin:0 auto">
+ <div style="display:flex;align-items:center;gap:10px"><img src="img/na-mark.png" alt="" style="width:36px;height:36px;border-radius:10px"><b style="font-size:19px">NeuAmigo</b></div>
+ <div style="margin-top:22px;border-radius:20px;overflow:hidden;aspect-ratio:3/2"><img src="img/p21/passport.webp" alt="Passport and boarding passes" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+ <div style="margin-top:22px;align-self:flex-start;padding:6px 12px;border-radius:10px;background:${acc}22;color:${acc};font-weight:700;font-size:13px">Adults only · 18+</div>
+ <h1 style="font-size:28px;line-height:1.2;margin:12px 0 10px;font-weight:800">This app is for people aged 18 and over</h1>
+ <p style="font-size:16px;line-height:1.5;color:${mu};margin:0">NeuAmigo helps adults who move to a new country. It is open only to people aged 18 and over.</p>
+ <div style="margin-top:18px;background:${card};border:1px solid ${ln};border-radius:16px;padding:14px 16px;font-size:14.5px;line-height:1.5;color:${mu}"><b style="color:${ink}">Why you see this</b><br>Google Play says this account belongs to someone under 18. We do not see or keep your birth date.</div>
+ <div style="flex:1;min-height:20px"></div>
+ <button id="na55x" style="border:0;background:${acc};color:${onacc};font:inherit;font-weight:700;font-size:16px;padding:16px;border-radius:14px;width:100%">Close app</button>
+ <button id="na55f" style="border:0;background:none;color:${acc};font:inherit;font-weight:600;font-size:14.5px;margin-top:10px;padding:8px">Age wrong? Fix it in your Google account</button>
+</div>`;
+    document.body.appendChild(d);
+    try{const B=Capacitor.Plugins.Bars;B&&B.set({top:bg,bottom:bg,light:!dark})}catch(e){}
+    d.querySelector('#na55x').onclick=()=>{try{Capacitor.Plugins.App.exitApp()}catch(e){}};
+    d.querySelector('#na55f').onclick=()=>{try{Capacitor.Plugins.Browser.open({url:'https://myaccount.google.com/personal-info'})}catch(e){location.href='https://myaccount.google.com/personal-info'}};
+  }
+  function hide(){const d=document.getElementById('na55');d&&d.remove()}
+  function run(){
+    N.check().then(r=>{
+      if(r&&r.under18){lss(1);show()}
+      else if(r&&r.known){lss(0);hide()}
+    }).catch(()=>{});
+  }
+  function boot(){if(lsg())show();run()}
+  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',boot):boot();
+  document.addEventListener('resume',run);
+  try{Capacitor.Plugins.App.addListener('resume',run)}catch(e){}
+})();
+
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();
 })();
