@@ -7890,7 +7890,7 @@ const N56_LIVE=true; /* his ok 20 Nov 2026 13:44 */
   let on=N56_LIVE;try{if(localStorage.getItem('na.n56')==='1')on=true}catch(e){}
   if(!on)return;
   const sync=()=>{try{const dk=a46th()==='dark';localStorage.setItem('nm.glassmode',dk?'dark':'light');
-    const h=document.documentElement;h.classList.toggle('gl-lt',!dk);h.classList.toggle('n56dk',dk);h.classList.add('n56')}catch(e){}};
+    const h=document.documentElement;h.classList.toggle('gl-lt',!dk);h.classList.toggle('n56dk',dk);h.classList.add('n56');const m=document.querySelector('meta[name=theme-color]');const c=dk?'#0B0C10':'#F6F4F0';if(m&&m.content!==c&&document.querySelector('#main'))m.content=c}catch(e){}};
   const flip=()=>{try{localStorage.setItem('na.a46th',a46th()==='dark'?'light':'dark')}catch(e){}sync();render()};
   A.a46theme=flip;A.p15theme=flip;sync();
   const PH={house_with_garden:'p20/living',clipboard:'p22/requests',automobile:'p19/usedcar',light_bulb:'p22/expert',identification_card:'p22/cards',
@@ -7914,6 +7914,23 @@ const N56_LIVE=true; /* his ok 20 Nov 2026 13:44 */
   const _ar=afterRenderEvents;afterRenderEvents=function(){const r=_ar.apply(this,arguments);sync();pass();brand();mark();
     try{const k=document.querySelector('.a8-sq[data-v=plans]');if(k&&!k.textContent.trim())k.textContent='Plus'}catch(e){}return r};
   try{new MutationObserver(m=>{for(const x of m)for(const n of x.addedNodes)if(n.nodeType===1){pass(n);brand(n)}}).observe(document.documentElement,{childList:true,subtree:true})}catch(e){}
+})();
+/* Live update, made sturdy (22 Nov 2026: his phone stayed on an old look for 2 days and nothing told us why).
+   - every failed step is reported (client_err15, screen 'liveupd') so a session can read the real reason;
+   - a failed check is tried again after 2 minutes (5 times) instead of waiting 6 hours;
+   - each phone says once per update which update it runs (screen 'boot'). */
+(function(){
+  if(typeof liveUpd!=='object'||!liveUpd.U||!liveUpd.U())return;
+  const say=(scr,m,v)=>{try{API.rpc('client_err15',{scr:scr,m:String(m).slice(0,300),v:String(v||''),u:navigator.userAgent.slice(0,160)}).catch(()=>{})}catch(e){}};
+  let tries=0;
+  liveUpd.check=async function(){const U=this.U();if(!U)return;let step='start',cur={},L=null;try{
+    step='own';cur=await fetch('bundle.json',{cache:'no-store'}).then(r=>r.json()).catch(()=>({}));
+    try{const k='na.bootv';if(localStorage.getItem(k)!==String(cur.v)){localStorage.setItem(k,String(cur.v));say('boot','running',cur.v)}}catch(e){}
+    step='latest';L=await fetch('https://neumarry.com/app-update/latest.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json());
+    if(!L||!L.version||!L.url||L.version===cur.v||L.version===this.v)return;
+    step='download';const b=await U.download({url:L.url,version:L.version,checksum:L.checksum||''});
+    step='next';await U.next({id:b.id});this.id=b.id;this.v=L.version;
+  }catch(e){say('liveupd',step+': '+((e&&(e.message||e.code))||e)+' -> '+(L&&L.version||''),cur.v);if(++tries<=5)setTimeout(()=>liveUpd.check(),120000)}};
 })();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
