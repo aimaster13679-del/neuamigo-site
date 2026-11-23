@@ -8064,7 +8064,7 @@ const N57_ON=true; /* database job passed 24 Nov 2026 */
    3 ready service list per category: switch on + price with - / + (own currency) 4 photos of your work (up to 6, shown whole)
    5 how customers reach you (real prices from the price table) 6 your page as customers see it -> Publish.
    Opens when a member turns on "NeuAmigo for Business" for the first time (after the member-QR question of part57). */
-const N58_ON=false;
+const N58_ON=true; /* database job passed 24 Nov 2026 */
 (function(){
   if(!N58_ON)return;
   const LS=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}};
