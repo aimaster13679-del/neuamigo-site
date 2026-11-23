@@ -8043,7 +8043,7 @@ const N57_ON=true; /* database job passed 24 Nov 2026 */
   function emptyHint(){document.querySelectorAll('#main .h53-empty,#main .a43-empty,#main .a7-empty,#main .n33-empty').forEach(e=>{if(e.querySelector('.n57-eh')||e.closest('.a6'))return;
     e.insertAdjacentHTML('beforeend',`<div class="n57-eh"><b>Know someone who does this?</b><small>Bring them to NeuAmigo in person. Earn 20% of what they pay us for 12 months.</small><button data-a="n57qr" data-k="biz">Bring them, earn 20%</button></div>`)})}
   /* first switch to business: ask once if a member brought them */
-  if(typeof A.c10bizon==='function'){const _on=A.c10bizon;A.c10bizon=function(el){if(LS('na.n57b')){return _on.call(this,el)}N.k='biz';N.after=()=>_on.call(A,el);show('biz')}}
+  if(typeof A.c10bizon==='function'){const _on=A.c10bizon;A.c10bizonCore=_on;const go=el=>(A.n58go||_on).call(A,el);A.c10bizon=function(el){if(LS('na.n57b')){return go(el)}N.k='biz';N.after=()=>go(el);show('biz')}}
   let asked=false;
   const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{
     if(S.screen!=='app'||N.v)return;
@@ -8057,6 +8057,133 @@ const N57_ON=true; /* database job passed 24 Nov 2026 */
   }catch(e){}};
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&N.v)shut()});
   try{window.addEventListener('popstate',()=>{if(N.v)shut()})}catch(e){}
+})();
+
+/* part58 Business setup in 6 steps (his ok 24 Nov 2026 01:30, mock handoff/mocks/na-qr-ref J10-J15):
+   1 what you offer (all journey categories, tick many) 2 name, areas, languages, days (only the name is typed)
+   3 ready service list per category: switch on + price with - / + (own currency) 4 photos of your work (up to 6, shown whole)
+   5 how customers reach you (real prices from the price table) 6 your page as customers see it -> Publish.
+   Opens when a member turns on "NeuAmigo for Business" for the first time (after the member-QR question of part57). */
+const N58_ON=false;
+(function(){
+  if(!N58_ON)return;
+  const LS=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}};
+  /* request category (database) + ready services with a base price in US$ (the business sets its own) */
+  const C=[
+    {k:'air',t:'Airport pickup',img:'p20/airport',cat:['Airport'],s:[['Airport to home, 1 to 3 people',45],['Airport to home, 4 to 6 people',65],['Home to airport',45]]},
+    {k:'sim',t:'SIM and phone services',img:'p19/router',cat:['Phone'],s:[['New SIM and setup',20],['Phone plan help',15],['Home internet setup',40]]},
+    {k:'stay',t:'Short stays nearby',img:'p20/studio',cat:['Short stay'],s:[['Private room, per night',45],['Whole studio, per night',80],['Shared room, per night',30]]},
+    {k:'food',t:'Taste of home',img:'p21/dinner',cat:['Catering'],s:[['Meal box, 1 person',12],['5 meals for the week',55],['Party food, per person',18]]},
+    {k:'law',t:'Paperwork and legal help',img:'p20/visa',cat:['Immigration'],s:[['First meeting, visa or permit',80],['Document check',40],['Help filling forms',60]]},
+    {k:'job',t:'Jobs for you',img:'p17/resume',next:['postjob','Post your first job']},
+    {k:'college',t:'Colleges and courses',img:'p21/laptop',cat:['College'],s:[['Short course',300],['Language class, per month',150],['Trial class',20]]},
+    {k:'rent',t:'Homes for rent',img:'p17/rentsign',rent:1,next:['postroom','List your first home']},
+    {k:'sale',t:'Homes to buy or sell',img:'p15/house',cat:['Home sale'],s:[['Home value check',150],['First meeting to buy',100]]},
+    {k:'event',t:'Events',img:'p17/ticket',next:['host','Set up your events']},
+    {k:'car',t:'Used cars',img:'p19/usedcar',cat:['Used cars'],s:[['Car check before you buy',120],['Help to buy a used car',200]]},
+    {k:'phone',t:'Used phones',img:'p21/phone',cat:['Used phones'],s:[['Screen repair',90],['Battery change',60],['Used phone check',20]]},
+    {k:'clean',t:'Cleaning',img:'p22/cleaning',cat:['Cleaning'],s:[['1-bedroom home',95],['2-bedroom home',130],['Move-in clean',180],['Office, per hour',35]]},
+    {k:'tax',t:'Tax and insurance',img:'p20/taxcalc',cat:['Tax','Insurance'],s:[['Personal tax return',90],['First tax return in a new country',70],['Insurance plan review',40]]},
+    {k:'fix',t:'Repairs at home',img:'p22/toolbox',cat:['Small jobs'],s:[['Furniture setup, per hour',40],['Small repair, per hour',50],['TV mounting',80]]},
+    {k:'drive',t:'Driving lessons',img:'p19/driving',cat:['Driving'],s:[['One lesson, 1 hour',55],['Test-day car and lesson',150],['5 lessons',250]]}];
+  const AREAS=['Only my area','Within 10 km','Within 25 km','Whole city'];
+  const LANGS=['English','French','Spanish','Arabic','Hindi','Tagalog','Portuguese','Chinese','Punjabi','Urdu','Korean','Swahili'];
+  const DAYS=['Mon–Fri','Sat','Sun'];
+  const B={on:false,step:1,info:null,pick:new Set(),nm:'',area:'Within 10 km',langs:new Set(['English']),days:new Set(['Mon–Fri']),svc:{},ph:[],busy:false,msg:'',after:null,done:null};
+  const fm=(c)=>money(c,(B.info&&B.info.cur)||'USD');
+  function nice(v){const k=(B.info&&B.info.k)||1,x=v*k;const st=x<20?1:x<100?5:x<500?10:50;return Math.max(st,Math.round(x/st)*st)}
+  function stepOf(x){return x<20?1:x<100?5:x<500?10:50}
+  function chosen(){return C.filter(c=>B.pick.has(c.k))}
+  function svcCats(){return chosen().filter(c=>c.s)}
+  function root(){let r=document.getElementById('na58');if(!r){r=document.createElement('div');r.id='na58';r.setAttribute('role','dialog');r.setAttribute('aria-modal','true');
+    r.addEventListener('click',e=>{const b=e.target.closest('[data-n]');if(!b||b.disabled)return;e.preventDefault();const f=ACT[b.dataset.n];if(f)f(b)});
+    r.addEventListener('input',e=>{if(e.target.id==='n58nm'){B.nm=e.target.value;if(B.msg){B.msg='';const x=r.querySelector('.n57-err');if(x)x.remove()}}});
+    r.addEventListener('change',e=>{if(e.target.id==='n58ph')addPhotos(e.target)});document.body.appendChild(r)}return r}
+  function shut(){B.on=false;const r=document.getElementById('na58');if(r)r.remove();document.documentElement.classList.remove('n57open')}
+  function prog(n){return `<div class="n58-prog">${[1,2,3,4,5,6].map(i=>`<i class="${i<=n?'on':''}"></i>`).join('')}</div><div class="n57-lb">Step ${n} of 6</div>`}
+  function top(t,right){return `<div class="n57-top"><button class="n57-bk" data-n="back">Back</button><b>${esc(t)}</b>${right||''}</div>`}
+  function draw(){if(!B.on)return;document.documentElement.classList.add('n57open');const r=root();const y=B.keepY?r.scrollTop:0;r.className='n57 n58 n58s-'+B.step;r.innerHTML=V[B.step]();r.scrollTop=y;B.keepY=false}
+  const chip=(on,n,v,t)=>`<button class="n58-ch${on?' on':''}" data-n="${n}" data-v="${esc(v)}" aria-pressed="${on}">${esc(t||v)}</button>`;
+  const V={
+    0(){return top('Your business')+'<div class="n57-wait">Getting your business ready</div>'},
+    1(){return top('Your business')+prog(1)+`<h2 class="n57-h">What do you <i>offer?</i></h2><p class="n57-sub">Tick everything you do. You can change it later.</p>
+      <div class="n57-card n58-list">${C.map(c=>`<button class="n58-cr${B.pick.has(c.k)?' on':''}" data-n="pick" data-v="${c.k}" aria-pressed="${B.pick.has(c.k)}"><span class="n58-th"><img src="img/${c.img}.webp" alt=""></span><b>${esc(c.t)}</b><i class="n58-cb">${B.pick.has(c.k)?'✓':''}</i></button>`).join('')}</div>
+      <button class="n57-btn" data-n="next"${B.pick.size?'':' disabled'}>${B.pick.size?`Next · ${B.pick.size} picked`:'Tick at least one'}</button>`},
+    2(){return top('Your business')+prog(2)+`<h2 class="n57-h">Where do you <i>work?</i></h2>
+      <div class="n57-card"><label class="n57-lb" for="n58nm">Business name</label><input id="n58nm" class="n58-in" maxlength="60" autocomplete="organization" value="${esc(B.nm)}" placeholder="Your business name"><p>The only thing you type here</p></div>
+      <div class="n57-lb n57-lbo">Areas you cover</div><div class="n58-chs">${AREAS.map(a=>chip(B.area===a,'area',a)).join('')}</div>
+      <div class="n57-lb n57-lbo">Languages you speak</div><div class="n58-chs">${LANGS.map(a=>chip(B.langs.has(a),'lang',a)).join('')}</div>
+      <div class="n57-lb n57-lbo">Days you work</div><div class="n58-chs">${DAYS.map(a=>chip(B.days.has(a),'day',a)).join('')}</div>
+      ${B.msg?`<p class="n57-err">${esc(B.msg)}</p>`:''}<button class="n57-btn" data-n="next">Next</button>`},
+    3(){const sc=svcCats();return top('Your business')+prog(3)+`<h2 class="n57-h">Your services and <i>prices.</i></h2>
+      <p class="n57-sub">${sc.length?'Ready list for what you picked. Switch on what you do and set your price.':'Nothing to price for what you picked. You add homes, jobs or events after this setup.'}</p>
+      ${sc.map(c=>`<div class="n57-lb n57-lbo">${esc(c.t)}</div><div class="n57-card n58-svc">${c.s.map((x,i)=>{const id=c.k+i,v=B.svc[id];
+        return `<div class="n58-pz${v.on?'':' off'}"><span>${esc(x[0])}</span><button class="n58-pm" data-n="minus" data-v="${id}" aria-label="Lower price of ${esc(x[0])}"${v.on?'':' disabled'}>–</button><b class="n58-pv">${fm(v.p*100)}</b><button class="n58-pm" data-n="plus" data-v="${id}" aria-label="Raise price of ${esc(x[0])}"${v.on?'':' disabled'}>+</button><button class="n58-sw${v.on?' on':''}" data-n="sw" data-v="${id}" role="switch" aria-checked="${v.on}" aria-label="${esc(x[0])}"></button></div>`}).join('')}</div>`).join('')}
+      ${sc.length?'<p class="n57-note">Customers see these prices before they ask. Change them any time.</p>':''}
+      ${B.msg?`<p class="n57-err">${esc(B.msg)}</p>`:''}<button class="n57-btn" data-n="next">Next</button>`},
+    4(){return top('Your business')+prog(4)+`<h2 class="n57-h">Show your <i>work.</i></h2><p class="n57-sub">Up to 6 photos of your work, your shop or your car. Each one shows whole.</p>
+      <div class="n58-g">${B.ph.map((p,i)=>`<div class="n58-phw"><img src="${p.url}" alt="Photo ${i+1}"><button class="n58-x" data-n="phdel" data-v="${i}" aria-label="Remove photo ${i+1}">Remove</button></div>`).join('')}
+        ${B.ph.length<6?`<label class="n58-add"><input id="n58ph" type="file" accept="image/*" multiple hidden>Add photo</label>`:''}</div>
+      <div class="n57-card"><b>Documents (only if you want)</b><p>Licence or insurance can be added later from your business desk. They show as "shared by the business, not checked by NeuAmigo".</p></div>
+      <button class="n57-btn" data-n="next">${B.ph.length?'Next':'Skip photos for now'}</button>`},
+    5(){const i=B.info||{},sc=svcCats(),cats=[...new Set(sc.flatMap(c=>c.cat))],L=i.leads||{};
+      const rows=cats.map(c=>L[c]!=null?`<div class="kv n58-kv"><span>${esc(c==='Small jobs'?'Repairs':c)}, per request taken</span><b>${fm(L[c])}</b></div>`:'').join('');
+      return top('Your business')+prog(5)+`<h2 class="n57-h">How customers <i>reach you.</i></h2>
+      <div class="n57-card">${['A newcomer near you asks for what you offer','The request goes to 6 businesses at once','You have 10 minutes to take it','You pay only for the requests you take'].map((s,k)=>`<div class="n57-st"><u>${k+1}</u><span>${s}</span></div>`).join('')}</div>
+      ${rows||i.plan?`<div class="n57-card">${rows}${sc.length&&i.plan!=null?`<div class="kv n58-kv"><span>Business plan, to get requests</span><b>${fm(i.plan)} / month</b></div>`:''}${B.pick.has('rent')&&i.agent_plan!=null?`<div class="kv n58-kv"><span>Homes plan</span><b>${fm(i.agent_plan)} / month</b></div>`:''}</div>`:''}
+      <p class="n57-note">Saving your page has no fee. It shows to customers and gets requests once your business plan starts.</p>
+      <button class="n57-btn" data-n="next">Next</button>`},
+    6(){const sc=svcCats(),items=[];sc.forEach(c=>c.s.forEach((x,k)=>{const v=B.svc[c.k+k];if(v&&v.on)items.push([x[0],v.p])}));
+      const first=B.ph[0]?B.ph[0].url:`img/${(chosen()[0]||C[0]).img}.webp`;
+      return top('Your page')+prog(6)+`<p class="n57-sub" style="margin-top:4px">This is how customers see you.</p>
+      <div class="n58-hero"><img src="${first}" alt=""></div>
+      <div class="n57-card"><b class="n58-nm">${esc(B.nm)}</b><p>${esc([B.area,[...B.langs].join(', '),[...B.days].join(', ')].filter(Boolean).join(' · '))}</p>
+        <p>${esc(chosen().map(c=>c.t).join(' · '))}</p>
+        ${items.map(x=>`<div class="kv n58-kv"><span>${esc(x[0])}</span><b>${fm(x[1]*100)}</b></div>`).join('')}</div>
+      ${B.msg?`<p class="n57-err">${esc(B.msg)}</p>`:''}<button class="n57-btn" data-n="publish"${B.busy?' disabled':''}>${B.busy?'Saving':'Save my business page'}</button>`},
+    7(){const nx=chosen().filter(c=>c.next);return `<div class="n57-ok">✓</div><h2 class="n57-h">Your page<br>is <i>ready.</i></h2>
+      <p class="n57-sub">${esc(B.nm)}${svcCats().length?' with your services and prices':''} shows to customers once your business plan starts.</p>
+      ${nx.length?`<div class="n57-lb n57-lbo">Next</div><div class="n57-card n58-list">${nx.map(c=>`<button class="n58-cr" data-n="go" data-v="${c.next[0]}"><span class="n58-th"><img src="img/${c.img}.webp" alt=""></span><b>${esc(c.next[1])}</b><i class="n58-ar">›</i></button>`).join('')}</div>`:''}
+      ${svcCats().length?'<button class="n57-btn" data-n="go" data-v="expplan">Start getting requests</button>':''}<button class="n57-gh" data-n="go" data-v="">Open my business desk</button>`}
+  };
+  async function addPhotos(inp){const fs=[...(inp.files||[])].slice(0,6-B.ph.length);inp.value='';
+    for(const f of fs){if(!/^image\//.test(f.type))continue;try{const blob=await shrink(f);B.ph.push({blob,url:URL.createObjectURL(blob)})}catch(e){toast('Could not read that photo.','info')}}draw()}
+  function shrink(f){return new Promise((ok,no)=>{const u=URL.createObjectURL(f),im=new Image();im.onload=()=>{const m=1600,s=Math.min(1,m/Math.max(im.width,im.height));
+    const c=document.createElement('canvas');c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);
+    c.toBlob(b=>b?ok(b):no(),'image/jpeg',.86)};im.onerror=no;im.src=u})}
+  function check(){if(B.step===2){if(B.nm.trim().length<2)return 'Please write your business name.';if(!B.langs.size)return 'Pick at least one language.';if(!B.days.size)return 'Pick the days you work.'}
+    if(B.step===3&&svcCats().length&&!Object.keys(B.svc).some(k=>B.pick.has(k.replace(/\d+$/,''))&&B.svc[k].on))return 'Switch on at least one service.';return ''}
+  const tog=(set,v)=>{set.has(v)?set.delete(v):set.add(v)};
+  const ACT={
+    back(){B.msg='';if(B.step>1&&B.step<7){B.step--;draw()}else{const a=B.after;shut();if(B.step===7&&a)a()}},
+    next(){const m=check();if(m){B.msg=m;B.keepY=true;draw();return}B.msg='';
+      if(B.step===1)chosen().forEach(c=>(c.s||[]).forEach((x,i)=>{const id=c.k+i;if(!B.svc[id])B.svc[id]={on:i<2,p:nice(x[1])}}));
+      B.step++;draw()},
+    pick(b){tog(B.pick,b.dataset.v);B.keepY=true;draw()},
+    area(b){B.area=b.dataset.v;B.keepY=true;draw()},
+    lang(b){tog(B.langs,b.dataset.v);B.keepY=true;draw()},
+    day(b){tog(B.days,b.dataset.v);B.keepY=true;draw()},
+    sw(b){const v=B.svc[b.dataset.v];v.on=!v.on;B.keepY=true;draw()},
+    plus(b){const v=B.svc[b.dataset.v];v.p+=stepOf(v.p);B.keepY=true;draw()},
+    minus(b){const v=B.svc[b.dataset.v],s=stepOf(Math.max(1,v.p-1));v.p=Math.max(s,v.p-s);B.keepY=true;draw()},
+    phdel(b){const x=B.ph.splice(+b.dataset.v,1)[0];try{URL.revokeObjectURL(x.url)}catch(e){}B.keepY=true;draw()},
+    async publish(){if(B.busy)return;B.busy=true;B.msg='';B.keepY=true;draw();
+      try{const uid=API.userId(),paths=[];for(const p of B.ph){const path=`${uid}/${uuid()}.jpg`;await API.upload('items',path,p.blob);paths.push(path)}
+        const items=[];svcCats().forEach(c=>c.s.forEach((x,k)=>{const v=B.svc[c.k+k];if(v&&v.on)items.push({title:x[0],price:Math.round(v.p*100)})}));
+        await API.rpc('biz_setup16',{nm:B.nm.trim(),cats:[...new Set(svcCats().flatMap(c=>c.cat))],ar:B.area,lg:[...B.langs],dy:[...B.days],ph:paths,items,rent:B.pick.has('rent')});
+        LS('na.n58done','1');B.busy=false;B.step=7;draw()}
+      catch(e){B.busy=false;const m=String(e&&e.message||e);B.msg=m.includes('city')?'Add your city in Me first, then publish.':'Could not publish. Check the internet and try again.';B.keepY=true;draw()}},
+    go(b){const v=b.dataset.v,a=B.after;shut();if(a)a();if(v){try{P15.v=v;render()}catch(e){}}}
+  };
+  /* entry: first time "NeuAmigo for Business" (after part57's member-QR question) */
+  A.n58go=async function(el){const core=A.c10bizonCore||function(){};if(LS('na.n58done'))return core.call(A,el);
+    B.on=true;B.step=0;B.after=()=>core.call(A,el);draw();
+    try{B.info=await API.rpc('biz_setup_info16',{})}catch(e){B.info=null}
+    const m=B.info&&B.info.mine;if(m&&(m.cats||[]).length){LS('na.n58done','1');shut();return core.call(A,el)}
+    if(!B.info){shut();return core.call(A,el)}
+    B.step=1;draw()};
+  A.n58edit=async function(){LS('na.n58done','');B.pick=new Set();B.svc={};A.n58go()};
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&B.on)shut()});
 })();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
