@@ -7939,7 +7939,7 @@ const N56_LIVE=true; /* his ok 20 Nov 2026 13:44 */
    Earnings come only from real payments (database bring_earn16), shown as they are; payouts start with the payment partner.
    N57_ON goes true only after the database part is live (job na-db-migrate).
    Places: Me page section "Earn with NeuAmigo"; first business switch; a new member's first days; empty categories. */
-const N57_ON=false;
+const N57_ON=true; /* database job passed 24 Nov 2026 */
 (function(){
   if(!N57_ON)return;
   const LS=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}};
