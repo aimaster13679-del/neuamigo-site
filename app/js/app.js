@@ -5908,7 +5908,7 @@ function c10plan(){const done=c10done(),b=c10bar(),path=c10get('nm.path','moving
    ${C10S.map(([h,steps],si)=>`<div class="c10-stage${path==='arrived'&&si===0?' opt':''}"><h2>${esc(h)}${path==='arrived'&&si===0?' <small>(if you still need it)</small>':''}</h2>${steps.map(([k,p,t,s,v])=>{const ok=done.includes(k);return `<div class="c9-pan c10-step${ok?' ok':''}">${c9i(p)}<span class="c10-st"><b>${esc(t)}</b><small>${esc(s)}</small><span class="c10-sb"><button class="c9-btn sm" ${c10go(v)}>${ok?'Open':'Do it'}</button><button class="c9-btn sm g" data-a="c10tick" data-k="${k}">${ok?'✓ Done':'Done'}</button></span></span></div>`}).join('')}</div>`).join('')}
    <p class="c9-lede c9-c">Government steps (tax number, health card) are free: ask an expert where to find them.</p></div>`)}
 /* ---------- business side ---------- */
-const C10R=[['home','rentsign','Homes to rent','Landlords and agents'],['work','hiring','Jobs to fill','Families and businesses'],['events','hall','Events to run','Hosts and organizers'],['service','tools','Services','Movers, cleaners, tax, repairs, experts'],['sell','saletags','Things to sell','Moving out? Sell your items']];
+const C10R=[['home','rentsign','Homes to rent','Landlords and agents'],['work','hiring','Jobs to fill','Families and businesses'],['events','hall','Events to run','Hosts and organizers'],['service','tools','Services','Cleaners, tax, repairs, experts'],['sell','saletags','Things to sell','Moving out? Sell your items']];
 const C10A={home:[['Post a home','postroom'],['People looking for a home','inbox:agent']],work:[['Post a job','postjob'],['My jobs and applicants','jobs']],events:[['Create an event','newev'],['My events and bookings','hostboard']],service:[['Requests from customers','svcleads'],['My plan','svcplan']],sell:[['Add items to sell','mysale'],['See my sale','mysale']]};
 function c10biz(){return c10get('nm.biz',false)===true}
 function c10roles(){return c10get('nm.bizr',[])}
@@ -7931,6 +7931,132 @@ const N56_LIVE=true; /* his ok 20 Nov 2026 13:44 */
     step='download';const b=await U.download({url:L.url,version:L.version,checksum:L.checksum||''});
     step='next';await U.next({id:b.id});this.id=b.id;this.v=L.version;
   }catch(e){say('liveupd',step+': '+((e&&(e.message||e.code))||e)+' -> '+(L&&L.version||''),cur.v);if(++tries<=5)setTimeout(()=>liveUpd.check(),120000)}};
+})();
+
+/* part57 Bring a business (20%) / bring a friend (15%), his rules 24 Nov 2026 00:14-00:48:
+   QR ONLY, in person, no link anywhere. The member shows a QR (lives 10 minutes) with a 6-character backup code;
+   the business ("NeuAmigo for Business" switch) or the new friend (first 14 days) scans it with the in-app scanner.
+   Earnings come only from real payments (database bring_earn16), shown as they are; payouts start with the payment partner.
+   N57_ON goes true only after the database part is live (job na-db-migrate).
+   Places: Me page section "Earn with NeuAmigo"; first business switch; a new member's first days; empty categories. */
+const N57_ON=false;
+(function(){
+  if(!N57_ON)return;
+  const LS=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}};
+  const N={v:null,k:'biz',qr:null,mine:null,stream:null,raf:0,msg:'',busy:false,after:null,t:0};
+  const money=c=>'US$'+(Math.round(c||0)/100).toFixed(2);
+  const pic=p=>`<img src="img/${p}.webp" alt="">`;
+  const KS={biz:{pct:20,who:'business owner',t:'Bring a business',img:'p22/counter'},friend:{pct:15,who:'friend',t:'Bring a friend',img:'p20/arrivals'}};
+  function root(){let r=document.getElementById('na57');if(!r){r=document.createElement('div');r.id='na57';r.setAttribute('role','dialog');r.setAttribute('aria-modal','true');
+    r.addEventListener('click',e=>{const b=e.target.closest('[data-n]');if(!b||b.disabled)return;e.preventDefault();const f=ACT[b.dataset.n];if(f)f(b)});document.body.appendChild(r)}return r}
+  function top(t){return `<div class="n57-top"><button class="n57-bk" data-n="close">Back</button><b>${esc(t)}</b></div>`}
+  function shut(){stopCam();clearTimeout(N.t);N.v=null;const r=document.getElementById('na57');if(r)r.remove();document.documentElement.classList.remove('n57open')}
+  function show(v){N.v=v;N.msg='';draw()}
+  function draw(){if(!N.v)return shut();document.documentElement.classList.add('n57open');const r=root();r.className='n57 n57v-'+N.v;r.innerHTML=V[N.v]();
+    if(N.v==='scan')startCam();const f=r.querySelector('input');if(f&&N.v==='type')setTimeout(()=>f.focus(),60)}
+  async function loadQR(){N.qr=null;draw();try{N.qr=await API.rpc('bring_qr16',{k:N.k});clearTimeout(N.t);N.t=setTimeout(()=>{if(N.v==='qr')loadQR()},9.5*60*1000)}
+    catch(e){N.qr={err:1}}if(N.v==='qr')draw()}
+  async function loadMine(force){if(N.mine&&!force)return N.mine;try{N.mine=await API.rpc('bring_mine16',{})}catch(e){N.mine=N.mine||{err:1}}return N.mine}
+  function qrSvg(t){try{const q=qrcode(0,'M');q.addData(t);q.make();return q.createSvgTag({cellSize:8,margin:2,scalable:true})}catch(e){return ''}}
+  function load(src){return new Promise((ok,no)=>{if(src==='qr'&&window.qrcode)return ok();if(src==='scan'&&window.jsQR)return ok();
+    const s=document.createElement('script');s.src=src==='qr'?'js/vendor/qrcode.js':'js/vendor/jsQR.js';s.onload=ok;s.onerror=no;document.head.appendChild(s)})}
+  const V={
+    qr(){const k=KS[N.k],q=N.qr,code=q&&q.code?q.code.slice(0,3)+' '+q.code.slice(3):'';
+      return top(k.t)+`<p class="n57-sub">Show this to the ${k.who}</p>
+      <div class="n57-qr">${!q?'<div class="n57-wait">Making your QR</div>':q.err?'<div class="n57-wait">Could not make the QR. Check the internet and try again.</div>':qrSvg(q.qr)}</div>
+      ${code?`<div class="n57-code">${esc(code)}<small>Camera not working? They type this code</small></div>`:''}
+      <div class="n57-card">${(N.k==='biz'?['They install <b>NeuAmigo</b> from Google Play','They tap <b>NeuAmigo for Business</b> in Me','They tap <b>Scan member QR</b> and scan this screen']
+        :['They install <b>NeuAmigo</b> from Google Play','They create their account','They tap <b>Scan friend QR</b> and scan this screen']).map((s,i)=>`<div class="n57-st"><u>${i+1}</u><span>${s}</span></div>`).join('')}</div>
+      <p class="n57-note">You get ${k.pct}% of what they pay NeuAmigo for their first 12 months. This QR changes every 10 minutes and works only inside NeuAmigo.</p>
+      ${q&&q.err?'<button class="n57-btn" data-n="retry">Try again</button>':''}`},
+    scan(){const f=N.k==='friend';return `<video id="n57v" playsinline muted></video><canvas id="n57c" hidden></canvas><div class="n57-frame"></div><div class="n57-line"></div>
+      <div class="n57-ov n57-ovt"><b>Scan ${f?'friend':'member'} QR</b><p>Point at the QR on their phone</p></div>
+      <div class="n57-ov n57-ovm">${N.msg?esc(N.msg):'Only NeuAmigo QR codes open here'}</div>
+      <div class="n57-ovb"><button class="n57-gh n57-dkb" data-n="type">Type the code instead</button><button class="n57-gh n57-dkb" data-n="close">Cancel</button></div>`},
+    type(){return top(N.k==='friend'?'Friend code':'Member code')+`<h2 class="n57-h">Type their <i>code</i></h2><p class="n57-sub">It is under the QR on their phone.</p>
+      <input class="n57-in" maxlength="7" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="6-character code" placeholder="K7M 2QX" value="${esc(N.typed||'')}">
+      ${N.msg?`<p class="n57-err">${esc(N.msg)}</p>`:''}<button class="n57-btn" data-n="typego"${N.busy?' disabled':''}>${N.busy?'Checking':'Link'}</button>`},
+    done(){const f=N.k==='friend';return `<div class="n57-ok">✓</div><h2 class="n57-h">You are linked<br>with <i>${esc(N.name||'a member')}</i></h2>
+      <p class="n57-sub">${f?'They brought you to NeuAmigo. You pay the same as everyone.':'They will see your business name only. Never your earnings or your customers. Your prices stay the same as everyone.'}</p>
+      <button class="n57-btn" data-n="donego">${f?'Continue':'Set up my business'}</button>`},
+    biz(){return top('NeuAmigo for Business')+`<h2 class="n57-h">Get customers<br><i>who just arrived.</i></h2><p class="n57-sub">People new to your city ask for help every day.</p>
+      <div class="n57-ph">${pic('p22/cleaning')}</div><div class="n57-card"><b>Did a member bring you here?</b><p>Scan their QR so they get the credit. It costs you nothing extra.</p></div>
+      <button class="n57-btn" data-n="scan" data-k="biz">Scan member QR</button><button class="n57-gh" data-n="skipbiz">No one brought me, continue</button>`},
+    friend(){return `<div class="n57-sheet"><div class="n57-ph">${pic('p20/arrivals')}</div><h2 class="n57-h">Did a friend<br><i>tell you about us?</i></h2>
+      <p class="n57-sub">Scan their QR. They get the credit; you pay the same as everyone.</p>
+      <button class="n57-btn" data-n="scan" data-k="friend">Scan friend QR</button><button class="n57-gh" data-n="close">No, continue</button></div>`},
+    card(){return `<div class="n57-sheet"><div class="n57-ph">${pic('p22/counter')}</div><div class="n57-lb">While you settle in</div><h2 class="n57-h">Earn with<br><i>NeuAmigo.</i></h2>
+      <p class="n57-sub">Bring a business you meet (a cleaner, a cook, a tax helper): 20% of what they pay us for 12 months. Bring a friend: 15%.</p>
+      <button class="n57-btn" data-n="earn">Show me how</button><button class="n57-gh" data-n="close">Not now</button><p class="n57-note n57-c">Shown once. Always in Me.</p></div>`},
+    earn(){const m=N.mine;if(!m)return top('Your earnings')+'<div class="n57-wait">Loading</div>';if(m.err)return top('Your earnings')+'<div class="n57-wait">Could not load. Check the internet.</div>';
+      const ppl=m.people||[],bz=ppl.filter(p=>p.kind==='biz'),fr=ppl.filter(p=>p.kind==='friend');
+      const row=p=>`<div class="n57-row"><span><b>${esc(p.name)}</b><small>${p.months_left>0?`${p.months_left} of 12 months left`:'12 months finished'}</small><i class="n57-bar"><i style="width:${Math.round(100*Math.max(0,p.months_left)/12)}%"></i></i></span><em>${money(p.cents)}</em></div>`;
+      return top('Your earnings')+`<div class="n57-card"><div class="n57-lb">You earned · this month</div><div class="n57-big">${money(m.month_cents)}</div>
+        <p>${bz.length} ${bz.length===1?'business':'businesses'} · ${fr.length} ${fr.length===1?'friend':'friends'}${m.waiting_cents?` · ${money(m.waiting_cents)} confirms 14 days after their payment`:''}</p></div>
+        ${bz.length?`<div class="n57-lb n57-lbo">Businesses · 20%</div><div class="n57-card n57-list">${bz.map(row).join('')}</div>`:''}
+        ${fr.length?`<div class="n57-lb n57-lbo">Friends · 15%</div><div class="n57-card n57-list">${fr.map(row).join('')}</div>`:''}
+        ${!ppl.length?`<div class="n57-card"><b>No one linked yet</b><p>Show your QR to a business near you or to a friend who just arrived.</p></div>`:''}
+        <button class="n57-btn" data-n="qr" data-k="biz">Show business QR</button><button class="n57-gh" data-n="qr" data-k="friend">Show friend QR</button>
+        <p class="n57-note">Paid out once a month. Payouts start when our payment partner is live; till then every cent is kept here. Only real payments count; refunds are taken off.</p>`}
+  };
+  async function claim(s){if(N.busy)return;N.busy=true;if(N.v==='type')draw();
+    try{const r=await API.rpc('bring_claim16',{s,k:N.k});N.busy=false;
+      if(r&&r.ok){stopCam();LS(N.k==='biz'?'na.n57b':'na.n57f','1');N.name=r.name;show('done');return}
+      const why=r&&r.why;N.msg={already:'You are already linked with a member.',expired:'This QR is old. Ask them to open it again.',unknown:'Code not found. Check the 6 characters.',
+        self:'That is your own code.',old:'Friend codes work only in your first 14 days.',loop:'You brought this member, so they cannot bring you.'}[why]||'Could not link. Try again.';
+      if(why==='already'){stopCam();LS(N.k==='biz'?'na.n57b':'na.n57f','1')}draw()}
+    catch(e){N.busy=false;N.msg='Could not link. Check the internet and try again.';draw()}}
+  function stopCam(){cancelAnimationFrame(N.raf);N.raf=0;try{N.stream&&N.stream.getTracks().forEach(t=>t.stop())}catch(e){}N.stream=null}
+  async function startCam(){stopCam();const v=document.getElementById('n57v');if(!v)return;
+    try{await load('scan');N.stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:{ideal:1280}},audio:false});v.srcObject=N.stream;await v.play()}
+    catch(e){stopCam();N.msg='Camera is off for NeuAmigo. Type the code instead.';show('type');N.msg='Camera is off for NeuAmigo. Type the code instead.';draw();return}
+    const c=document.getElementById('n57c'),x=c.getContext('2d',{willReadFrequently:true});let last=0,seen='';
+    const tick=t=>{if(N.v!=='scan'||!N.stream)return;N.raf=requestAnimationFrame(tick);if(t-last<120||!v.videoWidth||N.busy)return;last=t;
+      const w=Math.min(720,v.videoWidth),h=Math.round(v.videoHeight*w/v.videoWidth);c.width=w;c.height=h;x.drawImage(v,0,0,w,h);
+      const d=x.getImageData(0,0,w,h),q=window.jsQR&&jsQR(d.data,w,h,{inversionAttempts:'dontInvert'});
+      if(q&&q.data&&q.data!==seen){seen=q.data;if(/^NEUAMIGO:(biz|friend):/i.test(q.data)){try{navigator.vibrate&&navigator.vibrate(30)}catch(e){}claim(q.data)}
+        else{N.msg='This is not a NeuAmigo QR.';const m=document.querySelector('.n57-ovm');if(m)m.textContent=N.msg}}};
+    N.raf=requestAnimationFrame(tick)}
+  const ACT={
+    close(){N.after=null;shut()},
+    retry(){loadQR()},
+    async qr(b){N.k=b.dataset.k||N.k;show('qr');try{await load('qr')}catch(e){}loadQR()},
+    scan(b){N.k=b.dataset.k||N.k;N.msg='';if(!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia)){N.msg='Camera is not available here. Type the code instead.';show('type');N.msg='Camera is not available here. Type the code instead.';draw();return}show('scan')},
+    type(){stopCam();const m=N.msg;show('type');N.msg=m&&m.startsWith('Camera')?m:'';draw()},
+    typego(){const i=document.querySelector('#na57 .n57-in');N.typed=i?i.value:'';const s=(N.typed||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+      if(s.length!==6){N.msg='The code has 6 characters.';draw();return}claim(s)},
+    donego(){const f=N.k==='friend',a=N.after;N.after=null;shut();if(!f&&a)a()},
+    skipbiz(){LS('na.n57b','1');const a=N.after;N.after=null;shut();if(a)a()},
+    async earn(){LS('na.n57c','1');show('earn');await loadMine(true);if(N.v==='earn')draw()}
+  };
+  /* Me page: "Earn with NeuAmigo" */
+  Object.assign(A,{n57qr(el){ACT.qr(el)},async n57earn(){ACT.earn()}});
+  function meBlock(){if(document.querySelector('.n57-me'))return;const a=document.querySelector('#main .a6');if(!a)return;const anchor=a.querySelector('.a6-plan')||a.querySelector('.a6-who');if(!anchor)return;
+    const m=N.mine,amt=m&&!m.err?`${money(m.month_cents)} this month`:'Your businesses and friends';
+    const h=`<div class="a6-h n57-meh">Earn with NeuAmigo</div><div class="a6-list n57-me">
+      <button class="a6-row" data-a="n57qr" data-k="biz"><img src="img/p22/counter.webp" alt="" class="n56p"><span><b>Bring a business · earn 20%</b><small>Of what they pay us, for 12 months</small></span><i>›</i></button>
+      <button class="a6-row" data-a="n57qr" data-k="friend"><img src="img/p20/arrivals.webp" alt="" class="n56p"><span><b>Bring a friend · earn 15%</b><small>Of what they pay us, for 12 months</small></span><i>›</i></button>
+      <button class="a6-row" data-a="n57earn"><img src="img/p22/cards.webp" alt="" class="n56p"><span><b>My earnings</b><small class="n57-amt">${amt}</small></span><i>›</i></button></div>`;
+    anchor.insertAdjacentHTML('afterend',h);
+    if(!m)loadMine().then(r=>{const s=document.querySelector('.n57-amt');if(s&&r&&!r.err)s.textContent=`${money(r.month_cents)} this month`})}
+  /* empty category: "Know someone who does this?" */
+  function emptyHint(){document.querySelectorAll('#main .h53-empty,#main .a43-empty,#main .a7-empty,#main .n33-empty').forEach(e=>{if(e.querySelector('.n57-eh')||e.closest('.a6'))return;
+    e.insertAdjacentHTML('beforeend',`<div class="n57-eh"><b>Know someone who does this?</b><small>Bring them to NeuAmigo in person. Earn 20% of what they pay us for 12 months.</small><button data-a="n57qr" data-k="biz">Bring them, earn 20%</button></div>`)})}
+  /* first switch to business: ask once if a member brought them */
+  if(typeof A.c10bizon==='function'){const _on=A.c10bizon;A.c10bizon=function(el){if(LS('na.n57b')){return _on.call(this,el)}N.k='biz';N.after=()=>_on.call(A,el);show('biz')}}
+  let asked=false;
+  const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{
+    if(S.screen!=='app'||N.v)return;
+    if(S.tab==='me'&&!(typeof P15!=='undefined'&&P15.v)&&!(typeof c10biz==='function'&&c10biz()))meBlock();
+    emptyHint();
+    if(asked)return;asked=true;
+    const me=S.me||{},age=me.createdAt?Date.now()-Date.parse(me.createdAt):1e12,young=age<14*864e5;
+    if(young&&!LS('na.n57f')){LS('na.n57f','1');LS('na.n57ft',String(Date.now()));setTimeout(()=>{if(!N.v&&S.screen==='app'){N.k='friend';show('friend')}},1200);return}
+    const ft=+(LS('na.n57ft')||0);
+    if(!LS('na.n57c')&&age>36e5&&Date.now()-ft>6*36e5){LS('na.n57c','1');setTimeout(()=>{if(!N.v&&S.screen==='app')show('card')},1500)}
+  }catch(e){}};
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&N.v)shut()});
+  try{window.addEventListener('popstate',()=>{if(N.v)shut()})}catch(e){}
 })();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
