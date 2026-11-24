@@ -7711,7 +7711,7 @@ function h53rooms(){const l=P15.rooms;if(l===undefined){API.rpc('rooms15',{maxre
      <div class="h53-row"><span class="h53-pr">${esc(a4money(r.rent,r.currency))}<small> /month</small></span>${r.locked?`<button class="h53-go" data-a="p15open" data-v="plus">See contact</button>`:r.mine?`<button class="h53-go g" data-a="p15taken" data-id="${r.id}">Mark as taken</button>`:`<button class="h53-go" data-a="p15open" data-v="room53:${r.id}">View</button>`}</div>
      ${r.locked?`<small class="h53-nt">Contact and address open with NeuAmigo Plus</small>`:`<div class="h53-ct"><b>${esc(r.address||r.area||'')}</b><small>${esc(r.contact||'')}</small></div>`}</div></div>`};
   const list=L.length?`<p class="h53-lead">${L.length} ${L.length===1?'home':'homes'} in ${esc(city)} · rent shown on every listing</p><div class="h53-list">${L.map(card).join('')}</div>`
-    :`<div class="h53-empty"><b>No homes listed here yet</b><small>Tell owners what you need and they message you.</small><button class="h53-go" data-a="p15open" data-v="ask:room">Ask owners</button></div>`;
+    :`<div class="h53-empty"><b>No homes listed here yet</b><small>We show only real listings. Get one email when the first home is listed near you.</small>${n59btn('room')}<button class="h53-go2" data-a="p15open" data-v="postroom">Have a home to rent? List it</button></div>`;
   const two=`<div class="h53-two"><button data-a="p15open" data-v="ask:room"><span class="h53-ph2"><img ${a4src('img/p17/bedside.webp')} alt="" loading="lazy"></span><b>Ask owners</b><small>Post what you need</small></button><button data-a="p15open" data-v="postroom"><span class="h53-ph2"><img ${a4src('img/p17/rentsign.webp')} alt="" loading="lazy"></span><b>List your home</b><small>Find a tenant</small></button></div>`;
   return c9wrap(h53top('Homes for rent',`<button class="h53-ch" data-a="p15open" data-v="postroom">Post</button>`)+seg+`<div class="h53-in">${list}${two}<p class="h53-ex">Prices come from the owners and agents who list. NeuAmigo does not check listings: see the place before you pay anything.</p></div></div>`)}
 function h53jobs(){const c=P15.f.jc||'',key='j'+c,l=(P15.jb||{})[key];
@@ -7722,7 +7722,7 @@ function h53jobs(){const c=P15.f.jc||'',key='j'+c,l=(P15.jb||{})[key];
   const prof=`<button class="h53-wp" data-a="p15open" data-v="workprof"><span><small>My work profile${done?' · '+done+'% done':''}</small><b>${done>=100?'Ready: apply in one tap':'Finish it once, then apply in one tap'}</b></span><u>${done>=100?'Open':'Finish'}</u></button>`;
   const card=(j,i)=>`<button class="h53-job" style="animation-delay:${(i*.06).toFixed(2)}s" data-a="p15open" data-v="job:${j.id}"><span class="h53-jph"><img ${a4src(h53jobPh(j))} alt="" loading="lazy"></span><span class="h53-jb"><b class="h53-t">${esc(j.title)}</b><small>${esc(j.employer||'')}${j.area?' · '+esc(j.area):''}</small><span class="h53-chips">${j.hours?`<span>${j.hours} h a week</span>`:''}${j.sponsored?'<span>Sponsored</span>':''}${j.mine?`<span>Your job · ${j.apps} applied</span>`:j.applied?'<span>Applied</span>':''}</span><span class="h53-row"><span class="h53-pr s">${esc(a4money(j.pay,j.currency))}<small> /hour</small></span><span class="h53-go s">View</span></span></span></button>`;
   const list=l.length?`<p class="h53-lead">${l.length} ${l.length===1?'job':'jobs'} in ${esc(city)} · pay and hours on every job</p><div class="h53-list">${l.map(card).join('')}</div>`
-    :`<div class="h53-empty"><b>No jobs here yet</b><small>Finish your work profile so you can apply in one tap when they come.</small><button class="h53-go" data-a="p15open" data-v="workprof">My work profile</button></div>`;
+    :`<div class="h53-empty"><b>No jobs here yet</b><small>Get one email when the first job is posted near you, and finish your work profile to apply in one tap.</small>${n59btn('job')}<button class="h53-go2" data-a="p15open" data-v="workprof">My work profile</button></div>`;
   return c9wrap(h53top('Jobs for you',`<button class="h53-ch" data-a="p15open" data-v="postjob">Post a job</button>`)+seg+`<div class="h53-in">${prof}${list}<p class="h53-ex">Job seekers never pay. Report any job that asks you for money.</p></div></div>`)}
 (function(){
   if(!H53_LIVE)return;
@@ -7742,7 +7742,7 @@ function h53food(){const L=a44load(),city=c9city()||'your city',fr=P15.f.h53fr||
     <div class="h53-bd"><b class="h53-t">${esc(f.title)}</b><small>${esc(f.cuisine||'')}${f.area?' · '+esc(f.area):''}${f.pickup?' · '+esc(f.pickup):''}</small>${f.permit||f.orderBy?`<div class="h53-chips">${f.permit?'<span>Food permit shared by the cook</span>':''}${f.orderBy?`<span>Order by ${esc(f.orderBy)}</span>`:''}</div>`:''}
     <div class="h53-row"><span class="h53-pr">${esc(a4money(f.price,f.currency))}<small> /plate</small></span><button class="h53-go" data-a="p15open" data-v="food:${f.id}">${f.mine?`${f.orders||0} orders`:'Order'}</button></div></div></div>`};
   const list=S.length?`<p class="h53-lead">${S.length} ${S.length===1?'dish':'dishes'} cooked near you in ${esc(city)}</p><div class="h53-list">${S.map(card).join('')}</div>`
-    :`<div class="h53-empty"><b>No home cooks here yet</b><small>Cooks from many countries add dishes every week. Or ask: caterers and home cooks get your request.</small><button class="h53-go" data-a="z8q" data-c="Catering">Ask home cooks</button></div>`;
+    :`<div class="h53-empty"><b>No home cooks here yet</b><small>Get one email when the first home cook adds dishes near you.</small>${n59btn('food')}<button class="h53-go2" data-a="p15open" data-v="foodpost">You cook? Add your dishes</button></div>`;
   const two=`<div class="h53-two"><button data-a="p15open" data-v="foodorders"><span class="h53-ph2"><img ${a4src('img/p17/feast.webp')} alt="" loading="lazy"></span><b>My orders</b><small>Pay the cook at pick-up</small></button><button data-a="z8q" data-c="Catering"><span class="h53-ph2"><img ${a4src('img/p20/dinner.webp')} alt="" loading="lazy"></span><b>Food for a party</b><small>6 caterers get it at once</small></button></div>`;
   return c9wrap(head+seg+`<div class="h53-in">${list}${two}<p class="h53-ex">Prices come from the cooks. Food permits are shared by the cook and not checked by NeuAmigo.</p></div></div>`)}
 function h53sell(){const sl=P15.sl;if(sl===undefined||sl===null){if(sl===undefined){P15.sl=null;API.rpc('sales15',{}).then(r=>{P15.sl=r||[];render()}).catch(()=>{P15.sl=[];render()})}return c9wrap(h53top('Cars and phones')+`<div class="h53-in">${spinner('Loading')}</div></div>`)}
@@ -7752,7 +7752,7 @@ function h53sell(){const sl=P15.sl;if(sl===undefined||sl===null){if(sl===undefin
   const card=(s,i)=>{const p=(s.photos||[])[0],real=p&&PC15();return `<button class="h53-card h53-gc" style="animation-delay:${(i*.05).toFixed(2)}s" data-a="p15open" data-v="sale"><span class="h53-ph">${real?`<img src="${esc(phUrl15(p))}" alt="" loading="lazy">`:`<img ${a4src(SP53[a9cat(s)]||SP53.other)} alt="" loading="lazy"><span class="h53-cnt">Example photo</span>`}</span>
     <span class="h53-bd"><b class="h53-t h53-1">${esc(s.title)}</b><small>${esc(s.area||'')}${s.cond?' · '+esc(s.cond):''}</small><span class="h53-row"><span class="h53-pr s">${esc(a4money(s.price,s.currency))}</span><span class="h53-go s">View</span></span></span></button>`};
   const list=S.length?`<p class="h53-lead">${S.length} ${S.length===1?'item':'items'} in ${esc(city)} · seller's own price</p><div class="h53-g2">${S.slice(0,40).map(card).join('')}</div>`
-    :`<div class="h53-empty"><b>Nothing for sale here yet</b><small>People moving out post cars, phones and furniture here. Dealers can also answer your request.</small><button class="h53-go" data-a="z8q" data-c="Used cars">Ask car dealers</button></div>`;
+    :`<div class="h53-empty"><b>Nothing for sale here yet</b><small>Get one email when the first item is posted near you.</small>${n59btn('sale')}<button class="h53-go2" data-a="p15open" data-v="sale">Moving out? Sell your things</button></div>`;
   const two=`<div class="h53-two"><button data-a="z8q" data-c="Used cars"><span class="h53-ph2"><img ${a4src('img/p19/usedcar.webp')} alt="" loading="lazy"></span><b>Ask car dealers</b><small>6 dealers get it at once</small></button><button data-a="z8q" data-c="Used phones"><span class="h53-ph2"><img ${a4src('img/p21/phone.webp')} alt="" loading="lazy"></span><b>Ask phone shops</b><small>Buy, sell or fix</small></button></div>`;
   return c9wrap(h53top('Cars and phones',`<button class="h53-ch" data-a="p15open" data-v="mysale">Sell</button>`)+`<div class="h53-seg">${K.map(([k,t])=>`<button class="${cur===k?'on':''}" data-a="p15f" data-k="h53sc" data-val="${k}">${t}</button>`).join('')}</div><div class="h53-in">${list}${two}<p class="h53-ex">Meet in a public place and check the item before you pay. NeuAmigo does not check sellers or items.</p></div></div>`)}
 (function(){
@@ -7809,7 +7809,7 @@ function h54events(){const c=c9city(),city=c||'your city',ev=zdata8('events15','
      <div class="h53-bd"><small class="h53-k">WEEKEND CLUB</small><b class="h53-t">Every weekend, new friends</b><small>Members book first and get members-only nights.</small>
      <div class="h53-row"><span class="h53-pr">${p15price('wc_month_a')?'From '+esc(p15price('wc_month_a'))+'<small> /month</small>':'Membership'}</span><button class="h53-go" data-a="p15open" data-v="club">See the Club</button></div></div></div>`;
   const list=l.length?`<p class="h53-lead">${l.length} ${l.length===1?'event':'events'} coming up in ${esc(city)} · price on every event</p><div class="h53-list">${l.map(card).join('')}</div>`
-    :`<div class="h53-empty"><b>No events here yet this week</b><small>Hosts in ${esc(city)} add meetups, trips and food nights every week.</small><button class="h53-go" data-a="p15open" data-v="newev">Host an event</button></div>`;
+    :`<div class="h53-empty"><b>No events here yet this week</b><small>Get one email when the next event is added in ${esc(city)}.</small>${n59btn('event')}<button class="h53-go2" data-a="p15open" data-v="newev">Host an event</button></div>`;
   const host=`<div class="h53-two"><button data-a="p15open" data-v="newev"><span class="h53-ph2"><img ${a4src('img/p17/seats.webp')} alt="" loading="lazy"></span><b>Host an event</b><small>Sell seats to people new in ${esc(city)}</small></button><button data-a="p15open" data-v="club"><span class="h53-ph2"><img ${a4src('img/p17/ticket.webp')} alt="" loading="lazy"></span><b>My tickets</b><small>Tickets work without internet</small></button></div>`;
   return c9wrap(`<div class="h53 h54 a9${dk?' dk':''}" data-t="fun" data-a9="${cur}"><div class="h53-top h54-top"><span class="h54-ttl"><small>In ${esc(city)}</small><b>Events</b></span><button class="h53-ch" data-a="p15open" data-v="newev">Host</button></div>${seg}<div class="h53-in">${club}${list}${host}<p class="h53-ex">Hosts set their own prices and run their events. Just for fun: no money games.</p></div></div>`)}
 /* Phone bar space only when the app really draws under the phone bar (his 21:13 screenshot: an extra band under the
@@ -8041,7 +8041,7 @@ const N57_ON=true; /* database job passed 24 Nov 2026 */
     anchor.insertAdjacentHTML('afterend',h);
     if(!m)loadMine().then(r=>{const s=document.querySelector('.n57-amt');if(s&&r&&!r.err)s.textContent=`${money(r.month_cents)} this month`})}
   /* empty category: "Know someone who does this?" */
-  function emptyHint(){document.querySelectorAll('#main .h53-empty,#main .a43-empty,#main .a7-empty,#main .n33-empty').forEach(e=>{if(e.querySelector('.n57-eh')||e.closest('.a6'))return;
+  function emptyHint(){document.querySelectorAll('#main .a43-empty,#main .a7-empty,#main .n33-empty').forEach(e=>{if(e.querySelector('.n57-eh')||e.closest('.a6'))return;
     e.insertAdjacentHTML('beforeend',`<div class="n57-eh"><b>Know someone who does this?</b><small>Bring them to NeuAmigo in person. Earn 20% of what they pay us for 12 months.</small><button data-a="n57qr" data-k="biz">Bring them, earn 20%</button></div>`)})}
   /* first switch to business: ask once if a member brought them */
   if(typeof A.c10bizon==='function'){const _on=A.c10bizon;A.c10bizonCore=_on;const go=el=>(A.n58go||_on).call(A,el);A.c10bizon=function(el){if(LS('na.n57b')){return go(el)}N.k='biz';N.after=()=>go(el);show('biz')}}
@@ -8236,6 +8236,23 @@ const N58_ON=true; /* database job passed 24 Nov 2026 */
     c.insertAdjacentHTML('afterbegin','<div class="n58-adm"></div>');if(B.adm)admPut();admLoad();
   }catch(e){}};
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&B.on)shut()});
+})();
+
+/* part59 Honest empty categories (24 Nov 2026): "Notify me" = one email when the first listing of that kind appears in the city. */
+const N59={on:null,cnt:null};
+function n59btn(k){const on=N59.on&&N59.on.includes(k);return `<button class="h53-go" data-a="n59notify" data-k="${k}"${on?' disabled':''}>${on?'We will email you':'Notify me'}</button>`}
+(function(){
+  Object.assign(A,{async n59notify(el){const k=el.dataset.k;el.disabled=true;
+    try{await API.rpc('notify_me16',{k});N59.on=[...new Set([...(N59.on||[]),k])];el.textContent='We will email you';toast('Done. One email when it is listed near you.','check')}
+    catch(e){el.disabled=false;toast(String(e&&e.message||'').includes('city')?'Add your city in Me first.':'Could not save. Try again.','info')}}});
+  /* hide every "Ask" door where fewer than 3 businesses can answer in the member's city */
+  function hideAsks(){const c=N59.cnt;if(!c)return;const cats=c.cats||{},all=Object.values(cats).reduce((a,b)=>a+b,0);
+    document.querySelectorAll('#main [data-v^="ask:"],#main [data-a="z8q"]').forEach(b=>{let n;
+      if(b.dataset.a==='z8q'){n=b.dataset.c?(cats[b.dataset.c]||0):all}else{const k=b.dataset.v.slice(4);n=k==='service'?all:(c[k]||0)}
+      if(n<3){b.style.display='none';b.setAttribute('aria-hidden','true');const g=b.parentElement;
+        if(g&&getComputedStyle(g).display==='grid'){const v=[...g.children].filter(x=>x.style.display!=='none');if(v.length===1)v[0].style.gridColumn='1 / -1';if(!v.length)g.style.display='none'}}})}
+  const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{
+    if(S.screen==='app'&&API.userId()){if(N59.cnt===null){N59.cnt=false;API.rpc('ask_counts16',{}).then(r=>{N59.cnt=r||{};hideAsks()}).catch(()=>{N59.cnt={}})}else hideAsks()}if(N59.on===null&&S.screen==='app'&&API.userId()){N59.on=[];API.rpc('notify_mine16',{}).then(r=>{N59.on=r||[];if(document.querySelector('[data-a=n59notify]'))render()}).catch(()=>{})}}catch(e){}};
 })();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */

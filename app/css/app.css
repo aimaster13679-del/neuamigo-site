@@ -4489,3 +4489,5 @@ html.n56dk .n58-adm{background:rgba(255,255,255,.06);border-color:rgba(255,255,2
 .n58-adr{flex-wrap:wrap}.n58-adb{display:flex;gap:8px;width:100%}.n58-adb button{flex:1;margin:0!important;padding:10px!important}
 .bz .n58-dlink,.n58-dstat .n58-dlink{display:inline-block!important;border:1px solid rgba(15,82,186,.35)!important;background:rgba(15,82,186,.08)!important;color:#0F52BA!important;text-decoration:none!important;border-radius:10px!important;padding:6px 10px!important;font-size:12.5px!important;font-weight:800!important;visibility:visible!important;opacity:1!important}
 html.n56dk .n58-dstat .n58-dlink{color:#6EA0FF!important;border-color:rgba(110,160,255,.4)!important}
+.h53-empty .h53-go2{display:block;margin:10px auto 0;border:0;background:none;color:#0F52BA;font-weight:800;font-size:13.5px;text-decoration:underline;text-underline-offset:3px;padding:6px}
+html.n56dk .h53-empty .h53-go2{color:#6EA0FF}.h53-empty .h53-go[disabled]{opacity:.65}
