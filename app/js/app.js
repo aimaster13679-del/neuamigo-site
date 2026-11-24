@@ -7977,7 +7977,7 @@ const N57_ON=true; /* database job passed 24 Nov 2026 */
       ${code?`<div class="n57-code">${esc(code)}<small>Camera not working? They type this code</small></div>`:''}
       <div class="n57-card">${(N.k==='biz'?['They install <b>NeuAmigo</b> from Google Play','They tap <b>NeuAmigo for Business</b> in Me','They tap <b>Scan member QR</b> and scan this screen']
         :['They install <b>NeuAmigo</b> from Google Play','They create their account','They tap <b>Scan friend QR</b> and scan this screen']).map((s,i)=>`<div class="n57-st"><u>${i+1}</u><span>${s}</span></div>`).join('')}</div>
-      <p class="n57-note">You get ${k.pct}% of what they pay NeuAmigo for their first 12 months. This QR changes every 10 minutes and works only inside NeuAmigo.</p>
+      <p class="n57-note">You get ${k.pct}% of what NeuAmigo receives from them (after payment fees and taxes) for their first 12 months. This QR changes every 10 minutes and works only inside NeuAmigo.</p>
       ${q&&q.err?'<button class="n57-btn" data-n="retry">Try again</button>':''}`},
     scan(){const f=N.k==='friend';return `<video id="n57v" playsinline muted></video><canvas id="n57c" hidden></canvas><div class="n57-frame"></div><div class="n57-line"></div>
       <div class="n57-ov n57-ovt"><b>Scan ${f?'friend':'member'} QR</b><p>Point at the QR on their phone</p></div>
@@ -7996,7 +7996,7 @@ const N57_ON=true; /* database job passed 24 Nov 2026 */
       <p class="n57-sub">Scan their QR. They get the credit; you pay the same as everyone.</p>
       <button class="n57-btn" data-n="scan" data-k="friend">Scan friend QR</button><button class="n57-gh" data-n="close">No, continue</button></div>`},
     card(){return `<div class="n57-sheet"><div class="n57-ph">${pic('p22/counter')}</div><div class="n57-lb">While you settle in</div><h2 class="n57-h">Earn with<br><i>NeuAmigo.</i></h2>
-      <p class="n57-sub">Bring a business you meet (a cleaner, a cook, a tax helper): 20% of what they pay us for 12 months. Bring a friend: 15%.</p>
+      <p class="n57-sub">Bring a business you meet (a cleaner, a cook, a tax helper): 20% of what we receive from them for 12 months, after fees and taxes. Bring a friend: 15%.</p>
       <button class="n57-btn" data-n="earn">Show me how</button><button class="n57-gh" data-n="close">Not now</button><p class="n57-note n57-c">Shown once. Always in Me.</p></div>`},
     earn(){const m=N.mine;if(!m)return top('Your earnings')+'<div class="n57-wait">Loading</div>';if(m.err)return top('Your earnings')+'<div class="n57-wait">Could not load. Check the internet.</div>';
       const ppl=m.people||[],bz=ppl.filter(p=>p.kind==='biz'),fr=ppl.filter(p=>p.kind==='friend');
@@ -8007,7 +8007,7 @@ const N57_ON=true; /* database job passed 24 Nov 2026 */
         ${fr.length?`<div class="n57-lb n57-lbo">Friends · 15%</div><div class="n57-card n57-list">${fr.map(row).join('')}</div>`:''}
         ${!ppl.length?`<div class="n57-card"><b>No one linked yet</b><p>Show your QR to a business near you or to a friend who just arrived.</p></div>`:''}
         <button class="n57-btn" data-n="qr" data-k="biz">Show business QR</button><button class="n57-gh" data-n="qr" data-k="friend">Show friend QR</button>
-        <p class="n57-note">Paid out once a month. Payouts start when our payment partner is live; till then every cent is kept here. Only real payments count; refunds are taken off.</p>`}
+        <p class="n57-note">Paid out once a month. Payouts start when our payment partner is live; till then every cent is kept here. Shares are counted on what NeuAmigo receives after payment fees and taxes. Only real payments count; refunds are taken off.</p>`}
   };
   async function claim(s){if(N.busy)return;N.busy=true;if(N.v==='type')draw();
     try{const r=await API.rpc('bring_claim16',{s,k:N.k});N.busy=false;
@@ -8044,14 +8044,14 @@ const N57_ON=true; /* database job passed 24 Nov 2026 */
   function meBlock(){if(document.querySelector('.n57-me'))return;const a=document.querySelector('#main .a6');if(!a)return;const anchor=a.querySelector('.a6-plan')||a.querySelector('.a6-who');if(!anchor)return;
     const m=N.mine,amt=m&&!m.err?`${money(m.month_cents)} this month`:'Your businesses and friends';
     const h=`<div class="a6-h n57-meh">Earn with NeuAmigo</div><div class="a6-list n57-me">
-      <button class="a6-row" data-a="n57qr" data-k="biz"><img src="img/p22/counter.webp" alt="" class="n56p"><span><b>Bring a business · earn 20%</b><small>Of what they pay us, for 12 months</small></span><i>›</i></button>
-      <button class="a6-row" data-a="n57qr" data-k="friend"><img src="img/p20/arrivals.webp" alt="" class="n56p"><span><b>Bring a friend · earn 15%</b><small>Of what they pay us, for 12 months</small></span><i>›</i></button>
+      <button class="a6-row" data-a="n57qr" data-k="biz"><img src="img/p22/counter.webp" alt="" class="n56p"><span><b>Bring a business · earn 20%</b><small>Of what we receive, for 12 months</small></span><i>›</i></button>
+      <button class="a6-row" data-a="n57qr" data-k="friend"><img src="img/p20/arrivals.webp" alt="" class="n56p"><span><b>Bring a friend · earn 15%</b><small>Of what we receive, for 12 months</small></span><i>›</i></button>
       <button class="a6-row" data-a="n57earn"><img src="img/p22/cards.webp" alt="" class="n56p"><span><b>My earnings</b><small class="n57-amt">${amt}</small></span><i>›</i></button></div>`;
     anchor.insertAdjacentHTML('afterend',h);
     if(!m)loadMine().then(r=>{const s=document.querySelector('.n57-amt');if(s&&r&&!r.err)s.textContent=`${money(r.month_cents)} this month`})}
   /* empty category: "Know someone who does this?" */
   function emptyHint(){document.querySelectorAll('#main .a43-empty,#main .a7-empty,#main .n33-empty').forEach(e=>{if(e.querySelector('.n57-eh')||e.closest('.a6'))return;
-    e.insertAdjacentHTML('beforeend',`<div class="n57-eh"><b>Know someone who does this?</b><small>Bring them to NeuAmigo in person. Earn 20% of what they pay us for 12 months.</small><button data-a="n57qr" data-k="biz">Bring them, earn 20%</button></div>`)})}
+    e.insertAdjacentHTML('beforeend',`<div class="n57-eh"><b>Know someone who does this?</b><small>Bring them to NeuAmigo in person. Earn 20% of what we receive from them for 12 months.</small><button data-a="n57qr" data-k="biz">Bring them, earn 20%</button></div>`)})}
   /* first switch to business: ask once if a member brought them */
   if(typeof A.c10bizon==='function'){const _on=A.c10bizon;A.c10bizonCore=_on;const go=el=>(A.n58go||_on).call(A,el);A.c10bizon=function(el){if(LS('na.n57b')){return go(el)}N.k='biz';N.after=()=>go(el);show('biz')}}
   let asked=false;
