@@ -6592,7 +6592,7 @@ function a4home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{},name=(m
       real "from" price, new Boost page with real prices (each opens the real buying page). */
 const NA35_LIVE = true;
 function NA35(){try{return NA35_LIVE||localStorage.getItem('nm.na35')==='1'}catch(e){return NA35_LIVE}}
-const BZPIC={home:'house_with_garden',work:'briefcase',events:'party_popper',service:'delivery_truck',sell:'couch_and_lamp'};
+const BZPIC={home:'house_with_garden',work:'briefcase',events:'party_popper',service:'toolbox',sell:'couch_and_lamp'};
 const BZPR={home:'agent_plan',work:'hire_plan',events:'host_basic',service:'services_plan',sell:'sale_one'};
 function bz35top(t,sub){return `<div class="bz-top"><span class="bz-tag">Business desk</span><button class="bz-back" data-a="c10bizoff">Back to NeuAmigo</button></div>${t?`<div class="bz-h"><small>${esc(sub||'')}</small><h1>${t}</h1></div>`:''}`}
 function bz35pr(k){const p=BZPR[k];if(!p)return '';const v=p15price(p);if(!v)return '';return `<em>from <b>${esc(v)}</b>${p==='sale_one'?' / item':' / month'}</em>`}
@@ -7893,7 +7893,7 @@ const N56_LIVE=true; /* his ok 20 Nov 2026 13:44 */
     const h=document.documentElement;h.classList.toggle('gl-lt',!dk);h.classList.toggle('n56dk',dk);h.classList.add('n56');const m=document.querySelector('meta[name=theme-color]');const c=dk?'#0B0C10':'#F6F4F0';if(m&&m.content!==c&&document.querySelector('#main'))m.content=c}catch(e){}};
   const flip=()=>{try{localStorage.setItem('na.a46th',a46th()==='dark'?'light':'dark')}catch(e){}sync();render()};
   A.a46theme=flip;A.p15theme=flip;sync();
-  const PH={house_with_garden:'p20/living',clipboard:'p22/requests',automobile:'p19/usedcar',light_bulb:'p22/expert',identification_card:'p22/cards',
+  const PH={house_with_garden:'p20/living',delivery_truck:'p22/toolbox',clipboard:'p22/requests',automobile:'p19/usedcar',light_bulb:'p22/expert',identification_card:'p22/cards',
     sparkles:'p22/cleaning',toolbox:'p22/toolbox',shield:'p22/insure',briefcase:'p19/work',receipt:'p17/calc',ticket:'p22/tickets',calendar:'p22/calendar',
     compass:'p22/compass',party_popper:'p19/party',key:'p22/key',world_map:'p22/globe',handshake:'p22/headset',hot_beverage:'p17/coffee',couch_and_lamp:'p19/sofa',airplane:'p20/airport'};
   /* the words beside the picture decide first (one emoji was used for several things) */
@@ -8166,9 +8166,9 @@ const N58_ON=true; /* database job passed 24 Nov 2026 */
     sw(b){const v=B.svc[b.dataset.v];v.on=!v.on;B.keepY=true;draw()},
     plus(b){const v=B.svc[b.dataset.v];v.p+=stepOf(v.p);B.keepY=true;draw()},
     minus(b){const v=B.svc[b.dataset.v],s=stepOf(Math.max(1,v.p-1));v.p=Math.max(s,v.p-s);B.keepY=true;draw()},
-    phdel(b){const x=B.ph.splice(+b.dataset.v,1)[0];try{URL.revokeObjectURL(x.url)}catch(e){}B.keepY=true;draw()},
+    phdel(b){const x=B.ph.splice(+b.dataset.v,1)[0];try{if(!x.path)URL.revokeObjectURL(x.url)}catch(e){}B.keepY=true;draw()},
     async publish(){if(B.busy)return;B.busy=true;B.msg='';B.keepY=true;draw();
-      try{const uid=API.userId(),paths=[];for(const p of B.ph){const path=`${uid}/${uuid()}.jpg`;await API.upload('items',path,p.blob);paths.push(path)}
+      try{const uid=API.userId(),paths=[];for(const p of B.ph){if(p.path){paths.push(p.path);continue}const path=`${uid}/${uuid()}.jpg`;await API.upload('items',path,p.blob);paths.push(path)}
         const items=[];svcCats().forEach(c=>c.s.forEach((x,k)=>{const v=B.svc[c.k+k];if(v&&v.on)items.push({title:x[0],price:Math.round(v.p*100)})}));
         await API.rpc('biz_setup16',{nm:B.nm.trim(),cats:[...new Set(svcCats().flatMap(c=>c.cat))],ar:B.area,lg:[...B.langs],dy:[...B.days],ph:paths,items,rent:B.pick.has('rent')});
         LS('na.n58done','1');B.busy=false;B.step=7;draw()}
@@ -8182,7 +8182,22 @@ const N58_ON=true; /* database job passed 24 Nov 2026 */
     const m=B.info&&B.info.mine;if(m&&(m.cats||[]).length){LS('na.n58done','1');shut();return core.call(A,el)}
     if(!B.info){shut();return core.call(A,el)}
     B.step=1;draw()};
-  A.n58edit=async function(){LS('na.n58done','');B.pick=new Set();B.svc={};A.n58go()};
+  /* edit later from the business desk: same 6 steps, filled with what is saved */
+  function fill(m){B.pick=new Set();B.svc={};const cats=m.cats||[];
+    C.forEach(c=>{if(c.cat&&c.cat.some(x=>cats.includes(x)))B.pick.add(c.k)});
+    B.nm=m.name||'';if(m.areas)B.area=m.areas;if((m.langs||[]).length)B.langs=new Set(m.langs);if((m.days||[]).length)B.days=new Set(m.days);
+    const its=m.items||[];chosen().forEach(c=>(c.s||[]).forEach((x,i)=>{const f=its.find(t=>t.title===x[0]);B.svc[c.k+i]={on:!!f,p:f?Math.round(f.price/100):nice(x[1])}}));
+    B.ph=(m.photos||[]).map(path=>({path,url:phUrl15(path)}))}
+  A.n58edit=async function(){B.on=true;B.step=0;B.msg='';B.after=null;draw();
+    try{B.info=await API.rpc('biz_setup_info16',{})}catch(e){B.info=null}
+    if(!B.info){shut();toast('Could not load your page. Check the internet.','info');return}
+    if(B.info.mine)fill(B.info.mine);B.step=1;draw()};
+  /* business desk: "Your business page" row */
+  const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{
+    if(S.screen!=='app'||B.on||!(typeof c10biz==='function'&&c10biz())||(typeof P15!=='undefined'&&P15.v))return;
+    const l=document.querySelector('#main .bz .bz-lede');if(!l||document.querySelector('.n58-desk'))return;
+    l.insertAdjacentHTML('afterend',`<button class="n58-desk" data-a="n58edit"><span class="n58-th"><img src="img/p22/counter.webp" alt=""></span><span><b>Your business page</b><small>Services, prices, photos, up to 3 categories</small></span><i>Edit</i></button>`);
+  }catch(e){}};
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&B.on)shut()});
 })();
 
