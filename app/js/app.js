@@ -8003,7 +8003,7 @@ const N57_ON=true; /* database job passed 24 Nov 2026 */
     try{const r=await API.rpc('bring_claim16',{s,k:N.k});N.busy=false;
       if(r&&r.ok){stopCam();LS(N.k==='biz'?'na.n57b':'na.n57f','1');N.name=r.name;show('done');return}
       const why=r&&r.why;N.msg={already:'You are already linked with a member.',expired:'This QR is old. Ask them to open it again.',unknown:'Code not found. Check the 6 characters.',
-        self:'That is your own code.',old:'Friend codes work only in your first 14 days.',loop:'You brought this member, so they cannot bring you.'}[why]||'Could not link. Try again.';
+        self:'That is your own code.',old:'Friend codes work only in your first 14 days.',loop:'You brought this member, so they cannot bring you.',limit:'Too many tries today. Try again tomorrow.'}[why]||'Could not link. Try again.';
       if(why==='already'){stopCam();LS(N.k==='biz'?'na.n57b':'na.n57f','1')}draw()}
     catch(e){N.busy=false;N.msg='Could not link. Check the internet and try again.';draw()}}
   function stopCam(){cancelAnimationFrame(N.raf);N.raf=0;try{N.stream&&N.stream.getTracks().forEach(t=>t.stop())}catch(e){}N.stream=null}
@@ -8106,9 +8106,9 @@ const N58_ON=true; /* database job passed 24 Nov 2026 */
   const chip=(on,n,v,t)=>`<button class="n58-ch${on?' on':''}" data-n="${n}" data-v="${esc(v)}" aria-pressed="${on}">${esc(t||v)}</button>`;
   const V={
     0(){return top('Your business')+'<div class="n57-wait">Getting your business ready</div>'},
-    1(){return top('Your business')+prog(1)+`<h2 class="n57-h">What do you <i>offer?</i></h2><p class="n57-sub">Tick everything you do. You can change it later.</p>
+    1(){return top('Your business')+prog(1)+`<h2 class="n57-h">What do you <i>offer?</i></h2><p class="n57-sub">Tick up to 3, only what you really do.</p>
       <div class="n57-card n58-list">${C.map(c=>`<button class="n58-cr${B.pick.has(c.k)?' on':''}" data-n="pick" data-v="${c.k}" aria-pressed="${B.pick.has(c.k)}"><span class="n58-th"><img src="img/${c.img}.webp" alt=""></span><b>${esc(c.t)}</b><i class="n58-cb">${B.pick.has(c.k)?'✓':''}</i></button>`).join('')}</div>
-      <button class="n57-btn" data-n="next"${B.pick.size?'':' disabled'}>${B.pick.size?`Next · ${B.pick.size} picked`:'Tick at least one'}</button>`},
+      ${B.msg?`<p class="n57-err">${esc(B.msg)}</p>`:''}<button class="n57-btn" data-n="next"${B.pick.size?'':' disabled'}>${B.pick.size?`Next · ${B.pick.size} of 3 picked`:'Tick at least one'}</button>`},
     2(){return top('Your business')+prog(2)+`<h2 class="n57-h">Where do you <i>work?</i></h2>
       <div class="n57-card"><label class="n57-lb" for="n58nm">Business name</label><input id="n58nm" class="n58-in" maxlength="60" autocomplete="organization" value="${esc(B.nm)}" placeholder="Your business name"><p>The only thing you type here</p></div>
       <div class="n57-lb n57-lbo">Areas you cover</div><div class="n58-chs">${AREAS.map(a=>chip(B.area===a,'area',a)).join('')}</div>
@@ -8159,7 +8159,7 @@ const N58_ON=true; /* database job passed 24 Nov 2026 */
     next(){const m=check();if(m){B.msg=m;B.keepY=true;draw();return}B.msg='';
       if(B.step===1)chosen().forEach(c=>(c.s||[]).forEach((x,i)=>{const id=c.k+i;if(!B.svc[id])B.svc[id]={on:i<2,p:nice(x[1])}}));
       B.step++;draw()},
-    pick(b){tog(B.pick,b.dataset.v);B.keepY=true;draw()},
+    pick(b){const v=b.dataset.v;if(!B.pick.has(v)&&B.pick.size>=3){B.msg='Pick up to 3, only what you really do. You can change it later.';B.keepY=true;draw();return}B.msg='';tog(B.pick,v);B.keepY=true;draw()},
     area(b){B.area=b.dataset.v;B.keepY=true;draw()},
     lang(b){tog(B.langs,b.dataset.v);B.keepY=true;draw()},
     day(b){tog(B.days,b.dataset.v);B.keepY=true;draw()},
