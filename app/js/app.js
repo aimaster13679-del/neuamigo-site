@@ -3841,8 +3841,9 @@ try{if(typeof RLX!=='undefined'&&RLX.OPTS&&RLX.OPTS.welcome)RLX.OPTS.p15=()=>Obj
   pins:FL15.filter(c=>fg15(c[0])).map(c=>({ll:[c[1],c[2]],anchor:'center',cls:'p15f',html:`<span class="p15fg">${fg15(c[0])}</span><b>${esc(c[0])}</b>`,fly:true,
     go:ev=>{const b=ev.currentTarget;const was=b.classList.contains('open');document.querySelectorAll('.rl-mk.p15f.open').forEach(x=>x.classList.remove('open'));if(!was)b.classList.add('open')}}))})}catch(e){}
 function P15on(){return !!(P15.d&&P15.d.on)}
-async function load15(){try{P15.d=await API.rpc('my15',{});try{localStorage.setItem('nm.p15.'+(API.userId()||''),JSON.stringify(P15.d))}catch(e){}}catch(e){}}
+async function load15(){try{P15.d=await API.rpc('my15',{});try{P15.d.free3=await API.rpc('posts_free16',{})}catch(e){}try{localStorage.setItem('nm.p15.'+(API.userId()||''),JSON.stringify(P15.d))}catch(e){}}catch(e){}}
 function warm15(){try{const o=JSON.parse(localStorage.getItem('nm.p15.'+(API.userId()||''))||'null');if(o&&!P15.d)P15.d=o}catch(e){}}
+const fr3=k=>{const n=P15.d&&P15.d.free3&&P15.d.free3[k];return n>0?`no fee for your first 3 (${n} left)`:''};
 const p15price=k=>{const c=P15.d&&P15.d.prices&&P15.d.prices[k];return c==null?'':money(c,(P15.d&&P15.d.cur)||'USD')};
 /* launch prices (owner ok 9 Nov 2026): honest note, never a struck-through fake old price */
 const p15later=k=>{const c=P15.d&&P15.d.later&&P15.d.later[k];return c==null?'':money(c,(P15.d&&P15.d.cur)||'USD')};
@@ -4179,7 +4180,7 @@ function rooms15v(){const l=P15.rooms;if(l===undefined){API.rpc('rooms15',{maxre
      ${r.locked?`<button class="p15-unlock" data-a="p15open" data-v="plus">${ic('lock2')} Contact and address open with NeuMarry Plus</button>`:`<div class="p15-contact">${ic('pin')} ${esc(r.address||r.area)}<br>${ic('chat')} ${esc(r.contact)}</div>${r.mine?`<button class="p15-btn ghost" data-a="p15taken" data-id="${r.id}">Mark as taken</button>`:''}`}</div>`).join(''):
    `<div class="p15-g p15-note">${ic('bed2')} No rooms in your city at this rent yet. New rooms are posted every day.</div>`)+
    `<button class="p15-g p15-row" data-a="p15open" data-v="ask:room"><span class="p15-b lem">${ic('bed2')}</span><span class="tx"><b>Post a Room Wanted</b><small>Agents and landlords send you homes that fit</small></span>${ic('chev2')}</button>
-   <button class="p15-g p15-row" data-a="p15open" data-v="postroom"><span class="p15-b mint">${ic('home2')}</span><span class="tx"><b>List your home</b><small>Landlord · 1 home ${p15price('room_post')} for 30 days · agents: Agent Plan</small></span>${ic('chev2')}</button>`)}
+   <button class="p15-g p15-row" data-a="p15open" data-v="postroom"><span class="p15-b mint">${ic('home2')}</span><span class="tx"><b>List your home</b><small>Landlord · ${fr3('room')||`1 home ${p15price('room_post')} for 30 days`} · agents: Agent Plan</small></span>${ic('chev2')}</button>`)}
 function postRoom15(){const f=P15.f;f.rt=f.rt||'private';f.rent=f.rent||'800';f.av=f.av||days15()[6][0];
   return p15wrap(p15top('Post a Room',true)+`<div class="p15-g p15-form">
    <label>Room type</label>${chips15('rt',[['private','Private room'],['shared','Shared room'],['whole','Whole place']],f.rt)}
@@ -4191,7 +4192,7 @@ function postRoom15(){const f=P15.f;f.rt=f.rt||'private';f.rent=f.rent||'800';f.
    <label>Phone or email for replies (shown only to Plus members)</label><input id="p15-rct" maxlength="80" placeholder="+1 416 …" value="${esc(f.rct||'')}">
    <label>Street address (optional, Plus members only)</label><input id="p15-rad" maxlength="120" value="${esc(f.rad||'')}">${phPick15('room',8)}</div>
    <button class="p15-g p15-plan${f.top?' on':''}" data-a="p15f" data-k="top" data-val="${f.top?'':'1'}"><span><b>Boost this home</b><small>First in your city for 7 days</small></span><span class="p15-pr0"><b>+${p15price('room_top')}</b></span></button>
-   <button class="p15-btn" data-a="p15roomPost"${P15.busy==='room'?' disabled':''}>${P15.busy==='room'?'Posting…':`Post room · ${p15price('room_post')}${f.top?' + '+p15price('room_top'):''}`}</button>${P15.d&&P15.d.payTest?'<p class="p15-ex">Test mode: no real money is taken. Agents with an Agent Plan post without a listing fee.</p>':''}`)}
+   <button class="p15-btn" data-a="p15roomPost"${P15.busy==='room'?' disabled':''}>${P15.busy==='room'?'Posting…':`Post room · ${fr3('room')||p15price('room_post')}${f.top?' + '+p15price('room_top'):''}`}</button>${P15.d&&P15.d.payTest?'<p class="p15-ex">Test mode: no real money is taken. Agents with an Agent Plan post without a listing fee.</p>':''}`)}
 function buddy15v(){const l=P15.bd;if(l===undefined){API.rpc('buddy_mine15',{}).then(r=>{P15.bd=r;render()}).catch(()=>{P15.bd=[];render()});return p15wrap(p15top('Travel Buddy for Parents',true)+spinner('Loading'))}
   const f=P15.f;f.role=f.role||'family';f.fd=f.fd||days15()[9][0];
   const SN={met:'Met at the gate',changed:'Changed planes',landed:'Landed'};
@@ -4239,7 +4240,7 @@ function sale15v(){const l=P15.sl;if(l===undefined){API.rpc('sales15',{}).then(r
    <div class="p15-g p15-form"><label>Sell something</label><input id="p15-st" maxlength="60" placeholder="e.g. 3-seat sofa" value="${esc(f.st||'')}">
     <label>Price (${esc(cur15())})</label>${chips15('sp',[['10','10'],['25','25'],['50','50'],['100','100'],['150','150'],['300','300']],f.sp||'50')}
     <label>Pick-up area</label><input id="p15-sa" maxlength="60" placeholder="e.g. Etobicoke" value="${esc(f.sa||'')}"></div>
-   <button class="p15-btn" data-a="p15salePost">Post · Seller Plan ${p15price('seller_plan')} a month</button>${P15.d&&P15.d.payTest?'<p class="p15-ex">Test mode: no real money is taken.</p>':''}`)}
+   <button class="p15-btn" data-a="p15salePost">${fr3('sale')?`Post · ${fr3('sale')}`:`Post · Seller Plan ${p15price('seller_plan')} a month`}</button>${P15.d&&P15.d.payTest?'<p class="p15-ex">Test mode: no real money is taken.</p>':''}`)}
 function expPlan15(){const f=P15.f;f.ek2=f.ek2||'expert';const b=((P15.d&&P15.d.biz)||[]).find(x=>x.kind===f.ek2),me=S.me||{};
   return p15wrap(p15top('Expert or Agent',true)+chips15('ek2',[['expert','I am an expert'],['agent','I am a rental agent']],f.ek2)+
   `<div class="p15-g p15-form"><label>Business name</label><input id="p15-xn" maxlength="60" value="${esc(f.xn||(b&&b.name)||'')}">
