@@ -3,174 +3,284 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>NeuAmigo · S’installer à l’étranger, simplement</title>
-<meta name="description" content="Logement, emploi, démarches, services et amis pour les personnes qui s’installent dans un nouveau pays. Les prix sont affichés avant de payer.">
-<meta name="theme-color" content="#DCE7FF">
+<title>NeuAmigo · Votre nouvelle vie à l’étranger, simplifiée</title>
+<meta name="description" content="Transport depuis l’aéroport, SIM, courts séjours, cuisine de chez soi, papiers, emplois, logements et événements pour les personnes qui s’installent dans un nouveau pays. Prix affichés avant de payer.">
+<meta name="theme-color" content="#05070F">
 <link rel="icon" href="../img/v2/icon-192.png">
 <style>
 @font-face{font-family:'Plus Jakarta Sans';src:url(../img/v2/PlusJakartaSans-var-latin.woff2) format('woff2');font-weight:200 800;font-display:swap}
-:root{--sap:#0F52BA;--ink:#0B1226;--t2:#5A6584;--bg:#F5F6FA;--pn:#fff;--hl:rgba(11,18,38,.08);--band:#DCE7FF;--sh:0 1px 2px rgba(11,16,32,.05),0 12px 30px rgba(11,16,32,.08)}
-@media (prefers-color-scheme:dark){:root{--ink:#F2F3F7;--t2:#A9B4D0;--bg:#070B18;--pn:#111A33;--hl:rgba(255,255,255,.09);--band:#12306E;--sh:0 0 0 1px #222A3C}}
-*{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+@font-face{font-family:'Fraunces';src:url(../img/v2/Fraunces-opsz-latin.woff2) format('woff2');font-weight:300 900;font-display:swap}
+:root{--bg:#05070F;--bg2:#0A0F1E;--pn:rgba(255,255,255,.045);--pn2:rgba(255,255,255,.07);--line:rgba(255,255,255,.09);--ink:#F4F6FB;--t2:#9AA6C4;--t3:#6E7A99;--sap:#3D7BFF;--sap2:#8DB5FF;--ease:cubic-bezier(.2,.8,.2,1)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
-.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
-/* header band */
-.band{background:linear-gradient(180deg,var(--band) 0%,var(--band) 82%,var(--bg) 100%);padding:14px 0 30px}
-.top{display:flex;align-items:center;gap:10px}
-.logo{display:flex;align-items:center;gap:9px;font:800 19px 'Plus Jakarta Sans';flex:1}.logo img{width:34px;height:34px;border-radius:10px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:13px;font:800 14.5px 'Plus Jakarta Sans';padding:12px 18px;white-space:nowrap}
-.btn.p{background:var(--sap);color:#fff}.btn.w{background:var(--pn);color:var(--ink);box-shadow:0 2px 10px rgba(11,18,38,.1)}
-@media (prefers-color-scheme:dark){.btn.p{background:#3D7BFF}}
-.top .btn{padding:10px 14px;font-size:13.5px}
-.hero{display:grid;grid-template-columns:1fr;gap:28px;margin-top:30px;align-items:center}
-.kick{display:inline-block;background:var(--pn);border-radius:10px;padding:6px 11px;font:700 13px 'Plus Jakarta Sans';color:var(--sap);box-shadow:0 2px 8px rgba(11,18,38,.08)}
-@media (prefers-color-scheme:dark){.kick{color:#9DC0FF}}
-h1{font:800 clamp(34px,7.6vw,58px)/1.06 'Plus Jakarta Sans';margin:16px 0 14px;letter-spacing:0}
-h1 em{font-style:normal;color:var(--sap)}@media (prefers-color-scheme:dark){h1 em{color:#9DC0FF}}
-.lede{font:600 17px/1.5 'Plus Jakarta Sans';color:var(--t2);margin:0 0 20px;max-width:520px}
-.type{display:flex;align-items:center;gap:10px;background:var(--pn);border-radius:15px;padding:15px 16px;box-shadow:0 2px 12px rgba(11,18,38,.1);font:600 16px 'Plus Jakarta Sans';color:var(--t2);max-width:520px;margin-bottom:18px}
-.type b{color:var(--ink)}.type b::after{content:'';display:inline-block;width:2px;height:1.05em;background:var(--sap);margin-left:2px;vertical-align:-2px;animation:cur 1s steps(1) infinite}
-@keyframes cur{50%{opacity:0}}
-.mg{width:18px;height:18px;border:2.5px solid var(--t2);border-radius:50%;position:relative;flex:none}.mg::after{content:'';position:absolute;width:7px;height:2.5px;background:var(--t2);right:-6px;bottom:-3px;transform:rotate(45deg);border-radius:2px}
-.cta{display:flex;gap:10px;flex-wrap:wrap}
-.trust{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px;font:700 13px 'Plus Jakarta Sans';color:var(--t2)}
-.trust span::before{content:'';display:inline-block;width:8px;height:8px;border-radius:2px;background:#1F9D5B;margin-right:7px;vertical-align:1px}
-.phones{position:relative;display:flex;justify-content:center;gap:14px}
-.ph{width:min(260px,62vw);aspect-ratio:390/844;border-radius:34px;background:#0B1226;padding:8px;box-shadow:0 30px 60px rgba(11,18,38,.25)}
-.ph img{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:27px}
-.ph.b{display:none}
-/* tabs row */
-.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:6px -20px 0;padding:6px 20px 4px}.tabs::-webkit-scrollbar{display:none}
-.tabs a{flex:none;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:84px;padding:10px 8px;border-radius:16px;background:var(--pn);box-shadow:var(--sh);font:700 13px 'Plus Jakarta Sans'}
-.tabs img{width:38px;height:38px;transition:transform .3s cubic-bezier(.3,1.6,.5,1)}.tabs a:hover img{transform:scale(1.15) rotate(-6deg)}
+.wrap{max-width:1200px;margin:0 auto;padding:0 22px}
+.f{font-family:'Fraunces',Georgia,serif;font-weight:500;letter-spacing:0}
+/* follow + nav */
+.follow{border-bottom:1px solid var(--line);background:#03050B}
+.follow .wrap{display:flex;align-items:center;justify-content:center;gap:8px;min-height:42px;font:600 12.5px 'Plus Jakarta Sans';color:var(--t2);white-space:nowrap}
+.follow a{display:inline-flex;align-items:center;gap:6px;color:var(--ink);font-weight:700;padding:5px 10px;border:1px solid var(--line);border-radius:9px;transition:background .2s}
+.follow a:hover{background:var(--pn2)}.follow svg{width:15px;height:15px}
+nav{position:sticky;top:0;z-index:30;backdrop-filter:saturate(160%) blur(18px);-webkit-backdrop-filter:saturate(160%) blur(18px);background:rgba(5,7,15,.62);border-bottom:1px solid transparent;transition:border-color .3s}
+nav.sc{border-color:var(--line)}
+nav .wrap{display:flex;align-items:center;gap:14px;height:66px}
+.logo{display:flex;align-items:center;gap:10px;font:800 19px 'Plus Jakarta Sans';flex:1}.logo img{width:34px;height:34px;border-radius:10px}
+nav .lk{display:none;gap:26px;font:600 14px 'Plus Jakarta Sans';color:var(--t2)}nav .lk a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:999px;font:700 14.5px 'Plus Jakarta Sans';padding:13px 22px;white-space:nowrap;transition:transform .2s var(--ease),background .2s,box-shadow .3s}
+.btn:active{transform:scale(.97)}
+.btn.w{background:#fff;color:#05070F}.btn.w:hover{box-shadow:0 0 0 6px rgba(255,255,255,.1)}
+.btn.g{background:var(--pn2);color:var(--ink);border:1px solid var(--line)}
+nav .btn{padding:10px 18px;font-size:13.5px}
+/* play badge */
+.badge{display:inline-flex;align-items:center;gap:12px;background:#000;border:1px solid rgba(255,255,255,.28);border-radius:14px;padding:10px 20px 10px 16px;transition:transform .25s var(--ease),border-color .25s,box-shadow .3s}
+.badge:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.55);box-shadow:0 14px 40px rgba(61,123,255,.25)}
+.badge svg{width:28px;height:28px}.badge span{display:flex;flex-direction:column;line-height:1}
+.badge small{font:600 10.5px 'Plus Jakarta Sans';letter-spacing:.08em;text-transform:uppercase;color:#d6dbe8}.badge b{font:700 21px 'Plus Jakarta Sans';margin-top:3px}
+/* hero */
+.hero{position:relative;overflow:hidden;padding:64px 0 0}
+.hero::before{content:'';position:absolute;left:50%;top:-10%;width:1300px;height:900px;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(61,123,255,.30),rgba(61,123,255,.08) 55%,transparent);pointer-events:none}
+.hero::after{content:'';position:absolute;inset:auto 0 0 0;height:180px;background:linear-gradient(transparent,var(--bg));pointer-events:none;z-index:2}
+.hero .wrap{position:relative;z-index:1;text-align:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font:700 12px 'Plus Jakarta Sans';letter-spacing:.14em;text-transform:uppercase;color:var(--sap2);padding:8px 14px;border:1px solid rgba(141,181,255,.25);border-radius:999px;background:rgba(61,123,255,.08)}
+.eyebrow i{width:6px;height:6px;border-radius:2px;background:var(--sap2)}
+h1{font:400 clamp(46px,10.5vw,104px)/.98 'Fraunces',Georgia,serif;margin:22px auto 18px;max-width:980px;letter-spacing:0}
+h1 em{font-style:italic;font-weight:400;color:#A9C6FF}
+.rot{display:block;width:fit-content;margin:0 auto;position:relative;height:1.12em;padding:0 .08em;overflow:hidden;-webkit-mask:linear-gradient(transparent,#000 14%,#000 86%,transparent);mask:linear-gradient(transparent,#000 14%,#000 86%,transparent)}
+.rot span{display:block;transition:transform .8s var(--ease),opacity .8s}
+.lede{font:500 clamp(16px,2.2vw,19px)/1.6 'Plus Jakarta Sans';color:var(--t2);margin:0 auto 30px;max-width:620px}
+.ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;align-items:center}
+.note{font:600 12.5px 'Plus Jakarta Sans';color:var(--t3);margin-top:16px}
+.fan{position:relative;height:clamp(460px,92vw,700px);margin-top:54px;perspective:1600px}
+.dev{position:absolute;left:50%;top:0;width:clamp(230px,44vw,320px);aspect-ratio:975/2110;border-radius:clamp(34px,6vw,48px);padding:clamp(7px,1.3vw,10px);background:linear-gradient(145deg,#2A3142,#0B0E16 40%,#1B2130);box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,0 50px 100px rgba(0,0,0,.6),0 0 80px rgba(61,123,255,.18);transition:transform 1.2s var(--ease)}
+.dev .sc{display:block;position:relative;width:100%;height:100%;border-radius:clamp(27px,4.8vw,39px);overflow:hidden;background:#fff}
+.dev img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0;transition:opacity .9s ease}
+.dev img.on{opacity:1}
+.dev.c{transform:translateX(-50%);z-index:3}
+.dev.l{transform:translateX(-118%) translateY(70px) rotateY(18deg) scale(.86);z-index:2;filter:brightness(.6)}
+.dev.r{transform:translateX(18%) translateY(70px) rotateY(-18deg) scale(.86);z-index:2;filter:brightness(.6)}
+.hero.in .dev.l{transform:translateX(-128%) translateY(60px) rotateY(20deg) scale(.86)}
+.hero.in .dev.r{transform:translateX(28%) translateY(60px) rotateY(-20deg) scale(.86)}
 /* sections */
-section{padding:44px 0 0}
-h2{font:800 clamp(24px,4.6vw,34px)/1.15 'Plus Jakarta Sans';margin:0 0 6px;letter-spacing:0}
-.sub{font:600 15px/1.5 'Plus Jakarta Sans';color:var(--t2);margin:0 0 20px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.card{background:var(--pn);border-radius:22px;box-shadow:var(--sh);overflow:hidden;display:flex;flex-direction:column}
-.card .im{aspect-ratio:3/2;overflow:hidden}.card .im img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
-.card:hover .im img{transform:scale(1.04)}
-.card .bd{padding:14px 16px 16px}.card b{display:block;font:800 16.5px 'Plus Jakarta Sans'}.card small{display:block;font:600 13px/1.45 'Plus Jakarta Sans';color:var(--t2);margin-top:4px}
-.card .tag{display:inline-block;margin-top:10px;font:800 12px 'Plus Jakarta Sans';color:var(--sap);background:color-mix(in srgb,var(--sap) 10%,transparent);padding:5px 9px;border-radius:8px}
-@media (prefers-color-scheme:dark){.card .tag{color:#9DC0FF}}
-.steps{display:grid;grid-template-columns:1fr;gap:12px}
-.step{display:flex;gap:14px;align-items:center;background:var(--pn);border-radius:20px;padding:16px;box-shadow:var(--sh)}
-.step .n{flex:none;width:34px;height:34px;border-radius:11px;background:var(--sap);color:#fff;display:grid;place-items:center;font:800 15px 'Plus Jakarta Sans'}
-.step img{width:46px;height:46px;flex:none}.step b{display:block;font:800 16px 'Plus Jakarta Sans'}.step small{font:600 13.5px 'Plus Jakarta Sans';color:var(--t2)}
-.plans{display:grid;grid-template-columns:1fr;gap:16px}
-.plan{background:var(--pn);border-radius:24px;padding:20px;box-shadow:var(--sh)}
-.plan .hd{display:flex;align-items:center;gap:14px}.plan .pic{width:60px;height:60px;border-radius:18px;display:grid;place-items:center;background:color-mix(in srgb,var(--c,#0F52BA) 12%,var(--bg))}
-.plan .pic img{width:42px;height:42px;animation:bob 3.2s ease-in-out infinite}
-@keyframes bob{0%,100%{transform:none}50%{transform:translateY(-6px) rotate(-3deg)}}
-.plan h3{font:800 21px 'Plus Jakarta Sans';margin:0}.plan .for{font:700 12.5px 'Plus Jakarta Sans';color:var(--c,#0F52BA)}
-.plan ul{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:11px}
-.plan li{display:flex;gap:11px;font:600 14px/1.4 'Plus Jakarta Sans'}.plan li::before{content:'';flex:none;width:20px;height:20px;border-radius:6px;background:var(--c,#0F52BA) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3.2 3L15 6.5' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat}
-.plan .pr{margin-top:16px;font:700 13.5px 'Plus Jakarta Sans';color:var(--t2)}
-.biz{background:#0B1226;color:#fff;border-radius:26px;padding:24px;display:grid;grid-template-columns:1fr;gap:18px;align-items:center}
-@media (prefers-color-scheme:dark){.biz{background:#16203F}}
-.biz h2{color:#fff}.biz .sub{color:#A9B4D0;margin-bottom:14px}
-.biz .chips{display:flex;flex-wrap:wrap;gap:8px}.biz .chips span{background:rgba(255,255,255,.1);border-radius:10px;padding:7px 11px;font:700 13px 'Plus Jakarta Sans'}
-.biz .btn{background:#fff;color:#0B1226;margin-top:16px}
-.biz .art{display:flex;gap:10px;justify-content:center}.biz .art img{width:84px;height:84px;animation:bob 3.4s ease-in-out infinite}.biz .art img:nth-child(2){animation-delay:.5s}.biz .art img:nth-child(3){animation-delay:1s}
-.honest{display:grid;grid-template-columns:1fr;gap:12px}
-.honest div{background:var(--pn);border-radius:18px;padding:16px;box-shadow:var(--sh);border-top:3px solid var(--sap)}
-.honest b{display:block;font:800 15px 'Plus Jakarta Sans'}.honest small{font:600 13px/1.45 'Plus Jakarta Sans';color:var(--t2)}
-details{background:var(--pn);border-radius:16px;padding:14px 16px;box-shadow:var(--sh);margin-bottom:10px}
-summary{font:800 15px 'Plus Jakarta Sans';cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:10px}summary::after{content:'+';color:var(--sap);font-size:20px;line-height:1}details[open] summary::after{content:'–'}
-details p{font:600 14px/1.55 'Plus Jakarta Sans';color:var(--t2);margin:10px 0 0}
-.end{margin:46px 0 0;background:var(--band);border-radius:28px;padding:30px 22px;text-align:center}
-.end h2{margin-bottom:8px}.end .cta{justify-content:center;margin-top:16px}
-footer{padding:34px 0 40px;font:600 13px/1.8 'Plus Jakarta Sans';color:var(--t2)}
-footer .links{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:8px}footer a{color:var(--ink)}
-.big{font:800 clamp(34px,8vw,64px)/1.04 'Plus Jakarta Sans';color:color-mix(in srgb,var(--ink) 16%,var(--bg));margin:34px 0 0}
-.rv{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .6s cubic-bezier(.2,.9,.3,1.1)}.rv.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
-@media (min-width:860px){
- .hero{grid-template-columns:1.05fr .95fr}.ph.b{display:block;transform:translateY(40px)}
- .grid{grid-template-columns:repeat(3,1fr)}.steps{grid-template-columns:repeat(3,1fr)}.plans{grid-template-columns:1fr 1fr}
- .biz{grid-template-columns:1.3fr .7fr;padding:36px}.honest{grid-template-columns:repeat(3,1fr)}
- .tabs{justify-content:center;margin:20px 0 0}
+section{padding:110px 0 0;position:relative}
+.kick{font:700 12px 'Plus Jakarta Sans';letter-spacing:.14em;text-transform:uppercase;color:var(--sap2);margin-bottom:14px}
+h2{font:400 clamp(36px,6.4vw,68px)/1.03 'Fraunces',Georgia,serif;margin:0 0 16px;letter-spacing:0}
+h2 em{font-style:italic;color:var(--sap2)}
+.sub{font:500 clamp(15.5px,2vw,18px)/1.6 'Plus Jakarta Sans';color:var(--t2);margin:0 0 40px;max-width:600px}
+/* chapters */
+.chap{display:grid;grid-template-columns:1fr;gap:20px;padding:26px 0;border-top:1px solid var(--line)}
+.chap:first-of-type{border-top:0}
+.chap .ph{position:relative;border-radius:26px;overflow:hidden;aspect-ratio:3/2;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.chap .ph img{width:100%;height:100%;object-fit:cover;transform:scale(1.08);transition:transform 1.8s var(--ease)}
+.chap.in .ph img{transform:scale(1)}
+.chap .tx{display:flex;gap:18px;align-items:flex-start}
+.chap .n{font:300 clamp(64px,10vw,110px)/.8 'Fraunces',Georgia,serif;color:transparent;-webkit-text-stroke:1.2px rgba(141,181,255,.55);min-width:.9em}
+.chap h3{font:500 clamp(26px,3.6vw,38px)/1.1 'Fraunces',Georgia,serif;margin:4px 0 10px}
+.chap p{font:500 16px/1.6 'Plus Jakarta Sans';color:var(--t2);margin:0 0 16px;max-width:440px}
+.chap .lnk{display:inline-flex;align-items:center;gap:8px;font:700 14px 'Plus Jakarta Sans';color:var(--ink);border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:3px}
+.chap .lnk::after{content:'';width:7px;height:7px;border-top:2px solid currentColor;border-right:2px solid currentColor;transform:rotate(45deg);transition:transform .25s}
+.chap .lnk:hover::after{transform:translateX(3px) rotate(45deg)}
+.also{margin-top:22px;font:600 14px 'Plus Jakarta Sans';color:var(--t3)}
+/* bento */
+.bento{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;grid-auto-flow:dense}
+.tile{position:relative;border-radius:26px;overflow:hidden;background:var(--bg2);border:1px solid var(--line);display:flex;flex-direction:column;transition:transform .4s var(--ease),border-color .3s}
+.tile:hover{transform:translateY(-4px);border-color:rgba(141,181,255,.3)}
+.tile .im{overflow:hidden}.tile .im img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease)}.tile:hover .im img{transform:scale(1.05)}
+.tile .bd{padding:16px 18px 18px}.tile b{display:block;font:500 21px/1.15 'Fraunces',Georgia,serif}.tile small{display:block;font:500 13.5px/1.45 'Plus Jakarta Sans';color:var(--t2);margin-top:6px}
+.tile.w{grid-column:span 2}.tile.w .im{aspect-ratio:3/2}.tile .im{aspect-ratio:3/2}
+
+/* ask */
+.ask{position:relative;border-radius:34px;overflow:hidden;border:1px solid var(--line);background:radial-gradient(120% 90% at 100% 0%,rgba(61,123,255,.22),transparent 60%),var(--bg2);padding:44px 24px;display:grid;gap:40px}
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.slot{aspect-ratio:1.25;border-radius:20px;border:1px solid var(--line);background:var(--pn);display:flex;flex-direction:column;justify-content:space-between;padding:14px;transition:background .5s,border-color .5s,transform .5s var(--ease)}
+.slot small{font:700 11px 'Plus Jakarta Sans';letter-spacing:.1em;text-transform:uppercase;color:var(--t3)}
+.slot b{font:500 18px 'Fraunces',Georgia,serif;color:var(--t2)}
+.slot.on{background:rgba(61,123,255,.16);border-color:rgba(141,181,255,.5);transform:translateY(-3px)}.slot.on b{color:#fff}.slot.on small{color:var(--sap2)}
+.steps{display:grid;gap:18px;counter-reset:s}
+.st{display:flex;gap:16px}.st i{flex:none;font:400 30px/1 'Fraunces',Georgia,serif;font-style:normal;color:var(--sap2);min-width:26px}
+.st b{display:block;font:700 16.5px 'Plus Jakarta Sans'}.st small{display:block;font:500 14.5px/1.5 'Plus Jakarta Sans';color:var(--t2);margin-top:4px}
+/* two */
+.two{display:grid;gap:16px}
+.card{border-radius:30px;overflow:hidden;border:1px solid var(--line);background:var(--bg2);display:flex;flex-direction:column}
+.card .im{aspect-ratio:3/2;overflow:hidden}.card .im img{width:100%;height:100%;object-fit:cover}
+.card .bd{padding:28px 24px 30px}.card h3{font:400 clamp(30px,4vw,40px)/1.05 'Fraunces',Georgia,serif;margin:0 0 10px}
+.card p{font:500 15.5px/1.6 'Plus Jakarta Sans';color:var(--t2);margin:0 0 20px}
+.ticks{list-style:none;margin:0 0 26px;padding:0;display:grid;gap:11px}
+.ticks li{font:600 15px/1.4 'Plus Jakarta Sans';padding-left:26px;position:relative}
+.ticks li::before{content:'';position:absolute;left:2px;top:6px;width:11px;height:6px;border-left:2px solid var(--sap2);border-bottom:2px solid var(--sap2);transform:rotate(-45deg)}
+/* honest */
+.hon{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:28px;overflow:hidden}
+.hon div{background:var(--bg);padding:28px 24px}.hon b{display:block;font:500 23px 'Fraunces',Georgia,serif}.hon small{display:block;font:500 14.5px/1.6 'Plus Jakarta Sans';color:var(--t2);margin-top:8px}
+/* faq */
+details{border-bottom:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;font:500 clamp(19px,2.6vw,24px)/1.3 'Fraunces',Georgia,serif;padding:24px 40px 24px 0;position:relative}summary::-webkit-details-marker{display:none}
+summary::before,summary::after{content:'';position:absolute;right:6px;top:50%;width:16px;height:1.5px;background:var(--ink);transition:transform .3s var(--ease)}
+summary::after{transform:rotate(90deg)}details[open] summary::after{transform:rotate(0)}
+details p{font:500 15.5px/1.65 'Plus Jakarta Sans';color:var(--t2);margin:0 0 24px;max-width:720px}
+/* end */
+.end{margin-top:120px;text-align:center}
+.end .ph{border-radius:34px;overflow:hidden;aspect-ratio:3/2;max-height:620px;width:100%;margin-top:44px;box-shadow:0 40px 100px rgba(0,0,0,.5)}
+.end .ph img{width:100%;height:100%;object-fit:cover}
+footer{margin-top:90px;border-top:1px solid var(--line);padding:40px 0 110px;font:500 13.5px/1.7 'Plus Jakarta Sans';color:var(--t3)}
+footer .row{display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;align-items:flex-start}
+footer .lg{display:flex;align-items:center;gap:10px;font:800 17px 'Plus Jakarta Sans';color:var(--ink);margin-bottom:10px}footer .lg img{width:30px;height:30px;border-radius:9px}
+footer .links{display:flex;flex-wrap:wrap;gap:18px}footer .links a{color:var(--ink);font-weight:600}
+footer .soc{display:flex;gap:10px;margin-top:16px}footer .soc a{display:inline-flex;align-items:center;gap:7px;color:var(--ink);font-weight:700;padding:9px 14px;border:1px solid var(--line);border-radius:12px}
+footer svg{width:16px;height:16px}
+/* dock */
+.dock{position:fixed;left:12px;right:12px;bottom:12px;z-index:40;display:flex;align-items:center;gap:12px;background:rgba(18,24,42,.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:20px;padding:10px 10px 10px 12px;transform:translateY(150%);transition:transform .5s var(--ease)}
+.dock.on{transform:none}.dock img{width:40px;height:40px;border-radius:11px}.dock span{flex:1;min-width:0;font:800 14.5px/1.2 'Plus Jakarta Sans'}.dock small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;font:500 12px 'Plus Jakarta Sans';color:var(--t2)}
+.dock .btn{padding:11px 16px;font-size:14px}
+/* reveal */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease)}.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.dev,.chap .ph img{transition:none}}
+@media (min-width:900px){
+ nav .lk{display:flex}
+ .chap{grid-template-columns:1.25fr 1fr;gap:56px;align-items:center;padding:44px 0}
+ .chap:nth-of-type(even) .ph{order:2}
+ .bento{grid-template-columns:repeat(4,1fr);gap:16px}
+ .bento{grid-template-columns:repeat(3,1fr)}.tile.w{grid-column:auto}
+ .ask{grid-template-columns:1.1fr 1fr;padding:64px;align-items:center}
+ .two{grid-template-columns:1fr 1fr}
+ .hon{grid-template-columns:repeat(3,1fr)}
+ .dock{display:none}
+ footer{padding-bottom:50px}
 }
+/* consent banner in site colours */
+body #nm-consent{background:#111833;color:#F4F6FB;border:1px solid rgba(255,255,255,.12);box-shadow:0 20px 50px rgba(0,0,0,.5);font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+body #nm-consent a{color:#8DB5FF}body #nm-consent button{font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+body #nm-consent .y{background:#fff;color:#05070F;border:0}body #nm-consent .n{background:transparent;color:#F4F6FB;border:1px solid rgba(255,255,255,.25)}
 </style>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',region:["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "LI", "NO", "GB", "CH"]});gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'granted'});try{var nmC=localStorage.getItem('nm.analytics');if(nmC==='granted'||nmC==='denied')gtag('consent','update',{analytics_storage:nmC})}catch(e){}gtag('js',new Date());gtag('config','G-R90LWK3JJB',{allow_google_signals:false,allow_ad_personalization_signals:false});</script><script async src="https://www.googletagmanager.com/gtag/js?id=G-R90LWK3JJB"></script><script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');(function(){var tz='',c=null;try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';c=localStorage.getItem('nm.ads')}catch(e){}var eu=/^(Europe\/|Atlantic\/(Reykjavik|Canary|Madeira|Faroe|Azores))/.test(tz);window.nmEU=eu;var gpc=navigator.globalPrivacyControl===true;window.nmGPC=gpc;if(c==='denied'||((eu||gpc)&&c!=='granted'))fbq('consent','revoke');fbq('init','1427089529012759');fbq('track','PageView');document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(a&&/(^|\/)app\/?(\?|#|$)/.test(a.getAttribute('href')))fbq('track','Lead')},true)})();</script></head>
 <body>
-<div class="band"><div class="wrap">
- <div class="top"><a class="logo" href="#"><img src="../img/v2/icon-192.png" alt="">NeuAmigo</a><a class="btn w" href="../app/">Ouvrir l’app</a></div>
- <div class="hero">
-  <div>
-   <span class="kick">Pour celles et ceux qui changent de pays</span>
-   <h1>Votre nouvelle ville,<br><em>en toute simplicité.</em></h1>
-   <p class="lede">Un logement, un emploi, vos démarches, des déménageurs et de nouveaux amis. Tout pour votre installation, dans une seule app, avec le prix affiché avant de payer.</p>
-   <div class="type"><span class="mg"></span><span>Trouver <b id="tw">une chambre</b></span></div>
-   <div class="cta"><a class="btn p" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate">Disponible sur Google Play</a><a class="btn w" href="../app/">Ouvrir dans le navigateur</a></div>
-   <div class="trust"><span>Prix affichés d’abord</span><span>Aucun renouvellement automatique</span><span>Supprimez votre compte quand vous voulez</span></div>
-  </div>
-  <div class="phones"><div class="ph"><img src="../img/v2/app-home.webp" alt="Écran d’accueil NeuAmigo"></div><div class="ph b"><img src="../img/v2/app-events.webp" alt="Écran des événements NeuAmigo"></div></div>
- </div>
- <nav class="tabs" aria-label="Ce que NeuAmigo propose">
-  <a href="#homes"><img src="../img/v2/house_with_garden.webp" alt="">Logement</a><a href="#homes"><img src="../img/v2/briefcase.webp" alt="">Emploi</a><a href="#homes"><img src="../img/v2/clipboard.webp" alt="">Démarches</a><a href="#homes"><img src="../img/v2/toolbox.webp" alt="">Services</a><a href="#homes"><img src="../img/v2/party_popper.webp" alt="">Événements</a><a href="#homes"><img src="../img/v2/couch_and_lamp.webp" alt="">Acheter et vendre</a>
- </nav>
+<div class="follow"><div class="wrap">Suivez-nous
+ <a href="https://www.instagram.com/neuamigo" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Instagram</a>
+ <a href="https://www.facebook.com/1406121739254456" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8.5V6.8c0-.8.5-1 1-1h2V2.2h-2.8C11 2.2 10.3 4.3 10.3 6v2.5H8v3.6h2.3V22H14v-9.9h2.6l.4-3.6H14z"/></svg>Facebook</a>
 </div></div>
+<nav id="nav"><div class="wrap"><a class="logo" href="#"><img src="../img/v2/icon-192.png" alt="">NeuAmigo</a><span class="lk"><a href="#steps">Votre installation</a><a href="#ask">Demander à 6</a><a href="#biz">Entreprises</a><a href="#faq">Questions</a></span><a class="btn w" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate">Obtenir l’app</a></div></nav>
+
+<header class="hero" id="hero">
+ <div class="wrap">
+  <span class="eyebrow rv"><i></i>Vous partez vivre ailleurs</span>
+  <h1 class="rv">Votre nouvelle vie à l’étranger, <em class="rot"><span id="rw">simplifiée.</span></em></h1>
+  <p class="lede rv">Transport depuis l’aéroport, une SIM, un logement, la cuisine de chez vous, les papiers, un emploi et de nouveaux amis. Une seule app, dans l’ordre où vous en avez besoin, avec chaque prix affiché d’abord.</p>
+  <div class="ctas rv"><a class="badge" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate"><svg viewBox="0 0 24 24"><path fill="#34A853" d="M3.6 2.3 13.4 12 3.6 21.7c-.4-.2-.6-.6-.6-1.1V3.4c0-.5.2-.9.6-1.1z"/><path fill="#FBBC04" d="m16.7 15.3-3.3-3.3 3.3-3.3 3.8 2.2c1 .6 1 1.6 0 2.2z"/><path fill="#EA4335" d="M13.4 12 3.6 21.7c.3.2.8.2 1.3-.1l11.8-6.3z"/><path fill="#4285F4" d="M13.4 12 3.6 2.3c.3-.2.8-.2 1.3.1l11.8 6.3z"/></svg><span><small>Disponible sur</small><b>Google Play</b></span></a></div>
+  <p class="note rv">App Android · Découvrez sans payer</p>
+  <a class="fan" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate" aria-label="NeuAmigo sur Google Play" style="display:block">
+   <span class="dev l"><span class="sc"><img class="on" src="../img/v2/scr-homes.webp" alt="Homes for rent"></span></span>
+   <span class="dev r"><span class="sc"><img class="on" src="../img/v2/scr-events.webp" alt="Events"></span></span>
+   <span class="dev c"><span class="sc" id="hs"><img class="on" src="../img/v2/scr-settle.webp" alt="Settle In"><img src="../img/v2/scr-jobs.webp" alt="Jobs"><img src="../img/v2/scr-food.webp" alt="Taste of home"><img src="../img/v2/scr-homes.webp" alt="Homes"></span></span>
+  </a>
+ </div>
+</header>
+
 <main class="wrap">
- <section id="homes">
-  <h2>Tout pour votre installation</h2><p class="sub">Étape par étape, d’avant le départ à la vie dans votre nouvelle ville.</p>
-  <div class="grid">
-   <a class="card rv" href="../app/"><span class="im"><img src="../img/v2/apartment.webp" alt="" loading="lazy"></span><span class="bd"><b>Trouver un logement</b><small>Chambres et appartements de propriétaires et d’agents. Loyer sur chaque annonce.</small><span class="tag">Loyer affiché d’abord</span></span></a>
-   <a class="card rv" href="../app/"><span class="im"><img src="../img/v2/work2.webp" alt="" loading="lazy"></span><span class="bd"><b>Trouver un emploi</b><small>Salaire et horaires affichés. Postulez en un geste. Les candidats ne paient jamais.</small><span class="tag">Salaire affiché d’abord</span></span></a>
-   <a class="card rv" href="../app/"><span class="im"><img src="../img/v2/passport.webp" alt="" loading="lazy"></span><span class="bd"><b>Votre plan de 30 jours</b><small>Banque, pièce d’identité, numéro fiscal, téléphone : une étape claire à la fois.</small><span class="tag">Étape par étape</span></span></a>
-   <a class="card rv" href="../app/"><span class="im"><img src="../img/v2/boxes2.webp" alt="" loading="lazy"></span><span class="bd"><b>Déménagement, ménage, impôts</b><small>Dites-le une fois. Jusqu’à 5 entreprises locales vous envoient leur prix.</small><span class="tag">Jusqu’à 5 prix</span></span></a>
-   <a class="card rv" href="../app/"><span class="im"><img src="../img/v2/party.webp" alt="" loading="lazy"></span><span class="bd"><b>Événements et amis</b><small>Football, soirées repas et rencontres. Réservez une place, rencontrez du monde.</small><span class="tag">Chaque week-end</span></span></a>
-   <a class="card rv" href="../app/"><span class="im"><img src="../img/v2/sofa.webp" alt="" loading="lazy"></span><span class="bd"><b>Acheter et vendre</b><small>Canapés, bureaux et cuisine, de personnes qui arrivent ou qui partent.</small><span class="tag">Prix sur chaque article</span></span></a>
+ <section id="steps">
+  <div class="kick rv">Votre installation, étape par étape</div>
+  <h2 class="rv">Du jour où vous atterrissez au jour où vous êtes <em>chez vous.</em></h2>
+  <p class="sub rv">Tout ce qu’il faut à un nouvel arrivant, dans le bon ordre. Touchez une étape pour l’ouvrir dans l’app.</p>
+  <a class="chap rv play" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate"><span class="ph"><img src="../img/v2/h-airport.webp" alt="Airport walkway" loading="lazy"></span><span class="tx"><span class="n">1</span><span><h3>Transport depuis l’aéroport</h3><p>Les chauffeurs affichent leur prix. Réservez avant de partir et arrivez sans stress.</p><span class="lnk">Ouvrir dans l’app</span></span></span></a>
+  <a class="chap rv play" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate"><span class="ph"><img src="../img/v2/h-stay.webp" alt="Guest bedroom" loading="lazy"></span><span class="tx"><span class="n">2</span><span><h3>Un toit pour les premières nuits</h3><p>Chambres, maisons d’hôtes et hôtels proches pour un court séjour, prix par nuit affiché.</p><span class="lnk">Ouvrir dans l’app</span></span></span></a>
+  <a class="chap rv play" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate"><span class="ph"><img src="../img/v2/h-papers.webp" alt="Passports and travel papers" loading="lazy"></span><span class="tx"><span class="n">3</span><span><h3>Papiers et aide juridique</h3><p>Visa, immigration, impôts et avocats. Chacun affiche ses honoraires avant que vous demandiez.</p><span class="lnk">Ouvrir dans l’app</span></span></span></a>
+  <a class="chap rv play" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate"><span class="ph"><img src="../img/v2/h-jobs.webp" alt="Bright office" loading="lazy"></span><span class="tx"><span class="n">4</span><span><h3>Un emploi qui vous convient</h3><p>Salaire et horaires sur chaque offre. Postulez en un geste. Les candidats ne paient jamais.</p><span class="lnk">Ouvrir dans l’app</span></span></span></a>
+  <a class="chap rv play" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate"><span class="ph"><img src="../img/v2/h-rent.webp" alt="House keys and a lease" loading="lazy"></span><span class="tx"><span class="n">5</span><span><h3>Un logement à vous</h3><p>Chambres et appartements de propriétaires et d’agents, loyer affiché sur chaque annonce.</p><span class="lnk">Ouvrir dans l’app</span></span></span></a>
+  <a class="chap rv play" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate"><span class="ph"><img src="../img/v2/h-events.webp" alt="Dinner table set for guests" loading="lazy"></span><span class="tx"><span class="n">6</span><span><h3>De nouveaux amis</h3><p>Dîners, jeux et rencontres dans votre ville. Réservez une place et rencontrez des gens comme vous.</p><span class="lnk">Ouvrir dans l’app</span></span></span></a>
+ </section>
+
+ <section>
+  <div class="kick rv">Une seule app</div>
+  <h2 class="rv">Tout le reste, <em>au même endroit.</em></h2>
+  <p class="sub rv">De votre première SIM à votre première voiture.</p>
+  <div class="bento">
+   <a class="tile w wd rv play" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate"><span class="im"><img src="../img/v2/h-food.webp" alt="Home-cooked tacos" loading="lazy"></span><span class="bd"><b>Saveurs de chez soi</b><small>Cuisiniers et cuisines qui préparent les plats de votre enfance.</small></span></a>
+   <a class="tile rv play" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate"><span class="im"><img src="../img/v2/h-sim.webp" alt="Phone and SIM card" loading="lazy"></span><span class="bd"><b>SIM et téléphone</b><small>Connecté dès le premier jour.</small></span></a>
+   <a class="tile rv play" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate"><span class="im"><img src="../img/v2/h-car.webp" alt="Used car" loading="lazy"></span><span class="bd"><b>Voitures d’occasion</b><small>Achat ou vente, prix sur chaque voiture.</small></span></a>
+   <a class="tile rv play" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate"><span class="im"><img src="../img/v2/h-sofa.webp" alt="Living room furniture" loading="lazy"></span><span class="bd"><b>Acheter et vendre</b><small>Canapés, bureaux et plus, près de chez vous.</small></span></a>
+   <a class="tile rv play" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate"><span class="im"><img src="../img/v2/h-lake.webp" alt="City skyline by the lake" loading="lazy"></span><span class="bd"><b>Logements à acheter</b><small>Quand vous êtes prêt à rester pour de bon.</small></span></a>
+   <a class="tile w rv play" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate"><span class="im"><img src="../img/v2/h-office.webp" alt="Study desk with a laptop" loading="lazy"></span><span class="bd"><b>Écoles et formations</b><small>Programmes et frais, côte à côte.</small></span></a>
   </div>
  </section>
- <section>
-  <h2>Comment ça marche</h2><p class="sub">Trois étapes. Pas de longs formulaires.</p>
-  <div class="steps">
-   <div class="step rv"><span class="n">1</span><img src="../img/v2/airplane.webp" alt=""><span><b>Dites-nous où vous allez</b><small>Votre ville et où vous en êtes.</small></span></div>
-   <div class="step rv"><span class="n">2</span><img src="../img/v2/clipboard.webp" alt=""><span><b>Voyez ce qu’il vous faut, dans l’ordre</b><small>Logement, emploi, démarches et services, avec les prix.</small></span></div>
-   <div class="step rv"><span class="n">3</span><img src="../img/v2/handshake.webp" alt=""><span><b>Réservez, postulez ou demandez</b><small>Un geste. Vous traitez directement avec l’autre personne.</small></span></div>
+
+ <section id="ask">
+  <div class="ask rv">
+   <div>
+    <div class="kick">Demandez à 6 d’un coup</div>
+    <h2>Une demande.<br><em>Six réponses.</em></h2>
+    <p class="sub" style="margin-bottom:30px">Besoin d’un ménage, d’un avocat ou d’un trajet ? Dites-le une fois, la demande part à 6 entreprises près de vous.</p>
+    <div class="steps">
+     <div class="st"><i>1</i><span><b>Dites ce qu’il vous faut</b><small>Quelques gestes. Pas de long formulaire.</small></span></div>
+     <div class="st"><i>2</i><span><b>Six entreprises la reçoivent</b><small>Si l’une est occupée, la suivante prend le relais.</small></span></div>
+     <div class="st"><i>3</i><span><b>Vous choisissez</b><small>Comparez leurs prix et parlez-leur directement.</small></span></div>
+    </div>
+   </div>
+   <div class="slots" id="slots" aria-hidden="true">
+    <div class="slot"><small>1 sur 6</small><b>Envoyé</b></div><div class="slot"><small>2 sur 6</small><b>Envoyé</b></div><div class="slot"><small>3 sur 6</small><b>Envoyé</b></div>
+    <div class="slot"><small>4 sur 6</small><b>Envoyé</b></div><div class="slot"><small>5 sur 6</small><b>Envoyé</b></div><div class="slot"><small>6 sur 6</small><b>Envoyé</b></div>
+   </div>
   </div>
  </section>
- <section>
-  <h2>Formules</h2><p class="sub">Tout le monde peut parcourir l’app. Chaque prix est affiché dans votre monnaie avant de payer, et rien ne se renouvelle tout seul.</p>
-  <div class="plans">
-   <div class="plan rv"><div class="hd"><span class="pic"><img src="../img/v2/key.webp" alt=""></span><span><span class="for">Pour le logement, l’emploi et les amis</span><h3>NeuAmigo Plus</h3></span></div><ul><li>Toutes les coordonnées : appelez ou écrivez aux propriétaires, employeurs et vendeurs</li><li>Discutez dans l’app avec vos contacts</li><li>Alertes en premier pour les nouveaux logements et emplois de votre ville</li></ul><p class="pr">Au mois ou à l’année · prix dans votre monnaie dans l’app</p></div>
-   <div class="plan rv" style="--c:#C2255C"><div class="hd"><span class="pic"><img src="../img/v2/party_popper.webp" alt=""></span><span><span class="for">Pour les événements et rencontres</span><h3>Weekend Club</h3></span></div><ul><li>Pas de frais de réservation</li><li>Réservez 48 heures avant tout le monde</li><li>Soirées réservées aux membres</li></ul><p class="pr">Un mois ou un week-end · prix dans votre monnaie dans l’app</p></div>
+
+ <section id="biz">
+  <div class="two">
+   <div class="card rv"><div class="im"><img src="../img/v2/h-living.webp" alt="Bright living room" loading="lazy"></div><div class="bd">
+    <h3>Pour ceux qui s’installent</h3><p>Tout pour une nouvelle vie à l’étranger, dans le bon ordre.</p>
+    <ul class="ticks"><li>Prix affichés avant de payer</li><li>Découvrez sans payer</li><li>Rien ne se renouvelle tout seul</li></ul>
+    <a class="btn w" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate">Obtenir l’app</a></div></div>
+   <div class="card rv"><div class="im"><img src="../img/v2/h-city.webp" alt="City at dusk" loading="lazy"></div><div class="bd">
+    <h3>Pour les entreprises</h3><p>Soyez le nom que les nouveaux arrivants trouvent en premier dans votre ville.</p>
+    <ul class="ticks"><li>Créez votre page en 6 étapes simples</li><li>Chauffeurs, cuisiniers, propriétaires, avocats, employeurs et plus</li><li>Chaque formule affiche son prix d’abord</li></ul>
+    <a class="btn w" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate">Inscrire mon entreprise</a></div></div>
   </div>
  </section>
+
  <section>
-  <div class="biz rv"><div><h2>Pour les entreprises</h2><p class="sub">Soyez le premier nom que voient les nouveaux arrivants. Chaque formule affiche son prix avant de payer.</p>
-   <div class="chips"><span>Propriétaires et agents</span><span>Employeurs</span><span>Organisateurs d’événements</span><span>Déménageurs et ménage</span><span>Experts visa, impôts et assurance</span></div>
-   <a class="btn" href="../app/">Voir les formules entreprises</a></div>
-   <div class="art"><img src="../img/v2/megaphone.webp" alt=""><img src="../img/v2/briefcase.webp" alt=""><img src="../img/v2/sparkles.webp" alt=""></div></div>
- </section>
- <section>
-  <h2>Honnête par principe</h2><p class="sub">Ce que nous faisons, et ce que nous ne faisons pas.</p>
-  <div class="honest">
-   <div class="rv"><b>Prix affichés d’abord</b><small>Every plan, fee and listing shows its price before you tap Pay.</small></div>
-   <div class="rv"><b>Nous sommes une plateforme</b><small>NeuAmigo met les gens en relation. Nous ne vérifions pas les membres ni les entreprises : rencontrez-vous en public et ne payez jamais avant d’avoir vu un logement.</small></div>
-   <div class="rv"><b>Signalez tout problème</b><small>Chaque annonce a un bouton de signalement. Nous retirons ce qui enfreint les règles.</small></div>
+  <div class="kick rv">Honnête par principe</div>
+  <h2 class="rv">Ce que nous faisons, <em>et ce que nous ne faisons pas.</em></h2>
+  <div class="hon rv" style="margin-top:36px">
+   <div><b>Prix affichés d’abord</b><small>Chaque formule, frais et annonce affiche son prix avant que vous payiez.</small></div>
+   <div><b>Nous sommes une plateforme</b><small>NeuAmigo met les gens en relation. Nous ne vérifions pas les membres ni les entreprises : rencontrez-vous dans un lieu public et ne payez jamais avant d’avoir vu un logement.</small></div>
+   <div><b>Signalez tout problème</b><small>Chaque annonce a un bouton de signalement. Nous retirons ce qui enfreint les règles.</small></div>
   </div>
  </section>
- <section>
-  <h2>Questions</h2>
-  <details><summary>Dans quelles villes est NeuAmigo ?</summary><p>Vous choisissez votre ville à l’ouverture de l’app. Logements, emplois et événements viennent des personnes et entreprises de cette ville : certaines villes en ont plus que d’autres pendant que nous grandissons.</p></details>
-  <details><summary>Faut-il payer pour l’utiliser ?</summary><p>Vous pouvez parcourir l’app sans payer. Les coordonnées, la discussion et quelques extras viennent avec une formule. Demander des prix ne vous coûte rien : ce sont les entreprises qui paient.</p></details>
-  <details><summary>NeuAmigo est-elle une app de mariage ?</summary><p>Non. NeuAmigo aide pour tout ce qui entoure une nouvelle vie à l’étranger. Pour le mariage, notre app distincte est NeuMarry.</p></details>
-  <details><summary>Comment supprimer mon compte ?</summary><p>Dans l’app : Moi, puis Paramètres et aide, puis Supprimer mon compte. Ou voir la <a href="../delete-account.html" style="color:var(--sap)">page de suppression du compte</a>.</p></details>
+
+ <section id="faq">
+  <div class="kick rv">Questions</div>
+  <h2 class="rv" style="margin-bottom:20px">Bon à savoir</h2>
+  <details><summary>Dans quelles villes est NeuAmigo ?</summary><p>Vous choisissez votre ville en ouvrant l’app. Les annonces viennent des personnes et entreprises de cette ville : certaines villes en ont plus que d’autres pendant que nous grandissons.</p></details>
+  <details><summary>Faut-il payer pour l’utiliser ?</summary><p>Vous pouvez découvrir sans payer. Les coordonnées, la messagerie et certains extras viennent avec une formule. Demander des prix aux entreprises ne vous coûte rien : ce sont les entreprises qui paient.</p></details>
+  <details><summary>NeuAmigo est-elle une app de mariage ?</summary><p>Non. NeuAmigo aide pour tout ce qui entoure une nouvelle vie à l’étranger. Pour le mariage, notre app séparée s’appelle NeuMarry.</p></details>
+  <details><summary>Comment supprimer mon compte ?</summary><p>Dans l’app : Me, puis Settings and help, puis Delete my account. Ou consultez la <a href="../delete-account.html" style="color:var(--sap2);font-weight:700">page de suppression du compte</a>.</p></details>
  </section>
- <div class="end rv"><h2>Vous déménagez bientôt ? Commencez ici.</h2><p class="sub" style="margin:0">Une seule app pour toute votre installation.</p><div class="cta"><a class="btn p" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate">Disponible sur Google Play</a><a class="btn w" href="../app/">Ouvrir dans le navigateur</a></div></div>
- <p class="big">Votre nouvelle ville,<br>en toute simplicité.</p>
- <footer>NeuAmigo · NEUCONET PRIVATE LIMITED · Surat, Gujarat, India · support@neuamigo.com
-  <div class="links"><a href="privacy.html">Politique de confidentialité</a><a href="terms.html">Conditions d’utilisation</a><a href="../delete-account.html">Supprimer le compte</a><a href="../child-safety.html">Sécurité des enfants</a><a href="../">English</a></div></footer>
+
+ <div class="end">
+  <h2 class="rv">Vous partez bientôt ?<br><em>Commencez ici.</em></h2>
+  <p class="sub rv" style="margin:0 auto 30px">Une seule app pour toute votre installation.</p>
+  <div class="ctas rv"><a class="badge" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate"><svg viewBox="0 0 24 24"><path fill="#34A853" d="M3.6 2.3 13.4 12 3.6 21.7c-.4-.2-.6-.6-.6-1.1V3.4c0-.5.2-.9.6-1.1z"/><path fill="#FBBC04" d="m16.7 15.3-3.3-3.3 3.3-3.3 3.8 2.2c1 .6 1 1.6 0 2.2z"/><path fill="#EA4335" d="M13.4 12 3.6 21.7c.3.2.8.2 1.3-.1l11.8-6.3z"/><path fill="#4285F4" d="M13.4 12 3.6 2.3c.3-.2.8-.2 1.3.1l11.8 6.3z"/></svg><span><small>Disponible sur</small><b>Google Play</b></span></a></div>
+  <a class="ph rv" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate" style="display:block"><img src="../img/v2/h-city.webp" alt="Ville au crépuscule" loading="lazy"></a>
+ </div>
+
+ <footer>
+  <div class="row">
+   <div><div class="lg"><img src="../img/v2/icon-192.png" alt="">NeuAmigo</div>NEUCONET PRIVATE LIMITED · Surat, Gujarat, Inde<br>support@neuamigo.com
+    <div class="soc"><a href="https://www.instagram.com/neuamigo" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg>Instagram</a><a href="https://www.facebook.com/1406121739254456" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8.5V6.8c0-.8.5-1 1-1h2V2.2h-2.8C11 2.2 10.3 4.3 10.3 6v2.5H8v3.6h2.3V22H14v-9.9h2.6l.4-3.6H14z"/></svg>Facebook</a></div></div>
+   <div class="links"><a href="privacy.html">Politique de confidentialité</a><a href="terms.html">Conditions d’utilisation</a><a href="../delete-account.html">Delete account</a><a href="../child-safety.html">Child safety</a><a href="../">English</a></div>
+  </div>
+ </footer>
 </main>
+<a class="dock" id="dock" href="https://play.google.com/store/apps/details?id=com.neuconet.rootmate"><img src="../img/v2/icon-192.png" alt=""><span>NeuAmigo<small>App Android</small></span><span class="btn w">Obtenir l’app</span></a>
 <script>
-(function(){var W=['une chambre','un emploi','un déménageur','de l’aide fiscale','un canapé','des amis','un match de foot','du ménage'],el=document.getElementById('tw'),w=0,c=W[0].length,d=true,h=20;
- if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)setInterval(function(){if(h>0){h--;return}var s=W[w];if(!d){c++;el.textContent=s.slice(0,c);if(c>=s.length){d=true;h=20}}else{c--;el.textContent=s.slice(0,Math.max(c,0))||' ';if(c<=0){d=false;w=(w+1)%W.length;h=3}}},85);
- var L=document.querySelectorAll('.rv');if(!('IntersectionObserver' in window)){L.forEach(function(e){e.classList.add('in')});return}
- var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{rootMargin:'0px 0px -6% 0px'});L.forEach(function(e){io.observe(e)})})();
+(function(){
+ var red=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ var W=['simplifiée.','plus facile.','entre amis.','chez vous.'],el=document.getElementById('rw'),w=0;
+ if(!red)setInterval(function(){w=(w+1)%W.length;el.style.transform='translateY(-100%)';el.style.opacity='0';setTimeout(function(){el.style.transition='none';el.textContent=W[w];el.style.transform='translateY(100%)';void el.offsetWidth;el.style.transition='';el.style.transform='none';el.style.opacity='1'},800)},2800);
+ var S=document.querySelectorAll('#hs img'),k=0;if(!red)setInterval(function(){S[k].classList.remove('on');k=(k+1)%S.length;S[k].classList.add('on')},2800);
+ var d=document.getElementById('dock'),nv=document.getElementById('nav');window.addEventListener('scroll',function(){var y=window.scrollY;d.classList.toggle('on',y>640);nv.classList.toggle('sc',y>20)},{passive:true});
+ setTimeout(function(){document.getElementById('hero').classList.add('in')},300);
+ var sl=document.querySelectorAll('#slots .slot'),si=0,sio=null;
+ function run(){if(red){sl.forEach(function(s){s.classList.add('on')});return}sl.forEach(function(s){s.classList.remove('on')});si=0;var t=setInterval(function(){if(si>=sl.length){clearInterval(t);setTimeout(run,2600);return}sl[si++].classList.add('on')},420)}
+ var L=document.querySelectorAll('.rv');if(!('IntersectionObserver' in window)){L.forEach(function(e){e.classList.add('in')});run();return}
+ var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{rootMargin:'0px 0px -8% 0px'});L.forEach(function(e){io.observe(e)});
+ var so=new IntersectionObserver(function(es){if(es[0].isIntersecting){run();so.disconnect()}});so.observe(document.getElementById('slots'));
+})();
 </script>
 <div id="nm-consent" role="dialog" aria-live="polite" aria-label="Paramètres des témoins" hidden><style>#nm-consent{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:60;max-width:560px;margin:0 auto;background:#fff;color:#13201A;border:1px solid #DDEEE5;border-radius:18px;box-shadow:0 10px 30px rgba(20,60,40,.16);padding:14px 16px;font:14px/1.5 "Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif}#nm-consent p{margin:0 0 10px}#nm-consent a{color:#0E7A55;font-weight:700}#nm-consent .b{display:flex;gap:10px}#nm-consent button{flex:1;min-height:42px;border-radius:999px;font:700 14px/1 "Nunito Sans",system-ui,sans-serif;cursor:pointer}#nm-consent .y{background:linear-gradient(150deg,#D8F8EA,#9FE6C6);color:#0B4D36;border:1px solid #fff}#nm-consent .n{background:#fff;color:#13201A;border:1px solid #D0E3C9}.nm-alink{background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer}</style><p>Ce site utilise Google Analytics pour compter les visites et le pixel Meta pour mesurer nos publicités sur Facebook et Instagram. Nous ne vendons jamais vos données. <a href="../privacy.html">Politique de confidentialité</a></p><div class="b"><button type="button" class="n" data-c="denied">Refuser</button><button type="button" class="y" data-c="granted">Accepter</button></div></div><script>(function(){var tz='';try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){}var eu=/^(Europe\/|Atlantic\/(Reykjavik|Canary|Madeira|Faroe|Azores))/.test(tz);var d=document.getElementById('nm-consent'),c=null;try{c=localStorage.getItem('nm.ads')}catch(e){}function set(v){try{localStorage.setItem('nm.ads',v);if(eu||v==='denied')localStorage.setItem('nm.analytics',v)}catch(e){}if(eu||v==='denied')gtag('consent','update',{analytics_storage:v});if(window.fbq)fbq('consent',v==='granted'?'grant':'revoke');d.hidden=true}d.addEventListener('click',function(e){var v=e.target&&e.target.getAttribute('data-c');if(v)set(v)});if(c!=='granted'&&c!=='denied')d.hidden=false;var f=document.querySelector('footer .wrap');if(f){var a=document.createElement('button');a.type='button';a.className='nm-alink link';a.textContent='Paramètres des témoins';a.addEventListener('click',function(){d.hidden=false});f.appendChild(a)}})();</script></body>
 </html>
