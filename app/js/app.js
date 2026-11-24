@@ -8254,6 +8254,39 @@ function n59btn(k){const on=N59.on&&N59.on.includes(k);return `<button class="h5
   const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{
     if(S.screen==='app'&&API.userId()){if(N59.cnt===null){N59.cnt=false;API.rpc('ask_counts16',{}).then(r=>{N59.cnt=r||{};hideAsks()}).catch(()=>{N59.cnt={}})}else hideAsks()}if(N59.on===null&&S.screen==='app'&&API.userId()){N59.on=[];API.rpc('notify_mine16',{}).then(r=>{N59.on=r||[];if(document.querySelector('[data-a=n59notify]'))render()}).catch(()=>{})}}catch(e){}};
 })();
+/* Admin double lock (24 Nov 2026): authenticator-app code on top of the password, set up from the admin page */
+(function(){
+  const L={st:null,enr:null,msg:'',busy:false};
+  function put(){const box=document.querySelector('.n59-lock');if(!box)return;const s=L.st;
+    if(!s){box.innerHTML='<small>Checking the double lock</small>';return}
+    if(!s.admin){box.remove();return}
+    if(s.lock&&s.ok){box.innerHTML='<div class="n59-lk ok"><b>Double lock is on</b><small>Admin needs your password and the 6-digit code from your authenticator app.</small></div>';return}
+    const err=L.msg?`<p class="n59-err">${esc(L.msg)}</p>`:'';
+    if(s.lock&&!s.ok){box.innerHTML=`<div class="n59-lk"><b>Enter your 6-digit code</b><small>Open your authenticator app (for example Google Authenticator) and type the NeuAmigo code.</small>
+      <input class="n59-in" inputmode="numeric" maxlength="6" autocomplete="one-time-code" aria-label="6-digit code">${err}<button class="n59-btn" data-a="n59lockgo"${L.busy?' disabled':''}>${L.busy?'Checking':'Unlock admin'}</button></div>`;return}
+    if(!L.enr){box.innerHTML=`<div class="n59-lk"><b>Turn on double lock</b><small>Protects the admin even if someone learns your password. You need a free authenticator app on your phone (for example Google Authenticator).</small>${err}<button class="n59-btn" data-a="n59lockstart"${L.busy?' disabled':''}>${L.busy?'Starting':'Turn on'}</button></div>`;return}
+    box.innerHTML=`<div class="n59-lk"><b>Add NeuAmigo to your authenticator app</b><small>In the app tap "+" and scan this code. Or type the key below.</small>
+      <div class="n59-qr"><img src="${esc(L.enr.qr)}" alt="Setup code"></div><code class="n59-key">${esc(L.enr.secret)}</code>
+      <small>Then type the 6-digit code the app shows:</small><input class="n59-in" inputmode="numeric" maxlength="6" autocomplete="one-time-code" aria-label="6-digit code">${err}
+      <button class="n59-btn" data-a="n59lockgo"${L.busy?' disabled':''}>${L.busy?'Checking':'Turn on double lock'}</button></div>`}
+  async function load(){try{L.st=await API.rpc('admin_lock16',{})}catch(e){L.st={admin:false}}put()}
+  Object.assign(A,{
+    async n59lockstart(){L.busy=true;L.msg='';put();
+      try{const st=await API.mfaState();for(const f of st.pending){try{await API.mfaUnenroll(f.id)}catch(e){}}
+        const r=await API.mfaEnroll();L.enr={id:r.id,qr:(r.totp&&r.totp.qr_code)||'',secret:(r.totp&&r.totp.secret)||''}}
+      catch(e){L.msg='Could not start. Try again.'}L.busy=false;put()},
+    async n59lockgo(){const i=document.querySelector('.n59-lock .n59-in'),c=(i&&i.value||'').replace(/\D/g,'');
+      if(c.length!==6){L.msg='Type the 6-digit code.';put();return}L.busy=true;L.msg='';put();
+      try{let fid=L.enr&&L.enr.id;if(!fid){const st=await API.mfaState();fid=st.verified[0]&&st.verified[0].id}
+        await API.mfaVerify(fid,c);L.enr=null;L.busy=false;await load();P15.nad=undefined;render();toast('Double lock is on','check')}
+      catch(e){L.busy=false;L.msg='That code did not work. Check the time on your phone and try the new code.';put()}}
+  });
+  const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{
+    if(S.screen!=='app'||!(S.me&&S.me.isAdmin)||typeof P15==='undefined'||P15.v!=='nadmin'||P15.nadl||P15.nadu)return;
+    const c=document.querySelector('#main .c9-in');if(!c||document.querySelector('.n59-lock'))return;
+    c.insertAdjacentHTML('afterbegin','<div class="n59-lock"></div>');if(L.st)put();load();
+  }catch(e){}};
+})();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
 boot();

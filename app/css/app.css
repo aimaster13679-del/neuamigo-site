@@ -4491,3 +4491,13 @@ html.n56dk .n58-adm{background:rgba(255,255,255,.06);border-color:rgba(255,255,2
 html.n56dk .n58-dstat .n58-dlink{color:#6EA0FF!important;border-color:rgba(110,160,255,.4)!important}
 .h53-empty .h53-go2{display:block;margin:10px auto 0;border:0;background:none;color:#0F52BA;font-weight:800;font-size:13.5px;text-decoration:underline;text-underline-offset:3px;padding:6px}
 html.n56dk .h53-empty .h53-go2{color:#6EA0FF}.h53-empty .h53-go[disabled]{opacity:.65}
+.n59-lk b{display:block;font-size:15.5px}.n59-lk small{display:block;opacity:.75;font-size:13px;line-height:1.45;margin:4px 0 8px}
+.n59-lk.ok b{color:#0F52BA}html.n56dk .n59-lk.ok b{color:#6EA0FF}
+.n59-in{width:100%;font:800 24px/1 'Plus Jakarta Sans',system-ui,sans-serif;letter-spacing:.3em;text-align:center;padding:12px;border-radius:12px;border:1.5px solid rgba(20,40,80,.15);background:transparent;color:inherit;margin:4px 0}
+.n59-btn{display:block;width:100%;border:0;border-radius:12px;padding:13px;background:#0F52BA;color:#fff;font-weight:800;font-size:15px;margin-top:8px}.n59-btn[disabled]{opacity:.6}
+.n59-qr{width:200px;margin:6px auto;background:#fff;border-radius:14px;padding:10px}.n59-qr img{width:100%;display:block}
+.n59-key{display:block;text-align:center;font-size:13px;font-weight:700;letter-spacing:.08em;word-break:break-all;margin:6px 0}
+.n59-err{color:#C0392B;font-weight:700;font-size:13px;margin:6px 0 0}html.n56dk .n59-err{color:#FF8A80}
+.n59-lock{margin:12px 0;padding:14px;border-radius:18px;background:rgba(255,255,255,.9);border:1px solid rgba(20,40,80,.1);color:#13213A}
+html.n56dk .n59-lock{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:#F2F4F8}
+.n59-lock .n59-btn{display:block!important;width:100%!important;border:0!important;border-radius:12px!important;padding:13px!important;background:#0F52BA!important;color:#fff!important;font-weight:800!important;font-size:15px!important;margin-top:8px!important;text-align:center!important}

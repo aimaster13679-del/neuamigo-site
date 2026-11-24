@@ -222,6 +222,22 @@ window.RM_API = (function () {
         method: 'POST', body: blob, headers: { 'Content-Type': blob.type || 'application/octet-stream', 'x-upsert': 'false', 'cache-control': '3600' }
       });
     },
+    // admin double lock (24 Nov 2026): authenticator-app code on top of the password
+    mfaState: async function () {
+      var u = await raw('/auth/v1/user');
+      var f = ((u && u.factors) || []).filter(function (x) { return x.factor_type === 'totp'; });
+      var aal = '';
+      try { aal = JSON.parse(atob((ses.access_token.split('.')[1] || '').replace(/-/g, '+').replace(/_/g, '/'))).aal || ''; } catch (e) {}
+      return { verified: f.filter(function (x) { return x.status === 'verified'; }), pending: f.filter(function (x) { return x.status !== 'verified'; }), aal: aal };
+    },
+    mfaEnroll: function () { return raw('/auth/v1/factors', { method: 'POST', body: { factor_type: 'totp', friendly_name: 'NeuAmigo admin ' + Date.now() } }); },
+    mfaUnenroll: function (fid) { return raw('/auth/v1/factors/' + encodeURIComponent(fid), { method: 'DELETE' }); },
+    mfaVerify: async function (fid, code) {
+      var c = await raw('/auth/v1/factors/' + encodeURIComponent(fid) + '/challenge', { method: 'POST', body: {} });
+      var d = await raw('/auth/v1/factors/' + encodeURIComponent(fid) + '/verify', { method: 'POST', body: { challenge_id: c.id, code: String(code || '').replace(/\D/g, '') } });
+      if (d && d.access_token) saveSes(withExpiry(d));
+      return true;
+    },
     signMany: async function (bucket, paths, seconds) {
       if (!paths.length) return {};
       var d = await raw('/storage/v1/object/sign/' + bucket, { method: 'POST', body: { paths: paths, expiresIn: seconds || 3600 } });
