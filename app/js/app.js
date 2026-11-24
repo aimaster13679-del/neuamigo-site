@@ -5061,7 +5061,7 @@ function sale15v2(){const l=P15.sl;if(l===undefined){API.rpc('sales15',{}).then(
     `<div class="p15-g p15-note">${ic('tag2')} Nothing for sale in your city right now.</div>`)+
    `<div class="p15-g p15-note">${ic('shield2')}<span>Meet at the home, in daylight. Pay the seller at pick-up. NeuAmigo never holds this money and does not check sellers.</span></div>
    <button class="p15-g p15-row" data-a="p15open" data-v="mysale"><span class="p15-b fern">${ic('home2')}</span><span class="tx"><b>Leaving soon? Sell your home in a day</b><small>One item ${p15price('sale_one')} · Whole Home ${p15price('sale_home')}</small></span>${ic('chev2')}</button>
-   <button class="p15-g p15-row" data-a="p15open" data-v="ask:service"><span class="p15-b mint">${ic('truck')}</span><span class="tx"><b>Need movers?</b><small>Ask 6 businesses</small></span>${ic('chev2')}</button>`)}
+`)}
 function mySale15(){const m=P15.ms;if(m===undefined){API.rpc('my_sale15',{}).then(r=>{P15.ms=r||{};render()}).catch(()=>{P15.ms={};render()});return p15wrap(p15top('Sell before you leave',true)+spinner('Loading'))}
   const p=m.plan,on=p&&new Date(p.until)>new Date(),f=P15.f,cur=(P15.d&&P15.d.cur)||cur15();
   if(!on){f.sp2=f.sp2||'sale_home';f.lv=f.lv||days15()[13][0];f.ta=f.ta||'900';
@@ -5082,7 +5082,7 @@ function mySale15(){const m=P15.ms;if(m===undefined){API.rpc('my_sale15',{}).the
     <button class="p15-btn" data-a="p15itemAdd"${P15.busy==='it'?' disabled':''}>${P15.busy==='it'?'Adding…':'Add item'}</button>`:`<div class="p15-g p15-note">${ic('info')} Your plan is full. Pick a bigger plan when this one ends.</div>`}`)}
 
 /* ---------- Plan 11: Ad Spot by the week ---------- */
-const ADPL15=[['city','City Spotlight','Home screen tile · one brand per city per week','ad_city_w'],['homes','Homes','Top of Find a Room','ad_cat_w'],['jobs','Jobs','Top of Jobs','ad_cat_w'],['services','Event services','Top of Event Services','ad_cat_w'],['experts','Experts','Top of Trusted Experts','ad_cat_w']];
+const ADPL15=[['city','City Spotlight','Top of Settle In · one brand per city per week','ad_city_w'],['homes','Homes','Top of Find a Room','ad_cat_w'],['jobs','Jobs','Top of Jobs','ad_cat_w'],['services','Event services','Top of Event Services','ad_cat_w'],['experts','Experts','Top of Trusted Experts','ad_cat_w']];
 function adSlot15(pl){const k='ad_'+pl,a=(P15.as||{})[k];if(a===undefined){P15.as=Object.assign(P15.as||{},{[k]:null});API.rpc('ad_for15',{pl}).then(r=>{P15.as[k]=r||false;if(r)render()}).catch(()=>{});return ''}
   if(!a)return '';return `<button class="p15-g p15-ad" data-a="p15adTap" data-id="${esc(a.id)}"><span class="p15-pill">Sponsored</span><b>${esc(a.title)}</b>${a.body?`<small>${esc(a.body)}</small>`:''}<span class="p15-ad-go">${ic('chev2')}</span></button>`}
 function adSpot15v2(){const f=P15.f,l=P15.ads,pl=f.apl||'city',w=(P15.aw||{})[pl],me=S.me||{};
@@ -7749,10 +7749,10 @@ function h53sell(){const sl=P15.sl;if(sl===undefined||sl===null){if(sl===undefin
   const city=c9city()||'your city',l=(sl||[]).filter(s=>s.status==='open'||s.mine||s.bought),cur=P15.f.h53sc||'all';
   const K=[['all','All'],['cars','Cars'],['tech','Phones and tech'],['furniture','Furniture'],['kitchen','Kitchen'],['other','Other']].filter(([k])=>k==='all'||l.some(s=>a9cat(s)===k));
   const S=l.filter(s=>cur==='all'||a9cat(s)===cur);
-  const card=(s,i)=>{const p=(s.photos||[])[0],real=p&&PC15();return `<button class="h53-card h53-gc" style="animation-delay:${(i*.05).toFixed(2)}s" data-a="p15open" data-v="sale"><span class="h53-ph">${real?`<img src="${esc(phUrl15(p))}" alt="" loading="lazy">`:`<img ${a4src(SP53[a9cat(s)]||SP53.other)} alt="" loading="lazy"><span class="h53-cnt">Example photo</span>`}</span>
+  const card=(s,i)=>{const p=(s.photos||[])[0],real=p&&PC15();return `<button class="h53-card h53-gc" style="animation-delay:${(i*.05).toFixed(2)}s" data-a="n60item" data-id="${esc(s.id)}"><span class="h53-ph">${real?`<img src="${esc(phUrl15(p))}" alt="" loading="lazy">`:`<img ${a4src(SP53[a9cat(s)]||SP53.other)} alt="" loading="lazy"><span class="h53-cnt">Example photo</span>`}</span>
     <span class="h53-bd"><b class="h53-t h53-1">${esc(s.title)}</b><small>${esc(s.area||'')}${s.cond?' · '+esc(s.cond):''}</small><span class="h53-row"><span class="h53-pr s">${esc(a4money(s.price,s.currency))}</span><span class="h53-go s">View</span></span></span></button>`};
   const list=S.length?`<p class="h53-lead">${S.length} ${S.length===1?'item':'items'} in ${esc(city)} · seller's own price</p><div class="h53-g2">${S.slice(0,40).map(card).join('')}</div>`
-    :`<div class="h53-empty"><b>Nothing for sale here yet</b><small>Get one email when the first item is posted near you.</small>${n59btn('sale')}<button class="h53-go2" data-a="p15open" data-v="sale">Moving out? Sell your things</button></div>`;
+    :`<div class="h53-empty"><b>Nothing for sale here yet</b><small>Get one email when the first item is posted near you.</small>${n59btn('sale')}<button class="h53-go2" data-a="p15open" data-v="mysale">Moving out? Sell your things</button></div>`;
   const two=`<div class="h53-two"><button data-a="z8q" data-c="Used cars"><span class="h53-ph2"><img ${a4src('img/p19/usedcar.webp')} alt="" loading="lazy"></span><b>Ask car dealers</b><small>6 dealers get it at once</small></button><button data-a="z8q" data-c="Used phones"><span class="h53-ph2"><img ${a4src('img/p21/phone.webp')} alt="" loading="lazy"></span><b>Ask phone shops</b><small>Buy, sell or fix</small></button></div>`;
   return c9wrap(h53top('Cars and phones',`<button class="h53-ch" data-a="p15open" data-v="mysale">Sell</button>`)+`<div class="h53-seg">${K.map(([k,t])=>`<button class="${cur===k?'on':''}" data-a="p15f" data-k="h53sc" data-val="${k}">${t}</button>`).join('')}</div><div class="h53-in">${list}${two}<p class="h53-ex">Meet in a public place and check the item before you pay. NeuAmigo does not check sellers or items.</p></div></div>`)}
 (function(){
@@ -8286,6 +8286,47 @@ function n59btn(k){const on=N59.on&&N59.on.includes(k);return `<button class="h5
     const c=document.querySelector('#main .c9-in');if(!c||document.querySelector('.n59-lock'))return;
     c.insertAdjacentHTML('afterbegin','<div class="n59-lock"></div>');if(L.st)put();load();
   }catch(e){}};
+})();
+
+/* part60 Item page (mock A1, his ok for all 24 Nov 2026): one item with its photos shown whole, price, pick-up, safety,
+   and the way to reach the seller (Plus opens chat, as today). Before this, "View" opened the whole sale list. */
+(function(){
+  const d=s=>s?new Date(s).toLocaleDateString(RM_I18N.locale,{day:'numeric',month:'short'}):'';
+  function item16(){const id=P15.n60,l=P15.sl;
+    if(l===undefined||l===null){if(l===undefined){P15.sl=null;API.rpc('sales15',{}).then(r=>{P15.sl=r||[];render()}).catch(()=>{P15.sl=[];render()})}return c9wrap(h53top('Item')+`<div class="h53-in">${spinner('Loading')}</div></div>`)}
+    const s=(l||[]).find(x=>String(x.id)===String(id));
+    if(!s)return c9wrap(h53top('Item')+`<div class="h53-in"><div class="h53-empty"><b>This item is no longer listed</b><small>The seller may have sold it.</small><button class="h53-go" data-a="p15back">Back</button></div></div></div>`);
+    const ph=(s.photos||[]).filter(Boolean),real=ph.length&&PC15(),i=Math.min(P15.n60i||0,Math.max(0,ph.length-1));
+    const big=real?`<img src="${esc(phUrl15(ph[i]))}" alt="${esc(s.title)}, photo ${i+1} of ${ph.length}">`:`<img ${a4src(SP53[a9cat(s)]||SP53.other)} alt=""><span class="h53-cnt">Example photo</span>`;
+    const more=(l||[]).filter(x=>x.id!==s.id&&x.seller&&x.seller===s.seller&&x.status==='open').slice(0,6);
+    const act=s.mine?`<div class="n60-note"><b>Your item</b><small>${Number(s.wants||0)} ${Number(s.wants||0)===1?'person wants':'people want'} it</small></div><button class="n60-btn ghost" data-a="p15open" data-v="mysale">Manage your sale</button>`
+      :s.locked?`<button class="n60-btn" data-a="p15open" data-v="plus">Chat with the seller</button><p class="n60-ex">Chat opens with NeuAmigo Plus · ${p15price('plus_m')} a month.</p>`
+      :(P15.sw||{})[s.id]?`<div class="n60-note"><b>Seller contact</b><small>${esc(P15.sw[s.id])}</small></div>`
+      :`<button class="n60-btn" data-a="p15want" data-id="${esc(s.id)}">I want it · show seller contact</button>`;
+    return c9wrap(h53top('Item')+`<div class="h53-in n60">
+      <div class="n60-big">${big}${real&&ph.length>1?`<span class="n60-cnt">${i+1} of ${ph.length}</span>`:''}</div>
+      ${real&&ph.length>1?`<div class="n60-th">${ph.map((p,k)=>`<button class="${k===i?'on':''}" data-a="n60ph" data-k="${k}" aria-label="Photo ${k+1}"><img src="${esc(phUrl15(p))}" alt=""></button>`).join('')}</div>`:''}
+      <div class="n60-pr">${esc(a4money(s.price,s.currency))}</div><h2 class="n60-t">${esc(s.title)}</h2>
+      <p class="n60-m">${esc([s.cond,s.area,s.pickupBy?'pick up by '+d(s.pickupBy):'',s.leaving?'seller leaves '+d(s.leaving):''].filter(Boolean).join(' · '))}</p>
+      ${s.takeAll?`<div class="n60-note"><b>Take all: ${esc(a4money(s.takeAll,s.currency))}</b><small>The seller sells the whole home at once</small></div>`:''}
+      <div class="n60-kv"><span>You pay</span><b>The seller, at pick-up</b></div><div class="n60-kv"><span>Meet</span><b>In daylight, at the home</b></div>
+      ${act}
+      <p class="n60-ex">Never send money ahead. NeuAmigo does not check sellers or items.</p>
+      ${more.length?`<div class="h53-lead">More from this sale</div><div class="h53-g2">${more.map(x=>{const p=(x.photos||[])[0];return `<button class="h53-card h53-gc" data-a="n60item" data-id="${esc(x.id)}"><span class="h53-ph">${p&&PC15()?`<img src="${esc(phUrl15(p))}" alt="" loading="lazy">`:`<img ${a4src(SP53[a9cat(x)]||SP53.other)} alt="" loading="lazy"><span class="h53-cnt">Example photo</span>`}</span><span class="h53-bd"><b class="h53-t h53-1">${esc(x.title)}</b><span class="h53-row"><span class="h53-pr s">${esc(a4money(x.price,x.currency))}</span></span></span></button>`}).join('')}</div>`:''}
+    </div></div>`)}
+  P15V.item16=item16;
+  /* City Spotlight shows at the top of Settle In, never on Home (his rule: Home stays as it is) */
+  let AD;const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{
+    if(S.screen!=='app'||(typeof P15!=='undefined'&&P15.v))return;const hub=document.querySelector('#main .a7.a8');if(!hub||hub.querySelector('.n60-ad'))return;
+    const put=a=>{if(!a||hub.querySelector('.n60-ad'))return;const at=hub.querySelector('.a8-hd');if(!at)return;
+      at.insertAdjacentHTML('afterend',`<button class="n60-ad" data-a="p15adTap" data-id="${esc(a.id)}"><span class="n60-sp">Sponsored</span><b>${esc(a.title)}</b>${a.body?`<small>${esc(a.body)}</small>`:''}</button>`)};
+    if(AD===undefined){AD=null;API.rpc('ad_for15',{}).then(r=>{AD=r||false;put(AD)}).catch(()=>{AD=false})}else put(AD);
+  }catch(e){}};
+  const _bk=A.p15back;A.p15back=function(el){if(P15.v==='item16'){const f=P15.n60from||{};P15.v=f.v||null;if(f.tab)S.tab=f.tab;render();try{document.querySelector('#main').scrollTo(0,0)}catch(e){}return}return _bk.call(this,el)};
+  Object.assign(A,{
+    n60item(el){if(P15.v!=='item16')P15.n60from={v:P15.v,tab:S.tab};P15.n60=el.dataset.id;P15.n60i=0;const b=document.createElement('button');b.dataset.a='p15open';b.dataset.v='item16';A.p15open(b);try{document.querySelector('#main').scrollTo(0,0)}catch(e){}},
+    n60ph(el){P15.n60i=+el.dataset.k||0;render()}
+  });
 })();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */

@@ -4501,3 +4501,28 @@ html.n56dk .h53-empty .h53-go2{color:#6EA0FF}.h53-empty .h53-go[disabled]{opacit
 .n59-lock{margin:12px 0;padding:14px;border-radius:18px;background:rgba(255,255,255,.9);border:1px solid rgba(20,40,80,.1);color:#13213A}
 html.n56dk .n59-lock{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:#F2F4F8}
 .n59-lock .n59-btn{display:block!important;width:100%!important;border:0!important;border-radius:12px!important;padding:13px!important;background:#0F52BA!important;color:#fff!important;font-weight:800!important;font-size:15px!important;margin-top:8px!important;text-align:center!important}
+/* part60 item page */
+.n60-big{position:relative;aspect-ratio:3/2;border-radius:20px;overflow:hidden;background:rgba(120,130,150,.12)}.n60-big img{width:100%;height:100%;object-fit:contain;display:block}
+.n60-cnt{position:absolute;right:10px;bottom:10px;background:rgba(10,14,24,.7);color:#fff;font-size:12px;font-weight:800;padding:5px 9px;border-radius:9px}
+.n60-th{display:flex;gap:8px;margin-top:8px;overflow-x:auto}.n60-th button{flex:none;width:72px;aspect-ratio:3/2;border-radius:10px;overflow:hidden;border:2px solid transparent;padding:0;background:none}
+.n60-th button.on{border-color:#0F52BA}.n60-th img{width:100%;height:100%;object-fit:cover;display:block}
+.n60-pr{font-size:30px;font-weight:800;margin-top:14px}.n60-t{font:600 22px/1.25 Fraunces,Georgia,serif;margin:4px 0 4px}.n60-m{opacity:.7;font-size:14px;margin:0 0 10px}
+.n60-kv{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-top:1px solid rgba(20,40,80,.1);font-size:14px}.n60-kv span{opacity:.7}
+html.n56dk .n60-kv{border-color:rgba(255,255,255,.1)}
+.n60-note{padding:12px 14px;border-radius:14px;background:rgba(15,82,186,.07);margin:10px 0}.n60-note b{display:block;font-size:15px}.n60-note small{opacity:.75;font-size:13px}
+html.n56dk .n60-note{background:rgba(110,160,255,.12)}
+.n60-btn{display:block;width:100%;border:0;border-radius:14px;padding:15px;background:#0F52BA;color:#fff;font-weight:800;font-size:15.5px;margin-top:12px}
+html.n56dk .n60-btn{background:#6EA0FF;color:#061433}.n60-btn.ghost{background:transparent;color:inherit;border:1px solid rgba(20,40,80,.15)}
+.n60-ex{opacity:.7;font-size:12.5px;line-height:1.45;margin:8px 0 14px;text-align:center}
+.h53-in .n60-btn{display:block!important;width:100%!important;border:0!important;border-radius:14px!important;padding:15px!important;background:#0F52BA!important;color:#fff!important;font-weight:800!important;font-size:15.5px!important;margin-top:12px!important;text-align:center!important}
+html.n56dk .h53-in .n60-btn{background:#6EA0FF!important;color:#061433!important}
+.h53-in .n60-btn.ghost{background:transparent!important;color:inherit!important;border:1px solid rgba(20,40,80,.18)!important}
+/* one look for the older pages (Moving-Out Sale, Advertise, Chats...): no coloured header band, same as Journey pages */
+html.n56.n56.n56.n56.n56.n56.n56.n56.n56.n56.n56 .p15-top{background:transparent!important;box-shadow:none!important;border:0!important}
+html.n56.n56.n56.n56.n56.n56.n56.n56.n56.n56.n56 .p15-top h1{font-family:Fraunces,Georgia,serif!important;font-weight:600!important;color:#13213A!important}
+html.n56dk.n56.n56.n56.n56.n56.n56.n56.n56.n56.n56 .p15-top h1{color:#F2F4F8!important}
+html.n56.n56.n56.n56.n56.n56.n56.n56.n56.n56.n56 .p15-top::before,html.n56.n56.n56.n56.n56.n56.n56.n56.n56.n56.n56 .p15-top::after{display:none!important}
+.n60-ad{display:block;width:calc(100% - 32px);margin:12px 16px 0;padding:14px 16px;border-radius:18px;border:1px solid rgba(20,40,80,.1);background:rgba(255,255,255,.92);color:#13213A;text-align:left;font:inherit}
+html.n56dk .n60-ad{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:#F2F4F8}
+.n60-ad b{display:block;font-size:16px;margin-top:6px}.n60-ad small{display:block;opacity:.75;font-size:13px;margin-top:2px}
+.n60-sp{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:8px;background:rgba(120,130,150,.15)}
