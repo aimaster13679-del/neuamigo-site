@@ -4223,7 +4223,7 @@ function experts15v(){const k=P15.f.ek||'expert',cat=P15.f.ec||'',key=k+cat,l=(P
   const myx=((P15.d&&P15.d.biz)||[]).find(x=>x.kind==='expert'&&x.plan==='expert_pro'&&planOn15(x));
   return p15wrap(p15top('Trusted Experts',true)+(myx?`<div class="p15-g p15-note">${ic('star2')} Expert Pro: <b>${Number(myx.seen||0)}</b> people saw your page in the last 30 days.</div>`:'')+chips15('ek',[['expert','Experts'],['agent','Rental agents']],k)+(k==='expert'?chips15('ec',[['','All'],['Immigration','Immigration'],['Tax','Tax'],['Insurance','Insurance'],['Cleaning','Cleaning'],['Small jobs','Small jobs']],cat):'')+
    (l.length?l.map(b=>`<div class="p15-g p15-pad"><div class="p15-rh"><span class="tx"><b>${esc(b.name)}</b><small>${esc(b.city)}${b.langs&&b.langs.length?' · '+esc(b.langs.join(', ')):''}</small></span>${b.sponsored?'<span class="p15-pill y">Sponsored</span>':b.top?'<span class="p15-pill y">Top Spot</span>':''}</div>
-     <div class="p15-tags">${b.licence?`<span class="p15-pill">${ic('shield2')} Licence number shared · not checked by NeuAmigo</span>`:''}${b.category?`<span class="p15-pill">${esc(b.category)}</span>`:''}</div>${b.about?`<small style="display:block;margin-top:6px">${esc(b.about)}</small>`:''}
+     <div class="p15-tags">${b.licence?`<span class="p15-pill">${ic('shield2')} Licence number shared · not checked by NeuAmigo</span>`:''}<span class="n58-badge ${b.docs?'ok':'no'}">${b.docs?'Business documents shared':'No documents yet'}</span>${b.category?`<span class="p15-pill">${esc(b.category)}</span>`:''}</div>${b.about?`<small style="display:block;margin-top:6px">${esc(b.about)}</small>`:''}
      ${b.locked?`<button class="p15-unlock" data-a="p15open" data-v="plus">${ic('lock2')} Prices and contact open with NeuMarry Plus</button>`:
       `${(b.services||[]).map(s=>`<div class="p15-li"><span class="tx"><b>${esc(s.title)}</b><small>${esc(s.detail)}</small></span><b>${money(s.price,s.currency)}</b></div>`).join('')}<button class="p15-btn" data-a="p15connect" data-id="${b.id}">${ic('chat')} Connect me</button><p class="p15-ex">Your name and email go to this expert only after you tap Connect me.</p>`}</div>`).join(''):
    `<div class="p15-g p15-note">${ic('shield2')} No ${k==='agent'?'rental agents':'experts'} here yet. They join every week.</div>`)+
@@ -8098,7 +8098,7 @@ const N58_ON=true; /* database job passed 24 Nov 2026 */
   function root(){let r=document.getElementById('na58');if(!r){r=document.createElement('div');r.id='na58';r.setAttribute('role','dialog');r.setAttribute('aria-modal','true');
     r.addEventListener('click',e=>{const b=e.target.closest('[data-n]');if(!b||b.disabled)return;e.preventDefault();const f=ACT[b.dataset.n];if(f)f(b)});
     r.addEventListener('input',e=>{if(e.target.id==='n58nm'){B.nm=e.target.value;if(B.msg){B.msg='';const x=r.querySelector('.n57-err');if(x)x.remove()}}});
-    r.addEventListener('change',e=>{if(e.target.id==='n58ph')addPhotos(e.target)});document.body.appendChild(r)}return r}
+    r.addEventListener('change',e=>{if(e.target.id==='n58ph')addPhotos(e.target);if(e.target.id==='n58doc'){const f=e.target.files&&e.target.files[0];e.target.value='';if(!f)return;if(f.size>10*1048576){B.msg='This file is too big (over 10 MB).';draw();return}if(!/^image\/|application\/pdf/.test(f.type)){B.msg='Please use a photo or a PDF.';draw();return}B.msg='';B.df=f;draw()}});document.body.appendChild(r)}return r}
   function shut(){B.on=false;const r=document.getElementById('na58');if(r)r.remove();document.documentElement.classList.remove('n57open')}
   function prog(n){return `<div class="n58-prog">${[1,2,3,4,5,6].map(i=>`<i class="${i<=n?'on':''}"></i>`).join('')}</div><div class="n57-lb">Step ${n} of 6</div>`}
   function top(t,right){return `<div class="n57-top"><button class="n57-bk" data-n="back">Back</button><b>${esc(t)}</b>${right||''}</div>`}
@@ -8141,10 +8141,21 @@ const N58_ON=true; /* database job passed 24 Nov 2026 */
         <p>${esc(chosen().map(c=>c.t).join(' · '))}</p>
         ${items.map(x=>`<div class="kv n58-kv"><span>${esc(x[0])}</span><b>${fm(x[1]*100)}</b></div>`).join('')}</div>
       ${B.msg?`<p class="n57-err">${esc(B.msg)}</p>`:''}<button class="n57-btn" data-n="publish"${B.busy?' disabled':''}>${B.busy?'Saving':'Save my business page'}</button>`},
-    7(){const nx=chosen().filter(c=>c.next);return `<div class="n57-ok">✓</div><h2 class="n57-h">Your page<br>is <i>ready.</i></h2>
+    7(){const nx=chosen().filter(c=>c.next);return `<div class="n57-ok">✓</div><h2 class="n57-h">Your page<br>is <i>saved.</i></h2>
       <p class="n57-sub">${esc(B.nm)}${svcCats().length?' with your services and prices':''} shows to customers once your business plan starts.</p>
+      ${B.docs&&B.docs.ok?'':`<div class="n57-card"><b>One last step: proof of your business</b><p>Customers will see that you showed a document. Takes 1 minute.</p><span class="n58-badge no">No documents yet</span><button class="n57-btn" data-n="proof">Add proof now</button></div>`}
       ${nx.length?`<div class="n57-lb n57-lbo">Next</div><div class="n57-card n58-list">${nx.map(c=>`<button class="n58-cr" data-n="go" data-v="${c.next[0]}"><span class="n58-th"><img src="img/${c.img}.webp" alt=""></span><b>${esc(c.next[1])}</b><i class="n58-ar">›</i></button>`).join('')}</div>`:''}
-      ${svcCats().length?'<button class="n57-btn" data-n="go" data-v="expplan">Start getting requests</button>':''}<button class="n57-gh" data-n="go" data-v="">Open my business desk</button>`}
+      ${svcCats().length?'<button class="n57-btn" data-n="go" data-v="expplan">Start getting requests</button>':''}<button class="n57-gh" data-n="go" data-v="">Open my business desk</button>`},
+    8(){const K=[['reg','Business registration','Company or sole owner paper','p20/taxcalc'],['licence','Licence for your work','Only if your city asks for one','p20/visa'],['tax','Tax number letter','From your tax office','p22/cards'],['insurance','Insurance paper','Work or liability insurance','p22/expert']];
+      return top('Proof of business')+`<h2 class="n57-h">What can you <i>show?</i></h2><p class="n57-sub">One is enough. Only the NeuAmigo team sees it, never customers.</p>
+      <div class="n57-card n58-list">${K.map(k=>`<button class="n58-cr${B.dk===k[0]?' on':''}" data-n="dk" data-v="${k[0]}" aria-pressed="${B.dk===k[0]}"><span class="n58-th"><img src="img/${k[3]}.webp" alt=""></span><span class="n58-tt"><b>${k[1]}</b><small>${k[2]}</small></span><i class="n58-cb">${B.dk===k[0]?'✓':''}</i></button>`).join('')}</div>
+      ${B.df?`<div class="n57-card n58-file"><b>${esc(B.df.name)}</b><button class="n58-x2" data-n="dfdel">Remove</button></div>`:`<label class="n58-add n58-addw"><input id="n58doc" type="file" accept="image/*,application/pdf" hidden>Take photo or choose file</label>`}
+      <p class="n57-note">Photo or PDF. You may hide numbers you do not want to share.</p>
+      ${B.msg?`<p class="n57-err">${esc(B.msg)}</p>`:''}<button class="n57-btn" data-n="docsend"${B.busy?' disabled':''}>${B.busy?'Sending':'Send'}</button>`},
+    9(){return top('Proof of business')+`<div class="n57-ok">✓</div><h2 class="n57-h">Got it. <i>Thank you.</i></h2>
+      <p class="n57-sub">We look that the document matches your business name, usually within 2 days. Then your page shows "Business documents shared".</p>
+      <div class="n57-card"><p>NeuAmigo looks only at the name on the document. We do not check licences with the government, and we never share your document.</p></div>
+      <button class="n57-btn" data-n="docdone">Done</button>`}
   };
   async function addPhotos(inp){const fs=[...(inp.files||[])].slice(0,6-B.ph.length);inp.value='';
     for(const f of fs){if(!/^image\//.test(f.type))continue;try{const blob=await shrink(f);B.ph.push({blob,url:URL.createObjectURL(blob)})}catch(e){toast('Could not read that photo.','info')}}draw()}
@@ -8155,7 +8166,7 @@ const N58_ON=true; /* database job passed 24 Nov 2026 */
     if(B.step===3&&svcCats().length&&!Object.keys(B.svc).some(k=>B.pick.has(k.replace(/\d+$/,''))&&B.svc[k].on))return 'Switch on at least one service.';return ''}
   const tog=(set,v)=>{set.has(v)?set.delete(v):set.add(v)};
   const ACT={
-    back(){B.msg='';if(B.step>1&&B.step<7){B.step--;draw()}else{const a=B.after;shut();if(B.step===7&&a)a()}},
+    back(){B.msg='';if(B.step===8||B.step===9){B.step=B.from||7;if(B.step===0){shut();return}draw();return}if(B.step>1&&B.step<7){B.step--;draw()}else{const a=B.after;shut();if(B.step===7&&a)a()}},
     next(){const m=check();if(m){B.msg=m;B.keepY=true;draw();return}B.msg='';
       if(B.step===1)chosen().forEach(c=>(c.s||[]).forEach((x,i)=>{const id=c.k+i;if(!B.svc[id])B.svc[id]={on:i<2,p:nice(x[1])}}));
       B.step++;draw()},
@@ -8173,7 +8184,16 @@ const N58_ON=true; /* database job passed 24 Nov 2026 */
         await API.rpc('biz_setup16',{nm:B.nm.trim(),cats:[...new Set(svcCats().flatMap(c=>c.cat))],ar:B.area,lg:[...B.langs],dy:[...B.days],ph:paths,items,rent:B.pick.has('rent')});
         LS('na.n58done','1');B.busy=false;B.step=7;draw()}
       catch(e){B.busy=false;const m=String(e&&e.message||e);B.msg=m.includes('city')?'Add your city in Me first, then publish.':'Could not publish. Check the internet and try again.';B.keepY=true;draw()}},
-    go(b){const v=b.dataset.v,a=B.after;shut();if(a)a();if(v){try{P15.v=v;render()}catch(e){}}}
+    go(b){const v=b.dataset.v,a=B.after;shut();if(a)a();if(v){try{P15.v=v;render()}catch(e){}}},
+    proof(){B.from=7;B.step=8;B.msg='';B.dk=B.dk||'reg';draw()},
+    dk(b){B.dk=b.dataset.v;B.keepY=true;draw()},
+    dfdel(){B.df=null;B.keepY=true;draw()},
+    async docsend(){if(B.busy)return;if(!B.df){B.msg='Add a photo or PDF of the document first.';B.keepY=true;draw();return}
+      B.busy=true;B.msg='';B.keepY=true;draw();
+      try{const pdf=B.df.type==='application/pdf',blob=pdf?B.df:await shrink(B.df),path=`${API.userId()}/proof-${uuid()}.${pdf?'pdf':'jpg'}`;
+        await API.upload('verification',path,blob);await API.rpc('biz_doc_add16',{k:B.dk||'reg',p:path});B.df=null;B.busy=false;B.step=9;B.docs=null;draw()}
+      catch(e){B.busy=false;const m=String(e&&e.message||e);B.msg=m.includes('too many')?'Too many files today. Try again tomorrow.':m.includes('no business')?'Save your business page first.':'Could not send. Check the internet and try again.';B.keepY=true;draw()}},
+    docdone(){if(B.from===0){shut();try{render()}catch(e){}return}B.step=7;draw()}
   };
   /* entry: first time "NeuAmigo for Business" (after part57's member-QR question) */
   A.n58go=async function(el){const core=A.c10bizonCore||function(){};if(LS('na.n58done'))return core.call(A,el);
@@ -8188,6 +8208,7 @@ const N58_ON=true; /* database job passed 24 Nov 2026 */
     B.nm=m.name||'';if(m.areas)B.area=m.areas;if((m.langs||[]).length)B.langs=new Set(m.langs);if((m.days||[]).length)B.days=new Set(m.days);
     const its=m.items||[];chosen().forEach(c=>(c.s||[]).forEach((x,i)=>{const f=its.find(t=>t.title===x[0]);B.svc[c.k+i]={on:!!f,p:f?Math.round(f.price/100):nice(x[1])}}));
     B.ph=(m.photos||[]).map(path=>({path,url:phUrl15(path)}))}
+  A.n58proof=function(){B.on=true;B.from=0;B.step=8;B.msg='';B.dk=B.dk||'reg';draw()};
   A.n58edit=async function(){B.on=true;B.step=0;B.msg='';B.after=null;draw();
     try{B.info=await API.rpc('biz_setup_info16',{})}catch(e){B.info=null}
     if(!B.info){shut();toast('Could not load your page. Check the internet.','info');return}
@@ -8196,7 +8217,22 @@ const N58_ON=true; /* database job passed 24 Nov 2026 */
   const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{
     if(S.screen!=='app'||B.on||!(typeof c10biz==='function'&&c10biz())||(typeof P15!=='undefined'&&P15.v))return;
     const l=document.querySelector('#main .bz .bz-lede');if(!l||document.querySelector('.n58-desk'))return;
-    l.insertAdjacentHTML('afterend',`<button class="n58-desk" data-a="n58edit"><span class="n58-th"><img src="img/p22/counter.webp" alt=""></span><span><b>Your business page</b><small>Services, prices, photos, up to 3 categories</small></span><i>Edit</i></button>`);
+    l.insertAdjacentHTML('afterend',`<button class="n58-desk" data-a="n58edit"><span class="n58-th"><img src="img/p22/counter.webp" alt=""></span><span><b>Your business page</b><small>Services, prices, photos, up to 3 categories</small></span><i>Edit</i></button><div class="n58-dstat"></div>`);
+    const put=d=>{const x=document.querySelector('.n58-dstat');if(!x||!d)return;const w=(d.docs||[])[0];
+      x.innerHTML=d.ok?'<span class="n58-badge ok">Business documents shared</span>':w&&w.status==='waiting'?'<span class="n58-badge no">Proof sent · we look within 2 days</span>':
+        `<span class="n58-badge no">${w&&w.status==='no'?'Document did not match, send another':'No documents yet'}</span><button class="n58-dlink" data-a="n58proof">Add proof</button>`};
+    if(B.docsM)put(B.docsM);API.rpc('biz_docs_mine16',{}).then(d=>{B.docsM=d;put(d)}).catch(()=>{});
+  }catch(e){}};
+  /* admin: business proofs waiting (only the name is looked at) */
+  const KN={reg:'Business registration',licence:'Licence',tax:'Tax letter',insurance:'Insurance'};
+  async function admLoad(){try{const l=await API.rpc('admin_docs16',{});const u=await API.signMany('verification',l.map(x=>x.path),1800).catch(()=>({}));B.adm=l.map(x=>Object.assign(x,{url:u[x.path]||''}))}catch(e){B.adm=[]}admPut()}
+  function admPut(){const box=document.querySelector('.n58-adm');if(!box)return;const l=B.adm;
+    box.innerHTML=`<h3>Business proofs${l?` · ${l.length} waiting`:''}</h3>`+(!l?'<small>Loading</small>':!l.length?'<small>Nothing waiting.</small>':l.map(x=>`<div class="n58-adr"><a href="${esc(x.url)}" target="_blank" rel="noopener">${/\.pdf$/i.test(x.path)?'PDF':x.url?`<img src="${esc(x.url)}" alt="">`:'File'}</a><span><b>${esc(x.biz||'Business')}</b><small>${esc(KN[x.kind]||x.kind)} · ${esc(x.city||'')}</small></span><div class="n58-adb"><button class="y" data-a="n58adm" data-id="${x.id}" data-ok="1">Name matches</button><button class="n" data-a="n58adm" data-id="${x.id}" data-ok="0">Does not match</button></div></div>`).join(''))}
+  A.n58adm=async function(el){el.disabled=true;try{await API.rpc('admin_doc_set16',{did:el.dataset.id,ok:el.dataset.ok==='1',why:el.dataset.ok==='1'?'':'name does not match'});B.adm=(B.adm||[]).filter(x=>x.id!==el.dataset.id);admPut();toast('Saved','check')}catch(e){el.disabled=false;toast('Could not save','info')}};
+  const _ar2=afterRenderEvents;afterRenderEvents=function(vk){_ar2(vk);try{
+    if(S.screen!=='app'||!(S.me&&S.me.isAdmin)||typeof P15==='undefined'||P15.v!=='nadmin'||P15.nadl)return;
+    const c=document.querySelector('#main .c9-in');if(!c||document.querySelector('.n58-adm'))return;
+    c.insertAdjacentHTML('afterbegin','<div class="n58-adm"></div>');if(B.adm)admPut();admLoad();
   }catch(e){}};
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&B.on)shut()});
 })();
