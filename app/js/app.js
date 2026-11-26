@@ -8270,7 +8270,7 @@ function n59btn(k){const on=N59.on&&N59.on.includes(k);return `<button class="h5
   function hideAsks(){const c=N59.cnt;if(!c)return;const cats=c.cats||{},all=Object.values(cats).reduce((a,b)=>a+b,0);
     document.querySelectorAll('#main [data-v^="ask:"],#main [data-a="z8q"]').forEach(b=>{let n;
       if(b.dataset.a==='z8q'){n=b.dataset.c?(cats[b.dataset.c]||0):all}else{const k=b.dataset.v.slice(4);n=k==='service'?all:(c[k]||0)}
-      if(n<3&&b.classList.contains('n61-row')){const sm=b.querySelector('small');if(sm)sm.textContent='Businesses joining soon';return}if(n<3){b.style.display='none';b.setAttribute('aria-hidden','true');const g=b.parentElement;
+      if(n<3&&(b.classList.contains('n61-row')||b.classList.contains('n61-c')||b.classList.contains('n61-hero'))){const sm=b.classList.contains('n61-hero')?b.querySelector('.n61-hb i'):b.querySelector('small');if(sm)sm.textContent='Businesses joining soon';return}if(n<3){b.style.display='none';b.setAttribute('aria-hidden','true');const g=b.parentElement;
         if(g&&getComputedStyle(g).display==='grid'){const v=[...g.children].filter(x=>x.style.display!=='none');if(v.length===1)v[0].style.gridColumn='1 / -1';if(!v.length)g.style.display='none'}}})}
   const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{
     if(S.screen==='app'&&API.userId()){if(N59.cnt===null){N59.cnt=false;API.rpc('ask_counts16',{}).then(r=>{N59.cnt=r||{};hideAsks()}).catch(()=>{N59.cnt={}})}else hideAsks()}if(N59.on===null&&S.screen==='app'&&API.userId()){N59.on=[];API.rpc('notify_mine16',{}).then(r=>{N59.on=r||[];if(document.querySelector('[data-a=n59notify]'))render()}).catch(()=>{})}}catch(e){}};
@@ -8357,22 +8357,117 @@ const N61ST=[['When you land',['arr','sim','stay']],['Get set up',['legal','rent
 const N61TX={arr:'Drivers show their price',sim:'Get connected on day one',stay:'Rooms for your first few nights',legal:'Visa, immigration, tax, lawyers',rent:'Rent shown on every home',
   jobs:'Pay and hours on every job',col:'What they teach, fees shown',food:'Home cooks from your country',ev:'Dinners, games and meetups',buy:'When you are ready to stay',car:'Buy or sell, price on every car',mob:'Buy or sell nearby'};
 const N61T={sim:'SIM and phone plans',legal:'Paperwork and legal help',ev:'Events and new friends',buy:'Homes to buy or sell'};
-function n61settle(){
+function n61list(){
   const D=(typeof h48data==='function')?h48data():{rooms:[],jobs:[],cars:[],up:[]},city=D.c||(typeof me==='object'&&me&&me.city)||'';
   const all={};H50ST.forEach(st=>st[1].forEach(r=>{all[r[0]]=r}));
   const row=k=>{const r=all[k];if(!r)return '';let [img,pos]=String(r[1]).split('|');if(k==='mob'){img='img/p21/phone.webp';pos='50% 50%'}let sub=N61TX[k]||'';
     try{const s=h50sub(r[4],D);if(s&&s.p)sub=s.t}catch(e){}
     return `<button class="n61-row" ${h50act(r[3])}><span class="n61-ph"><img ${a4src(img)} alt="" decoding="async" loading="lazy"${pos?` style="object-position:${esc(pos)}"`:''}></span><span class="n61-tx"><b>${esc(N61T[k]||r[2])}</b><small>${esc(sub)}</small></span><i class="n61-ch" aria-hidden="true"></i></button>`};
-  return c9wrap(`<div class="n61">
-    <div class="n61-top"><small>NeuAmigo</small>${city?`<span class="n61-city">${esc(city)}</span>`:''}</div>
-    <h1>Settle In</h1><p class="n61-lede">Everything for your move, in the order you need it.</p>
-    <button class="n61-search" data-a="p15open" data-v="search"><i></i><span>Search homes, jobs, food...</span></button>
+  return c9wrap(h53top('All services')+`<div class="n61 n61-all">
     ${N61ST.map((st,i)=>`<section class="n61-st"><b>Step ${i+1}</b><h2>${esc(st[0])}</h2>${st[1].map(row).join('')}</section>`).join('')}
     <button class="n61-ask" data-a="z8q"><span><b>Not sure where to start?</b><small>Tell us once. 6 businesses answer.</small></span><u>Ask 6</u></button>
   </div>`)}
+/* v3 (his ask 26 Nov 2026 21:48: 'horizontal vertical wala banana tha'): vertical page of 4 steps, each step its own look:
+   a big 'Start here' card, then per step: name + All + a row you swipe sideways. Step 3 is a side-by-side pair, step 4 compact. */
+function n61v3(){
+  const D=(typeof h48data==='function')?h48data():{rooms:[],jobs:[],cars:[],up:[]},city=D.c||'';
+  const all={};H50ST.forEach(st=>st[1].forEach(r=>{all[r[0]]=r}));
+  const path=(typeof c10path==='function'&&c10path())||'';
+  const info=k=>{const r=all[k];if(!r)return null;let [img,pos]=String(r[1]).split('|');if(k==='mob'){img='img/p21/phone.webp';pos='50% 50%'}
+    let sub=N61TX[k]||'',live=0;try{const x=h50sub(r[4],D);if(x&&x.p){sub=x.t;live=1}}catch(e){}
+    return {k,img,pos,t:N61T[k]||r[2],sub,live,act:h50act(r[3])}};
+  const im=i=>`<img ${a4src(i.img)} alt="" decoding="async" loading="lazy"${i.pos?` style="object-position:${esc(i.pos)}"`:''}>`;
+  const card=(k,cls)=>{const i=info(k);if(!i)return '';return `<button class="n61-c ${cls}" ${i.act}><span class="n61-ci">${im(i)}</span><span class="n61-cb"><b>${esc(i.t)}</b><small class="${i.live?'lv':''}">${esc(i.sub)}</small></span></button>`};
+  const head=(n,t,step)=>`<div class="n61-h"><span><b>Step ${n}</b><h2>${esc(t)}</h2></span><button class="n61-all-b" data-a="n61all" data-s="${step}">All</button></div>`;
+  const heroK=path==='moving'?'arr':'rent',h=info(heroK);
+  const hero=h?`<button class="n61-hero" ${h.act}><span class="n61-hi">${im(h)}</span><span class="n61-hb"><small>Start here</small><b>${esc(h.t)}</b><i>${esc(h.sub)}</i></span><u>Open</u></button>`:'';
+  return c9wrap(`<div class="n61 n61v3">
+    <div class="n61-top"><small>NeuAmigo</small>${city?`<span class="n61-city">${esc(city)}</span>`:''}</div>
+    <h1>Settle In</h1><p class="n61-lede">Everything for your move, in the order you need it.</p>
+    <button class="n61-search" data-a="p15open" data-v="search"><i></i><span>Search homes, jobs, food...</span></button>
+    ${hero}
+    <section class="n61-s">${head(1,'When you land',0)}<div class="n61-rail">${['arr','sim','stay'].map(k=>card(k,'w1')).join('')}</div></section>
+    <section class="n61-s">${head(2,'Get set up',1)}<div class="n61-rail">${['legal','rent','jobs','col'].map(k=>card(k,'w2')).join('')}</div></section>
+    <section class="n61-s">${head(3,'Feel at home',2)}<div class="n61-pair">${['food','ev'].map(k=>card(k,'w3')).join('')}</div></section>
+    <section class="n61-s">${head(4,'Once you are settled',3)}<div class="n61-rail">${['buy','car','mob'].map(k=>card(k,'w4')).join('')}</div></section>
+    <button class="n61-ask" data-a="z8q"><span><b>Not sure where to start?</b><small>Tell us once. 6 businesses answer.</small></span><u>Ask 6</u></button>
+  </div>`)}
+Object.assign(A,{n61all(el){P15.n61s=+(el&&el.dataset.s||0);if(typeof A.p15open==='function')A.p15open({dataset:{v:'n61all'}});else{P15.v='n61all';render()}}});
 (function(){
   if(typeof settle15!=='function'||typeof H50ST==='undefined')return;
-  const _s=settle15;settle15=function(){try{return n61settle()}catch(e){console.warn('[n61]',e);return _s.apply(this,arguments)}};
+  P15V.n61all=function(){const h=n61list();setTimeout(()=>{const t=document.querySelectorAll('.n61-all .n61-st')[P15.n61s||0];if(t&&P15.n61s)t.scrollIntoView({block:'start'})},60);return h};
+  const _s=settle15;settle15=function(){try{return n61v3()}catch(e){console.warn('[n61]',e);return _s.apply(this,arguments)}};
+})();
+
+/* part62 - Settle In v4 (his ok 26 Nov 2026 22:49 on handoff/mocks/na-settle-v4):
+   Settle In shows the real things, not the same list as Home. One tab per service with a photo; each tab has its own
+   header colour (Blinkit-like); filter chips; one big featured listing; a sideways row; more listings down the page.
+   Only real listings are shown (no invented numbers); tabs without a list open the right page or Ask. */
+const N62T=[['homes','Homes','img/p20/keys.webp','#123A8C','#0B2560'],['jobs','Jobs','img/p20/office.webp','#0E5C4A','#08392E'],['food','Food','img/p18/tacos.webp','#8A3B1E','#561F0D'],
+  ['stays','Stays','img/p20/bed.webp','#4B2E83','#2D1A55'],['papers','Papers','img/p20/passports.webp','#1F4E6B','#123247'],['cars','Cars','img/p19/usedcar.webp','#3A3F4B','#22262E'],['events','Events','img/p20/dinner.webp','#7A2448','#4A1229']];
+const N62W={homes:'homes',jobs:'jobs',food:'home food',stays:'short stays',papers:'visa help',cars:'used cars',events:'events'};
+const N62RP=['img/p20/room.webp','img/p20/studio.webp','img/p20/livingy.webp','img/p20/living.webp','img/p21/studio2.webp'];
+function n62rp(id){let h=0;String(id||'').split('').forEach(c=>{h=(h*31+c.charCodeAt(0))|0});return N62RP[Math.abs(h)%N62RP.length]}
+function n62img(src,ex){return `<img ${a4src(src)} alt="" decoding="async" loading="lazy">${ex?'<span class="n62-ex">Example photo</span>':''}`}
+function n62money(v,c){try{return a4money(v,c)}catch(e){return ''}}
+function n62tab(){const k=P15.n62||'homes';return N62T.some(t=>t[0]===k)?k:'homes'}
+/* one featured card + sideways row + list, from a real list */
+function n62feed(L,o){if(!L.length)return o.empty;
+  const f=L[0],rest=L.slice(1),cheap=rest.slice().sort((a,b)=>(+o.price(a)||9e15)-(+o.price(b)||9e15)).slice(0,6),more=rest.filter(x=>!cheap.includes(x));
+  const ft=`<button class="n62-ft" ${o.act(f)}><span class="n62-fi">${o.img(f)}${o.tag(f)?`<span class="n62-tag">${esc(o.tag(f))}</span>`:''}</span><span class="n62-fb"><b>${esc(o.title(f))}</b><small>${esc(o.meta(f))}</small><span class="n62-fr"><span class="n62-pr">${esc(o.money(f))}<small>${esc(o.unit||'')}</small></span><u>${esc(o.btn(f))}</u></span></span></button>`;
+  const rail=cheap.length?`<div class="n62-sh"><h2>${esc(o.railT)}</h2></div><div class="n62-rail">${cheap.map(x=>`<button class="n62-rc" ${o.act(x)}><span class="n62-ri">${o.img(x)}</span><span class="n62-rb"><b>${esc(o.money(x))}<small>${esc(o.unit||'')}</small></b><small>${esc(o.title(x))}</small></span></button>`).join('')}</div>`:'';
+  const list=more.length?`<div class="n62-sh"><h2>${esc(o.moreT)}</h2></div>${more.map(x=>`<button class="n62-li" ${o.act(x)}><span class="n62-lim">${o.img(x)}</span><span class="n62-lb"><b>${esc(o.title(x))}</b><small>${esc(o.meta(x))}</small><i>${esc(o.money(x))}${esc(o.unit||'')}</i></span></button>`).join('')}`:'';
+  return `<p class="n62-cnt">${esc(o.count(L.length))}</p>${ft}${rail}${list}${o.foot||''}`}
+function n62panel(img,t,sub,btns){return `<div class="n62-pn"><span class="n62-fi">${n62img(img)}</span><div class="n62-pb"><b>${esc(t)}</b><small>${esc(sub)}</small><div class="n62-pbt">${btns.map((b,i)=>`<button class="${i?'s':''}" ${b[1]}>${esc(b[0])}</button>`).join('')}</div></div></div>`}
+function n62empty(t,sub,notify,post){return `<div class="n62-empty"><b>${esc(t)}</b><small>${esc(sub)}</small>${notify&&typeof n59btn==='function'?n59btn(notify):''}${post?`<button class="n62-post" ${post[1]}>${esc(post[0])}</button>`:''}</div>`}
+function n62body(k,D,city){const ph=(o)=>{const p=o.photos&&o.photos[0];return p&&typeof PC15==='function'&&PC15()?`<img src="${esc(phUrl15(p))}" alt="" loading="lazy">`:''};
+  if(k==='homes'){const ty=P15.n62f||'',TY={private:'Private room',shared:'Shared room',whole:'Whole place'};const L=(D.rooms||[]).filter(r=>!ty||r.type===ty);
+    const chips=[['','All'],['private','Rooms'],['shared','Shared'],['whole','Whole place']];
+    return n62chips(chips,ty)+n62feed(L,{act:r=>`data-a="p15open" data-v="room53:${r.id}"`,img:r=>ph(r)||n62img(n62rp(r.id),1),tag:r=>r.sponsored?'Sponsored':r.top?'Featured':'',
+      title:r=>r.title||'Home',meta:r=>[r.area,TY[r.type]].filter(Boolean).join(' · '),price:r=>r.rent,money:r=>n62money(r.rent,r.currency),unit:' /month',btn:r=>r.locked?'See contact':'View',
+      railT:'Lowest rent',moreT:'More homes',count:n=>`${n} ${n===1?'home':'homes'} in ${city} · rent shown on every home`,
+      foot:`<button class="n62-post" data-a="p15open" data-v="postroom">Have a home to rent? List it</button>`,
+      empty:n62empty('No homes listed here yet','We show only real listings. Get one email when the first home is listed near you.','room',['Have a home to rent? List it','data-a="p15open" data-v="postroom"'])})}
+  if(k==='jobs'){const L=D.jobs||[];
+    return n62feed(L,{act:j=>`data-a="p15open" data-v="job:${j.id}"`,img:j=>n62img(typeof h53jobPh==='function'?h53jobPh(j):'img/p20/work.webp'),tag:j=>j.sponsored?'Sponsored':'',
+      title:j=>j.title||'Job',meta:j=>[j.employer,j.area,j.hours?j.hours+' h a week':''].filter(Boolean).join(' · '),price:j=>-(+j.pay||0),money:j=>n62money(j.pay,j.currency),unit:' /hour',btn:j=>j.applied?'Applied':'View',
+      railT:'Best pay',moreT:'More jobs',count:n=>`${n} ${n===1?'job':'jobs'} in ${city} · pay and hours on every job`,
+      foot:`<button class="n62-post" data-a="p15open" data-v="postjob">Hiring? Post a job</button>`,
+      empty:n62empty('No jobs here yet','Get one email when the first job is posted near you.','job',['Hiring? Post a job','data-a="p15open" data-v="postjob"'])})}
+  if(k==='cars'){const L=D.cars||[];
+    return n62feed(L,{act:s=>`data-a="n60item" data-id="${esc(s.id)}"`,img:s=>ph(s)||n62img('img/p20/carcity.webp',1),tag:()=>'',
+      title:s=>s.title||'Car',meta:s=>[s.area,s.cond].filter(Boolean).join(' · '),price:s=>s.price,money:s=>n62money(s.price,s.currency),unit:'',btn:()=>'View',
+      railT:'Lowest price',moreT:'More cars',count:n=>`${n} ${n===1?'car':'cars'} for sale in ${city}`,
+      foot:`<button class="n62-post" data-a="z8q" data-c="Used cars">Ask dealers for your budget</button>`,
+      empty:n62empty('No cars listed here yet','Dealers can send you cars for your budget.',null,['Ask dealers for prices','data-a="z8q" data-c="Used cars"'])})}
+  if(k==='events'){const L=D.up||[];
+    return n62feed(L,{act:e=>`data-a="p15open" data-v="evd:${e.id}"`,img:e=>typeof c9i==='function'?c9i(c9evp(e)):n62img('img/p20/dinner.webp'),tag:e=>{try{const d=new Date(e.startsAt);return d.toLocaleDateString('en',{weekday:'short',day:'numeric',month:'short'})}catch(x){return ''}},
+      title:e=>e.title||'Event',meta:e=>{let tm='';try{tm=new Date(e.startsAt).toLocaleTimeString('en',{hour:'numeric',minute:'2-digit'})}catch(x){}return [tm,e.venue].filter(Boolean).join(' · ')},price:e=>e.price||0,money:e=>e.price?n62money(e.price,e.currency):'No ticket',unit:'',btn:()=>'Book',
+      railT:'Coming up',moreT:'More events',count:n=>`${n} ${n===1?'event':'events'} coming up in ${city}`,
+      empty:n62empty('No events coming up yet','Get one email when the next event is listed near you.','event',['See all events','data-a="tab" data-k="ev15"'])})}
+  if(k==='food')return n62panel('img/p18/tacos.webp','Taste of home','Home cooks and kitchens making the food of your country, with the price of every dish.',[['See home food','data-a="p15open" data-v="food"'],['Cook at home? List your food','data-a="p15open" data-v="food"']]);
+  if(k==='stays')return n62panel('img/p20/bed.webp','Short stays','Rooms, guesthouses and hotels for your first few nights. Tell us your dates and owners answer with their price.',[['Ask for a short stay','data-a="z8q" data-c="Short stay"'],['See homes for rent','data-a="n62t" data-k="homes"']]);
+  if(k==='papers')return n62panel('img/p20/passports.webp','Paperwork and legal help','Visa, immigration, tax and lawyers. Each one shows their own fee before you ask.',[['See experts and fees','data-a="p15open" data-v="experts"'],['Ask 6 at once','data-a="z8q" data-c="Immigration"']]);
+  return ''}
+function n62chips(L,cur){return `<div class="n62-chips">${L.map(([v,t])=>`<button class="${cur===v?'on':''}" data-a="n62f" data-val="${esc(v)}">${esc(t)}</button>`).join('')}</div>`}
+function n62settle(){
+  const D=(typeof h48data==='function')?h48data():{rooms:[],jobs:[],cars:[],up:[]},city=D.c||(typeof c9city==='function'&&c9city())||'your city';
+  const k=n62tab(),T=N62T.find(t=>t[0]===k);
+  const tabs=N62T.map(t=>`<button class="n62-tb${t[0]===k?' on':''}" data-a="n62t" data-k="${t[0]}"><span class="n62-ti">${n62img(t[2])}</span><span>${esc(t[1])}</span></button>`).join('');
+  return c9wrap(`<div class="n62" style="--n62a:${T[3]};--n62b:${T[4]}">
+    <div class="n62-hd"><div class="n62-r1"><small>NeuAmigo</small><span class="n62-city">${esc(city)}</span></div>
+      <h1>Settle In</h1>
+      <button class="n62-sr" data-a="p15open" data-v="search"><i></i><span>Search <b>${esc(N62W[k])}</b> in ${esc(city)}</span></button>
+      <div class="n62-tabs">${tabs}</div></div>
+    <div class="n62-pg">${n62body(k,D,city)}</div></div>`)}
+Object.assign(A,{n62t(el){P15.n62=el.dataset.k;P15.n62f='';render();const m=document.getElementById('main');if(m)m.scrollTop=0},
+  n62f(el){P15.n62f=el.dataset.val||'';render()}});
+(function(){
+  if(typeof settle15!=='function')return;
+  const _s=settle15;settle15=function(){try{return n62settle()}catch(e){console.warn('[n62]',e);return _s.apply(this,arguments)}};
+  /* phone top bar takes the tab colour on Settle In (his rule: top bar = header colour) */
+  let keep=null;const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{const m=document.querySelector('meta[name=theme-color]');if(!m)return;const on=document.querySelector('.n62');
+    if(on){if(keep===null)keep=m.content;const T=N62T.find(t=>t[0]===n62tab());if(T)m.content=T[3]}else if(keep!==null){m.content=keep;keep=null}}catch(e){}};
 })();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */
