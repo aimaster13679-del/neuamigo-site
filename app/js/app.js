@@ -7936,17 +7936,22 @@ const N56_LIVE=true; /* his ok 20 Nov 2026 13:44 */
    - every failed step is reported (client_err15, screen 'liveupd') so a session can read the real reason;
    - a failed check is tried again after 2 minutes (5 times) instead of waiting 6 hours;
    - each phone says once per update which update it runs (screen 'boot'). */
+/* 26 Nov 2026: his phone kept an old version for days because a new one is only used after the app goes to the background.
+   Now, once a new version is downloaded, a slim bar offers to use it at once (one tap, the app reloads in about 1 second). */
+function n56ready(U,id){try{if(document.getElementById('n56up'))return;const d=document.createElement('button');d.id='n56up';d.type='button';
+  d.innerHTML='<b style="color:#fff!important;-webkit-text-fill-color:#fff!important;font-size:14.5px;font-weight:800">A new version is ready</b><span style="color:#fff!important;-webkit-text-fill-color:#fff!important;font-size:13.5px;font-weight:800;white-space:nowrap;background:rgba(255,255,255,.18)!important;padding:7px 12px;border-radius:10px">Tap to refresh</span>';d.onclick=()=>{try{cacheSave()}catch(e){}d.disabled=true;d.querySelector('span').textContent='Refreshing...';U.set({id:id}).catch(()=>{d.remove()})};
+  document.body.appendChild(d);requestAnimationFrame(()=>d.classList.add('on'))}catch(e){}}
 (function(){
   if(typeof liveUpd!=='object'||!liveUpd.U||!liveUpd.U())return;
   const say=(scr,m,v)=>{try{API.rpc('client_err15',{scr:scr,m:String(m).slice(0,300),v:String(v||''),u:navigator.userAgent.slice(0,160)}).catch(()=>{})}catch(e){}};
   let tries=0;
   liveUpd.check=async function(){const U=this.U();if(!U)return;let step='start',cur={},L=null;try{
     step='own';cur=await fetch('bundle.json',{cache:'no-store'}).then(r=>r.json()).catch(()=>({}));
-    try{const k='na.bootv';if(localStorage.getItem(k)!==String(cur.v)){localStorage.setItem(k,String(cur.v));say('boot','running',cur.v)}}catch(e){}
+    try{const k='na.bootv';if(localStorage.getItem(k)!==String(cur.v)){API.rpc('client_err15',{scr:'boot',m:'running',v:String(cur.v||''),u:navigator.userAgent.slice(0,160)}).then(()=>{try{localStorage.setItem(k,String(cur.v))}catch(e){}}).catch(()=>{})}}catch(e){}
     step='latest';L=await fetch('https://neumarry.com/app-update/latest.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json());
     if(!L||!L.version||!L.url||L.version===cur.v||L.version===this.v)return;
     step='download';const b=await U.download({url:L.url,version:L.version,checksum:L.checksum||''});
-    step='next';await U.next({id:b.id});this.id=b.id;this.v=L.version;
+    step='next';await U.next({id:b.id});this.id=b.id;this.v=L.version;n56ready(U,b.id);
   }catch(e){say('liveupd',step+': '+((e&&(e.message||e.code))||e)+' -> '+(L&&L.version||''),cur.v);if(++tries<=5)setTimeout(()=>liveUpd.check(),120000)}};
 })();
 
