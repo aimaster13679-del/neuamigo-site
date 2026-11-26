@@ -3616,7 +3616,7 @@ html.a8on .topbar,html.a8on .p15s:has(.a8){background:#0A1A40!important}
 .a8-hd p{position:relative;margin:0;font:600 13.5px 'Plus Jakarta Sans',system-ui;color:#C3D2F2;-webkit-text-fill-color:#C3D2F2}.a8-hd p strong{color:#fff;-webkit-text-fill-color:#fff}
 .a8 .a8-search{position:relative;display:flex!important;align-items:center;gap:10px;width:100%;margin:16px 0 0;background:#fff!important;border:0!important;border-radius:14px!important;box-shadow:0 10px 30px rgba(0,0,0,.25);padding:14px!important;text-align:left;color:#5A6584!important;font:600 15px/1.3 'Plus Jakarta Sans',system-ui!important;min-height:50px}
 .a8 .a8-search .a7-type{color:#0B1226;-webkit-text-fill-color:#0B1226}
-.a8-tw{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--c9bg) 88%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--c9hl);padding:8px 0}
+.a8-tw{position:sticky;top:0;z-index:20;background:var(--c9bg);box-shadow:0 -60px 0 var(--c9bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--c9hl);padding:8px 0}
 .a8-trk{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:0 16px;position:relative}
 .a8-trk::-webkit-scrollbar{display:none}
 .a8 .a8-trk button{flex:none;display:flex!important;align-items:center;gap:7px;background:var(--c9pn)!important;border:1px solid var(--c9hl)!important;border-radius:12px!important;padding:8px 12px 8px 8px!important;color:var(--c9t2)!important;font:800 13px 'Plus Jakarta Sans',system-ui!important;transition:background .3s,color .3s,transform .3s}
@@ -4534,3 +4534,9 @@ html.n56dk .n60-ad{background:rgba(255,255,255,.06);border-color:rgba(255,255,25
 
 #n56up{position:fixed;left:12px;right:12px;bottom:calc(92px + env(safe-area-inset-bottom));z-index:9000;display:flex;align-items:center;justify-content:space-between;gap:12px;border:0;border-radius:16px;padding:14px 16px;background:#0F52BA;color:#fff;font:inherit;box-shadow:0 14px 34px rgba(11,18,38,.3);transform:translateY(160%);transition:transform .45s cubic-bezier(.2,.8,.2,1);cursor:pointer;text-align:left}
 #n56up.on{transform:none}#n56up b{font-size:14.5px;font-weight:800;color:#fff!important}#n56up span{color:#fff!important;font-size:13.5px;font-weight:800;white-space:nowrap;background:rgba(255,255,255,.18);padding:7px 12px;border-radius:10px}
+
+.a42-row:has(.a42-tx[aria-hidden=true]),.a42-row:has(.a42-go[aria-hidden=true]){display:none}
+.a7-ck,.a42-ck,.a7-trk,.a42-tr,.c10-bar{display:none!important}
+/* 26 Nov 2026: the stop chips bar was see-through (page colour variable is transparent in the one-theme layer), so cards showed behind it */
+html.n56 .a8 .a8-tw{background:#F3F2F1!important;box-shadow:0 -80px 0 #F3F2F1}
+html.n56dk .a8 .a8-tw{background:#0D0F15!important;box-shadow:0 -80px 0 #0D0F15}

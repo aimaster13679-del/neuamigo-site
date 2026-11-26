@@ -5911,9 +5911,9 @@ function c10done(){return c10get('nm.plan30',[])}
 function c10bar(){const all=c10all(),d=c10done().filter(x=>all.some(s=>s[0]===x)).length;return {d,n:all.length,pct:Math.round(d/all.length*100)}}
 function c10pre(){const path=c10get('nm.path',null);if(!C10()||!(path==='moving'||path==='arrived'))return '';
   const b=c10bar(),done=c10done(),nx=c10all().find(s=>!done.includes(s[0])&&!(path==='arrived'&&C10S[0][1].includes(s)))||c10all().find(s=>!done.includes(s[0]));
-  return `<div class="c9-in"><button class="c9-pan c10-card" data-a="p15open" data-v="plan30"><span class="c10-ct"><span class="c9-tag">My 30-day plan</span><b>${b.d} of ${b.n} steps done</b><span class="c10-bar"><i style="width:${b.pct}%"></i></span></span>${nx?`<span class="c10-nx">${c9i(nx[1])}<span><small>Next step</small><b>${esc(nx[2])}</b></span></span>`:'<span class="c10-nx"><span><b>All done. Welcome home.</b></span></span>'}</button></div>`}
+  return `<div class="c9-in"><button class="c9-pan c10-card" data-a="p15open" data-v="plan30"><span class="c10-ct"><span class="c9-tag">Step by step</span><b>${b.d} of ${b.n} steps done</b><span class="c10-bar"><i style="width:${b.pct}%"></i></span></span>${nx?`<span class="c10-nx">${c9i(nx[1])}<span><small>Next step</small><b>${esc(nx[2])}</b></span></span>`:'<span class="c10-nx"><span><b>All done. Welcome home.</b></span></span>'}</button></div>`}
 function c10plan(){const done=c10done(),b=c10bar(),path=c10get('nm.path','moving');
-  return c9wrap(c9back('')+`<div class="c9-in"><h1 class="c9-h1">My 30-day plan</h1><p class="c9-lede">${path==='arrived'?'Welcome. Start with week 1.':'Start before you fly, then follow the weeks.'} Tap a step to do it, then mark it done.</p>
+  return c9wrap(c9back('')+`<div class="c9-in"><h1 class="c9-h1">Step by step</h1><p class="c9-lede">${path==='arrived'?'Welcome. Start with week 1.':'Start before you fly, then follow the weeks.'} Tap a step to do it, then mark it done.</p>
    <div class="c9-pan c10-sum"><b>${b.d} of ${b.n} steps done</b><span class="c10-bar"><i style="width:${b.pct}%"></i></span></div>
    ${C10S.map(([h,steps],si)=>`<div class="c10-stage${path==='arrived'&&si===0?' opt':''}"><h2>${esc(h)}${path==='arrived'&&si===0?' <small>(if you still need it)</small>':''}</h2>${steps.map(([k,p,t,s,v])=>{const ok=done.includes(k);return `<div class="c9-pan c10-step${ok?' ok':''}">${c9i(p)}<span class="c10-st"><b>${esc(t)}</b><small>${esc(s)}</small><span class="c10-sb"><button class="c9-btn sm" ${c10go(v)}>${ok?'Open':'Do it'}</button><button class="c9-btn sm g" data-a="c10tick" data-k="${k}">${ok?'✓ Done':'Done'}</button></span></span></div>`}).join('')}</div>`).join('')}
    <p class="c9-lede c9-c">Government steps (tax number, health card) are free: ask an expert where to find them.</p></div>`)}
@@ -5947,7 +5947,7 @@ function c10post(){const R=[['rentsign','A home to rent','postroom'],['hiring','
   const _m=me15;me15=function(){const h=_m.apply(this,arguments);if(!C10())return h;
     const card=c10biz()?`<button class="c9-pan c10-sw" data-a="c10bizoff">${c9i('city')}<span><b>Switch to using NeuAmigo</b><small>Find homes, jobs and events</small></span></button>`
       :`<button class="c9-pan c10-sw" data-a="c10bizon">${c9i('office')}<span><b>NeuAmigo for Business</b><small>Rent a home, post a job, run events, offer services, sell items</small></span></button>`;
-    const plan=(c10get('nm.path','')||'')!=='local'?`<button class="c9-pan c10-sw" data-a="p15open" data-v="plan30">${c9i('keys')}<span><b>My 30-day plan</b><small>${c10bar().d} of ${c10bar().n} steps done</small></span></button>`:'';
+    const plan=(c10get('nm.path','')||'')!=='local'?`<button class="c9-pan c10-sw" data-a="p15open" data-v="plan30">${c9i('keys')}<span><b>Step by step</b><small>${c10bar().d} of ${c10bar().n} steps done</small></span></button>`:'';
     return h.replace('<div class="c9-old">',`<div class="c9-in">${plan}${card}</div><div class="c9-old">`)};
   Object.assign(A,{
     c10path(el){P15.c10p=el.dataset.k;render()},
@@ -5996,7 +5996,7 @@ function c11me(){const me=S.me||{},d=P15.d||{},biz=typeof c10biz==='function'&&c
    <div class="c11-who"><b>${esc(me.name||'')}</b><small>${esc([me.city,me.country].filter(Boolean).join(', '))}</small></div>
    <div class="c9-rh"><h2>Your things</h2></div>
    <div class="c9-g2 c11-g">${tile('ticket','My tickets','data-a="p15open" data-v="tickets"')}${tile('boxes','My requests','data-a="p15open" data-v="myasks"')}
-    ${tile('resume','My work profile','data-a="p15open" data-v="workprof"')}${path!=='local'&&typeof c10bar==='function'?tile('plan','My 30-day plan','data-a="p15open" data-v="plan30"'):tile('compass','Change what I need','data-a="c9redo"')}</div>
+    ${tile('resume','My work profile','data-a="p15open" data-v="workprof"')}${path!=='local'&&typeof c10bar==='function'?tile('plan','Step by step','data-a="p15open" data-v="plan30"'):tile('compass','Change what I need','data-a="c9redo"')}</div>
    ${path!=='local'&&typeof c10bar==='function'?row('compass','Change what I need','Moving, just arrived or local · homes, jobs, people','data-a="c9redo"'):''}
    <div class="c9-rh"><h2>Membership</h2></div>
    <div class="c11-mem">
@@ -6051,7 +6051,7 @@ function c12home(){const c=c9city();
    +c9row('Moving Abroad','data-a="p15open" data-v="c12move"',c9rail(C12MOVE.map(c12tile)));
   return c9wrap(c9top()+`<div class="c9-in"><h1 class="c9-h1 sm c12-q">What do you need today?</h1>${c12cats()}</div>`+(typeof c10pre==='function'?c10pre():'')+t10+newRow+rows)}
 const c12item=s=>`<button class="c9-card" data-a="p15open" data-v="c12sell">${c9i(kw8((s.cat||'')+' '+s.title,'sofa')==='-'?'sofa':kw8((s.cat||'')+' '+s.title,'sofa'))}<span class="c9-pr">${esc(money(s.price,s.currency))}</span><b>${esc(s.title)}</b><small>${esc(s.area||'')}${s.cond?' · '+esc(s.cond):''}</small></button>`;
-const C12MOVE=[['plan','My 30-day plan','From before the flight to week 4','p15open" data-v="plan30'],['passport','Visa and papers','Ask a trusted expert','p15open" data-v="experts'],
+const C12MOVE=[['plan','Step by step','From before the flight to week 4','p15open" data-v="plan30'],['passport','Visa and papers','Ask a trusted expert','p15open" data-v="experts'],
   ['plane','Travel buddy','Someone on the same flight','p15open" data-v="buddy'],['office','Job referral','Ask people inside a company','p15open" data-v="referral'],['boxes2','Movers','Ask 6 businesses at once','z8q" data-c="Movers']];
 const c12tile=([p,t,s,a])=>`<button class="c9-card s" data-a="${a}">${c9i(p)}<b>${esc(t)}</b><small>${esc(s)}</small></button>`;
 const c12grid=L=>`<div class="c9-g2 c12-g">${L.map(([p,t,s,a])=>`<button class="c9-pk" data-a="${a}">${c9i(p)}<b>${esc(t)}</b><small>${esc(s)}</small></button>`).join('')}</div>`;
@@ -6756,14 +6756,14 @@ function a7home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{};
    <button class="a7-search" data-a="p15open" data-v="search"><span class="n32-mg"></span><span>Search <em class="a7-type">${A7HINT[0]}</em></span></button>
    <div class="a7-tabs" role="tablist">${A7TABS.map(([k,l,p])=>`<button role="tab" data-a="a7tab" data-k="${k}" class="${k===t?'on':''}"><img src="${f3(p)}" alt=""><span>${l}</span></button>`).join('')}</div></div>`;
   const bans=[
-    a7ban('all',`Welcome to ${esc(city)}`,'Settle in<br>without stress.',bar&&path!=='local'?`${bar.d} of ${bar.n} steps done`:'Home, work, papers, friends','Start here','p15open" data-v="'+(path!=='local'?'plan30':'rooms'),['luggage','airplane','house_with_garden']),
+    a7ban('all',`Welcome to ${esc(city)}`,'Settle in<br>without stress.','Home, work, papers, friends','Start here','p15open" data-v="'+(path!=='local'?'plan30':'rooms'),['luggage','airplane','house_with_garden']),
     a7ban('homes','Homes in '+esc(city),'Find your<br>new home.',rooms.length?`${rooms.length} ${rooms.length===1?'room':'rooms'}${minRent?' from '+esc(a4money(minRent.rent,minRent.currency)):''}`:'Rooms and flats to rent','See homes','p15open" data-v="rooms',['house_with_garden','key','bed']),
     a7ban('work','Work in '+esc(city),'Jobs with<br>the pay shown.',jobs.length?`${jobs.length} ${jobs.length===1?'job':'jobs'} open now`:'Apply in one tap','See jobs','p15open" data-v="jobs',['briefcase','dollar_banknote','handshake']),
-    a7ban('papers','Your papers','One step today.<br>That is enough.',bar?`${bar.d} of ${bar.n} steps done`:'A clear step-by-step plan','Open my plan','p15open" data-v="plan30',['identification_card','page_facing_up','check_mark_button']),
+    a7ban('papers','Your papers','One step today.<br>That is enough.','A clear step-by-step plan','Open my plan','p15open" data-v="plan30',['identification_card','page_facing_up','check_mark_button']),
     a7ban('help','Services','Ask 6 at once.<br>Pick the best.','Used cars, visa, tax, cleaning','Ask for prices','p15open" data-v="c12svc',['delivery_truck','toolbox','receipt']),
     a7ban('fun','Fun in '+esc(city),'Weekends<br>with new friends.',up.length?`${up.length} ${up.length===1?'event':'events'} coming up`:'Events and meetups near you','See events','tab" data-k="ev15',['party_popper','soccer_ball','confetti_ball'])].join('');
   const grid=`<div class="a7-sec"><div><h2>What do you need?</h2></div></div><div class="a7-grid">${[
-    ['house_with_garden','Rooms','p15open" data-v="rooms'],['briefcase','Jobs','p15open" data-v="jobs'],['clipboard','30-day plan','p15open" data-v="plan30'],['books','Childcare','z8q" data-c="Childcare'],
+    ['house_with_garden','Rooms','p15open" data-v="rooms'],['briefcase','Jobs','p15open" data-v="jobs'],['clipboard','Step by step','p15open" data-v="plan30'],['books','Childcare','z8q" data-c="Childcare'],
     ['sparkles','Cleaning','z8q" data-c="Cleaning'],['receipt','Tax filing','z8q" data-c="Tax'],['shield','Insurance','z8q" data-c="Insurance'],['toolbox','Repairs','z8q" data-c="Small jobs'],
     ['automobile','Used cars','z8q" data-c="Used cars'],['vertical_traffic_light','Driving lessons','z8q" data-c="Driving'],['airplane_arrival','Airport pickup','z8q" data-c="Airport'],['scroll','Visa help','z8q" data-c="Immigration'],
     ['party_popper','Events','tab" data-k="ev15'],['hot_beverage','Taste of home','p15open" data-v="food'],['couch_and_lamp','Buy and sell','p15open" data-v="c12sell'],['world_map','All services','p15open" data-v="services']].map(x=>a7tile(...x)).join('')}</div>`;
@@ -6771,7 +6771,7 @@ function a7home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{};
   const jr=a7rail('Jobs near you','Pay shown on every job',jobs.slice(0,8).map(a7job),jobs.length>2?'See all jobs':'','p15open" data-v="jobs');
   const sr=a7rail('Things for your new home','From people who are moving out',sales.slice(0,8).map(a7item),sales.length>2?'See all items':'','p15open" data-v="c12sell');
   const tx=up.length?`<div class="a7-sec"><div><h2>Coming up</h2><p>Book a seat, meet people</p></div></div><div class="a7-rail a7-evr">${up.slice(0,8).map(a7ev).join('')}</div><button class="a7-more" data-a="tab" data-k="ev15">See all events ›</button>`:'';
-  let steps='';if(bar){const done=c10done(),L=c10all();steps=`<div class="a7-sec"><div><h2>Your 30-day plan</h2><p>${bar.d} of ${bar.n} steps done</p></div></div><span class="a7-trk"><i style="width:${bar.pct}%"></i></span><div class="a7-list">${L.slice(0,6).map(s=>{const ok=done.includes(s[0]);return `<button class="a7-row${ok?' ok':''}" data-a="p15open" data-v="plan30"><span class="a7-ck"></span><span><b>${esc(s[2])}</b><small>${esc(s[3])}</small></span><i>${ok?'Done':'›'}</i></button>`}).join('')}</div><button class="a7-more" data-a="p15open" data-v="plan30">See the whole plan ›</button>`}
+  let steps='';if(bar){const done=c10done(),L=c10all();steps=`<div class="a7-sec"><div><h2>Step by step</h2><p>From before the flight to week 4</p></div></div><span class="a7-trk"><i style="width:${bar.pct}%"></i></span><div class="a7-list">${L.slice(0,6).map(s=>{const ok=done.includes(s[0]);return `<button class="a7-row${ok?' ok':''}" data-a="p15open" data-v="plan30"><span class="a7-ck"></span><span><b>${esc(s[2])}</b><small>${esc(s[3])}</small></span><i>${ok?'Done':'›'}</i></button>`}).join('')}</div><button class="a7-more" data-a="p15open" data-v="plan30">See the whole plan ›</button>`}
   const svc=`<div class="a7-sec"><div><h2>Services</h2><p>Tell us once. 6 businesses get it at once.</p></div></div><div class="a7-sv">${[['automobile','Used cars','z8q" data-c="Used cars'],['mobile_phone','Phone and internet','z8q" data-c="Phone'],['globe_with_meridians','Translation','z8q" data-c="Translation'],['books','Childcare and tutors','z8q" data-c="Childcare'],['light_bulb','Ask an expert','p15open" data-v="experts'],['world_map','All services','p15open" data-v="services']].map(([p,tt,a])=>`<div class="a7-svc"><span><img src="${f3(p)}" alt="" loading="lazy"></span><b>${tt}</b><button data-a="${a}">${tt==='Ask an expert'?'See experts':tt==='All services'?'See all':'Get prices'}</button></div>`).join('')}</div>`;
   const plan=(plus&&!hasPlus)?`<button class="a7-plus" data-a="p15open" data-v="plans"><img src="${f3('key')}" alt=""><span><small>NeuAmigo Plus</small><b>Call landlords and employers directly</b><i>${p15price('plus_m')?esc(p15price('plus_m'))+' a month · ':''}alerts first</i></span><u>See plans</u></button>`:'';
   const biz=`<button class="a7-biz" data-a="p15open" data-v="plans" data-t="biz"><img src="${f3('megaphone')}" alt=""><span><small>For businesses</small><b>Be the first name new arrivals see</b><i>Homes, jobs, services or events in ${esc(city)}</i></span><u>Prices</u></button>`;
@@ -6834,14 +6834,14 @@ function a8home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{};
   const track=`<div class="a8-trk" role="tablist">${order.map(k=>{const S8=A8ST.find(x=>x[0]===k);return `<button data-a="a8go" data-k="${k}" class="${k===now?'on':''}"><img src="${f3(S8[2])}" alt=""><span>${S8[1]}</span></button>`}).join('')}</div>`;
   const head=`<div class="a8-hd"><div class="a8-sky">${st}</div><svg class="a8-route" viewBox="0 0 390 120" preserveAspectRatio="none"><path d="M -10 110 C 120 20, 260 10, 400 60" fill="none" stroke="rgba(157,184,240,.45)" stroke-width="2" stroke-dasharray="6 7"/></svg>
    <div class="a8-bar"><span class="a8-lg"><img src="img/icon-192.png" alt=""><b>NeuAmigo</b></span><button class="a8-sq" data-a="p15open" data-v="plans" aria-label="Plans"><img src="${f3('key')}" alt=""></button><button class="a8-sq" data-a="tab" data-k="me" aria-label="Me">${ini}</button></div>
-   <h1>${title}</h1><p>${bar&&path!=='local'?`<strong>${bar.d} of ${bar.n}</strong> steps done. Everything you need, stop by stop.`:'Everything you need, stop by stop.'}</p>
+   <h1>${title}</h1><p>Everything you need, stop by stop.</p>
    <button class="a8-search" data-a="p15open" data-v="search"><span class="n32-mg"></span><span>Search <em class="a7-type">${A7HINT[0]}</em></span></button></div><div class="a8-tw">${track}</div>`;
   const picks={
     fly:[a8pick(a4p('apartment'),'house_with_garden','A home before you land',rooms.length?`${rooms.length} ${rooms.length===1?'room':'rooms'}${minRent?' from <strong>'+esc(a4money(minRent.rent,minRent.currency))+'</strong>':''}`:'Rooms and flats to rent','See homes','p15open" data-v="rooms'),
          a8pick(a4p('papers'),'clipboard','Papers, step by step',bar?`<strong>${bar.d} of ${bar.n}</strong> done`:'Your 30-day plan','Open plan','p15open" data-v="plan30'),
          a8pick('img/p19/usedcar.webp','automobile','Used cars',`Dealers send cars <strong>for your budget</strong>`,'Get prices','z8q" data-c="Used cars')],
     week:[a8pick(a4p('apartment'),'house_with_garden','A place to live',rooms.length?`${rooms.length} ${rooms.length===1?'room':'rooms'}${minRent?' from <strong>'+esc(a4money(minRent.rent,minRent.currency))+'</strong>':''}`:'Rooms and flats to rent','See homes','p15open" data-v="rooms'),
-          a8pick(a4p('papers'),'identification_card','Bank, ID, tax number',bar?`<strong>${bar.d} of ${bar.n}</strong> done`:'One step at a time','Open plan','p15open" data-v="plan30'),
+          a8pick(a4p('papers'),'identification_card','Bank, ID, tax number','Ask an expert <strong>what to bring</strong>','Ask an expert','p15open" data-v="experts'),
           a8pick('img/p17/clean.webp','sparkles','Cleaning',`Tell us once, <strong>6 businesses at once</strong>`,'Get prices','z8q" data-c="Cleaning')],
     month:[a8pick('img/p19/work.webp','briefcase','Work',jobs.length?`<strong>${jobs.length} ${jobs.length===1?'job':'jobs'}</strong>, pay shown`:'Jobs with pay shown','See jobs','p15open" data-v="jobs'),
            a8pick('img/p17/resume.webp','identification_card','Work profile','Apply to any job in <strong>one tap</strong>','Make it','p15open" data-v="workprof'),
@@ -6855,12 +6855,12 @@ function a8home(){a4n=0;const c=c9city(),city=c||'your city',me=S.me||{};
   const third=Math.ceil(steps.length/3);
   const body={
     fly:a8head('fly','Before you fly','airplane','Stop 1')+`<div class="a8-rail">${picks.fly.join('')}</div>`
-      +grid([['house_with_garden','Homes','p15open" data-v="rooms'],['clipboard','30-day plan','p15open" data-v="plan30'],['automobile','Used cars','z8q" data-c="Used cars'],['light_bulb','Ask an expert','p15open" data-v="experts']])
-      +(path!=='local'?stepRows(steps.slice(0,Math.min(3,third))):'')
+      +grid([['house_with_garden','Homes','p15open" data-v="rooms'],['passport','Visa and papers','p15open" data-v="experts'],['automobile','Used cars','z8q" data-c="Used cars'],['light_bulb','Ask an expert','p15open" data-v="experts']])
+      
       +a7rail('Homes for you',`Rooms in ${esc(city)}`,rooms.slice(0,8).map(a7room),rooms.length>2?'See all homes':'','p15open" data-v="rooms'),
     week:a8head('week','First week','key','Stop 2')+`<div class="a8-rail">${picks.week.join('')}</div>`
-      +grid([['identification_card','Bank and ID','p15open" data-v="plan30'],['sparkles','Cleaning','z8q" data-c="Cleaning'],['toolbox','Repairs','z8q" data-c="Small jobs'],['shield','Insurance','z8q" data-c="Insurance']])
-      +(path!=='local'?stepRows(steps.slice(third,third*2).slice(0,3)):'')
+      +grid([['identification_card','Bank and ID','p15open" data-v="experts'],['sparkles','Cleaning','z8q" data-c="Cleaning'],['toolbox','Repairs','z8q" data-c="Small jobs'],['shield','Insurance','z8q" data-c="Insurance']])
+      
       +a7rail('Things for your new home','From people who are moving out',sales.slice(0,8).map(a7item),sales.length>2?'See all items':'','p15open" data-v="c12sell'),
     month:a8head('month','First month','briefcase','Stop 3')+`<div class="a8-rail">${picks.month.join('')}</div>`
       +grid([['briefcase','Jobs','p15open" data-v="jobs'],['identification_card','Work profile','p15open" data-v="workprof'],['receipt','Tax filing','z8q" data-c="Tax'],['light_bulb','Ask an expert','p15open" data-v="experts']])
@@ -7037,12 +7037,12 @@ function NA42(){try{return NA42_LIVE||localStorage.getItem('nm.na42')==='1'}catc
 const A42STP=['airplane','key','briefcase','party_popper'];
 function a42plan(){const done=c10done(),b=c10bar(),path=c10get('nm.path','moving');
   const nx=c10all().find(s=>!done.includes(s[0]));
-  const head=`<div class="a7-hd"><div class="a7-top"><button class="a7-sq a40-bk" data-a="p15back" aria-label="Back">‹</button><span class="a7-where"><small>Step by step</small><b>My 30-day plan</b><i>${path==='arrived'?'Welcome. Start with week 1.':'Start before you fly, then follow the weeks.'}</i></span></div>
-   <div class="a42-sum"><div><b>${b.d} of ${b.n}</b><small>steps done</small></div><span class="a42-tr"><i style="width:${Math.max(3,b.pct)}%"></i></span></div></div>`;
+  const head=`<div class="a7-hd"><div class="a7-top"><button class="a7-sq a40-bk" data-a="p15back" aria-label="Back">‹</button><span class="a7-where"><small>Step by step</small><b>Step by step</b><i>${path==='arrived'?'Welcome. Start with week 1.':'Start before you fly, then follow the weeks.'}</i></span></div>
+</div>`;
   const next=nx?`<button class="a7-plus a42-next" ${c10go(nx[4])}><img src="${f3('sparkles')}" alt=""><span><small>Your next step</small><b>${esc(nx[2])}</b><i>${esc(nx[3])}</i></span><u>Do it</u></button>`:`<div class="a7-empty in"><img src="${f3('check_mark_button')}" alt=""><b>All steps done</b><small>Well done. You can open any step again below.</small></div>`;
   const stages=C10S.map(([h,steps],si)=>{const dn=steps.filter(s=>done.includes(s[0])).length;
-    return `<div class="a42-st"><div class="a42-sh"><span class="a42-pic"><img src="${f3(A42STP[si]||'calendar')}" alt=""></span><span><small>${dn} of ${steps.length} done${path==='arrived'&&si===0?' · if you still need it':''}</small><h2>${esc(h)}</h2></span></div>
-     <div class="a7-list">${steps.map(([k,p,t,s,v])=>{const ok=done.includes(k);return `<div class="a42-row${ok?' ok':''}"><button class="a42-ck" data-a="c10tick" data-k="${k}" aria-label="${ok?'Mark as not done':'Mark as done'}"></button><button class="a42-tx" ${c10go(v)}><b>${esc(t)}</b><small>${esc(s)}</small></button><button class="a42-go" ${c10go(v)}>${ok?'Open':'Do it'}</button></div>`}).join('')}</div></div>`}).join('');
+    return `<div class="a42-st"><div class="a42-sh"><span class="a42-pic"><img src="${f3(A42STP[si]||'calendar')}" alt=""></span><span><small>${path==='arrived'&&si===0?'If you still need it':'Step '+(si+1)}</small><h2>${esc(h)}</h2></span></div>
+     <div class="a7-list">${steps.map(([k,p,t,s,v])=>{const ok=done.includes(k);return `<div class="a42-row"><button class="a42-tx" ${c10go(v)}><b>${esc(t)}</b><small>${esc(s)}</small></button><button class="a42-go" ${c10go(v)}>Open</button></div>`}).join('')}</div></div>`}).join('');
   return c9wrap(`<div class="a7 a42" data-t="papers">${head}<div class="a7-pn on" data-p="papers">${next}${stages}<p class="a42-note">Government steps (tax number, health card) are free: ask an expert where to find them.</p></div></div>`)}
 function a42svc(){const city=c9city()||'your city';
   const S=[['automobile','Used cars','Used cars'],['sparkles','Cleaning','Cleaning'],['receipt','Tax filing','Tax'],['toolbox','Repairs','Small jobs'],['shield','Insurance','Insurance']];
