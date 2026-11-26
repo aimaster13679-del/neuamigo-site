@@ -8270,7 +8270,7 @@ function n59btn(k){const on=N59.on&&N59.on.includes(k);return `<button class="h5
   function hideAsks(){const c=N59.cnt;if(!c)return;const cats=c.cats||{},all=Object.values(cats).reduce((a,b)=>a+b,0);
     document.querySelectorAll('#main [data-v^="ask:"],#main [data-a="z8q"]').forEach(b=>{let n;
       if(b.dataset.a==='z8q'){n=b.dataset.c?(cats[b.dataset.c]||0):all}else{const k=b.dataset.v.slice(4);n=k==='service'?all:(c[k]||0)}
-      if(n<3){b.style.display='none';b.setAttribute('aria-hidden','true');const g=b.parentElement;
+      if(n<3&&b.classList.contains('n61-row')){const sm=b.querySelector('small');if(sm)sm.textContent='Businesses joining soon';return}if(n<3){b.style.display='none';b.setAttribute('aria-hidden','true');const g=b.parentElement;
         if(g&&getComputedStyle(g).display==='grid'){const v=[...g.children].filter(x=>x.style.display!=='none');if(v.length===1)v[0].style.gridColumn='1 / -1';if(!v.length)g.style.display='none'}}})}
   const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{
     if(S.screen==='app'&&API.userId()){if(N59.cnt===null){N59.cnt=false;API.rpc('ask_counts16',{}).then(r=>{N59.cnt=r||{};hideAsks()}).catch(()=>{N59.cnt={}})}else hideAsks()}if(N59.on===null&&S.screen==='app'&&API.userId()){N59.on=[];API.rpc('notify_mine16',{}).then(r=>{N59.on=r||[];if(document.querySelector('[data-a=n59notify]'))render()}).catch(()=>{})}}catch(e){}};
@@ -8348,6 +8348,31 @@ function n59btn(k){const on=N59.on&&N59.on.includes(k);return `<button class="h5
     n60item(el){if(P15.v!=='item16')P15.n60from={v:P15.v,tab:S.tab};P15.n60=el.dataset.id;P15.n60i=0;const b=document.createElement('button');b.dataset.a='p15open';b.dataset.v='item16';A.p15open(b);try{document.querySelector('#main').scrollTo(0,0)}catch(e){}},
     n60ph(el){P15.n60i=+el.dataset.k||0;render()}
   });
+})();
+
+/* part61 - Settle In v2 (his ok 26 Nov 2026 20:51 on handoff/mocks/na-settle-v2):
+   title + city + search, then 4 steps in his order; every service is ONE clear row (whole photo, name, one line, arrow).
+   No tick boxes, no sliding rails, no tile grids. Actions and live numbers come from the Journey Home list (H50ST, h50act, h50sub). */
+const N61ST=[['When you land',['arr','sim','stay']],['Get set up',['legal','rent','jobs','col']],['Feel at home',['food','ev']],['Once you are settled',['buy','car','mob']]];
+const N61TX={arr:'Drivers show their price',sim:'Get connected on day one',stay:'Rooms for your first few nights',legal:'Visa, immigration, tax, lawyers',rent:'Rent shown on every home',
+  jobs:'Pay and hours on every job',col:'What they teach, fees shown',food:'Home cooks from your country',ev:'Dinners, games and meetups',buy:'When you are ready to stay',car:'Buy or sell, price on every car',mob:'Buy or sell nearby'};
+const N61T={sim:'SIM and phone plans',legal:'Paperwork and legal help',ev:'Events and new friends',buy:'Homes to buy or sell'};
+function n61settle(){
+  const D=(typeof h48data==='function')?h48data():{rooms:[],jobs:[],cars:[],up:[]},city=D.c||(typeof me==='object'&&me&&me.city)||'';
+  const all={};H50ST.forEach(st=>st[1].forEach(r=>{all[r[0]]=r}));
+  const row=k=>{const r=all[k];if(!r)return '';let [img,pos]=String(r[1]).split('|');if(k==='mob'){img='img/p21/phone.webp';pos='50% 50%'}let sub=N61TX[k]||'';
+    try{const s=h50sub(r[4],D);if(s&&s.p)sub=s.t}catch(e){}
+    return `<button class="n61-row" ${h50act(r[3])}><span class="n61-ph"><img ${a4src(img)} alt="" decoding="async" loading="lazy"${pos?` style="object-position:${esc(pos)}"`:''}></span><span class="n61-tx"><b>${esc(N61T[k]||r[2])}</b><small>${esc(sub)}</small></span><i class="n61-ch" aria-hidden="true"></i></button>`};
+  return c9wrap(`<div class="n61">
+    <div class="n61-top"><small>NeuAmigo</small>${city?`<span class="n61-city">${esc(city)}</span>`:''}</div>
+    <h1>Settle In</h1><p class="n61-lede">Everything for your move, in the order you need it.</p>
+    <button class="n61-search" data-a="p15open" data-v="search"><i></i><span>Search homes, jobs, food...</span></button>
+    ${N61ST.map((st,i)=>`<section class="n61-st"><b>Step ${i+1}</b><h2>${esc(st[0])}</h2>${st[1].map(row).join('')}</section>`).join('')}
+    <button class="n61-ask" data-a="z8q"><span><b>Not sure where to start?</b><small>Tell us once. 6 businesses answer.</small></span><u>Ask 6</u></button>
+  </div>`)}
+(function(){
+  if(typeof settle15!=='function'||typeof H50ST==='undefined')return;
+  const _s=settle15;settle15=function(){try{return n61settle()}catch(e){console.warn('[n61]',e);return _s.apply(this,arguments)}};
 })();
 
 window.__rm={get S(){return S},get PROFILES(){return PROFILES},A,render,boot,goBack,card:p=>card(p),cel:id=>{celebrate={id};render()},spinner:l=>spinner(l)}; /* used by automated tests */

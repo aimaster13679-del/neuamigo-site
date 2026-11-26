@@ -4540,3 +4540,36 @@ html.n56dk .n60-ad{background:rgba(255,255,255,.06);border-color:rgba(255,255,25
 /* 26 Nov 2026: the stop chips bar was see-through (page colour variable is transparent in the one-theme layer), so cards showed behind it */
 html.n56 .a8 .a8-tw{background:#F3F2F1!important;box-shadow:0 -80px 0 #F3F2F1}
 html.n56dk .a8 .a8-tw{background:#0D0F15!important;box-shadow:0 -80px 0 #0D0F15}
+/* part61 Settle In v2 (26 Nov 2026) */
+.n61{padding:6px 0 40px;color:var(--c9tx,#F2F4F8)}
+.n61-top{display:flex;align-items:center;justify-content:space-between;margin:4px 0 2px}
+.n61-top small{font-size:13px;font-weight:700;opacity:.62}
+.n61-city{font-size:13px;font-weight:700;border:1px solid var(--c9hl,rgba(255,255,255,.1));background:var(--c9pn,#161A24);padding:8px 12px;border-radius:12px}
+.n61 h1{font-family:'Fraunces',Georgia,serif;font-weight:700;font-size:34px;line-height:1.08;margin:6px 0;letter-spacing:0}
+.n61-lede{font-size:14.5px;font-weight:600;line-height:1.45;opacity:.62;margin:0 0 16px}
+.n61-search{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:var(--c9pn,#161A24);border:1px solid var(--c9hl,rgba(255,255,255,.1));border-radius:14px;padding:13px 14px;font:inherit;font-size:14.5px;font-weight:600;color:inherit;cursor:pointer}
+.n61-search span{opacity:.6}
+.n61-search i{position:relative;flex:none;width:15px;height:15px;border:2px solid currentColor;border-radius:50%;opacity:.6}
+.n61-search i::after{content:'';position:absolute;width:6px;height:2px;background:currentColor;right:-5px;bottom:-3px;transform:rotate(45deg)}
+.n61-st{margin-top:28px}
+.n61-st>b{display:block;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#6EA0FF;margin-bottom:2px}
+html:not(.n56dk) .n61-st>b{color:#1F5BD8}
+.n61-st h2{font-family:'Fraunces',Georgia,serif;font-weight:700;font-size:22px;margin:0 0 6px;letter-spacing:0}
+.n61-row{display:flex;align-items:center;gap:14px;width:100%;padding:12px 0;border:0;border-bottom:1px solid var(--c9hl,rgba(255,255,255,.1));background:none;color:inherit;font:inherit;text-align:left;cursor:pointer;transition:opacity .15s}
+.n61-row:last-child{border-bottom:0}.n61-row:active{opacity:.7}
+.n61-ph{flex:none;width:118px;aspect-ratio:3/2;border-radius:14px;overflow:hidden;background:var(--c9pn,#161A24)}
+.n61-ph img{width:100%;height:100%;object-fit:cover;display:block}
+.n61-tx{flex:1;min-width:0}.n61-tx b{display:block;font-size:16px;font-weight:800;line-height:1.25}
+.n61-tx small{display:block;font-size:13px;font-weight:600;line-height:1.4;opacity:.62;margin-top:3px}
+.n61-ch{flex:none;width:9px;height:9px;border-top:2px solid currentColor;border-right:2px solid currentColor;transform:rotate(45deg);margin-right:4px;opacity:.5}
+.n61-ask{display:flex;align-items:center;gap:14px;width:100%;margin-top:28px;border:0;border-radius:18px;padding:16px;background:#2F6BEA;color:#fff;font:inherit;text-align:left;cursor:pointer}
+html:not(.n56dk) .n61-ask{background:#1F5BD8}
+.n61-ask b{display:block;font-size:16px;font-weight:800;color:#fff!important;-webkit-text-fill-color:#fff!important}
+.n61-ask small{display:block;font-size:13px;font-weight:600;margin-top:3px;color:rgba(255,255,255,.85)!important;-webkit-text-fill-color:rgba(255,255,255,.85)!important}
+.n61-ask u{margin-left:auto;text-decoration:none;font-size:13.5px;font-weight:800;background:#fff!important;color:#1F5BD8!important;-webkit-text-fill-color:#1F5BD8!important;padding:9px 13px;border-radius:11px;white-space:nowrap}
+
+.n61 h1,.n61 h2{font-family:'Fraunces',Georgia,serif!important;letter-spacing:0!important}
+.n61 .n61-ph{width:112px}
+.n61-ph img.n61-top0{object-position:50% 30%}
+html.n56dk .n61-search,html.n56dk .n61-city{background:#161A24!important;border-color:rgba(255,255,255,.1)!important}
+html.n56:not(.n56dk) .n61-search,html.n56:not(.n56dk) .n61-city{background:#FFFFFF!important;border-color:rgba(11,18,38,.08)!important}
