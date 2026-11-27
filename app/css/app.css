@@ -4660,3 +4660,8 @@ html.n56:not(.n56dk) .n62-lb i{color:var(--n62a)}
 .n62-empty{text-align:center;padding:30px 10px}.n62-empty b{display:block;font-size:18px;font-weight:800}.n62-empty small{display:block;font-size:13.5px;opacity:.65;margin:6px 0 14px;line-height:1.5}
 .n62 .n62-post{border:0!important;background:rgba(127,140,170,.14)!important;color:inherit!important;-webkit-text-fill-color:currentColor!important;display:block!important}
 .n62 .n62-post{text-align:center}
+
+/* 27 Nov 2026: empty pages get the page's photo, not a bare dark box */
+.h53-empty .h53-eph{display:block;aspect-ratio:3/2;border-radius:16px;overflow:hidden;margin:-4px 0 16px}
+.h53-empty .h53-eph img{width:100%;height:100%;object-fit:cover;display:block}
+.h53-empty small{opacity:.85}
