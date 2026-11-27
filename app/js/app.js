@@ -7546,7 +7546,7 @@ const P50=n=>`img/p21/${n}.webp`;
 const P50S=img=>{const m=img.match(/^img\/(p2[01])\/([a-z0-9]+)\.webp$/);return m?`src="img/${m[1]}/t/${m[2]}.webp" srcset="img/${m[1]}/t/${m[2]}.webp 480w, ${img} 900w" sizes="(max-width:500px) 30vw, 200px"`:(typeof a4src==='function'?a4src(img):`src="${img}"`)};
 /* key, photo, title, action, live getter */
 const H50ST=[
-  ['DAY 1 · ARRIVE',[['arr',P50('arrival')+'|50% 88%','Airport pickup','q:Airport','Fixed fares'],['sim',P50('phone'),'SIM and phone','q:Phone','Compare plans'],['stay',P50('bedroom'),'Short stays','v:rooms','PG, guesthouse']]],
+  ['DAY 1 · ARRIVE',[['arr',P50('arrival')+'|50% 88%','Airport pickup','q:Airport','Fixed fares'],['sim',P50('phone'),'SIM and phone','q:Phone','Compare plans'],['stay',P50('bedroom'),'Short stays','v:rooms','A few nights']]],
   ['WEEK 1 · SETTLE',[['food','img/p17/feast.webp','Taste of home','v:food','Home cooks'],['legal',P50('passport'),'Paperwork and legal','v:legal50','Lawyers, visa'],['rent',P50('studio2'),'Homes for rent','v:rooms','@rooms']]],
   ['MONTH 1 · WORK AND STUDY',[['jobs','img/p20/office.webp','Jobs for you','v:jobs','@jobs'],['col','img/p18/work.webp','Colleges and courses','q:College','Ask for fees'],['ev',P50('dinner'),'Events','k:ev15','@events']]],
   ['ONCE SETTLED · GROW',[['car',P50('suv'),'Used cars','v:c12sell','@cars'],['mob',P50('laptop'),'Used phones','v:c12sell','Buy or sell'],['buy','img/p15/house.webp','Buy or sell a home','q:Home sale','Ask agents'],
@@ -8270,7 +8270,7 @@ function n59btn(k){const on=N59.on&&N59.on.includes(k);return `<button class="h5
   function hideAsks(){const c=N59.cnt;if(!c)return;const cats=c.cats||{},all=Object.values(cats).reduce((a,b)=>a+b,0);
     document.querySelectorAll('#main [data-v^="ask:"],#main [data-a="z8q"]').forEach(b=>{let n;
       if(b.dataset.a==='z8q'){n=b.dataset.c?(cats[b.dataset.c]||0):all}else{const k=b.dataset.v.slice(4);n=k==='service'?all:(c[k]||0)}
-      if(n<3&&(b.classList.contains('n61-row')||b.classList.contains('n61-c')||b.classList.contains('n61-hero'))){const sm=b.classList.contains('n61-hero')?b.querySelector('.n61-hb i'):b.querySelector('small');if(sm)sm.textContent='Businesses joining soon';return}if(n<3){b.style.display='none';b.setAttribute('aria-hidden','true');const g=b.parentElement;
+      if(n<3&&b.classList.contains('h50-t')){const sm=b.querySelector('.h50-pr,.h50-sb');if(sm){sm.className='h50-sb';sm.textContent='Joining soon'}return}if(n<3&&(b.classList.contains('n61-row')||b.classList.contains('n61-c')||b.classList.contains('n61-hero'))){const sm=b.classList.contains('n61-hero')?b.querySelector('.n61-hb i'):b.querySelector('small');if(sm)sm.textContent='Businesses joining soon';return}if(n<3){b.style.display='none';b.setAttribute('aria-hidden','true');const g=b.parentElement;
         if(g&&getComputedStyle(g).display==='grid'){const v=[...g.children].filter(x=>x.style.display!=='none');if(v.length===1)v[0].style.gridColumn='1 / -1';if(!v.length)g.style.display='none'}}})}
   const _ar=afterRenderEvents;afterRenderEvents=function(vk){_ar(vk);try{
     if(S.screen==='app'&&API.userId()){if(N59.cnt===null){N59.cnt=false;API.rpc('ask_counts16',{}).then(r=>{N59.cnt=r||{};hideAsks()}).catch(()=>{N59.cnt={}})}else hideAsks()}if(N59.on===null&&S.screen==='app'&&API.userId()){N59.on=[];API.rpc('notify_mine16',{}).then(r=>{N59.on=r||[];if(document.querySelector('[data-a=n59notify]'))render()}).catch(()=>{})}}catch(e){}};
