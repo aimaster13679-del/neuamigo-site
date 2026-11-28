@@ -4940,7 +4940,7 @@ Object.assign(P15V,{myasks:myAsks15,venuecal:venueCal15});
    Plan 10 Moving-Out Seller (buyer pays the seller at pick-up), Plan 11 Ad Spot by the week (checked first, always "Sponsored").
    Platform only: NeuAmigo checks no one; documents show as shared by the member. */
 const SVCCAT15=[['Cleaning','home2'],['Tax','chart'],['Insurance','shield2'],['Small jobs','key'],['Immigration','plane2']];
-const LEADK15={Immigration:'lead_imm',Tax:'lead_tax',Insurance:'lead_tax',Movers:'lead_move',Cleaning:'lead_move','Small jobs':'lead_small'};
+const LEADK15={Immigration:'lead_imm',Tax:'lead_tax',Insurance:'lead_tax',Cleaning:'lead_move','Small jobs':'lead_small'};
 ASK15.service={t:'Ask 6 businesses',biz:'expert',ic:'tag2',sub:'Cleaning, tax, insurance, small jobs, immigration. 6 businesses get it at once.',who:'businesses'};
 ASKBIZ15.expert='service';
 const _askSum0=askSum15;askSum15=(k,d)=>k==='service'?[d&&d.cat,d&&d.what,d&&d.when,d&&d.dist].filter(Boolean).join(' · '):_askSum0(k,d);
@@ -5108,7 +5108,7 @@ function adSpot15v2(){const f=P15.f,l=P15.ads,pl=f.apl||'city',w=(P15.aw||{})[pl
    <label>Headline (4 to 60 letters)</label><input id="p15-at" maxlength="60" placeholder="e.g. Groceries from 40 countries" value="${esc(f.at||'')}">
    <label>One more line (optional)</label><input id="p15-ab" maxlength="90" value="${esc(f.ab||'')}">
    <label>Link (https://…)</label><input id="p15-au" maxlength="300" inputmode="url" placeholder="https://" value="${esc(f.au||'')}"></div>
-  <div class="p15-g p15-list">${[['Welcome','Shops, restaurants, banks, phone plans, schools, courses, movers, events'],['Not allowed','Gambling, lotteries, betting, "guaranteed visa or job", get-rich offers, payday loans, adult content'],['Your responsibility','You are responsible for what your ad says. Ads follow the law of the country they show in. We look at every ad before it shows and remove ads that break the rules.']].map(([t,s])=>`<div class="p15-li"><span class="p15-b mint">${ic(t==='Not allowed'?'info':'tick2')}</span><span class="tx"><b>${t}</b><small>${s}</small></span></div>`).join('')}</div>
+  <div class="p15-g p15-list">${[['Welcome','Shops, restaurants, banks, phone plans, schools, courses, events'],['Not allowed','Gambling, lotteries, betting, "guaranteed visa or job", get-rich offers, payday loans, adult content'],['Your responsibility','You are responsible for what your ad says. Ads follow the law of the country they show in. We look at every ad before it shows and remove ads that break the rules.']].map(([t,s])=>`<div class="p15-li"><span class="p15-b mint">${ic(t==='Not allowed'?'info':'tick2')}</span><span class="tx"><b>${t}</b><small>${s}</small></span></div>`).join('')}</div>
   <button class="p15-btn" data-a="p15adBook"${P15.busy==='ad'?' disabled':''}>${P15.busy==='ad'?'Sending…':`Send for review · ${p15price(pk)}`}</button>
   <p class="p15-ex">Event sponsor (your name at a Weekend Club big event, "Sponsored"): ${p15price('ad_event')} an event · ask in Help.</p>`)}
 Object.assign(P15V,{wallet:wallet15v,jobs:jobs15v,workprof:workProf15,postjob:postJob15,hire:hire15v,ready:ready15v,safejobs:safeJobs15,sale:sale15v2,mysale:mySale15,adspot:adSpot15v2});
@@ -5556,7 +5556,7 @@ function now7(){const c=(S.me||{}).city||'';let t;try{t=new Date().toLocaleTimeS
 function phase7(){const c=(S.me||{}).city||'';let h;try{h=+new Date().toLocaleString('en-US',{hour:'numeric',hour12:false,timeZone:TZ7[c]||undefined})}catch(e){h=new Date().getHours()}return h<5||h>=21?'night':h<11?'morning':h<17?'day':'evening'}
 const multi7=(ps)=>`<span class="x6-ph x7-mx">${ps.map((p,i)=>`<img src="img/p15/${p}.webp" alt="" loading="lazy" decoding="async" style="--n:${i}">`).join('')}</span>`;
 function stories7(keys){return `<div class="x7-stories" role="list">${keys.map((k,i)=>`<button class="x7-st" data-a="x7story" data-k="${k}" style="--i:${i}" role="listitem"><span class="x7-ring"><img src="img/p15/${ST7[k][0][0]}.webp" alt="" loading="lazy"></span><small>${esc(ST7[k][1].replace('Find a ','').replace('Find an ','').replace('Get 5 ','').replace('Buy & Sell Used','Sell'))}</small></button>`).join('')}</div>`}
-function head7(){const me=S.me||{},c=me.city||'your city',W=['a room','a job','movers','new friends','visa help','a team'];
+function head7(){const me=S.me||{},c=me.city||'your city',W=['a room','a job','new friends','visa help','a team'];
   return `<div class="x7-live x7-${phase7()}"><i></i><span>${esc(c)} · <b class="x7-clock">${now7()}</b></span></div>
    <h1 class="x6-h1 x7-h1">${esc(hi6())}${me.name?', '+esc(me.name.split(' ')[0]):''}.<br><span class="x7-lf">Let's find</span> <span class="x7-cyc" aria-label="what you need"><span>${W.concat(W[0]).map(w=>`<i>${esc(w)}</i>`).join('')}</span></span></h1>`}
 function journey7(){const d=pd6(),n=d.length,t=PL6.length,PH={home:'room',sim:'docs',job:'office',move:'boxes',friends:'table',parents:'plane'},nx=PL6.findIndex(([k])=>!d.includes(k));
